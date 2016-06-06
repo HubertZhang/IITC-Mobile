@@ -6,7 +6,7 @@
 //  Copyright © 2016年 IITC. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import WebKit
 
 @objc class IITCWebView: WKWebView {
@@ -16,6 +16,21 @@ import WebKit
         let handler = JSHandler()
         configuration.userContentController.addScriptMessageHandler(handler, name: "ios")
         super.init(frame: frame, configuration: configuration)
+        NSNotificationCenter.defaultCenter().addObserverForName("WebViewExecuteJS", object: nil, queue: nil) { (notification) -> Void in
+            let JS = notification.userInfo!["JS"] as! String
+            self.evaluateJavaScript(JS)
+        }
+    }
+    
+    init(withScripts scripts:[Script]) {
+        let configuration = WKWebViewConfiguration()
+        let handler = JSHandler()
+        configuration.userContentController.addScriptMessageHandler(handler, name: "ios")
+        for script in scripts {
+            configuration.userContentController.addUserScript(WKUserScript(source: script.fileContent, injectionTime: .AtDocumentStart, forMainFrameOnly: true))
+        }
+        
+        super.init(frame: CGRectZero, configuration: configuration)
         NSNotificationCenter.defaultCenter().addObserverForName("WebViewExecuteJS", object: nil, queue: nil) { (notification) -> Void in
             let JS = notification.userInfo!["JS"] as! String
             self.evaluateJavaScript(JS)
@@ -33,10 +48,9 @@ import WebKit
         }
     }
     
-    func loadScripts(filePaths:[NSURL]) {
-        for file in filePaths {
-            let js = String(fileContent:file, encoding: NSUTF8StringEncoding)
-            self.evaluateJavaScript(js) {
+    func loadScripts(scripts:[Script]) {
+        for script in scripts {
+            self.evaluateJavaScript(script.fileContent) {
                 (response, error) -> Void in
                 
             }
