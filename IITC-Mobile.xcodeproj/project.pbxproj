@@ -86,6 +86,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B405EE061D05EC6900110D9E /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				B4E2F0051D05D06C00D2D86B /* ViewController.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		B4E2EFF71D05D06C00D2D86B = {
 			isa = PBXGroup;
 			children = (
@@ -109,10 +117,10 @@
 		B4E2F0021D05D06C00D2D86B /* IITC-Mobile */ = {
 			isa = PBXGroup;
 			children = (
+				B405EE061D05EC6900110D9E /* UI */,
 				B4E2F0281D05E5F400D2D86B /* IITCWebView */,
 				B4E2F0231D05D4E700D2D86B /* ScriptsManager */,
 				B4E2F0031D05D06C00D2D86B /* AppDelegate.swift */,
-				B4E2F0051D05D06C00D2D86B /* ViewController.swift */,
 				B4E2F0071D05D06C00D2D86B /* Main.storyboard */,
 				B4E2F00A1D05D06C00D2D86B /* Assets.xcassets */,
 				B4E2F00C1D05D06C00D2D86B /* LaunchScreen.storyboard */,
