@@ -1,0 +1,26 @@
+PODS:
+  - InAppSettingsKit (2.7.1)
+  - MBProgressHUD (0.9.2)
+  - RxBlocking (2.5.0):
+    - RxSwift (~> 2.5)
+  - RxCocoa (2.5.0):
+    - RxSwift (~> 2.5)
+  - RxSwift (2.5.0)
+
+DEPENDENCIES:
+  - InAppSettingsKit
+  - MBProgressHUD
+  - RxBlocking
+  - RxCocoa
+  - RxSwift
+
+SPEC CHECKSUMS:
+  InAppSettingsKit: 2b9fcdb82cdff2f99c51cae544e9f4df0df7afbf
+  MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
+  RxBlocking: 595d9ab56dde6b00beaa5aba40e95b150d2135f1
+  RxCocoa: e1b1562e57a554d0fb2aabf9d71b637f177257c7
+  RxSwift: 402b41a50e922a0368fc14cb3bc9f4427920e8ae
+
+PODFILE CHECKSUM: d0498edac30f55b9a5cfbb9bdd32a9b8041876a9
+
+COCOAPODS: 1.0.0
