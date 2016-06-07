@@ -53,7 +53,7 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MainViewController.setCurrentPanel(_:)), name: JSNotificationPaneChanged, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MainViewController.setIITCProgress(_:)), name: JSNotificationProgressChanged, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MainViewController.reloadIITC), name: JSNotificationReloadRequired, object: nil)
-
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(MainViewController.sharedAction(_:)), name:JSNotificationSharedAction, object:nil)
         NSNotificationCenter.defaultCenter().addObserverForName("SwitchToPanel", object: nil, queue: NSOperationQueue.mainQueue()) {
             (notification) in
             let panel = notification.userInfo!["Panel"] as! String
@@ -231,14 +231,25 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     }
 
     func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
-        print(#function)
-        print(navigationAction.request.mainDocumentURL)
+//        print(#function)
+//        print(navigationAction.request.mainDocumentURL)
         if let urlString = navigationAction.request.mainDocumentURL?.absoluteString {
             if urlString.containsString("accounts.google"){
                 self.loadIITCNeeded = true
             }
         }
         decisionHandler(.Allow)
+    }
+    
+    
+    func sharedAction(notification:NSNotification) {
+        let activityItem = notification.userInfo!["data"] as! [AnyObject]
+        let activityViewController = UIActivityViewController(activityItems: activityItem, applicationActivities: [OpenInMapActivity()])
+        activityViewController.excludedActivityTypes = [UIActivityTypeAddToReadingList]
+        if activityViewController.respondsToSelector(Selector("popoverPresentationController")) {
+            activityViewController.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItems?.first
+        }
+        self.presentViewController(activityViewController, animated: true, completion: nil)
     }
 }
 

@@ -25,8 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 hud.hide(true)
                 })
             })
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(AppDelegate.sharedAction(_:)), name:JSNotificationSharedAction, object:nil)
         return true
     }
 
@@ -50,13 +48,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    }
-
-    func sharedAction(notification:NSNotification) {
-        let activityItem = notification.userInfo!["data"] as! [AnyObject]
-        let activityViewController = UIActivityViewController(activityItems: activityItem, applicationActivities: [OpenInMapActivity()])
-        activityViewController.excludedActivityTypes = [UIActivityTypeAddToReadingList]
-        self.window?.rootViewController?.presentViewController(activityViewController, animated: true, completion: nil)
     }
 
 }
