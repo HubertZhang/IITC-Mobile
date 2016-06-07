@@ -14,6 +14,8 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     var webView: IITCWebView!
 
     var layersController: LayersController = LayersController.sharedInstance
+    
+    var location = IITCLocation()
     @IBOutlet weak var backButton: UIBarButtonItem!
 
     @IBOutlet weak var webProgressView: UIProgressView!
