@@ -78,14 +78,6 @@
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-			<key>Title</key>
-			<string>pref_advanced_options</string>
-			<key>Key</key>
-			<string>pref_advanced_options</string>
-		</dict>
-		<dict>
-			<key>Type</key>
 			<string>IASKButtonSpecifier</string>
 			<key>Title</key>
 			<string>pref_force_plugin_update</string>
