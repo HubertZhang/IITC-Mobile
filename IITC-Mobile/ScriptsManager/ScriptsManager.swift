@@ -11,7 +11,7 @@ import RxSwift
 import Alamofire
 import RxAlamofire
 
-class ScriptsManager: NSObject {
+class ScriptsManager: NSObject, DirectoryWatcherDelegate {
     static let sharedInstance = ScriptsManager()
 
     var storedPlugins = [Script]()
@@ -27,6 +27,8 @@ class ScriptsManager: NSObject {
     var userScriptsPath: NSURL
     var userPluginsPath: NSURL
 
+    var watcher: DirectoryWatcher?
+    
     override init() {
         initialScriptsPath = NSBundle.mainBundle().resourceURL!.URLByAppendingPathComponent("scripts", isDirectory: true)
         initialPluginsPath = initialScriptsPath.URLByAppendingPathComponent("plugins", isDirectory: true)
@@ -39,7 +41,10 @@ class ScriptsManager: NSObject {
         positionScript = try! Script(coreJS: initialScriptsPath.URLByAppendingPathComponent("user-location.user.js"), withName: "position")
         loadedPluginNames = NSUserDefaults.standardUserDefaults().arrayForKey("LoadedPlugins") as? [String] ?? [String]()
         loadedPlugins = Set<String>(loadedPluginNames)
+
         super.init()
+//        print(userScriptsPath.absoluteString)
+        watcher = DirectoryWatcher.watchFolderWithPath(userScriptsPath.absoluteString, delegate: self)
         loadUserMainScript()
         loadAllPlugins()
 
@@ -169,5 +174,10 @@ class ScriptsManager: NSObject {
             return Observable<Void>.just(Void())
 
         }
+    }
+    
+    func directoryDidChange(folderWatcher: DirectoryWatcher!) {
+        self.loadAllPlugins()
+        self.loadUserMainScript()
     }
 }
