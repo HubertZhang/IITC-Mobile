@@ -61,7 +61,7 @@ class JSHandler: NSObject, WKScriptMessageHandler {
 //        var locationURL = NSURL(string: "maps://?ll=\(lat),\(lng)")!
         //    NSString *title = args[3];
         //
-        NSNotificationCenter.defaultCenter().postNotificationName(JSNotificationSharedAction, object: self, userInfo: ["data": [args[3], url]])
+        NSNotificationCenter.defaultCenter().postNotificationName(JSNotificationSharedAction, object: self, userInfo: ["data": [args[3], url, [lat, lng, zoom]]])
         //    mIitc.startActivity(ShareActivity.forPosition(mIitc, lat, lng, zoom, title, isPortal));
     }
 
