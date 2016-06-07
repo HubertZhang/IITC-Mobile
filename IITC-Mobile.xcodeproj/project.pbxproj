@@ -15,6 +15,8 @@
 		B405EECE1D06832200110D9E /* LayersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B405EECD1D06832200110D9E /* LayersController.swift */; };
 		B405EED11D06969C00110D9E /* SettingsViewControllerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = B405EECF1D06969C00110D9E /* SettingsViewControllerNew.swift */; };
 		B405EED21D06969C00110D9E /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B405EED01D06969C00110D9E /* Settings.bundle */; };
+		B405EED41D0726BA00110D9E /* IITCLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B405EED31D0726BA00110D9E /* IITCLocation.swift */; };
+		B405EED61D0726D700110D9E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B405EED51D0726D700110D9E /* CoreLocation.framework */; };
 		B4E2F0041D05D06C00D2D86B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E2F0031D05D06C00D2D86B /* AppDelegate.swift */; };
 		B4E2F0061D05D06C00D2D86B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E2F0051D05D06C00D2D86B /* MainViewController.swift */; };
 		B4E2F0091D05D06C00D2D86B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4E2F0071D05D06C00D2D86B /* Main.storyboard */; };
@@ -46,6 +48,8 @@
 		B405EECD1D06832200110D9E /* LayersController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayersController.swift; sourceTree = "<group>"; };
 		B405EECF1D06969C00110D9E /* SettingsViewControllerNew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewControllerNew.swift; sourceTree = "<group>"; };
 		B405EED01D06969C00110D9E /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		B405EED31D0726BA00110D9E /* IITCLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IITCLocation.swift; sourceTree = "<group>"; };
+		B405EED51D0726D700110D9E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		B4E2F0001D05D06C00D2D86B /* IITC-Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IITC-Mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4E2F0031D05D06C00D2D86B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B4E2F0051D05D06C00D2D86B /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -67,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B405EED61D0726D700110D9E /* CoreLocation.framework in Frameworks */,
 				15A88E13EAE8062F7FBCB54B /* Pods_IITC_Mobile.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -93,6 +98,7 @@
 		3DAD2415200F542459C8954A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B405EED51D0726D700110D9E /* CoreLocation.framework */,
 				E9F05CB9F2CD0E3DB406B710 /* Pods_IITC_Mobile.framework */,
 			);
 			name = Frameworks;
@@ -170,6 +176,7 @@
 			children = (
 				B405EE041D05EA6400110D9E /* IITCWebView.swift */,
 				B4E2F0291D05E63C00D2D86B /* JSHandler.swift */,
+				B405EED31D0726BA00110D9E /* IITCLocation.swift */,
 			);
 			path = IITCWebView;
 			sourceTree = "<group>";
@@ -328,6 +335,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B405EED41D0726BA00110D9E /* IITCLocation.swift in Sources */,
 				B4E2F02A1D05E63C00D2D86B /* JSHandler.swift in Sources */,
 				B405EECC1D066FC900110D9E /* LayersTableViewController.swift in Sources */,
 				B405EED11D06969C00110D9E /* SettingsViewControllerNew.swift in Sources */,
