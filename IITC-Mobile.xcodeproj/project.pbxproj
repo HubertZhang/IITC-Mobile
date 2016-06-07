@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		15A88E13EAE8062F7FBCB54B /* Pods_IITC_Mobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9F05CB9F2CD0E3DB406B710 /* Pods_IITC_Mobile.framework */; };
 		B405EE051D05EA6400110D9E /* IITCWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B405EE041D05EA6400110D9E /* IITCWebView.swift */; };
+		B405EECA1D0602C200110D9E /* scripts in Resources */ = {isa = PBXBuildFile; fileRef = B405EEC91D0602C200110D9E /* scripts */; };
 		B4E2F0041D05D06C00D2D86B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E2F0031D05D06C00D2D86B /* AppDelegate.swift */; };
 		B4E2F0061D05D06C00D2D86B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E2F0051D05D06C00D2D86B /* ViewController.swift */; };
 		B4E2F0091D05D06C00D2D86B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4E2F0071D05D06C00D2D86B /* Main.storyboard */; };
@@ -34,6 +35,7 @@
 		0E61D2D30C4A18577CBD8273 /* Pods-IITC-Mobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IITC-Mobile.release.xcconfig"; path = "Pods/Target Support Files/Pods-IITC-Mobile/Pods-IITC-Mobile.release.xcconfig"; sourceTree = "<group>"; };
 		3FECEBB0EFDCF16AE63C8042 /* Pods-IITC-Mobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IITC-Mobile.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IITC-Mobile/Pods-IITC-Mobile.debug.xcconfig"; sourceTree = "<group>"; };
 		B405EE041D05EA6400110D9E /* IITCWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IITCWebView.swift; sourceTree = "<group>"; };
+		B405EEC91D0602C200110D9E /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = scripts; sourceTree = "<group>"; };
 		B4E2F0001D05D06C00D2D86B /* IITC-Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IITC-Mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4E2F0031D05D06C00D2D86B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B4E2F0051D05D06C00D2D86B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 		B4E2F0021D05D06C00D2D86B /* IITC-Mobile */ = {
 			isa = PBXGroup;
 			children = (
+				B405EEC91D0602C200110D9E /* scripts */,
 				B405EE061D05EC6900110D9E /* UI */,
 				B4E2F0281D05E5F400D2D86B /* IITCWebView */,
 				B4E2F0231D05D4E700D2D86B /* ScriptsManager */,
@@ -241,6 +244,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4E2F00E1D05D06C00D2D86B /* LaunchScreen.storyboard in Resources */,
+				B405EECA1D0602C200110D9E /* scripts in Resources */,
 				B4E2F00B1D05D06C00D2D86B /* Assets.xcassets in Resources */,
 				B4E2F0091D05D06C00D2D86B /* Main.storyboard in Resources */,
 			);
