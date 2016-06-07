@@ -8,6 +8,7 @@
 
 import UIKit
 import MBProgressHUD
+import Google.Analytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,16 +16,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject:AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        
-        let hud = MBProgressHUD.showHUDAddedTo(self.window?.rootViewController?.view, animated:true)
-        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+
+        var configureError: NSError?
+        GGLContext.sharedInstance().configureWithError(&configureError)
+        assert(configureError == nil, "Error configuring Google services: \(configureError)")
+
+        // Optional: configure GAI options.
+        let gai = GAI.sharedInstance()
+        gai.trackUncaughtExceptions = true  // report uncaught exceptions
+//        gai.logger.logLevel = GAILogLevel.Verbose  // remove before app release
+
+
+        let hud = MBProgressHUD.showHUDAddedTo(self.window?.rootViewController?.view, animated: true)
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
             ScriptsManager.sharedInstance.getLoadedScripts()
             dispatch_async(dispatch_get_main_queue(), {
                 hud.hide(true)
-                })
             })
+        })
         return true
     }
 

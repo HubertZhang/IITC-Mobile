@@ -3,3 +3,5 @@
 //
 
 #import "DirectoryWatcher.h"
+
+#import "Google/Analytics.h"

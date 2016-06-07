@@ -12,6 +12,15 @@ class AboutViewController: UIViewController, UITextViewDelegate {
 
 
     @IBOutlet weak var textView: UITextView!
+    
+    override func viewWillAppear(animated: Bool) {
+        let tracker = GAI.sharedInstance().defaultTracker
+        tracker.set(kGAIScreenName, value: "About")
+            
+        let builder = GAIDictionaryBuilder.createScreenView()
+        tracker.send(builder.build() as [NSObject : AnyObject])
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

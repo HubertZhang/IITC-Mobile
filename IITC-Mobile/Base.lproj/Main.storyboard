@@ -71,10 +71,10 @@
             </objects>
             <point key="canvasLocation" x="1631" y="354"/>
         </scene>
-        <!--About View Controller-->
+        <!--About-->
         <scene sceneID="aAM-JP-3vs">
             <objects>
-                <viewController storyboardIdentifier="aboutViewController" automaticallyAdjustsScrollViewInsets="NO" id="y5L-YV-8tI" customClass="AboutViewController" customModule="IITC_Mobile" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="aboutViewController" title="About" automaticallyAdjustsScrollViewInsets="NO" id="y5L-YV-8tI" customClass="AboutViewController" customModule="IITC_Mobile" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Idj-JQ-0Od"/>
                         <viewControllerLayoutGuide type="bottom" id="fHZ-uV-iwy"/>
@@ -110,7 +110,7 @@
             </objects>
             <point key="canvasLocation" x="2315" y="1010"/>
         </scene>
-        <!--Layers Table View Controller-->
+        <!--Layers-->
         <scene sceneID="zbc-bi-ZP4">
             <objects>
                 <tableViewController id="FAj-bD-ndF" customClass="LayersTableViewController" customModule="IITC_Mobile" customModuleProvider="target" sceneMemberID="viewController">
@@ -123,7 +123,7 @@
                             <outlet property="delegate" destination="FAj-bD-ndF" id="Prl-cf-lf4"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="t0B-s1-18g">
+                    <navigationItem key="navigationItem" title="Layers" id="t0B-s1-18g">
                         <barButtonItem key="leftBarButtonItem" systemItem="done" id="YoR-px-Ora">
                             <connections>
                                 <action selector="dismiss:" destination="FAj-bD-ndF" id="hEL-Kd-xBp"/>
@@ -135,10 +135,10 @@
             </objects>
             <point key="canvasLocation" x="3127" y="-320"/>
         </scene>
-        <!--Plugins Table View Controller-->
+        <!--Plugins-->
         <scene sceneID="CAy-dP-gfU">
             <objects>
-                <tableViewController storyboardIdentifier="pluginsViewController" id="Voa-0H-JZJ" customClass="PluginsTableViewController" customModule="IITC_Mobile" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="pluginsViewController" title="Plugins" id="Voa-0H-JZJ" customClass="PluginsTableViewController" customModule="IITC_Mobile" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="59" sectionHeaderHeight="28" sectionFooterHeight="28" id="1By-TZ-8Sd">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
