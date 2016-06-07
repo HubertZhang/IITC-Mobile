@@ -17,21 +17,19 @@ let JSNotificationSharedAction: String = "JSNotificationSharedAction"
 let JSNotificationProgressChanged: String = "JSNotificationProgressChanged"
 
 class JSHandler: NSObject, WKScriptMessageHandler {
-    
+
     func userContentController(userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
-        let call: [String : AnyObject] = message.body as! [String : AnyObject]
+        let call: [String:AnyObject] = message.body as! [String:AnyObject]
         let function = call["functionName"] as! String
         if (call["args"] is String) {
             if (call["args"] as! String == "") {
                 let selfSelector: Selector = NSSelectorFromString(function)
                 if self.respondsToSelector(selfSelector) {
                     self.performSelector(selfSelector)
-                }
-                else {
+                } else {
                     NSLog("%@ not implemented", function)
                 }
-            }
-            else {
+            } else {
                 let selfSelector: Selector = NSSelectorFromString(function.stringByAppendingString(":"))
                 if self.respondsToSelector(selfSelector) {
                     self.performSelector(selfSelector, withObject: call["args"])
@@ -40,7 +38,7 @@ class JSHandler: NSObject, WKScriptMessageHandler {
         } else if (call["args"] is NSNumber || call["args"] is NSArray) {
             let selfSelector = NSSelectorFromString(function.stringByAppendingString(":"));
             if (self.respondsToSelector(selfSelector)) {
-                self.performSelector(selfSelector, withObject:call["args"]);
+                self.performSelector(selfSelector, withObject: call["args"]);
             } else {
                 NSLog("%@ not implemented", function);
             }
@@ -48,7 +46,7 @@ class JSHandler: NSObject, WKScriptMessageHandler {
             NSLog(message.body.description);
         }
     }
-    
+
     func intentPosLink(args: [AnyObject]) {
         let isPortal: Bool = args[4] as! Bool
         let lat: String = args[0] as! String
@@ -57,8 +55,7 @@ class JSHandler: NSObject, WKScriptMessageHandler {
         var url: NSURL
         if isPortal {
             url = NSURL(string: "https://www.ingress.com/intel?pll=\(lat),\(lng)&z=\(zoom)")!
-        }
-        else {
+        } else {
             url = NSURL(string: "https://www.ingress.com/intel?ll=\(lat),\(lng)&z=\(zoom)")!
         }
 //        var locationURL = NSURL(string: "maps://?ll=\(lat),\(lng)")!
@@ -67,49 +64,49 @@ class JSHandler: NSObject, WKScriptMessageHandler {
         NSNotificationCenter.defaultCenter().postNotificationName(JSNotificationSharedAction, object: self, userInfo: ["data": [args[3], url]])
         //    mIitc.startActivity(ShareActivity.forPosition(mIitc, lat, lng, zoom, title, isPortal));
     }
-    
+
     // share a string to the IITC share activity. only uses the share tab.
-    
+
     func shareString(str: String) {
         NSNotificationCenter.defaultCenter().postNotificationName(JSNotificationSharedAction, object: self, userInfo: ["data": [str]])
     }
-    
+
     // disable javascript injection while spinner is enabled
     // prevent the spinner from closing automatically
-    
+
     //- (void) spinnerEnabled:(BOOL) en {
     ////    mIitc.getWebView().disableJS(en);
     //}
-    
+
     // copy link to specific portal to android clipboard
-    
+
 //    func copy(s: String) {
 //        UIPasteboard.generalPasteboard().string = s
 //    }
-    
+
     func switchToPane(paneID: String) {
         NSNotificationCenter.defaultCenter().postNotificationName(JSNotificationPaneChanged, object: self, userInfo: ["paneID": paneID])
     }
-    
+
     //- (void) dialogFocused:(NSString *) dialogID {
     ////    mIitc.setFocusedDialog(id);
     //}
-    
-    
+
+
     //- (void) dialogOpened:(NSString *) dialogID withResult:(BOOL) open {
     ////    mIitc.dialogOpened(id, open);
     //}
-    
-    
+
+
     func bootFinished() {
         NSNotificationCenter.defaultCenter().postNotificationName(JSNotificationBootFinished, object: self)
     }
     // get layers and list them in a dialog
-    
+
     func setLayers(layers: [AnyObject]) {
         NSNotificationCenter.defaultCenter().postNotificationName(JSNotificationLayersGot, object: self, userInfo: ["layers": layers])
     }
-    
+
     //
     //- (void) addPortalHighlighter:( NSString * )name {
     ////    mIitc.runOnUiThread(new Runnable() {
@@ -129,8 +126,8 @@ class JSHandler: NSObject, WKScriptMessageHandler {
     ////        }
     ////    });
     //}
-    
-    
+
+
     //- (void) updateIitc: (NSString *) fileUrl {
     //    mIitc.runOnUiThread(new Runnable() {
     //        @Override
@@ -139,8 +136,8 @@ class JSHandler: NSObject, WKScriptMessageHandler {
     //        }
     //    });
     //}
-    
-    
+
+
     //- (void) addPane( NSString * name,  NSString * label,  NSString * icon) {
     //    mIitc.runOnUiThread(new Runnable() {
     //        @Override
@@ -149,9 +146,9 @@ class JSHandler: NSObject, WKScriptMessageHandler {
     //        }
     //    });
     //}
-    
+
     // some plugins may have no specific icons...add a default icon
-    
+
     //- (void) addPane( NSString * name,  NSString * label) {
     //    mIitc.runOnUiThread(new Runnable() {
     //        @Override
@@ -160,8 +157,8 @@ class JSHandler: NSObject, WKScriptMessageHandler {
     //        }
     //    });
     //}
-    
-    
+
+
     //- (BOOL) showZoom {
     ////     PackageManager pm = mIitc.getPackageManager();
     ////     boolean hasMultitouch = pm.hasSystemFeature(PackageManager.FEATURE_TOUCHSCREEN_MULTITOUCH);
@@ -169,8 +166,8 @@ class JSHandler: NSObject, WKScriptMessageHandler {
     ////    return forcedZoom || !hasMultitouch;
     //    return YES;
     //}
-    
-    
+
+
     //- (void) setFollowMode:(BOOL) follow {
     ////    mIitc.runOnUiThread(new Runnable() {
     ////        @Override
@@ -179,23 +176,23 @@ class JSHandler: NSObject, WKScriptMessageHandler {
     ////        }
     ////    });
     //}
-    
-    
+
+
     func setProgress(progress: Int) {
         NSNotificationCenter.defaultCenter().postNotificationName(JSNotificationProgressChanged, object: self, userInfo: ["data": progress])
     }
-    
+
     //- (NSString *) getFileRequestUrlPrefix {
     ////    return mIitc.getFileManager().getFileRequestPrefix();
     //    return nil;
     //}
-    
-    
+
+
     //- (void) setPermalink:( NSString *) href {
     ////    mIitc.setPermalink(href);
     //}
-    
-    
+
+
     //- (void) saveFile( NSString * filename,  NSString * type,  NSString * content) {
     //    try {
     //         File outFile = new File(Environment.getExternalStorageDirectory().getPath() +
@@ -210,14 +207,14 @@ class JSHandler: NSObject, WKScriptMessageHandler {
     //        e.printStackTrace();
     //    }
     //}
-    
-    
+
+
     func reloadIITC() {
-        
+
         NSNotificationCenter.defaultCenter().postNotificationName(JSNotificationReloadRequired, object: self, userInfo: nil)
     }
-    
-    
+
+
     //- (void) reloadIITC:(BOOL) clearCache {
     ////    mIitc.runOnUiThread(new Runnable() {
     ////        @Override
