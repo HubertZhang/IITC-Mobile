@@ -1,12 +1,7 @@
 function Android() {
-    this.showZoom = showZoom;
-    function showZoom() {
-        window.webkit.messageHandlers.ios.postMessage({functionName: "showZoom", args: ""});
-    };
-
     this.copy = copy;
     function copy(text) {
-        window.webkit.messageHandlers.ios.postMessage({functionName: "copy", args: text});
+        window.webkit.messageHandlers.ios.postMessage({functionName: "ioscopy", args: text});
     };
 
     this.reloadIITC = reloadIITC;
@@ -19,10 +14,10 @@ function Android() {
         window.webkit.messageHandlers.ios.postMessage({functionName: "getFileRequestUrlPrefix", args: ""});
     };
 
-    this.setActiveHighlighter = setActiveHighlighter;
-    function setActiveHighlighter(name) {
-        window.webkit.messageHandlers.ios.postMessage({functionName: "setActiveHighlighter", args: name});
-    };
+    // this.setActiveHighlighter = setActiveHighlighter;
+    // function setActiveHighlighter(name) {
+    //     window.webkit.messageHandlers.ios.postMessage({functionName: "setActiveHighlighter", args: name});
+    // };
 
     this.setPermalink = setPermalink;
     function setPermalink(href) {
@@ -59,10 +54,10 @@ function Android() {
         window.webkit.messageHandlers.ios.postMessage({functionName: "dialogOpened", args: [id, boolValue]});
     };
 
-    this.addPortalHighlighter = addPortalHighlighter;
-    function addPortalHighlighter(name) {
-        window.webkit.messageHandlers.ios.postMessage({functionName: "addPortalHighlighter", args: name});
-    };
+    // this.addPortalHighlighter = addPortalHighlighter;
+    // function addPortalHighlighter(name) {
+    //     window.webkit.messageHandlers.ios.postMessage({functionName: "addPortalHighlighter", args: name});
+    // };
 
     this.spinnerEnabled = spinnerEnabled;
     function spinnerEnabled(boolValue) {

@@ -80,9 +80,9 @@ class JSHandler: NSObject, WKScriptMessageHandler {
 
     // copy link to specific portal to android clipboard
 
-//    func copy(s: String) {
-//        UIPasteboard.generalPasteboard().string = s
-//    }
+    func ioscopy(s: String) {
+        UIPasteboard.generalPasteboard().string = s
+    }
 
     func switchToPane(paneID: String) {
         NSNotificationCenter.defaultCenter().postNotificationName(JSNotificationPaneChanged, object: self, userInfo: ["paneID": paneID])
@@ -182,46 +182,13 @@ class JSHandler: NSObject, WKScriptMessageHandler {
         NSNotificationCenter.defaultCenter().postNotificationName(JSNotificationProgressChanged, object: self, userInfo: ["data": progress])
     }
 
-    //- (NSString *) getFileRequestUrlPrefix {
-    ////    return mIitc.getFileManager().getFileRequestPrefix();
-    //    return nil;
-    //}
-
-
     //- (void) setPermalink:( NSString *) href {
     ////    mIitc.setPermalink(href);
     //}
-
-
-    //- (void) saveFile( NSString * filename,  NSString * type,  NSString * content) {
-    //    try {
-    //         File outFile = new File(Environment.getExternalStorageDirectory().getPath() +
-    //                                      "/IITC_Mobile/export/" + filename);
-    //        outFile.getParentFile().mkdirs();
-    //
-    //         FileOutputStream outStream = new FileOutputStream(outFile);
-    //        outStream.write(content.getBytes("UTF-8"));
-    //        outStream.close();
-    //        Toast.makeText(mIitc, "File exported to " + outFile.getPath(), Toast.LENGTH_SHORT).show();
-    //    } catch ( IOException e) {
-    //        e.printStackTrace();
-    //    }
-    //}
-
 
     func reloadIITC() {
 
         NSNotificationCenter.defaultCenter().postNotificationName(JSNotificationReloadRequired, object: self, userInfo: nil)
     }
 
-
-    //- (void) reloadIITC:(BOOL) clearCache {
-    ////    mIitc.runOnUiThread(new Runnable() {
-    ////        @Override
-    ////        - (void) run() {
-    ////            if (clearCache) mIitc.getWebView().clearCache(true);
-    ////            mIitc.reloadIITC();
-    ////        }
-    ////    });
-    //}
 }
