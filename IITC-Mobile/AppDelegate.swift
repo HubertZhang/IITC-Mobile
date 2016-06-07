@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 })
             })
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"sharedAction:", name:JSNotificationSharedAction, object:nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(AppDelegate.sharedAction(_:)), name:JSNotificationSharedAction, object:nil)
         return true
     }
 
