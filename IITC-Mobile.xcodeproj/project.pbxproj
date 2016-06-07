@@ -21,6 +21,7 @@
 		B42BE75D1D07342700A0A0CB /* DirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = B42BE75C1D07342700A0A0CB /* DirectoryWatcher.m */; };
 		B42BE7611D073C0400A0A0CB /* About.html in Resources */ = {isa = PBXBuildFile; fileRef = B42BE7601D073C0400A0A0CB /* About.html */; };
 		B42BE7631D073C7800A0A0CB /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BE7621D073C7800A0A0CB /* AboutViewController.swift */; };
+		B42BE7651D07529300A0A0CB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B42BE7641D07529300A0A0CB /* GoogleService-Info.plist */; };
 		B4E2F0041D05D06C00D2D86B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E2F0031D05D06C00D2D86B /* AppDelegate.swift */; };
 		B4E2F0061D05D06C00D2D86B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E2F0051D05D06C00D2D86B /* MainViewController.swift */; };
 		B4E2F0091D05D06C00D2D86B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4E2F0071D05D06C00D2D86B /* Main.storyboard */; };
@@ -60,6 +61,7 @@
 		B42BE75C1D07342700A0A0CB /* DirectoryWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectoryWatcher.m; sourceTree = "<group>"; };
 		B42BE7601D073C0400A0A0CB /* About.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = About.html; sourceTree = "<group>"; };
 		B42BE7621D073C7800A0A0CB /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		B42BE7641D07529300A0A0CB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B4E2F0001D05D06C00D2D86B /* IITC-Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IITC-Mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4E2F0031D05D06C00D2D86B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B4E2F0051D05D06C00D2D86B /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				B4E2F0071D05D06C00D2D86B /* Main.storyboard */,
 				B4E2F00A1D05D06C00D2D86B /* Assets.xcassets */,
 				B4E2F00C1D05D06C00D2D86B /* LaunchScreen.storyboard */,
+				B42BE7641D07529300A0A0CB /* GoogleService-Info.plist */,
 				B4E2F00F1D05D06C00D2D86B /* Info.plist */,
 			);
 			path = "IITC-Mobile";
@@ -287,6 +290,7 @@
 				B405EED21D06969C00110D9E /* Settings.bundle in Resources */,
 				B4E2F00B1D05D06C00D2D86B /* Assets.xcassets in Resources */,
 				B4E2F0091D05D06C00D2D86B /* Main.storyboard in Resources */,
+				B42BE7651D07529300A0A0CB /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

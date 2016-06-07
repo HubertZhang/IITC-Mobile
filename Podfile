@@ -10,4 +10,5 @@ target 'IITC-Mobile' do
 	pod 'RxAlamofire'
 	pod 'InAppSettingsKit'
 	pod 'MBProgressHUD'
+	pod 'Google/Analytics'
 end
