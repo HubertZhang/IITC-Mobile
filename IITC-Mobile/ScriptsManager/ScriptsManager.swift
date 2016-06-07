@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import RxSwift
+import Alamofire
+import RxAlamofire
 
 class ScriptsManager: NSObject {
     static let sharedInstance = ScriptsManager()
@@ -30,6 +33,7 @@ class ScriptsManager: NSObject {
         userScriptsPath = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).last!
         userPluginsPath = userScriptsPath.URLByAppendingPathComponent("plugins", isDirectory: true)
         mainScript = try! Script(atFilePath: initialScriptsPath.URLByAppendingPathComponent("total-conversion-build.user.js"))
+        mainScript.category = "Core"
         hookScript = try! Script(coreJS: initialScriptsPath.URLByAppendingPathComponent("ios-hooks.js"), withName: "hook")
         hookScript.fileContent = String(format: hookScript.fileContent, "1.0", 20)
         positionScript = try! Script(coreJS: initialScriptsPath.URLByAppendingPathComponent("user-location.user.js"), withName: "position")
@@ -61,6 +65,7 @@ class ScriptsManager: NSObject {
         if NSFileManager.defaultManager().fileExistsAtPath(userURL.path!) {
             do {
                 mainScript = try Script(atFilePath: userURL)
+                mainScript.category = "Core"
             } catch {
 
             }
@@ -95,7 +100,11 @@ class ScriptsManager: NSObject {
                 return plugin.fileName == name
             }
             if index != nil {
-                result.append(storedPlugins[index!])
+                if name == "canvas-render.user.js" {
+                    result.insert(storedPlugins[index!], atIndex: 0)
+                } else {
+                    result.append(storedPlugins[index!])
+                }
             }
         }
         return result
@@ -115,7 +124,50 @@ class ScriptsManager: NSObject {
         NSUserDefaults.standardUserDefaults().setObject(loadedPluginNames, forKey: "LoadedPlugins")
     }
 
-    func updatePlugins() {
+    func updatePlugins() -> Observable<Void> {
+        var scripts = storedPlugins
+        scripts.append(mainScript)
+        scripts.append(positionScript)
+        return scripts.toObservable().flatMap {
+            script -> Observable<(String, Script)> in
+            guard let url = script.updateURL else {
+                return Observable<(String, Script)>.just(("", script))
+            }
+            return Alamofire.request(.GET, url).rx_string().map {
+                string -> (String, Script) in
+                return (string, script)
+            }
+        }.flatMap {
+            string, script -> Observable<Void> in
+            let attribute = Script.getJSAttributes(string)
+            var shouldDownload = false
+            if let newVersion = attribute["version"] {
+                if let oldVersion = script.version {
+                    if newVersion.compare(oldVersion, options: .NumericSearch) != .OrderedDescending {
+                        shouldDownload = true
+                    }
+                } else {
+                    shouldDownload = true
+                }
+            }
+            if shouldDownload {
+                return Alamofire.request(.GET, attribute["downloadURL"]!).rx_string().map {
+                    string in
+                    do {
+                        var prefix: NSURL
+                        if script.category == "Core" {
+                            prefix = self.userScriptsPath
+                        } else {
+                            prefix = self.userPluginsPath
+                        }
+                        try string.writeToURL(prefix.URLByAppendingPathComponent(script.fileName), atomically: true, encoding: NSUTF8StringEncoding)
+                    } catch let e as NSError {
+                        print(e)
+                    }
+                }
+            }
+            return Observable<Void>.just(Void())
 
+        }
     }
 }

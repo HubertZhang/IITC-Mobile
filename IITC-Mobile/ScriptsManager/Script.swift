@@ -46,12 +46,15 @@ class Script: NSObject {
         var attributes = Dictionary<String, String>()
 
         do {
-            let range1 = fileContent.rangeOfString("==UserScript==")
-            let range2 = fileContent.rangeOfString("==/UserScript==")
-
+            guard let range1 = fileContent.rangeOfString("==UserScript==") else {
+                return attributes
+            }
+            guard let range2 = fileContent.rangeOfString("==/UserScript==") else {
+                return attributes
+            }
             var e: NSRegularExpression
             e = try NSRegularExpression(pattern: "//.*?@([^\\s]*)\\s*(.*)", options: NSRegularExpressionOptions(rawValue: 0))
-            let header = fileContent.substringWithRange(Range<String.Index>(start: (range1?.endIndex)!.successor(), end: (range2?.startIndex)!))
+            let header = fileContent.substringWithRange(Range<String.Index>(range1.endIndex.successor() ..< range2.startIndex))
             for line in header.componentsSeparatedByString("\n") {
 //                print(line)
                 let search = e.matchesInString(line, options: NSMatchingOptions(rawValue: 0), range: NSMakeRange(0, (line as NSString).length))
