@@ -35,15 +35,15 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         self.view.addSubview(self.webView);
 
         var constraints = [NSLayoutConstraint]()
-        constraints.append(NSLayoutConstraint.init(item: self.view, attribute: NSLayoutAttribute.Top, relatedBy: .Equal, toItem: self.webView, attribute: .Top, multiplier: 1.0, constant: 0))
-        constraints.append(NSLayoutConstraint.init(item: self.view, attribute: .Bottom, relatedBy: .Equal, toItem: self.webView, attribute: .Bottom, multiplier: 1.0, constant: 0))
+        constraints.append(NSLayoutConstraint.init(item: self.topLayoutGuide, attribute: .Bottom, relatedBy: .Equal, toItem: self.webView, attribute: .Top, multiplier: 1.0, constant: 0))
+        constraints.append(NSLayoutConstraint.init(item: self.bottomLayoutGuide, attribute: .Top, relatedBy: .Equal, toItem: self.webView, attribute: .Bottom, multiplier: 1.0, constant: 0))
         constraints.append(NSLayoutConstraint.init(item: self.view, attribute: .Leading, relatedBy: .Equal, toItem: self.webView, attribute: .Leading, multiplier: 1.0, constant: 0))
         constraints.append(NSLayoutConstraint.init(item: self.view, attribute: .Trailing, relatedBy: .Equal, toItem: self.webView, attribute: .Trailing, multiplier: 1.0, constant: 0))
         self.view.addConstraints(constraints)
 
         self.webView.addObserver(self, forKeyPath: "estimatedProgress", options: .New, context: nil)
         self.view.bringSubviewToFront(webProgressView)
-        self.webView.loadRequest(NSURLRequest(URL: NSURL(string: "https://www.ingress.com/intel")!))
+        reloadIITC()
     }
 
     func configureNotification() {
@@ -159,6 +159,13 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
     }
 
+    @IBAction func settingsButtonPressed(sender: AnyObject) {
+        let vc = SettingsViewController()
+        vc.neverShowPrivacySettings = true
+        vc.showDoneButton = false
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+
     @IBAction func reloadButtonPressed(aa: AnyObject) {
         reloadIITC()
     }
@@ -199,7 +206,12 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
     func reloadIITC() {
         self.loadIITCNeeded = true
-        self.webView.loadRequest(NSURLRequest(URL: NSURL(string: "https://www.ingress.com/intel")!))
+        if NSUserDefaults.standardUserDefaults().boolForKey("pref_force_desktop") {
+            self.webView.loadRequest(NSURLRequest(URL: NSURL(string: "https://www.ingress.com/intel?vp=f")!))
+        } else {
+            self.webView.loadRequest(NSURLRequest(URL: NSURL(string: "https://www.ingress.com/intel")!))
+
+        }
     }
 
     func setIITCProgress(notification: NSNotification) {
