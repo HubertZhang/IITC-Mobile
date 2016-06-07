@@ -6,6 +6,8 @@ target 'IITC-Mobile' do
 	pod 'RxSwift'
 	pod 'RxCocoa'
 	pod 'RxBlocking'
+	pod 'Alamofire'
+	pod 'RxAlamofire'
 	pod 'InAppSettingsKit'
 	pod 'MBProgressHUD'
 end
