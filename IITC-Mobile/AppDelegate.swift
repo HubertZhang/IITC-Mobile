@@ -54,7 +54,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func sharedAction(notification:NSNotification) {
         let activityItem = notification.userInfo!["data"] as! [AnyObject]
-        let activityViewController = UIActivityViewController(activityItems: activityItem, applicationActivities: nil)
+        let activityViewController = UIActivityViewController(activityItems: activityItem, applicationActivities: [OpenInMapActivity()])
+        activityViewController.excludedActivityTypes = [UIActivityTypeAddToReadingList]
         self.window?.rootViewController?.presentViewController(activityViewController, animated: true, completion: nil)
     }
 
