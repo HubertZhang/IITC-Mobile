@@ -231,12 +231,11 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
         print(#function)
         print(navigationAction.request.mainDocumentURL)
-        decisionHandler(.Allow)
-    }
-
-    func webView(webView: WKWebView, decidePolicyForNavigationResponse navigationResponse: WKNavigationResponse, decisionHandler: (WKNavigationResponsePolicy) -> Void) {
-        print(#function)
-        print(navigationResponse.response.URL)
+        if let urlString = navigationAction.request.mainDocumentURL?.absoluteString {
+            if urlString.containsString("accounts.google"){
+                self.loadIITCNeeded = true
+            }
+        }
         decisionHandler(.Allow)
     }
 }
