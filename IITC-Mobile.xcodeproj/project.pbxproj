@@ -9,9 +9,12 @@
 /* Begin PBXBuildFile section */
 		15A88E13EAE8062F7FBCB54B /* Pods_IITC_Mobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9F05CB9F2CD0E3DB406B710 /* Pods_IITC_Mobile.framework */; };
 		B405EE051D05EA6400110D9E /* IITCWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B405EE041D05EA6400110D9E /* IITCWebView.swift */; };
+		B405EE081D05FD1400110D9E /* PluginsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B405EE071D05FD1400110D9E /* PluginsTableViewController.swift */; };
 		B405EECA1D0602C200110D9E /* scripts in Resources */ = {isa = PBXBuildFile; fileRef = B405EEC91D0602C200110D9E /* scripts */; };
+		B405EECC1D066FC900110D9E /* LayersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B405EECB1D066FC900110D9E /* LayersTableViewController.swift */; };
+		B405EECE1D06832200110D9E /* LayersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B405EECD1D06832200110D9E /* LayersController.swift */; };
 		B4E2F0041D05D06C00D2D86B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E2F0031D05D06C00D2D86B /* AppDelegate.swift */; };
-		B4E2F0061D05D06C00D2D86B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E2F0051D05D06C00D2D86B /* ViewController.swift */; };
+		B4E2F0061D05D06C00D2D86B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E2F0051D05D06C00D2D86B /* MainViewController.swift */; };
 		B4E2F0091D05D06C00D2D86B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4E2F0071D05D06C00D2D86B /* Main.storyboard */; };
 		B4E2F00B1D05D06C00D2D86B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4E2F00A1D05D06C00D2D86B /* Assets.xcassets */; };
 		B4E2F00E1D05D06C00D2D86B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4E2F00C1D05D06C00D2D86B /* LaunchScreen.storyboard */; };
@@ -35,10 +38,13 @@
 		0E61D2D30C4A18577CBD8273 /* Pods-IITC-Mobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IITC-Mobile.release.xcconfig"; path = "Pods/Target Support Files/Pods-IITC-Mobile/Pods-IITC-Mobile.release.xcconfig"; sourceTree = "<group>"; };
 		3FECEBB0EFDCF16AE63C8042 /* Pods-IITC-Mobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IITC-Mobile.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IITC-Mobile/Pods-IITC-Mobile.debug.xcconfig"; sourceTree = "<group>"; };
 		B405EE041D05EA6400110D9E /* IITCWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IITCWebView.swift; sourceTree = "<group>"; };
+		B405EE071D05FD1400110D9E /* PluginsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PluginsTableViewController.swift; sourceTree = "<group>"; };
 		B405EEC91D0602C200110D9E /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = scripts; sourceTree = "<group>"; };
+		B405EECB1D066FC900110D9E /* LayersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayersTableViewController.swift; sourceTree = "<group>"; };
+		B405EECD1D06832200110D9E /* LayersController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayersController.swift; sourceTree = "<group>"; };
 		B4E2F0001D05D06C00D2D86B /* IITC-Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IITC-Mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4E2F0031D05D06C00D2D86B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B4E2F0051D05D06C00D2D86B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B4E2F0051D05D06C00D2D86B /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		B4E2F0081D05D06C00D2D86B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B4E2F00A1D05D06C00D2D86B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B4E2F00D1D05D06C00D2D86B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -91,7 +97,10 @@
 		B405EE061D05EC6900110D9E /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				B4E2F0051D05D06C00D2D86B /* ViewController.swift */,
+				B4E2F0051D05D06C00D2D86B /* MainViewController.swift */,
+				B405EE071D05FD1400110D9E /* PluginsTableViewController.swift */,
+				B405EECB1D066FC900110D9E /* LayersTableViewController.swift */,
+				B405EECD1D06832200110D9E /* LayersController.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -313,9 +322,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4E2F02A1D05E63C00D2D86B /* JSHandler.swift in Sources */,
-				B4E2F0061D05D06C00D2D86B /* ViewController.swift in Sources */,
+				B405EECC1D066FC900110D9E /* LayersTableViewController.swift in Sources */,
+				B405EECE1D06832200110D9E /* LayersController.swift in Sources */,
+				B4E2F0061D05D06C00D2D86B /* MainViewController.swift in Sources */,
 				B405EE051D05EA6400110D9E /* IITCWebView.swift in Sources */,
 				B4E2F0251D05D50D00D2D86B /* Script.swift in Sources */,
+				B405EE081D05FD1400110D9E /* PluginsTableViewController.swift in Sources */,
 				B4E2F0271D05D51F00D2D86B /* ScriptsManager.swift in Sources */,
 				B4E2F0041D05D06C00D2D86B /* AppDelegate.swift in Sources */,
 			);
