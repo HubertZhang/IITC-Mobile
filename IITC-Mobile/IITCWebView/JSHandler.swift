@@ -49,8 +49,8 @@ class JSHandler: NSObject, WKScriptMessageHandler {
 
     func intentPosLink(args: [AnyObject]) {
         let isPortal: Bool = args[4] as! Bool
-        let lat: String = args[0] as! String
-        let lng: String = args[1] as! String
+        let lat = args[0] as! Double
+        let lng = args[1] as! Double
         let zoom: Int = args[2] as! Int
         var url: NSURL
         if isPortal {

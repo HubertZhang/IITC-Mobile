@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        let hud = MBProgressHUD.showHUDAddedTo(self.window?.rootViewController?.view, animated:true)
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+            ScriptsManager.sharedInstance.getLoadedScripts()
+            dispatch_async(dispatch_get_main_queue(), {
+                hud.hide(true)
+                })
+            })
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"sharedAction:", name:JSNotificationSharedAction, object:nil)
         return true
     }
 
@@ -41,6 +52,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    func sharedAction(notification:NSNotification) {
+        let activityItem = notification.userInfo!["data"] as! [AnyObject]
+        let activityViewController = UIActivityViewController(activityItems: activityItem, applicationActivities: nil)
+        self.window?.rootViewController?.presentViewController(activityViewController, animated: true, completion: nil)
+    }
 
 }
 
