@@ -22,37 +22,42 @@ class ScriptsManager: NSObject, DirectoryWatcherDelegate {
     var hookScript: Script
     var positionScript: Script
 
-    var initialScriptsPath: NSURL
-    var initialPluginsPath: NSURL
+    var libraryScriptsPath: NSURL
+    var libraryPluginsPath: NSURL
     var userScriptsPath: NSURL
-    var userPluginsPath: NSURL
 
     var watcher: DirectoryWatcher?
     
     override init() {
-        initialScriptsPath = NSBundle.mainBundle().resourceURL!.URLByAppendingPathComponent("scripts", isDirectory: true)
-        initialPluginsPath = initialScriptsPath.URLByAppendingPathComponent("plugins", isDirectory: true)
+        let libraryPath = NSFileManager.defaultManager().URLsForDirectory(.LibraryDirectory, inDomains: .UserDomainMask).last!.URLByAppendingPathComponent("IITC", isDirectory: true)
+        libraryScriptsPath = libraryPath.URLByAppendingPathComponent("scripts", isDirectory: true)
+        libraryPluginsPath = libraryScriptsPath.URLByAppendingPathComponent("plugins", isDirectory: true)
         userScriptsPath = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).last!
-        userPluginsPath = userScriptsPath.URLByAppendingPathComponent("plugins", isDirectory: true)
-        mainScript = try! Script(atFilePath: initialScriptsPath.URLByAppendingPathComponent("total-conversion-build.user.js"))
+        let mainScriptPath = libraryScriptsPath.URLByAppendingPathComponent("total-conversion-build.user.js")
+        if !NSFileManager.defaultManager().fileExistsAtPath(mainScriptPath.path!) {
+            try! NSFileManager.defaultManager().createDirectoryAtURL(libraryPath, withIntermediateDirectories: true, attributes: nil)
+            try? NSFileManager.defaultManager().removeItemAtURL(libraryScriptsPath)
+            try! NSFileManager.defaultManager().copyItemAtURL(NSBundle.mainBundle().resourceURL!.URLByAppendingPathComponent("scripts", isDirectory: true), toURL: libraryScriptsPath)
+        }
+        mainScript = try! Script(atFilePath: libraryScriptsPath.URLByAppendingPathComponent("total-conversion-build.user.js"))
         mainScript.category = "Core"
-        hookScript = try! Script(coreJS: initialScriptsPath.URLByAppendingPathComponent("ios-hooks.js"), withName: "hook")
+        hookScript = try! Script(coreJS: libraryScriptsPath.URLByAppendingPathComponent("ios-hooks.js"), withName: "hook")
         hookScript.fileContent = String(format: hookScript.fileContent, "1.0", 20)
-        positionScript = try! Script(coreJS: initialScriptsPath.URLByAppendingPathComponent("user-location.user.js"), withName: "position")
+        positionScript = try! Script(coreJS: libraryScriptsPath.URLByAppendingPathComponent("user-location.user.js"), withName: "position")
         loadedPluginNames = NSUserDefaults.standardUserDefaults().arrayForKey("LoadedPlugins") as? [String] ?? [String]()
         loadedPlugins = Set<String>(loadedPluginNames)
 
         super.init()
 //        print(userScriptsPath.absoluteString)
-        watcher = DirectoryWatcher.watchFolderWithPath(userScriptsPath.absoluteString, delegate: self)
+        watcher = DirectoryWatcher.watchFolderWithPath(userScriptsPath.path, delegate: self)
         loadUserMainScript()
         loadAllPlugins()
 
     }
 
     func loadAllPlugins() {
-        self.storedPlugins = loadPluginInDirectory(initialPluginsPath)
-        for plugin in loadPluginInDirectory(userPluginsPath) {
+        self.storedPlugins = loadPluginInDirectory(libraryPluginsPath)
+        for plugin in loadPluginInDirectory(userScriptsPath) {
             let index = storedPlugins.indexOf {
                 oldPlugin -> Bool in
                 return oldPlugin.fileName == plugin.fileName
@@ -82,9 +87,16 @@ class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         let directoryContents = try! NSFileManager.defaultManager().contentsOfDirectoryAtURL(url, includingPropertiesForKeys: nil, options: .SkipsHiddenFiles)
         var result = [Script]()
         for pluginPath in directoryContents {
+            if !pluginPath.path!.hasSuffix(".js") {
+                continue
+            }
             if pluginPath.path!.hasSuffix(".meta.js") {
                 continue
             }
+            if pluginPath.lastPathComponent == "total-conversion-build.user.js" {
+                continue
+            }
+            
             do {
                 try result.append(Script(atFilePath: pluginPath))
             } catch {
@@ -161,9 +173,9 @@ class ScriptsManager: NSObject, DirectoryWatcherDelegate {
                     do {
                         var prefix: NSURL
                         if script.category == "Core" {
-                            prefix = self.userScriptsPath
+                            prefix = self.libraryScriptsPath
                         } else {
-                            prefix = self.userPluginsPath
+                            prefix = self.libraryPluginsPath
                         }
                         try string.writeToURL(prefix.URLByAppendingPathComponent(script.fileName), atomically: true, encoding: NSUTF8StringEncoding)
                     } catch let e as NSError {
