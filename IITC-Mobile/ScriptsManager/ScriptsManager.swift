@@ -49,7 +49,7 @@ class ScriptsManager: NSObject, DirectoryWatcherDelegate {
 
         super.init()
 //        print(userScriptsPath.absoluteString)
-        watcher = DirectoryWatcher.watchFolderWithPath(userScriptsPath.path, delegate: self)
+        watcher = DirectoryWatcher(userScriptsPath, delegate: self)
         loadUserMainScript()
         loadAllPlugins()
 
@@ -84,7 +84,9 @@ class ScriptsManager: NSObject, DirectoryWatcherDelegate {
 
     func loadPluginInDirectory(url: NSURL) -> [Script] {
         try! NSFileManager.defaultManager().createDirectoryAtURL(url, withIntermediateDirectories: true, attributes: nil)
-        let directoryContents = try! NSFileManager.defaultManager().contentsOfDirectoryAtURL(url, includingPropertiesForKeys: nil, options: .SkipsHiddenFiles)
+        guard let directoryContents = try? NSFileManager.defaultManager().contentsOfDirectoryAtURL(url, includingPropertiesForKeys: nil, options: .SkipsHiddenFiles) else {
+            return []
+        }
         var result = [Script]()
         for pluginPath in directoryContents {
             if !pluginPath.path!.hasSuffix(".js") {
@@ -188,7 +190,7 @@ class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         }
     }
     
-    func directoryDidChange(folderWatcher: DirectoryWatcher!) {
+    func directoryDidChange(folderWatcher: DirectoryWatcher) {
         self.loadAllPlugins()
         self.loadUserMainScript()
     }

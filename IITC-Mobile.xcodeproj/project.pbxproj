@@ -18,10 +18,10 @@
 		B405EED41D0726BA00110D9E /* IITCLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B405EED31D0726BA00110D9E /* IITCLocation.swift */; };
 		B405EED61D0726D700110D9E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B405EED51D0726D700110D9E /* CoreLocation.framework */; };
 		B42BE7591D072D1B00A0A0CB /* OpenInMapActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BE7581D072D1B00A0A0CB /* OpenInMapActivity.swift */; };
-		B42BE75D1D07342700A0A0CB /* DirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = B42BE75C1D07342700A0A0CB /* DirectoryWatcher.m */; };
 		B42BE7611D073C0400A0A0CB /* About.html in Resources */ = {isa = PBXBuildFile; fileRef = B42BE7601D073C0400A0A0CB /* About.html */; };
 		B42BE7631D073C7800A0A0CB /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BE7621D073C7800A0A0CB /* AboutViewController.swift */; };
 		B42BE7651D07529300A0A0CB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B42BE7641D07529300A0A0CB /* GoogleService-Info.plist */; };
+		B42BE7691D08BFA300A0A0CB /* DirectoryWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BE7681D08BFA300A0A0CB /* DirectoryWatcher.swift */; };
 		B4E2F0041D05D06C00D2D86B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E2F0031D05D06C00D2D86B /* AppDelegate.swift */; };
 		B4E2F0061D05D06C00D2D86B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E2F0051D05D06C00D2D86B /* MainViewController.swift */; };
 		B4E2F0091D05D06C00D2D86B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4E2F0071D05D06C00D2D86B /* Main.storyboard */; };
@@ -57,11 +57,10 @@
 		B405EED51D0726D700110D9E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		B42BE7581D072D1B00A0A0CB /* OpenInMapActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenInMapActivity.swift; sourceTree = "<group>"; };
 		B42BE75A1D07342700A0A0CB /* IITC-Mobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IITC-Mobile-Bridging-Header.h"; sourceTree = "<group>"; };
-		B42BE75B1D07342700A0A0CB /* DirectoryWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectoryWatcher.h; sourceTree = "<group>"; };
-		B42BE75C1D07342700A0A0CB /* DirectoryWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectoryWatcher.m; sourceTree = "<group>"; };
 		B42BE7601D073C0400A0A0CB /* About.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = About.html; sourceTree = "<group>"; };
 		B42BE7621D073C7800A0A0CB /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		B42BE7641D07529300A0A0CB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B42BE7681D08BFA300A0A0CB /* DirectoryWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectoryWatcher.swift; sourceTree = "<group>"; };
 		B4E2F0001D05D06C00D2D86B /* IITC-Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IITC-Mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4E2F0031D05D06C00D2D86B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B4E2F0051D05D06C00D2D86B /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -181,10 +180,9 @@
 		B4E2F0231D05D4E700D2D86B /* ScriptsManager */ = {
 			isa = PBXGroup;
 			children = (
+				B42BE7681D08BFA300A0A0CB /* DirectoryWatcher.swift */,
 				B4E2F0241D05D50D00D2D86B /* Script.swift */,
 				B4E2F0261D05D51F00D2D86B /* ScriptsManager.swift */,
-				B42BE75B1D07342700A0A0CB /* DirectoryWatcher.h */,
-				B42BE75C1D07342700A0A0CB /* DirectoryWatcher.m */,
 				B42BE75A1D07342700A0A0CB /* IITC-Mobile-Bridging-Header.h */,
 			);
 			path = ScriptsManager;
@@ -360,9 +358,9 @@
 				B4E2F02A1D05E63C00D2D86B /* JSHandler.swift in Sources */,
 				B42BE7591D072D1B00A0A0CB /* OpenInMapActivity.swift in Sources */,
 				B405EECC1D066FC900110D9E /* LayersTableViewController.swift in Sources */,
+				B42BE7691D08BFA300A0A0CB /* DirectoryWatcher.swift in Sources */,
 				B405EED11D06969C00110D9E /* SettingsViewControllerNew.swift in Sources */,
 				B405EECE1D06832200110D9E /* LayersController.swift in Sources */,
-				B42BE75D1D07342700A0A0CB /* DirectoryWatcher.m in Sources */,
 				B4E2F0061D05D06C00D2D86B /* MainViewController.swift in Sources */,
 				B405EE051D05EA6400110D9E /* IITCWebView.swift in Sources */,
 				B4E2F0251D05D50D00D2D86B /* Script.swift in Sources */,
