@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import BaseFramework
 import RxSwift
 import RxCocoa
 import RxBlocking

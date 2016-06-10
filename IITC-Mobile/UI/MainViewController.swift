@@ -8,7 +8,7 @@
 
 import UIKit
 import WebKit
-
+import BaseFramework
 class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
     var webView: IITCWebView!

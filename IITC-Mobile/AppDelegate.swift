@@ -9,7 +9,7 @@
 import UIKit
 import MBProgressHUD
 import Google.Analytics
-
+import BaseFramework
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

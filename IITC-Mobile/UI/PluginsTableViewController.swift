@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import BaseFramework
 class PluginCell: UITableViewCell {
 
     @IBOutlet weak var titleText: UILabel!
