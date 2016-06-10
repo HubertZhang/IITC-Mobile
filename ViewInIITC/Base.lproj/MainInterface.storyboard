@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ObA-dk-sSI">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
+    </dependencies>
+    <scenes>
+        <!--Image-->
+        <scene sceneID="7MM-of-jgj">
+            <objects>
+                <viewController title="Image" id="ObA-dk-sSI" customClass="ActionViewController" customModule="ViewInIITC" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="qkL-Od-lgU"/>
+                        <viewControllerLayoutGuide type="bottom" id="n38-gi-rB5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zMn-AG-sqS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="528"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="NOA-Dm-cuz">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <items>
+                                    <navigationItem id="3HJ-uW-3hn">
+                                        <barButtonItem key="leftBarButtonItem" title="Done" style="done" id="WYi-yp-eM6">
+                                            <connections>
+                                                <action selector="done" destination="ObA-dk-sSI" id="Qdu-qn-U6V"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <rightBarButtonItems>
+                                            <barButtonItem systemItem="action" id="ida-mI-JTS">
+                                                <connections>
+                                                    <action selector="openInIITC:" destination="ObA-dk-sSI" id="FrK-N1-Loj"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem systemItem="refresh" id="aEw-aH-OKQ">
+                                                <connections>
+                                                    <action selector="reloadButtonPressed:" destination="ObA-dk-sSI" id="Ks6-8G-GS5"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem title="Back" id="2O6-tV-YgJ">
+                                                <connections>
+                                                    <action selector="backButtonPressed:" destination="ObA-dk-sSI" id="9La-BN-cZL"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem title="Layer" id="JtD-Ux-scL">
+                                                <connections>
+                                                    <segue destination="NST-j8-ogO" kind="modal" id="mjA-CP-cgv"/>
+                                                </connections>
+                                            </barButtonItem>
+                                        </rightBarButtonItems>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="tAK-Ve-lB6">
+                                <rect key="frame" x="0.0" y="64" width="320" height="2"/>
+                            </progressView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="NOA-Dm-cuz" secondAttribute="trailing" id="A05-Pj-hrr"/>
+                            <constraint firstItem="NOA-Dm-cuz" firstAttribute="leading" secondItem="zMn-AG-sqS" secondAttribute="leading" id="HxO-8t-aoh"/>
+                            <constraint firstAttribute="trailing" secondItem="tAK-Ve-lB6" secondAttribute="trailing" id="fwf-DK-PvW"/>
+                            <constraint firstItem="tAK-Ve-lB6" firstAttribute="leading" secondItem="zMn-AG-sqS" secondAttribute="leading" id="hr5-gA-fCJ"/>
+                            <constraint firstItem="tAK-Ve-lB6" firstAttribute="top" secondItem="NOA-Dm-cuz" secondAttribute="bottom" id="n7h-03-slc"/>
+                            <constraint firstItem="NOA-Dm-cuz" firstAttribute="top" secondItem="qkL-Od-lgU" secondAttribute="bottom" id="we0-1t-bgp"/>
+                        </constraints>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="528"/>
+                    <connections>
+                        <outlet property="backButton" destination="2O6-tV-YgJ" id="UTA-cv-Mll"/>
+                        <outlet property="navigationBar" destination="NOA-Dm-cuz" id="W45-0d-8Tn"/>
+                        <outlet property="view" destination="zMn-AG-sqS" id="Qma-de-2ek"/>
+                        <outlet property="webProgressView" destination="tAK-Ve-lB6" id="s9z-nE-NJv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X47-rx-isc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="252" y="-124"/>
+        </scene>
+        <!--Layers-->
+        <scene sceneID="mrM-Sd-I4y">
+            <objects>
+                <tableViewController id="JaD-qj-QxS" customClass="LayersTableViewController" customModule="ViewInIITC" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="1fa-w7-4Wl">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="JaD-qj-QxS" id="Ic5-T3-UZh"/>
+                            <outlet property="delegate" destination="JaD-qj-QxS" id="k58-gO-GSu"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Layers" id="d4U-K4-Lk2">
+                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="Bhd-2K-JWF">
+                            <connections>
+                                <action selector="dismiss:" destination="JaD-qj-QxS" id="iE6-xC-4Ps"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7ZF-AM-OL6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1495" y="-104"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="knu-Xr-MA9">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="NST-j8-ogO" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="vXw-CM-teo">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="JaD-qj-QxS" kind="relationship" relationship="rootViewController" id="Qf3-YH-wYQ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tzd-SI-x0D" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="683" y="-104"/>
+        </scene>
+    </scenes>
+</document>
