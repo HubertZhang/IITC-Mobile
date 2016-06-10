@@ -9,9 +9,9 @@
 import UIKit
 import WebKit
 
-@objc class IITCWebView: WKWebView {
+@objc public class IITCWebView: WKWebView {
 
-    init(frame: CGRect) {
+    public init(frame: CGRect) {
         let configuration = WKWebViewConfiguration()
         let handler = JSHandler()
         configuration.userContentController.addScriptMessageHandler(handler, name: "ios")
@@ -23,7 +23,7 @@ import WebKit
         }
     }
 
-    init(withScripts scripts: [Script]) {
+    public init(withScripts scripts: [Script]) {
         let configuration = WKWebViewConfiguration()
         let handler = JSHandler()
         configuration.userContentController.addScriptMessageHandler(handler, name: "ios")
@@ -43,7 +43,7 @@ import WebKit
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
-    func evaluateJavaScript(javaScriptString: String) {
+    public func evaluateJavaScript(javaScriptString: String) {
         self.evaluateJavaScript(javaScriptString) {
             (response, error) -> Void in
 //            print(response)
@@ -51,7 +51,7 @@ import WebKit
         }
     }
 
-    func loadScripts(scripts: [Script]) {
+    public func loadScripts(scripts: [Script]) {
         for script in scripts {
             self.evaluateJavaScript(script.fileContent) {
                 (response, error) -> Void in

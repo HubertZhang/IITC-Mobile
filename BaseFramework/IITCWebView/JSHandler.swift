@@ -9,12 +9,12 @@
 import UIKit
 import WebKit
 
-let JSNotificationLayersGot: String = "JSNotificationLayersGot"
-let JSNotificationPaneChanged: String = "JSNotificationPaneChanged"
-let JSNotificationBootFinished: String = "JSNotificationBootFinished"
-let JSNotificationReloadRequired: String = "JSNotificationReloadRequired"
-let JSNotificationSharedAction: String = "JSNotificationSharedAction"
-let JSNotificationProgressChanged: String = "JSNotificationProgressChanged"
+public let JSNotificationLayersGot: String = "JSNotificationLayersGot"
+public let JSNotificationPaneChanged: String = "JSNotificationPaneChanged"
+public let JSNotificationBootFinished: String = "JSNotificationBootFinished"
+public let JSNotificationReloadRequired: String = "JSNotificationReloadRequired"
+public let JSNotificationSharedAction: String = "JSNotificationSharedAction"
+public let JSNotificationProgressChanged: String = "JSNotificationProgressChanged"
 
 class JSHandler: NSObject, WKScriptMessageHandler {
 

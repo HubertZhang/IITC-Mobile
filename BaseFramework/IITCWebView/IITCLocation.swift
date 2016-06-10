@@ -15,10 +15,10 @@ enum IITCLocationMode: Int {
     case ShowPositionAndOrientation = 2
 }
 
-class IITCLocation: NSObject, CLLocationManagerDelegate {
+public class IITCLocation: NSObject, CLLocationManagerDelegate {
     let locationManager = CLLocationManager()
     var currentMode = IITCLocationMode.NotShow
-    override init() {
+    public override init() {
         super.init()
         locationManager.delegate = self;
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
@@ -33,7 +33,7 @@ class IITCLocation: NSObject, CLLocationManagerDelegate {
 
     }
 
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String:AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    override public func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String:AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if keyPath == "pref_user_location_mode" {
             currentMode = IITCLocationMode(rawValue: NSUserDefaults.standardUserDefaults().integerForKey("pref_user_location_mode"))!
             if currentMode != .NotShow {
@@ -55,7 +55,7 @@ class IITCLocation: NSObject, CLLocationManagerDelegate {
         locationManager.stopUpdatingLocation()
     }
 
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    public func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = manager.location!
         var notification = ""
         if self.currentMode != .NotShow {
@@ -69,11 +69,11 @@ class IITCLocation: NSObject, CLLocationManagerDelegate {
 
     }
 
-    func locationManager(manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+    public func locationManager(manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         NSLog("Heading:%@", newHeading.description)
     }
 
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+    public func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         NSLog("Error:%@", error.debugDescription)
     }
 }

@@ -11,12 +11,12 @@ import RxSwift
 import Alamofire
 import RxAlamofire
 
-class ScriptsManager: NSObject, DirectoryWatcherDelegate {
-    static let sharedInstance = ScriptsManager()
+public class ScriptsManager: NSObject, DirectoryWatcherDelegate {
+    public static let sharedInstance = ScriptsManager()
 
-    var storedPlugins = [Script]()
+    public var storedPlugins = [Script]()
     var loadedPluginNames: [String]
-    var loadedPlugins: Set<String>
+    public var loadedPlugins: Set<String>
 
     var mainScript: Script
     var hookScript: Script
@@ -37,7 +37,8 @@ class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         if !NSFileManager.defaultManager().fileExistsAtPath(mainScriptPath.path!) {
             try! NSFileManager.defaultManager().createDirectoryAtURL(libraryPath, withIntermediateDirectories: true, attributes: nil)
             try? NSFileManager.defaultManager().removeItemAtURL(libraryScriptsPath)
-            try! NSFileManager.defaultManager().copyItemAtURL(NSBundle.mainBundle().resourceURL!.URLByAppendingPathComponent("scripts", isDirectory: true), toURL: libraryScriptsPath)
+            print(NSBundle.allBundles())
+            try! NSFileManager.defaultManager().copyItemAtURL(NSBundle(forClass:ScriptsManager.classForCoder()).resourceURL!.URLByAppendingPathComponent("scripts", isDirectory: true), toURL: libraryScriptsPath)
         }
         mainScript = try! Script(atFilePath: libraryScriptsPath.URLByAppendingPathComponent("total-conversion-build.user.js"))
         mainScript.category = "Core"
@@ -55,7 +56,7 @@ class ScriptsManager: NSObject, DirectoryWatcherDelegate {
 
     }
 
-    func loadAllPlugins() {
+    public func loadAllPlugins() {
         self.storedPlugins = loadPluginInDirectory(libraryPluginsPath)
         for plugin in loadPluginInDirectory(userScriptsPath) {
             let index = storedPlugins.indexOf {
@@ -70,7 +71,7 @@ class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         }
     }
 
-    func loadUserMainScript() {
+    public func loadUserMainScript() {
         let userURL = userScriptsPath.URLByAppendingPathComponent("total-conversion-build.user.js")
         if NSFileManager.defaultManager().fileExistsAtPath(userURL.path!) {
             do {
@@ -108,7 +109,7 @@ class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         return result
     }
 
-    func getLoadedScripts() -> [Script] {
+    public func getLoadedScripts() -> [Script] {
         var result = [Script]()
         result.append(mainScript)
         result.append(hookScript)
@@ -129,7 +130,7 @@ class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         return result
     }
 
-    func setPlugin(script: Script, loaded: Bool) {
+    public func setPlugin(script: Script, loaded: Bool) {
         let index = loadedPluginNames.indexOf {
             plugin -> Bool in
             return plugin == script.fileName
@@ -143,7 +144,7 @@ class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         NSUserDefaults.standardUserDefaults().setObject(loadedPluginNames, forKey: "LoadedPlugins")
     }
 
-    func updatePlugins() -> Observable<Void> {
+    public func updatePlugins() -> Observable<Void> {
         var scripts = storedPlugins
         scripts.append(mainScript)
         scripts.append(positionScript)

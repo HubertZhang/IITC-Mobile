@@ -8,16 +8,16 @@
 
 import UIKit
 
-class Script: NSObject {
-    var fileName: String
-    var version: String?
-    var name: String?
-    var category: String
-    var scriptDescription: String?
-    var filePath: NSURL
-    var downloadURL: String?
-    var updateURL: String?
-    var fileContent: String
+public class Script: NSObject {
+    public var fileName: String
+    public var version: String?
+    public var name: String?
+    public var category: String
+    public var scriptDescription: String?
+    public var filePath: NSURL
+    public var downloadURL: String?
+    public var updateURL: String?
+    public var fileContent: String
 
     init(coreJS filePath: NSURL, withName name: String) throws {
         self.fileContent = try String(contentsOfURL: filePath)
