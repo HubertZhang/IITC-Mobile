@@ -37,6 +37,11 @@
 	<string>2.0.1.1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>IITC requires access to location service to display your location and orientation on map.</string>
 	<key>UIFileSharingEnabled</key>
