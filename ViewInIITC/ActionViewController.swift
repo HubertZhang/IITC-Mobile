@@ -89,7 +89,8 @@ class ActionViewController: UIViewController, WKUIDelegate, WKNavigationDelegate
                             }
                         } else {
                             NSOperationQueue.mainQueue().addOperationWithBlock {
-                                self.done()
+                                self.webProgressView.hidden = true
+                                self.webView.loadHTMLString("Link not supported", baseURL: nil)
                             }
                         }
                     })
@@ -98,7 +99,8 @@ class ActionViewController: UIViewController, WKUIDelegate, WKNavigationDelegate
             }
         }
         if !founded {
-            self.done()
+            self.webProgressView.hidden = true
+            self.webView.loadHTMLString("Link not supported", baseURL: nil)
         }
     }
     
