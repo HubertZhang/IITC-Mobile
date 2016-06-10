@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ObA-dk-sSI">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
@@ -28,11 +27,6 @@
                                             </connections>
                                         </barButtonItem>
                                         <rightBarButtonItems>
-                                            <barButtonItem systemItem="action" id="ida-mI-JTS">
-                                                <connections>
-                                                    <action selector="openInIITC:" destination="ObA-dk-sSI" id="FrK-N1-Loj"/>
-                                                </connections>
-                                            </barButtonItem>
                                             <barButtonItem systemItem="refresh" id="aEw-aH-OKQ">
                                                 <connections>
                                                     <action selector="reloadButtonPressed:" destination="ObA-dk-sSI" id="Ks6-8G-GS5"/>
@@ -102,7 +96,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7ZF-AM-OL6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1495" y="-104"/>
+            <point key="canvasLocation" x="1012" y="-104"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="knu-Xr-MA9">
@@ -120,7 +114,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tzd-SI-x0D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="683" y="-104"/>
+            <point key="canvasLocation" x="656" y="-104"/>
         </scene>
     </scenes>
 </document>
