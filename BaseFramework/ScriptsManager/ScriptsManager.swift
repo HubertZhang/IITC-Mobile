@@ -37,7 +37,6 @@ public class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         if !NSFileManager.defaultManager().fileExistsAtPath(mainScriptPath.path!) {
             try! NSFileManager.defaultManager().createDirectoryAtURL(libraryPath, withIntermediateDirectories: true, attributes: nil)
             try? NSFileManager.defaultManager().removeItemAtURL(libraryScriptsPath)
-            print(NSBundle.allBundles())
             try! NSFileManager.defaultManager().copyItemAtURL(NSBundle(forClass:ScriptsManager.classForCoder()).resourceURL!.URLByAppendingPathComponent("scripts", isDirectory: true), toURL: libraryScriptsPath)
         }
         mainScript = try! Script(atFilePath: libraryScriptsPath.URLByAppendingPathComponent("total-conversion-build.user.js"))

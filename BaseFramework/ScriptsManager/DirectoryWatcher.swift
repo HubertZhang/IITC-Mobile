@@ -32,12 +32,12 @@ class DirectoryWatcher: NSObject {
         }
         source = dispatch_source_create(DISPATCH_SOURCE_TYPE_VNODE, UInt(fileDescr), DISPATCH_VNODE_ATTRIB | DISPATCH_VNODE_WRITE | DISPATCH_VNODE_LINK | DISPATCH_VNODE_EXTEND, observerQueue);// create dispatch_source object to observe vnode events
         dispatch_source_set_registration_handler(source, {
-            print("registered for observation");
+//            print("registered for observation");
             //event handler is called each time file system event of selected type (DISPATCH_VNODE_*) has occurred
             dispatch_source_set_event_handler(self.source, {
 
-                let flags = dispatch_source_get_data(self.source);//obtain flags
-                print("%lu",flags);
+//                let flags = dispatch_source_get_data(self.source);//obtain flags
+//                print("%lu",flags);
                 self.delegate.directoryDidChange(self)
 //                if(flags & DISPATCH_VNODE_WRITE != 0)//flag is set to DISPATCH_VNODE_WRITE every time data is appended to file
 //                {
