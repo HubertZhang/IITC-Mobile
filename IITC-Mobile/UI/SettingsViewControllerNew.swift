@@ -51,7 +51,6 @@ import MBProgressHUD
                 ScriptsManager.sharedInstance.loadAllPlugins()
                 ScriptsManager.sharedInstance.loadUserMainScript()
                 hud.hide(true)
-                print("complete")
             }, onDisposed: {
                 () -> Void in
             })

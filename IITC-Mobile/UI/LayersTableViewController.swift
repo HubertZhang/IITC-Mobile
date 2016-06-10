@@ -117,7 +117,7 @@ class LayersTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch (indexPath.section) {
         case 0:
-            var panels = ["Info", "All", "Faction", "Alert"]
+            var panels = ["info", "all", "faction", "alert"]
             NSNotificationCenter.defaultCenter().postNotificationName("SwitchToPanel", object: nil, userInfo: ["Panel": panels[indexPath.row]])
             self.dismiss(nil)
         case 1:
