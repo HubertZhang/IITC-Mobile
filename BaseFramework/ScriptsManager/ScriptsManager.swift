@@ -11,6 +11,9 @@ import RxSwift
 import Alamofire
 import RxAlamofire
 
+public let ScriptsUpdatedNotification: String = "ScriptsUpdatedNotification"
+
+
 public class ScriptsManager: NSObject, DirectoryWatcherDelegate {
     public static let sharedInstance = ScriptsManager()
 
@@ -18,7 +21,7 @@ public class ScriptsManager: NSObject, DirectoryWatcherDelegate {
     var loadedPluginNames: [String]
     public var loadedPlugins: Set<String>
 
-    var mainScript: Script
+    public var mainScript: Script
     var hookScript: Script
     var positionScript: Script
 
@@ -58,6 +61,7 @@ public class ScriptsManager: NSObject, DirectoryWatcherDelegate {
     public func loadAllPlugins() {
         self.storedPlugins = loadPluginInDirectory(libraryPluginsPath)
         for plugin in loadPluginInDirectory(userScriptsPath) {
+            plugin.isUserScript = true
             let index = storedPlugins.indexOf {
                 oldPlugin -> Bool in
                 return oldPlugin.fileName == plugin.fileName
@@ -76,6 +80,7 @@ public class ScriptsManager: NSObject, DirectoryWatcherDelegate {
             do {
                 mainScript = try Script(atFilePath: userURL)
                 mainScript.category = "Core"
+                mainScript.isUserScript = true
             } catch {
 
             }
@@ -193,5 +198,6 @@ public class ScriptsManager: NSObject, DirectoryWatcherDelegate {
     func directoryDidChange(folderWatcher: DirectoryWatcher) {
         self.loadAllPlugins()
         self.loadUserMainScript()
+        NSNotificationCenter.defaultCenter().postNotificationName(ScriptsUpdatedNotification, object: nil)
     }
 }

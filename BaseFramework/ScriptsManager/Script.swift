@@ -18,11 +18,12 @@ public class Script: NSObject {
     public var downloadURL: String?
     public var updateURL: String?
     public var fileContent: String
+    public var isUserScript: Bool = false
 
     init(coreJS filePath: NSURL, withName name: String) throws {
         self.fileContent = try String(contentsOfURL: filePath)
         self.name = name
-        self.filePath = filePath;
+        self.filePath = filePath.URLByResolvingSymlinksInPath!
         self.fileName = filePath.lastPathComponent!
         self.category = "Core"
         super.init()
@@ -37,7 +38,7 @@ public class Script: NSObject {
         self.name = attributes["name"];
         self.category = attributes["category"] ?? "Undefined"
         self.scriptDescription = attributes["description"];
-        self.filePath = filePath;
+        self.filePath = filePath.URLByResolvingSymlinksInPath!
         self.fileName = filePath.lastPathComponent!
         super.init()
     }
