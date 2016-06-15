@@ -40,7 +40,7 @@ class UserFilesTableViewController: UITableViewController {
     func updateContent() {
         contents = []
         recordedUserScripts.removeAll()
-        let temp = (try? NSFileManager.defaultManager().contentsOfDirectoryAtURL(userScriptsPath, includingPropertiesForKeys: nil, options: .SkipsHiddenFiles)) ?? []
+        let temp = (try? NSFileManager.defaultManager().contentsOfDirectoryAtURL(ScriptsManager.sharedInstance.userScriptsPath, includingPropertiesForKeys: nil, options: .SkipsHiddenFiles)) ?? []
         for url in temp {
             if url.lastPathComponent! == "com.google.iid-keypair.plist" {
                 continue

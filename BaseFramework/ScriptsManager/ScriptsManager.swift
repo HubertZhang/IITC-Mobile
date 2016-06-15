@@ -28,6 +28,7 @@ public class ScriptsManager: NSObject, DirectoryWatcherDelegate {
     var libraryScriptsPath: NSURL
     var libraryPluginsPath: NSURL
     public var userScriptsPath: NSURL
+    var documentPath: NSURL
 
     var documentWatcher: DirectoryWatcher?
     var containerWatcher: DirectoryWatcher?
@@ -40,7 +41,7 @@ public class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         libraryPluginsPath = libraryScriptsPath.URLByAppendingPathComponent("plugins", isDirectory: true)
         userScriptsPath = containerPath.URLByAppendingPathComponent("userScripts", isDirectory: true)
         try? NSFileManager.defaultManager().createDirectoryAtURL(userScriptsPath, withIntermediateDirectories: true, attributes: nil)
-        let documentPath = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).last!
+        documentPath = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).last!
         let mainScriptPath = libraryScriptsPath.URLByAppendingPathComponent("total-conversion-build.user.js")
         if !NSFileManager.defaultManager().fileExistsAtPath(mainScriptPath.path!) {
             try? NSFileManager.defaultManager().createDirectoryAtURL(containerPath, withIntermediateDirectories: true, attributes: nil)
@@ -204,7 +205,7 @@ public class ScriptsManager: NSObject, DirectoryWatcherDelegate {
     }
     
     public func syncDocumentAndContainer() {
-        let temp = (try? NSFileManager.defaultManager().contentsOfDirectoryAtURL(userScriptsPath, includingPropertiesForKeys: nil, options: .SkipsHiddenFiles)) ?? []
+        let temp = (try? NSFileManager.defaultManager().contentsOfDirectoryAtURL(documentPath, includingPropertiesForKeys: nil, options: .SkipsHiddenFiles)) ?? []
         for url in temp {
             if url.lastPathComponent! == "com.google.iid-keypair.plist" {
                 continue
