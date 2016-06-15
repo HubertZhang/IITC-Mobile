@@ -20,6 +20,8 @@
 		B42BE7631D073C7800A0A0CB /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BE7621D073C7800A0A0CB /* AboutViewController.swift */; };
 		B42BE7651D07529300A0A0CB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B42BE7641D07529300A0A0CB /* GoogleService-Info.plist */; };
 		B4B3284A1D10F3AF007AA6D5 /* UserFilesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B328491D10F3AF007AA6D5 /* UserFilesTableViewController.swift */; };
+		B4B3284C1D117970007AA6D5 /* IITC.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = B4B3284B1D117970007AA6D5 /* IITC.entitlements */; };
+		B4B3284E1D1179C4007AA6D5 /* IITC-Action.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = B4B3284D1D1179C4007AA6D5 /* IITC-Action.entitlements */; };
 		B4E2F0041D05D06C00D2D86B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E2F0031D05D06C00D2D86B /* AppDelegate.swift */; };
 		B4E2F0061D05D06C00D2D86B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E2F0051D05D06C00D2D86B /* MainViewController.swift */; };
 		B4E2F0091D05D06C00D2D86B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4E2F0071D05D06C00D2D86B /* Main.storyboard */; };
@@ -119,6 +121,8 @@
 		B42BE7641D07529300A0A0CB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B42BE7681D08BFA300A0A0CB /* DirectoryWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectoryWatcher.swift; sourceTree = "<group>"; };
 		B4B328491D10F3AF007AA6D5 /* UserFilesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFilesTableViewController.swift; sourceTree = "<group>"; };
+		B4B3284B1D117970007AA6D5 /* IITC.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = IITC.entitlements; sourceTree = "<group>"; };
+		B4B3284D1D1179C4007AA6D5 /* IITC-Action.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "IITC-Action.entitlements"; sourceTree = "<group>"; };
 		B4E2F0001D05D06C00D2D86B /* IITC-Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IITC-Mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4E2F0031D05D06C00D2D86B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B4E2F0051D05D06C00D2D86B /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -265,6 +269,7 @@
 				B4E2F00C1D05D06C00D2D86B /* LaunchScreen.storyboard */,
 				B42BE7641D07529300A0A0CB /* GoogleService-Info.plist */,
 				B4E2F00F1D05D06C00D2D86B /* Info.plist */,
+				B4B3284B1D117970007AA6D5 /* IITC.entitlements */,
 			);
 			path = "IITC-Mobile";
 			sourceTree = "<group>";
@@ -318,6 +323,7 @@
 				B4F840431D0AD26900C58690 /* ActionViewController.swift */,
 				B4F840451D0AD26900C58690 /* MainInterface.storyboard */,
 				B4F840481D0AD26900C58690 /* Info.plist */,
+				B4B3284D1D1179C4007AA6D5 /* IITC-Action.entitlements */,
 			);
 			path = ViewInIITC;
 			sourceTree = "<group>";
@@ -469,6 +475,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4B3284C1D117970007AA6D5 /* IITC.entitlements in Resources */,
 				B42BE7611D073C0400A0A0CB /* About.html in Resources */,
 				B4E2F00E1D05D06C00D2D86B /* LaunchScreen.storyboard in Resources */,
 				B4F8405E1D0B285800C58690 /* Default-iitc.png in Resources */,
@@ -499,6 +506,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4B3284E1D1179C4007AA6D5 /* IITC-Action.entitlements in Resources */,
 				B4F840621D0B329A00C58690 /* Assets.xcassets in Resources */,
 				B4F840471D0AD26900C58690 /* MainInterface.storyboard in Resources */,
 			);
@@ -816,11 +824,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "IITC-Mobile/IITC.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xiaoyu Liu (P6573NDJNM)";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = "IITC-Mobile/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vuryleo.iitcmobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "799f4a53-03b1-4148-bd09-8334f2dc77fc";
 				SWIFT_OBJC_BRIDGING_HEADER = "IITC-Mobile/IITC-Mobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -832,11 +843,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "IITC-Mobile/IITC.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xiaoyu Liu (P6573NDJNM)";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = "IITC-Mobile/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vuryleo.iitcmobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "799f4a53-03b1-4148-bd09-8334f2dc77fc";
 				SWIFT_OBJC_BRIDGING_HEADER = "IITC-Mobile/IITC-Mobile-Bridging-Header.h";
 			};
 			name = Release;
@@ -914,11 +928,15 @@
 			baseConfigurationReference = 22B1AC5D429D8D15EAEF1CC0 /* Pods-ViewInIITC.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = ActionIcon;
+				CODE_SIGN_ENTITLEMENTS = "ViewInIITC/IITC-Action.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xiaoyu Liu (P6573NDJNM)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xiaoyu Liu (P6573NDJNM)";
 				INFOPLIST_FILE = ViewInIITC/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.vuryleo.iitcmobile.ViewInIITC;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vuryleo.iitcmobile.viewiniitcaction;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "5ee8fbe7-e61d-43f2-a3e7-c641c29ded21";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -928,11 +946,15 @@
 			baseConfigurationReference = EE01948CFA6A82D15C2BA26D /* Pods-ViewInIITC.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = ActionIcon;
+				CODE_SIGN_ENTITLEMENTS = "ViewInIITC/IITC-Action.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xiaoyu Liu (P6573NDJNM)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xiaoyu Liu (P6573NDJNM)";
 				INFOPLIST_FILE = ViewInIITC/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.vuryleo.iitcmobile.ViewInIITC;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vuryleo.iitcmobile.viewiniitcaction;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "5ee8fbe7-e61d-43f2-a3e7-c641c29ded21";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
