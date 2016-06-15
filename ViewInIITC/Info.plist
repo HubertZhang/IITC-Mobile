@@ -32,9 +32,9 @@
 		<dict>
 			<key>NSExtensionActivationRule</key>
 			<dict>
-				<key>NSExtensionActivationSupportsWebURLWithMaxCount</key>
-				<integer>10</integer>
 				<key>NSExtensionActivationSupportsText</key>
+				<integer>10</integer>
+				<key>NSExtensionActivationSupportsWebURLWithMaxCount</key>
 				<integer>10</integer>
 			</dict>
 			<key>NSExtensionActivationUsesStrictMatching</key>
@@ -44,6 +44,11 @@
 		<string>MainInterface</string>
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.ui-services</string>
+	</dict>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
 	</dict>
 </dict>
 </plist>
