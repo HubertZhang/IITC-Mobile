@@ -77,9 +77,10 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         if (keyPath == "estimatedProgress") {
             let progress: Double = self.webView.estimatedProgress
             if progress >= 0.8 {
-                if self.webView.URL!.host!.containsString("ingress") && self.loadIITCNeeded {
-                    self.loadScripts()
-//                    self.configWebView()
+                if let host = self.webView.URL?.host {
+                    if host.containsString("ingress") && self.loadIITCNeeded {
+                        self.loadScripts()
+                    }
                 }
             }
             self.webProgressView.setProgress(Float(progress), animated: true)
@@ -87,7 +88,9 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
                 UIView.animateWithDuration(1, animations: {
                     () -> Void in
                     self.webProgressView.alpha = 0
-                })
+                }) { result in
+                    self.webProgressView.progress = 0
+                }
             } else {
                 self.webProgressView.alpha = 1
             }
