@@ -27,18 +27,23 @@ public class ScriptsManager: NSObject, DirectoryWatcherDelegate {
 
     var libraryScriptsPath: NSURL
     var libraryPluginsPath: NSURL
-    var userScriptsPath: NSURL
+    public var userScriptsPath: NSURL
 
-    var watcher: DirectoryWatcher?
+    var documentWatcher: DirectoryWatcher?
+    var containerWatcher: DirectoryWatcher?
+    
+    var userDefaults = NSUserDefaults(suiteName: "group.com.vuryleo.iitcmobile")!
     
     override init() {
-        let libraryPath = NSFileManager.defaultManager().URLsForDirectory(.LibraryDirectory, inDomains: .UserDomainMask).last!.URLByAppendingPathComponent("IITC", isDirectory: true)
-        libraryScriptsPath = libraryPath.URLByAppendingPathComponent("scripts", isDirectory: true)
+        let containerPath = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.com.vuryleo.iitcmobile")!
+        libraryScriptsPath = containerPath.URLByAppendingPathComponent("scripts", isDirectory: true)
         libraryPluginsPath = libraryScriptsPath.URLByAppendingPathComponent("plugins", isDirectory: true)
-        userScriptsPath = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).last!
+        userScriptsPath = containerPath.URLByAppendingPathComponent("userScripts", isDirectory: true)
+        try? NSFileManager.defaultManager().createDirectoryAtURL(userScriptsPath, withIntermediateDirectories: true, attributes: nil)
+        let documentPath = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).last!
         let mainScriptPath = libraryScriptsPath.URLByAppendingPathComponent("total-conversion-build.user.js")
         if !NSFileManager.defaultManager().fileExistsAtPath(mainScriptPath.path!) {
-            try! NSFileManager.defaultManager().createDirectoryAtURL(libraryPath, withIntermediateDirectories: true, attributes: nil)
+            try? NSFileManager.defaultManager().createDirectoryAtURL(containerPath, withIntermediateDirectories: true, attributes: nil)
             try? NSFileManager.defaultManager().removeItemAtURL(libraryScriptsPath)
             try! NSFileManager.defaultManager().copyItemAtURL(NSBundle(forClass:ScriptsManager.classForCoder()).resourceURL!.URLByAppendingPathComponent("scripts", isDirectory: true), toURL: libraryScriptsPath)
         }
@@ -47,12 +52,15 @@ public class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         hookScript = try! Script(coreJS: libraryScriptsPath.URLByAppendingPathComponent("ios-hooks.js"), withName: "hook")
         hookScript.fileContent = String(format: hookScript.fileContent, "1.0", 20)
         positionScript = try! Script(coreJS: libraryScriptsPath.URLByAppendingPathComponent("user-location.user.js"), withName: "position")
-        loadedPluginNames = NSUserDefaults.standardUserDefaults().arrayForKey("LoadedPlugins") as? [String] ?? [String]()
+        loadedPluginNames = userDefaults.arrayForKey("LoadedPlugins") as? [String] ?? [String]()
         loadedPlugins = Set<String>(loadedPluginNames)
 
         super.init()
 //        print(userScriptsPath.absoluteString)
-        watcher = DirectoryWatcher(userScriptsPath, delegate: self)
+        syncDocumentAndContainer()
+        documentWatcher = DirectoryWatcher(documentPath, delegate: self)
+        containerWatcher = DirectoryWatcher(userScriptsPath, delegate: self)
+        
         loadUserMainScript()
         loadAllPlugins()
 
@@ -145,7 +153,7 @@ public class ScriptsManager: NSObject, DirectoryWatcherDelegate {
             loadedPluginNames.append(script.fileName)
         }
         loadedPlugins = Set<String>(loadedPluginNames)
-        NSUserDefaults.standardUserDefaults().setObject(loadedPluginNames, forKey: "LoadedPlugins")
+        userDefaults.setObject(loadedPluginNames, forKey: "LoadedPlugins")
     }
 
     public func updatePlugins() -> Observable<Void> {
@@ -195,9 +203,28 @@ public class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         }
     }
     
+    public func syncDocumentAndContainer() {
+        let temp = (try? NSFileManager.defaultManager().contentsOfDirectoryAtURL(userScriptsPath, includingPropertiesForKeys: nil, options: .SkipsHiddenFiles)) ?? []
+        for url in temp {
+            if url.lastPathComponent! == "com.google.iid-keypair.plist" {
+                continue
+            }
+            let containerFileURL = userScriptsPath.URLByAppendingPathComponent(url.lastPathComponent!)
+            if !NSFileManager.defaultManager().fileExistsAtPath(containerFileURL.path!) {
+                try? NSFileManager.defaultManager().copyItemAtURL(url, toURL: containerFileURL)
+                try? NSFileManager.defaultManager().removeItemAtURL(url)
+            }
+        }
+
+    }
+    
     func directoryDidChange(folderWatcher: DirectoryWatcher) {
-        self.loadAllPlugins()
-        self.loadUserMainScript()
-        NSNotificationCenter.defaultCenter().postNotificationName(ScriptsUpdatedNotification, object: nil)
+        if folderWatcher == documentWatcher {
+            syncDocumentAndContainer()
+        } else if folderWatcher == containerWatcher {
+            self.loadAllPlugins()
+            self.loadUserMainScript()
+            NSNotificationCenter.defaultCenter().postNotificationName(ScriptsUpdatedNotification, object: nil)
+        }
     }
 }

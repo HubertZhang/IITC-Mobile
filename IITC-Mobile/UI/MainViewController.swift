@@ -16,6 +16,9 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     var layersController: LayersController = LayersController.sharedInstance
     
     var location = IITCLocation()
+    
+    var userDefaults = NSUserDefaults(suiteName: "group.com.vuryleo.iitcmobile")!
+    
     @IBOutlet weak var backButton: UIBarButtonItem!
 
     @IBOutlet weak var webProgressView: UIProgressView!
@@ -142,20 +145,9 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
             self.backButton.enabled = false
         }
     }
-//    func backButtonPressed(aa: AnyObject) {
-//        if self.backPane.count {
-//            var pane: String = self.backPane.lastObject()
-//            self.backPane.removeLastObject()
-//            self.switchToPane(pane)
-//            self.backButtonPressed = true
-//        }
-//        if !self.backPane.count {
-//            self.backButton.enabled = false
-//        }
-//    }
 
     @IBAction func locationButtonPressed(aa: AnyObject) {
-        let prefPersistentZoom = NSUserDefaults.standardUserDefaults().boolForKey("pref_persistent_zoom")
+        let prefPersistentZoom = userDefaults.boolForKey("pref_persistent_zoom")
         if prefPersistentZoom {
             self.webView.evaluateJavaScript("window.map.locate({setView : true, maxZoom : map.getZoom()})")
         } else {
@@ -165,7 +157,7 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     }
 
     @IBAction func settingsButtonPressed(sender: AnyObject) {
-        let vc = SettingsViewController()
+        let vc = SettingsViewController(style: .Grouped)
         vc.neverShowPrivacySettings = true
         vc.showDoneButton = false
         self.navigationController?.pushViewController(vc, animated: true)
@@ -211,7 +203,7 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
     func reloadIITC() {
         self.loadIITCNeeded = true
-        if NSUserDefaults.standardUserDefaults().boolForKey("pref_force_desktop") {
+        if userDefaults.boolForKey("pref_force_desktop") {
             self.webView.loadRequest(NSURLRequest(URL: NSURL(string: "https://www.ingress.com/intel?vp=f")!))
         } else {
             self.webView.loadRequest(NSURLRequest(URL: NSURL(string: "https://www.ingress.com/intel")!))

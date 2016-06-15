@@ -18,6 +18,8 @@ enum IITCLocationMode: Int {
 public class IITCLocation: NSObject, CLLocationManagerDelegate {
     let locationManager = CLLocationManager()
     var currentMode = IITCLocationMode.NotShow
+    
+    var userDefaults = NSUserDefaults(suiteName: "group.com.vuryleo.iitcmobile")!
     public override init() {
         super.init()
         locationManager.delegate = self;
@@ -25,17 +27,17 @@ public class IITCLocation: NSObject, CLLocationManagerDelegate {
 
         // Set a movement threshold for new events.
         locationManager.distanceFilter = 1; // meters
-        currentMode = IITCLocationMode(rawValue: NSUserDefaults.standardUserDefaults().integerForKey("pref_user_location_mode"))!
+        currentMode = IITCLocationMode(rawValue: userDefaults.integerForKey("pref_user_location_mode"))!
         if currentMode != .NotShow {
             self.startUpdate()
         }
-        NSUserDefaults.standardUserDefaults().addObserver(self, forKeyPath: "pref_user_location_mode", options: .New, context: nil)
+        userDefaults.addObserver(self, forKeyPath: "pref_user_location_mode", options: .New, context: nil)
 
     }
 
     override public func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String:AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if keyPath == "pref_user_location_mode" {
-            currentMode = IITCLocationMode(rawValue: NSUserDefaults.standardUserDefaults().integerForKey("pref_user_location_mode"))!
+            currentMode = IITCLocationMode(rawValue: userDefaults.integerForKey("pref_user_location_mode"))!
             if currentMode != .NotShow {
                 self.startUpdate()
             } else {

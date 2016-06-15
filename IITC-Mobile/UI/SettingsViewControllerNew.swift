@@ -28,6 +28,16 @@ import MBProgressHUD
         tracker.send(builder.build() as [NSObject : AnyObject])
     }
 
+    override init(style: UITableViewStyle) {
+        super.init(style: style)
+        let defaults = NSUserDefaults(suiteName: "group.com.vuryleo.iitcmobile")
+        self.settingsStore = IASKSettingsStoreUserDefaults(userDefaults: defaults)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     func settingsViewController(sender: IASKAppSettingsViewController!, buttonTappedForSpecifier specifier: IASKSpecifier!) {
         if (specifier.key() == "pref_plugins") {
             let vc = self.navigationController!.storyboard!.instantiateViewControllerWithIdentifier("pluginsViewController")
