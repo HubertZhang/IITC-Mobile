@@ -8,6 +8,7 @@
 
 import UIKit
 import BaseFramework
+
 class PluginCell: UITableViewCell {
 
     @IBOutlet weak var titleText: UILabel!
@@ -32,6 +33,10 @@ class PluginsTableViewController: UITableViewController {
         self.tableView.estimatedRowHeight = 80.0
         self.tableView.rowHeight = UITableViewAutomaticDimension;
 //        prototypeCell = self.tableView.dequeueReusableCellWithIdentifier("PluginCell") as! PluginCell
+        NSNotificationCenter.defaultCenter().addObserverForName(ScriptsUpdatedNotification, object: nil, queue: NSOperationQueue.mainQueue()) { notification in
+            self.loadScripts()
+            self.tableView.reloadData()
+        }
         loadScripts()
     }
 
@@ -46,6 +51,8 @@ class PluginsTableViewController: UITableViewController {
 
     var changed = false
     func loadScripts() {
+        scripts = [String: [Script]]()
+        keys = [String]()
         let temp = ScriptsManager.sharedInstance.storedPlugins
         for script in temp {
 //            prototypeCell.titleText.text = script.name
