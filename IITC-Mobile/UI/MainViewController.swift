@@ -29,6 +29,24 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     func loadScripts() {
         self.webView.loadScripts(ScriptsManager.sharedInstance.getLoadedScripts())
         loadIITCNeeded = false
+        syncCookie()
+    }
+    
+    func syncCookie() {
+        let containerPath = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.com.vuryleo.iitcmobile")!
+        let cookieDirPath = containerPath.URLByAppendingPathComponent("Library/Cookies", isDirectory: true)
+        let bakCookiePath = cookieDirPath.URLByAppendingPathComponent("Cookies.binarycookies", isDirectory: false)
+        if NSFileManager.defaultManager().fileExistsAtPath(bakCookiePath.path!) {
+            return
+        }
+        
+        let libraryPath = NSFileManager.defaultManager().URLsForDirectory(.LibraryDirectory, inDomains: .UserDomainMask).last!
+        let oriCookiePath = libraryPath.URLByAppendingPathComponent("Cookies/Cookies.binarycookies", isDirectory: false)
+        if !NSFileManager.defaultManager().fileExistsAtPath(oriCookiePath.path!) {
+            return
+        }
+        try? NSFileManager.defaultManager().createDirectoryAtURL(cookieDirPath, withIntermediateDirectories: true, attributes: nil)
+        try? NSFileManager.defaultManager().copyItemAtURL(oriCookiePath, toURL: bakCookiePath)
     }
 
     func configureWebView() {

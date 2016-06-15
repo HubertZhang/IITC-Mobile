@@ -34,7 +34,27 @@ class ActionViewController: UIViewController, WKUIDelegate, WKNavigationDelegate
         loadIITCNeeded = false
     }
     
+    func syncCookie() {
+        let containerPath = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.com.vuryleo.iitcmobile")!
+        
+        let bakCookiePath = containerPath.URLByAppendingPathComponent("Library/Cookies/Cookies.binarycookies", isDirectory: false)
+        if !NSFileManager.defaultManager().fileExistsAtPath(bakCookiePath.path!) {
+            return
+        }
+        
+        let libraryPath = NSFileManager.defaultManager().URLsForDirectory(.LibraryDirectory, inDomains: .UserDomainMask).last!
+        let cookieDirPath = libraryPath.URLByAppendingPathComponent("Cookies", isDirectory: true)
+        let cookiePath = cookieDirPath.URLByAppendingPathComponent("Cookies.binarycookies", isDirectory: false)
+        if NSFileManager.defaultManager().fileExistsAtPath(cookiePath.path!) {
+            return
+        }
+        try? NSFileManager.defaultManager().createDirectoryAtURL(cookieDirPath, withIntermediateDirectories: true, attributes: nil)
+        try? NSFileManager.defaultManager().copyItemAtURL(bakCookiePath, toURL: cookiePath)
+    }
+
+    
     func configureWebView() {
+        syncCookie()
         self.webView = IITCWebView(frame: CGRectZero)
         
         self.webView.translatesAutoresizingMaskIntoConstraints = false
