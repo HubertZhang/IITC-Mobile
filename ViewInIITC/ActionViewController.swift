@@ -35,7 +35,7 @@ class ActionViewController: UIViewController, WKUIDelegate, WKNavigationDelegate
     }
     
     func syncCookie() {
-        let containerPath = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.com.vuryleo.iitcmobile")!
+        let containerPath = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier(ContainerIdentifier)!
         
         let bakCookiePath = containerPath.URLByAppendingPathComponent("Library/Cookies/Cookies.binarycookies", isDirectory: false)
         if !NSFileManager.defaultManager().fileExistsAtPath(bakCookiePath.path!) {

@@ -19,7 +19,7 @@ public class IITCLocation: NSObject, CLLocationManagerDelegate {
     let locationManager = CLLocationManager()
     var currentMode = IITCLocationMode.NotShow
     
-    var userDefaults = NSUserDefaults(suiteName: "group.com.vuryleo.iitcmobile")!
+    var userDefaults = NSUserDefaults(suiteName: ContainerIdentifier)!
     public override init() {
         super.init()
         locationManager.delegate = self;

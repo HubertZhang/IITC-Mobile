@@ -12,7 +12,7 @@ import Alamofire
 import RxAlamofire
 
 public let ScriptsUpdatedNotification: String = "ScriptsUpdatedNotification"
-
+public let ContainerIdentifier: String = "group.com.vuryleo.iitcmobile"
 
 public class ScriptsManager: NSObject, DirectoryWatcherDelegate {
     public static let sharedInstance = ScriptsManager()
@@ -33,10 +33,10 @@ public class ScriptsManager: NSObject, DirectoryWatcherDelegate {
     var documentWatcher: DirectoryWatcher?
     var containerWatcher: DirectoryWatcher?
     
-    var userDefaults = NSUserDefaults(suiteName: "group.com.vuryleo.iitcmobile")!
+    var userDefaults = NSUserDefaults(suiteName: ContainerIdentifier)!
     
     override init() {
-        let containerPath = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.com.vuryleo.iitcmobile")!
+        let containerPath = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier(ContainerIdentifier)!
         libraryScriptsPath = containerPath.URLByAppendingPathComponent("scripts", isDirectory: true)
         libraryPluginsPath = libraryScriptsPath.URLByAppendingPathComponent("plugins", isDirectory: true)
         userScriptsPath = containerPath.URLByAppendingPathComponent("userScripts", isDirectory: true)

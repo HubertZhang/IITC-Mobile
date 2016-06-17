@@ -17,7 +17,7 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     
     var location = IITCLocation()
     
-    var userDefaults = NSUserDefaults(suiteName: "group.com.vuryleo.iitcmobile")!
+    var userDefaults = NSUserDefaults(suiteName: ContainerIdentifier)!
     
     @IBOutlet weak var backButton: UIBarButtonItem!
 
@@ -33,7 +33,7 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     }
     
     func syncCookie() {
-        let containerPath = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.com.vuryleo.iitcmobile")!
+        let containerPath = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier(ContainerIdentifier)!
         let cookieDirPath = containerPath.URLByAppendingPathComponent("Library/Cookies", isDirectory: true)
         let bakCookiePath = cookieDirPath.URLByAppendingPathComponent("Cookies.binarycookies", isDirectory: false)
         if NSFileManager.defaultManager().fileExistsAtPath(bakCookiePath.path!) {

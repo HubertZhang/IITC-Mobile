@@ -30,7 +30,7 @@ import MBProgressHUD
 
     override init(style: UITableViewStyle) {
         super.init(style: style)
-        let defaults = NSUserDefaults(suiteName: "group.com.vuryleo.iitcmobile")
+        let defaults = NSUserDefaults(suiteName: ContainerIdentifier)
         self.settingsStore = IASKSettingsStoreUserDefaults(userDefaults: defaults)
     }
     
