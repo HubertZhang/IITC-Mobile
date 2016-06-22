@@ -68,6 +68,9 @@ import MBProgressHUD
         } else if specifier.key() == "pref_about" {
             let vc = self.navigationController!.storyboard!.instantiateViewControllerWithIdentifier("aboutViewController")
             self.navigationController!.pushViewController(vc, animated: true)
+        } else if specifier.key() == "pref_new" {
+            let vc = self.navigationController!.storyboard!.instantiateViewControllerWithIdentifier("whatsNewViewController")
+            self.navigationController!.pushViewController(vc, animated: true)
         }
     }
 

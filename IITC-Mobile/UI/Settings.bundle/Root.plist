@@ -90,6 +90,16 @@
 			<key>Type</key>
 			<string>IASKButtonSpecifier</string>
 			<key>Title</key>
+			<string>pref_new</string>
+			<key>Key</key>
+			<string>pref_new</string>
+			<key>IASKTextAlignment</key>
+			<string>IASKUITextAlignmentLeft</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>IASKButtonSpecifier</string>
+			<key>Title</key>
 			<string>pref_about</string>
 			<key>Key</key>
 			<string>pref_about</string>
