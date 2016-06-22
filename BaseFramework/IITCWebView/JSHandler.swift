@@ -15,6 +15,7 @@ public let JSNotificationBootFinished: String = "JSNotificationBootFinished"
 public let JSNotificationReloadRequired: String = "JSNotificationReloadRequired"
 public let JSNotificationSharedAction: String = "JSNotificationSharedAction"
 public let JSNotificationProgressChanged: String = "JSNotificationProgressChanged"
+public let JSNotificationPermalinkChanged: String = "JSNotificationPermalinkChanged"
 
 class JSHandler: NSObject, WKScriptMessageHandler {
 
@@ -182,9 +183,9 @@ class JSHandler: NSObject, WKScriptMessageHandler {
         NSNotificationCenter.defaultCenter().postNotificationName(JSNotificationProgressChanged, object: self, userInfo: ["data": progress])
     }
 
-    //- (void) setPermalink:( NSString *) href {
-    ////    mIitc.setPermalink(href);
-    //}
+    func setPermalink(href: String) {
+        NSNotificationCenter.defaultCenter().postNotificationName(JSNotificationPermalinkChanged, object: self, userInfo: ["data": href])
+    }
 
     func reloadIITC() {
 

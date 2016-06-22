@@ -19,6 +19,8 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     
     var userDefaults = NSUserDefaults(suiteName: ContainerIdentifier)!
     
+    var permalink: String = ""
+    
     @IBOutlet weak var backButton: UIBarButtonItem!
 
     @IBOutlet weak var webProgressView: UIProgressView!
@@ -79,6 +81,12 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
             (notification) in
             let panel = notification.userInfo!["Panel"] as! String
             self.switchToPanel(panel)
+        }
+        NSNotificationCenter.defaultCenter().addObserverForName(JSNotificationPermalinkChanged, object: nil, queue: NSOperationQueue.mainQueue()) {
+            (notification) in
+            if let permalink = notification.userInfo?["data"] as? String {
+                self.permalink = permalink
+            }
         }
     }
 
@@ -189,11 +197,14 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         let alert = UIAlertController(title: "Input intel URL", message: nil, preferredStyle: .Alert)
         alert.addTextFieldWithConfigurationHandler {
             textField in
-            
+            textField.text = self.permalink
         }
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: {
             action in
             let urlString = alert.textFields![0].text ?? ""
+            if urlString == self.permalink {
+                return
+            }
             if let urlComponent = NSURLComponents(string: urlString) where urlComponent.host == "www.ingress.com" {
                 self.webView.loadRequest(NSURLRequest(URL: urlComponent.URL!))
                 self.loadIITCNeeded = true
