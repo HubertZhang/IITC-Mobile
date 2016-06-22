@@ -185,8 +185,29 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         reloadIITC()
     }
 
+    @IBAction func linkButtonPressed(sender: AnyObject) {
+        let alert = UIAlertController(title: "Input intel URL", message: nil, preferredStyle: .Alert)
+        alert.addTextFieldWithConfigurationHandler {
+            textField in
+            
+        }
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: {
+            action in
+            let urlString = alert.textFields![0].text ?? ""
+            if let urlComponent = NSURLComponents(string: urlString) where urlComponent.host == "www.ingress.com" {
+                self.webView.loadRequest(NSURLRequest(URL: urlComponent.URL!))
+                self.loadIITCNeeded = true
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+
+    }
+    
     func bootFinished() {
         getLayers()
+        self.webView.evaluateJavaScript("window.selectPortalByLatLng(urlPortalLL[0],urlPortalLL[1]);")
     }
 
     var currentPanelID = "map"

@@ -60,6 +60,11 @@
                                     <action selector="reloadButtonPressed:" destination="BYZ-38-t0r" id="MCZ-uj-qN3"/>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem image="ic_link" id="jyp-Xj-Qpl">
+                                <connections>
+                                    <action selector="linkButtonPressed:" destination="BYZ-38-t0r" id="8Mr-we-bWL"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
@@ -303,6 +308,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ic_link" width="24" height="24"/>
         <image name="ic_my_location" width="24" height="24"/>
         <image name="ic_settings" width="24" height="24"/>
     </resources>
