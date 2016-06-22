@@ -2,31 +2,24 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '9.0'
 
 use_frameworks!
-target 'BaseFramework' do
-	pod 'RxSwift'
-	pod 'RxCocoa'
-	pod 'RxBlocking'
-	pod 'Alamofire'
-	pod 'RxAlamofire'
-end
 
-target 'IITC-Mobile' do
+abstract_target 'Base' do
     pod 'RxSwift'
     pod 'RxCocoa'
     pod 'RxBlocking'
     pod 'Alamofire'
     pod 'RxAlamofire'
-    pod 'InAppSettingsKit'
-    pod 'MBProgressHUD'
-    pod 'Google/Analytics'
-end
+    
+    target 'BaseFramework'
+    abstract_target 'Application' do
+        pod 'MBProgressHUD'
+        pod 'Google/Analytics'
+#        pod 'Google/SignIn'
 
-target 'ViewInIITC' do
-    pod 'RxSwift'
-    pod 'RxCocoa'
-    pod 'RxBlocking'
-    pod 'Alamofire'
-    pod 'RxAlamofire'
-    pod 'MBProgressHUD'
-    pod 'Google/Analytics'
+        target 'IITC-Mobile' do
+            pod 'InAppSettingsKit'
+        end
+        
+        target 'ViewInIITC'
+    end
 end
