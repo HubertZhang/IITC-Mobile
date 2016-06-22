@@ -19,6 +19,8 @@
 		B42BE7611D073C0400A0A0CB /* About.html in Resources */ = {isa = PBXBuildFile; fileRef = B42BE7601D073C0400A0A0CB /* About.html */; };
 		B42BE7631D073C7800A0A0CB /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BE7621D073C7800A0A0CB /* AboutViewController.swift */; };
 		B42BE7651D07529300A0A0CB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B42BE7641D07529300A0A0CB /* GoogleService-Info.plist */; };
+		B44856F91D1AB17A0082B1E7 /* WhatsNew.html in Resources */ = {isa = PBXBuildFile; fileRef = B44856F81D1AB17A0082B1E7 /* WhatsNew.html */; };
+		B44856FB1D1AB78F0082B1E7 /* WhatsNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44856FA1D1AB78F0082B1E7 /* WhatsNewViewController.swift */; };
 		B4B3284A1D10F3AF007AA6D5 /* UserFilesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B328491D10F3AF007AA6D5 /* UserFilesTableViewController.swift */; };
 		B4B3284C1D117970007AA6D5 /* IITC.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = B4B3284B1D117970007AA6D5 /* IITC.entitlements */; };
 		B4B3284E1D1179C4007AA6D5 /* IITC-Action.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = B4B3284D1D1179C4007AA6D5 /* IITC-Action.entitlements */; };
@@ -126,6 +128,8 @@
 		B42BE7621D073C7800A0A0CB /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		B42BE7641D07529300A0A0CB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B42BE7681D08BFA300A0A0CB /* DirectoryWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectoryWatcher.swift; sourceTree = "<group>"; };
+		B44856F81D1AB17A0082B1E7 /* WhatsNew.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = WhatsNew.html; sourceTree = "<group>"; };
+		B44856FA1D1AB78F0082B1E7 /* WhatsNewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhatsNewViewController.swift; sourceTree = "<group>"; };
 		B4B328491D10F3AF007AA6D5 /* UserFilesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFilesTableViewController.swift; sourceTree = "<group>"; };
 		B4B3284B1D117970007AA6D5 /* IITC.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = IITC.entitlements; sourceTree = "<group>"; };
 		B4B3284D1D1179C4007AA6D5 /* IITC-Action.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "IITC-Action.entitlements"; sourceTree = "<group>"; };
@@ -238,8 +242,10 @@
 				B405EECD1D06832200110D9E /* LayersController.swift */,
 				B42BE7581D072D1B00A0A0CB /* OpenInMapActivity.swift */,
 				B42BE7601D073C0400A0A0CB /* About.html */,
+				B44856F81D1AB17A0082B1E7 /* WhatsNew.html */,
 				B42BE7621D073C7800A0A0CB /* AboutViewController.swift */,
 				B4B328491D10F3AF007AA6D5 /* UserFilesTableViewController.swift */,
+				B44856FA1D1AB78F0082B1E7 /* WhatsNewViewController.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -488,6 +494,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4B3284C1D117970007AA6D5 /* IITC.entitlements in Resources */,
+				B44856F91D1AB17A0082B1E7 /* WhatsNew.html in Resources */,
 				B42BE7611D073C0400A0A0CB /* About.html in Resources */,
 				B4E2F00E1D05D06C00D2D86B /* LaunchScreen.storyboard in Resources */,
 				B4F8405E1D0B285800C58690 /* Default-iitc.png in Resources */,
@@ -655,6 +662,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B42BE7591D072D1B00A0A0CB /* OpenInMapActivity.swift in Sources */,
+				B44856FB1D1AB78F0082B1E7 /* WhatsNewViewController.swift in Sources */,
 				B405EECC1D066FC900110D9E /* LayersTableViewController.swift in Sources */,
 				B405EED11D06969C00110D9E /* SettingsViewControllerNew.swift in Sources */,
 				B405EECE1D06832200110D9E /* LayersController.swift in Sources */,
