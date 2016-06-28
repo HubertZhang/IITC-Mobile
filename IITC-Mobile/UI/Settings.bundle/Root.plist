@@ -78,6 +78,16 @@
 		</dict>
 		<dict>
 			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+			<key>Title</key>
+			<string>pref_advanced</string>
+			<key>File</key>
+			<string>Advanced</string>
+			<key>IASKTextAlignment</key>
+			<string>IASKUITextAlignmentLeft</string>
+		</dict>
+		<dict>
+			<key>Type</key>
 			<string>IASKButtonSpecifier</string>
 			<key>Title</key>
 			<string>pref_force_plugin_update</string>
