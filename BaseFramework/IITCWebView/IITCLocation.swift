@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-enum IITCLocationMode: Int {
+public enum IITCLocationMode: Int {
     case NotShow = 0
     case ShowPosition = 1
     case ShowPositionAndOrientation = 2

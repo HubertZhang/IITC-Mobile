@@ -23,7 +23,7 @@ public class ScriptsManager: NSObject, DirectoryWatcherDelegate {
 
     public var mainScript: Script
     var hookScript: Script
-    var positionScript: Script
+    public var positionScript: Script
 
     var libraryScriptsPath: NSURL
     var libraryPluginsPath: NSURL
@@ -126,7 +126,6 @@ public class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         var result = [Script]()
         result.append(mainScript)
         result.append(hookScript)
-        result.append(positionScript)
         for name in loadedPluginNames {
             let index = storedPlugins.indexOf {
                 plugin -> Bool in

@@ -29,7 +29,13 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     var loadIITCNeeded = true
 
     func loadScripts() {
-        self.webView.loadScripts(ScriptsManager.sharedInstance.getLoadedScripts())
+        var scripts = ScriptsManager.sharedInstance.getLoadedScripts()
+        let currentMode = IITCLocationMode(rawValue: userDefaults.integerForKey("pref_user_location_mode"))!
+        if currentMode != .NotShow {
+            scripts.append(ScriptsManager.sharedInstance.positionScript)
+                
+        }
+        self.webView.loadScripts(scripts)
         loadIITCNeeded = false
         syncCookie()
     }
