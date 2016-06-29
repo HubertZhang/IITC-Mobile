@@ -23,7 +23,7 @@ class UserFilesTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        userScriptsPath = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).last!
+        userScriptsPath = ScriptsManager.sharedInstance.userScriptsPath
         NSNotificationCenter.defaultCenter().addObserverForName(ScriptsUpdatedNotification, object: nil, queue: NSOperationQueue.mainQueue()) {
             notification in
             self.updateContent()
