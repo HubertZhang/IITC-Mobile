@@ -224,7 +224,7 @@ class ActionViewController: UIViewController, WKUIDelegate, WKNavigationDelegate
     
     func bootFinished() {
         getLayers()
-        self.webView.evaluateJavaScript("window.selectPortalByLatLng(urlPortalLL[0],urlPortalLL[1]);")
+        self.webView.evaluateJavaScript("if(urlPortalLL[0] != undefined) window.selectPortalByLatLng(urlPortalLL[0],urlPortalLL[1]);")
     }
     
     var currentPanelID = "map"
