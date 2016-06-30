@@ -72,7 +72,7 @@ import Alamofire
         } else if specifier.key() == "pref_new" {
             let vc = self.navigationController!.storyboard!.instantiateViewControllerWithIdentifier("whatsNewViewController")
             self.navigationController!.pushViewController(vc, animated: true)
-        } else if specifier.key() == "pref_download_test" {
+        } else if specifier.key() == "pref_adv_download_test" {
             let alert = UIAlertController(title: "Download test build", message: "Warning: download script may override IITC script you added. Continue?", preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: {
                 action in

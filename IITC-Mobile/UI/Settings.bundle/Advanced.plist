@@ -12,15 +12,15 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
-			<string>SLIDER_TITLE</string>
+			<string>pref_adv_group_test</string>
 		</dict>
 		<dict>
 			<key>Type</key>
 			<string>IASKButtonSpecifier</string>
 			<key>Title</key>
-			<string>pref_download_test</string>
+			<string>pref_adv_download_test</string>
 			<key>Key</key>
-			<string>pref_download_test</string>
+			<string>pref_adv_download_test</string>
 			<key>IASKTextAlignment</key>
 			<string>IASKUITextAlignmentLeft</string>
 		</dict>

@@ -80,7 +80,7 @@
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 			<key>Title</key>
-			<string>pref_advanced</string>
+			<string>pref_advanced_options</string>
 			<key>File</key>
 			<string>Advanced</string>
 			<key>IASKTextAlignment</key>
