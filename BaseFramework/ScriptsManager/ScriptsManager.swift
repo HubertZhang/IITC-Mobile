@@ -12,7 +12,7 @@ import Alamofire
 import RxAlamofire
 
 public let ScriptsUpdatedNotification: String = "ScriptsUpdatedNotification"
-public let ContainerIdentifier: String = "group.com.vuryleo.iitcmobile"
+public let ContainerIdentifier: String = "group.com.vuryleo.iitc"
 
 public class ScriptsManager: NSObject, DirectoryWatcherDelegate {
     public static let sharedInstance = ScriptsManager()
