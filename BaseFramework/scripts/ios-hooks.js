@@ -102,3 +102,5 @@ window.isSmartphone = function() {
   return navigator.userAgent.match(/Android.*Mobile/)
   || navigator.userAgent.match(/iPhone|iPad|iPod/i);
 }
+
+if(!window.bootPlugins) window.bootPlugins = [];
