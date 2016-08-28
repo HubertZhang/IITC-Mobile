@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
             ScriptsManager.sharedInstance.getLoadedScripts()
             dispatch_async(dispatch_get_main_queue(), {
-                hud.hide(true)
+                hud.hideAnimated(true)
             })
         })
         return true

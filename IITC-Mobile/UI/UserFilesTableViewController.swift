@@ -128,7 +128,7 @@ class UserFilesTableViewController: UITableViewController {
             if let url = NSURL(string: urlString) {
                 let hud = MBProgressHUD.showHUDAddedTo(self.navigationController!.view, animated: true);
                 hud.mode = MBProgressHUDMode.AnnularDeterminate;
-                hud.labelText = "Downloading...";
+                hud.label.text = "Downloading...";
 
                 Alamofire.download(.GET, url, destination: {
                     (url, response) -> NSURL in
@@ -152,7 +152,7 @@ class UserFilesTableViewController: UITableViewController {
                     }
                 }.response {
                     request, response, _, error in
-                    hud.hide(true)
+                    hud.hideAnimated(true)
                     if error != nil {
                         let alert1 = UIAlertController(title: "Error", message: error!.localizedDescription, preferredStyle: .Alert)
                         alert1.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))

@@ -46,7 +46,7 @@ import Alamofire
         } else if (specifier.key() == "pref_update") {
             let hud = MBProgressHUD.showHUDAddedTo(self.navigationController!.view, animated: true);
             hud.mode = MBProgressHUDMode.AnnularDeterminate;
-            hud.labelText = "Updating...";
+            hud.label.text = "Updating...";
             var finished = 0
             let all = ScriptsManager.sharedInstance.storedPlugins.count + 2
             ScriptsManager.sharedInstance.updatePlugins().subscribeOn(SerialDispatchQueueScheduler.init(internalSerialQueueName: "com.cradle.IITC-Mobile.network")).observeOn(MainScheduler.instance).subscribe(onNext: {
@@ -58,10 +58,10 @@ import Alamofire
                 print(e)
             }, onCompleted: {
                 () -> Void in
-                hud.labelText = "Scanning..."
+                hud.label.text = "Scanning..."
                 ScriptsManager.sharedInstance.loadAllPlugins()
                 ScriptsManager.sharedInstance.loadUserMainScript()
-                hud.hide(true)
+                hud.hideAnimated(true)
             }, onDisposed: {
                 () -> Void in
             })
@@ -78,7 +78,7 @@ import Alamofire
                 action in
                 let hud = MBProgressHUD.showHUDAddedTo(self.navigationController!.view, animated: true);
                 hud.mode = MBProgressHUDMode.AnnularDeterminate;
-                hud.labelText = "Downloading IITC script...";
+                hud.label.text = "Downloading IITC script...";
 
                 Alamofire.download(.GET, "https://secure.jonatkins.com/iitc/test/total-conversion-build.user.js", destination: {
                     (url, response) -> NSURL in
@@ -103,7 +103,7 @@ import Alamofire
                 }.response {
                     request, response, _, error in
 
-                    hud.hide(true)
+                    hud.hideAnimated(true)
                     if error != nil {
                         let alert1 = UIAlertController(title: "Error", message: error!.localizedDescription, preferredStyle: .Alert)
                         alert1.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
