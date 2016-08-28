@@ -154,7 +154,7 @@ class UserFilesTableViewController: UITableViewController {
                     request, response, _, error in
                     hud.hide(true)
                     if error != nil {
-                        let alert1 = UIAlertController(title: "Error", message: error!.description, preferredStyle: .Alert)
+                        let alert1 = UIAlertController(title: "Error", message: error!.localizedDescription, preferredStyle: .Alert)
                         alert1.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
                         self.presentViewController(alert1, animated: true, completion: nil)
                     }
