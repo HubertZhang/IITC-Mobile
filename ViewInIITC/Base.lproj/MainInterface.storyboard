@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ObA-dk-sSI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ObA-dk-sSI">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
@@ -73,31 +74,6 @@
             </objects>
             <point key="canvasLocation" x="252" y="-124"/>
         </scene>
-        <!--Layers-->
-        <scene sceneID="mrM-Sd-I4y">
-            <objects>
-                <tableViewController id="JaD-qj-QxS" customClass="LayersTableViewController" customModule="ViewInIITC" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="1fa-w7-4Wl">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <connections>
-                            <outlet property="dataSource" destination="JaD-qj-QxS" id="Ic5-T3-UZh"/>
-                            <outlet property="delegate" destination="JaD-qj-QxS" id="k58-gO-GSu"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Layers" id="d4U-K4-Lk2">
-                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="Bhd-2K-JWF">
-                            <connections>
-                                <action selector="dismiss:" destination="JaD-qj-QxS" id="iE6-xC-4Ps"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7ZF-AM-OL6" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1012" y="-104"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="knu-Xr-MA9">
             <objects>
@@ -109,12 +85,119 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="JaD-qj-QxS" kind="relationship" relationship="rootViewController" id="Qf3-YH-wYQ"/>
+                        <segue destination="OFT-bQ-9x4" kind="relationship" relationship="rootViewController" id="2GG-5k-Zc6"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tzd-SI-x0D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="656" y="-104"/>
+        </scene>
+        <!--Layers-->
+        <scene sceneID="4WF-8z-PGQ">
+            <objects>
+                <viewController id="OFT-bQ-9x4" customClass="LayersTableViewController" customModule="ViewInIITC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wAh-is-4Wu"/>
+                        <viewControllerLayoutGuide type="bottom" id="Bii-aF-KA4"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uai-T2-EhV">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IFi-T9-jOg">
+                                <rect key="frame" x="160" y="108" width="0.0" height="0.0"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" id="GJz-oU-meF"/>
+                                    <constraint firstAttribute="width" id="Nlx-q8-8IH"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bFg-6M-vJC">
+                                <rect key="frame" x="0.0" y="108" width="320" height="460"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="OFT-bQ-9x4" id="jRX-7l-3DV"/>
+                                    <outlet property="delegate" destination="OFT-bQ-9x4" id="xZ5-S4-d9m"/>
+                                </connections>
+                            </tableView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="XjP-h6-qr4">
+                                <rect key="frame" x="0.0" y="108" width="320" height="460"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="OFT-bQ-9x4" id="FHT-Vt-sWe"/>
+                                    <outlet property="delegate" destination="OFT-bQ-9x4" id="6Z9-sB-UJf"/>
+                                </connections>
+                            </tableView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IrH-MI-IWy">
+                                <rect key="frame" x="0.0" y="108" width="320" height="460"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="OFT-bQ-9x4" id="mmm-yu-9pW"/>
+                                    <outlet property="delegate" destination="OFT-bQ-9x4" id="5Ot-f7-b0R"/>
+                                </connections>
+                            </tableView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qAd-9e-jWv">
+                                <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="a7P-o2-BbY"/>
+                                    <barButtonItem style="plain" id="LbY-WY-qsD">
+                                        <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="SW9-Q7-wQz">
+                                            <rect key="frame" x="18" y="7" width="285" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <segments>
+                                                <segment title="Panel"/>
+                                                <segment title="Base Layers"/>
+                                                <segment title="Overlay Layers"/>
+                                            </segments>
+                                            <connections>
+                                                <action selector="tabChanged:" destination="OFT-bQ-9x4" eventType="valueChanged" id="8EW-Wm-NJf"/>
+                                            </connections>
+                                        </segmentedControl>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="zmL-Z2-w0J"/>
+                                </items>
+                                <connections>
+                                    <outlet property="delegate" destination="OFT-bQ-9x4" id="WtD-Bl-C7s"/>
+                                </connections>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="XjP-h6-qr4" firstAttribute="leading" secondItem="uai-T2-EhV" secondAttribute="leading" id="1xC-Xw-Eqe"/>
+                            <constraint firstItem="IFi-T9-jOg" firstAttribute="top" secondItem="qAd-9e-jWv" secondAttribute="bottom" id="62H-7r-8mv"/>
+                            <constraint firstItem="bFg-6M-vJC" firstAttribute="leading" secondItem="uai-T2-EhV" secondAttribute="leading" id="CvA-Ml-Oj1"/>
+                            <constraint firstItem="Bii-aF-KA4" firstAttribute="top" secondItem="XjP-h6-qr4" secondAttribute="bottom" id="F70-qU-IbS"/>
+                            <constraint firstAttribute="trailing" secondItem="XjP-h6-qr4" secondAttribute="trailing" id="FC2-4x-ex4"/>
+                            <constraint firstItem="bFg-6M-vJC" firstAttribute="top" secondItem="qAd-9e-jWv" secondAttribute="bottom" id="IvJ-3c-8HA"/>
+                            <constraint firstItem="Bii-aF-KA4" firstAttribute="top" secondItem="IrH-MI-IWy" secondAttribute="bottom" id="Uy5-IL-DN7"/>
+                            <constraint firstAttribute="trailing" secondItem="IrH-MI-IWy" secondAttribute="trailing" id="Xwz-TH-5eR"/>
+                            <constraint firstItem="qAd-9e-jWv" firstAttribute="top" secondItem="wAh-is-4Wu" secondAttribute="bottom" id="YmT-tO-VrB"/>
+                            <constraint firstItem="qAd-9e-jWv" firstAttribute="leading" secondItem="uai-T2-EhV" secondAttribute="leading" id="Z23-M0-iYM"/>
+                            <constraint firstItem="IrH-MI-IWy" firstAttribute="top" secondItem="qAd-9e-jWv" secondAttribute="bottom" id="cHD-rb-XLx"/>
+                            <constraint firstAttribute="trailing" secondItem="qAd-9e-jWv" secondAttribute="trailing" id="gwu-cA-JtC"/>
+                            <constraint firstAttribute="trailing" secondItem="bFg-6M-vJC" secondAttribute="trailing" id="jZ6-Ne-RRj"/>
+                            <constraint firstItem="Bii-aF-KA4" firstAttribute="top" secondItem="bFg-6M-vJC" secondAttribute="bottom" id="nSg-rI-bNr"/>
+                            <constraint firstItem="IrH-MI-IWy" firstAttribute="leading" secondItem="uai-T2-EhV" secondAttribute="leading" id="svJ-z5-9Ip"/>
+                            <constraint firstItem="IFi-T9-jOg" firstAttribute="centerX" secondItem="uai-T2-EhV" secondAttribute="centerX" id="wVJ-Z5-fdd"/>
+                            <constraint firstItem="XjP-h6-qr4" firstAttribute="top" secondItem="qAd-9e-jWv" secondAttribute="bottom" id="y2R-mk-miM"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Layers" id="74D-Wv-6wh">
+                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="fbf-HM-EhT">
+                            <connections>
+                                <action selector="dismiss:" destination="OFT-bQ-9x4" id="cYS-91-Bdv"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="baseLayerTable" destination="XjP-h6-qr4" id="fiL-MF-gqE"/>
+                        <outlet property="overlayLayerTable" destination="bFg-6M-vJC" id="dyb-63-D9t"/>
+                        <outlet property="panelTable" destination="IrH-MI-IWy" id="uzs-FP-vdw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QfT-7A-356" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1107" y="-104"/>
         </scene>
     </scenes>
 </document>
