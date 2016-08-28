@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        gai.logger.logLevel = GAILogLevel.Verbose  // remove before app release
 
 
-        let hud = MBProgressHUD.showHUDAddedTo(self.window?.rootViewController?.view, animated: true)
+        let hud = MBProgressHUD.showHUDAddedTo(self.window!.rootViewController!.view, animated: true)
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
             ScriptsManager.sharedInstance.getLoadedScripts()
             dispatch_async(dispatch_get_main_queue(), {
