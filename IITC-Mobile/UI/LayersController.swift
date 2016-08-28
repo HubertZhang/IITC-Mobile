@@ -20,11 +20,14 @@ class LayersController: NSObject {
 
     var baseLayers = [Layer]()
     var overlayLayers = [Layer]()
-
+    var panelNames = ["info", "all", "faction", "alert"]
+    var panelLabels = ["Info", "All", "Faction", "Alert"]
+    var panelIcons = ["ic_action_about", "ic_action_view_as_list", "ic_action_cc_bcc", "ic_action_warning"]
 
     override init() {
         super.init()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LayersController.setLayers(_:)), name: JSNotificationLayersGot, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LayersController.addPane(_:)), name: JSNotificationAddPane, object: nil)
     }
 
     deinit {
@@ -59,6 +62,15 @@ class LayersController: NSObject {
                 }
             }
         }
+    }
+
+    func addPane(notification: NSNotification) {
+        guard let info = notification.userInfo as? [String:String] else {
+            return
+        }
+        self.panelNames.append(info["name"]!)
+        self.panelLabels.append(info["label"]!)
+        self.panelIcons.append(info["icon"] ?? "ic_action_new_event")
     }
 
 }
