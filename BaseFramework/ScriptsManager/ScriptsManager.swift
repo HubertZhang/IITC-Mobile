@@ -32,9 +32,9 @@ public class ScriptsManager: NSObject, DirectoryWatcherDelegate {
 
     var documentWatcher: DirectoryWatcher?
     var containerWatcher: DirectoryWatcher?
-    
+
     var userDefaults = NSUserDefaults(suiteName: ContainerIdentifier)!
-    
+
     override init() {
         let containerPath = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier(ContainerIdentifier)!
         libraryScriptsPath = containerPath.URLByAppendingPathComponent("scripts", isDirectory: true)
@@ -56,7 +56,9 @@ public class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         mainScript = try! Script(atFilePath: libraryScriptsPath.URLByAppendingPathComponent("total-conversion-build.user.js"))
         mainScript.category = "Core"
         hookScript = try! Script(coreJS: libraryScriptsPath.URLByAppendingPathComponent("ios-hooks.js"), withName: "hook")
-        hookScript.fileContent = String(format: hookScript.fileContent, "1.0", 20)
+        let currentBuild = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleVersion") as! String
+        let buildNumber = Int(currentBuild) ?? 0
+        hookScript.fileContent = String(format: hookScript.fileContent, currentVersion, buildNumber)
         positionScript = try! Script(coreJS: libraryScriptsPath.URLByAppendingPathComponent("user-location.user.js"), withName: "position")
         loadedPluginNames = userDefaults.arrayForKey("LoadedPlugins") as? [String] ?? [String]()
         loadedPlugins = Set<String>(loadedPluginNames)
@@ -66,7 +68,7 @@ public class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         syncDocumentAndContainer()
         documentWatcher = DirectoryWatcher(documentPath, delegate: self)
         containerWatcher = DirectoryWatcher(userScriptsPath, delegate: self)
-        
+
         loadUserMainScript()
         loadAllPlugins()
 
@@ -117,7 +119,7 @@ public class ScriptsManager: NSObject, DirectoryWatcherDelegate {
             if pluginPath.lastPathComponent == "total-conversion-build.user.js" {
                 continue
             }
-            
+
             do {
                 try result.append(Script(atFilePath: pluginPath))
             } catch {
@@ -207,7 +209,7 @@ public class ScriptsManager: NSObject, DirectoryWatcherDelegate {
 
         }
     }
-    
+
     public func syncDocumentAndContainer() {
         let temp = (try? NSFileManager.defaultManager().contentsOfDirectoryAtURL(documentPath, includingPropertiesForKeys: nil, options: .SkipsHiddenFiles)) ?? []
         for url in temp {
@@ -222,7 +224,7 @@ public class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         }
 
     }
-    
+
     func directoryDidChange(folderWatcher: DirectoryWatcher) {
         if folderWatcher == documentWatcher {
             syncDocumentAndContainer()
