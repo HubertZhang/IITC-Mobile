@@ -16,6 +16,7 @@ public let JSNotificationReloadRequired: String = "JSNotificationReloadRequired"
 public let JSNotificationSharedAction: String = "JSNotificationSharedAction"
 public let JSNotificationProgressChanged: String = "JSNotificationProgressChanged"
 public let JSNotificationPermalinkChanged: String = "JSNotificationPermalinkChanged"
+public let JSNotificationAddPane: String = "JSNotificationAddPane"
 
 class JSHandler: NSObject, WKScriptMessageHandler {
 
@@ -139,26 +140,23 @@ class JSHandler: NSObject, WKScriptMessageHandler {
     //}
 
 
-    //- (void) addPane( NSString * name,  NSString * label,  NSString * icon) {
-    //    mIitc.runOnUiThread(new Runnable() {
-    //        @Override
-    //        - (void) run() {
-    //            mIitc.getNavigationHelper().addPane(name, label, icon);
-    //        }
-    //    });
-    //}
+    func addPane(pane: [AnyObject]) {
+        if pane.count < 2 {
+            return
+        }
+        guard let name = pane[0] as? String else {
+            return
+        }
+        guard let label = pane[1] as? String else {
+            return
+        }
+        var icon = "ic_action_new_event"
+        if pane.count >= 3  {
+            icon = pane[2] as? String ?? "ic_action_new_event"
+        }
+        NSNotificationCenter.defaultCenter().postNotificationName(JSNotificationAddPane, object: self, userInfo: ["name": name, "label":label, "icon":icon])
 
-    // some plugins may have no specific icons...add a default icon
-
-    //- (void) addPane( NSString * name,  NSString * label) {
-    //    mIitc.runOnUiThread(new Runnable() {
-    //        @Override
-    //        - (void) run() {
-    //            mIitc.getNavigationHelper().addPane(name, label, "ic_action_new_event");
-    //        }
-    //    });
-    //}
-
+    }
 
     //- (BOOL) showZoom {
     ////     PackageManager pm = mIitc.getPackageManager();

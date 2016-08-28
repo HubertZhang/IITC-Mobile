@@ -78,6 +78,11 @@ function Android() {
     function intentPosLink(lat, lng, zoom, title, boolValue ){
         window.webkit.messageHandlers.ios.postMessage({functionName: "intentPosLink", args:[lat,lng,zoom,title,boolValue]});
     };
+    
+    this.addPane=addPane;
+    function addPane(name, label, icon) {
+        window.webkit.messageHandlers.ios.postMessage({functionName: "addPane", args:[name, label, icon]});
+    }
 }
 var android=new Android();
 
