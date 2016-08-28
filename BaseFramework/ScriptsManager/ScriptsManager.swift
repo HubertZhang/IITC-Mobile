@@ -43,10 +43,15 @@ public class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         try? NSFileManager.defaultManager().createDirectoryAtURL(userScriptsPath, withIntermediateDirectories: true, attributes: nil)
         documentPath = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).last!
         let mainScriptPath = libraryScriptsPath.URLByAppendingPathComponent("total-conversion-build.user.js")
-        if !NSFileManager.defaultManager().fileExistsAtPath(mainScriptPath.path!) {
+        let copied = NSFileManager.defaultManager().fileExistsAtPath(mainScriptPath.path!)
+        let currentVersion = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
+        let oldVersion = userDefaults.stringForKey("Version") ?? "0.0.0"
+        let upgraded = currentVersion.compare(oldVersion, options: .NumericSearch) != .OrderedSame
+        if !copied || upgraded {
             try? NSFileManager.defaultManager().createDirectoryAtURL(containerPath, withIntermediateDirectories: true, attributes: nil)
             try? NSFileManager.defaultManager().removeItemAtURL(libraryScriptsPath)
-            try! NSFileManager.defaultManager().copyItemAtURL(NSBundle(forClass:ScriptsManager.classForCoder()).resourceURL!.URLByAppendingPathComponent("scripts", isDirectory: true), toURL: libraryScriptsPath)
+            try? NSFileManager.defaultManager().copyItemAtURL(NSBundle(forClass: ScriptsManager.classForCoder()).resourceURL!.URLByAppendingPathComponent("scripts", isDirectory: true), toURL: libraryScriptsPath)
+            userDefaults.setObject(currentVersion, forKey: "Version")
         }
         mainScript = try! Script(atFilePath: libraryScriptsPath.URLByAppendingPathComponent("total-conversion-build.user.js"))
         mainScript.category = "Core"
