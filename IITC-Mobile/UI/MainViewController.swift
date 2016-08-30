@@ -139,9 +139,24 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
     func webView(webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: () -> Void) {
         let alertController: UIAlertController = UIAlertController(title: message, message: "", preferredStyle: .Alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: {
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .Cancel, handler: {
             (action: UIAlertAction) -> Void in
             completionHandler()
+        }))
+        self.presentViewController(alertController, animated: true, completion: {
+            () -> Void in
+        })
+    }
+    
+    func webView(webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: (Bool) -> Void) {
+        let alertController: UIAlertController = UIAlertController(title: message, message: "", preferredStyle: .Alert)
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .Default, handler: {
+            (action: UIAlertAction) -> Void in
+            completionHandler(true)
+        }))
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Cancel, handler: {
+            (action: UIAlertAction) -> Void in
+            completionHandler(false)
         }))
         self.presentViewController(alertController, animated: true, completion: {
             () -> Void in
