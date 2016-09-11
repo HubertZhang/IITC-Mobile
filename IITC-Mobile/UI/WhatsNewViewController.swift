@@ -31,7 +31,7 @@ class WhatsNewViewController: UIViewController, UITextViewDelegate {
         }
         let options : [String:Any] = [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType, NSCharacterEncodingDocumentAttribute: NSNumber(value:String.Encoding.utf8.rawValue)]
         textView.attributedText = try! NSAttributedString(data:data, options:options, documentAttributes: nil)
-        // Do any additional setup after loading the view.
+        textView.scrollRangeToVisible(NSMakeRange(0, 0))
     }
     
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
