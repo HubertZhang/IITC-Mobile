@@ -27,6 +27,7 @@ class LayersController: NSObject {
     override init() {
         super.init()
         NotificationCenter.default.addObserver(self, selector: #selector(LayersController.setLayers(_:)), name: NSNotification.Name(rawValue: JSNotificationLayersGot), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(LayersController.reload(_:)), name: NSNotification.Name(rawValue: JSNotificationReloadRequired), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(LayersController.addPane(_:)), name: NSNotification.Name(rawValue: JSNotificationAddPane), object: nil)
     }
 
@@ -71,6 +72,12 @@ class LayersController: NSObject {
         self.panelNames.append(info["name"]!)
         self.panelLabels.append(info["label"]!)
         self.panelIcons.append(info["icon"] ?? "ic_action_new_event")
+    }
+    
+    func reload(_ notification: Notification) {
+        panelNames = ["info", "all", "faction", "alert"]
+        panelLabels = ["Info", "All", "Faction", "Alert"]
+        panelIcons = ["ic_action_about", "ic_action_view_as_list", "ic_action_cc_bcc", "ic_action_warning"]
     }
 
 }
