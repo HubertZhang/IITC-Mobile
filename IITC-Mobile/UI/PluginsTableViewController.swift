@@ -19,12 +19,12 @@ class PluginsTableViewController: UITableViewController {
 
 //    var prototypeCell : PluginCell!
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         let tracker = GAI.sharedInstance().defaultTracker
-        tracker.set(kGAIScreenName, value: "Plugins")
+        tracker?.set(kGAIScreenName, value: "Plugins")
         
-        let builder = GAIDictionaryBuilder.createScreenView()
-        tracker.send(builder.build() as [NSObject : AnyObject])
+        let builder = GAIDictionaryBuilder.createScreenView()!
+        tracker?.send(builder.build() as NSDictionary as! [AnyHashable: Any])
     }
     
     override func viewDidLoad() {
@@ -33,7 +33,7 @@ class PluginsTableViewController: UITableViewController {
         self.tableView.estimatedRowHeight = 80.0
         self.tableView.rowHeight = UITableViewAutomaticDimension;
 //        prototypeCell = self.tableView.dequeueReusableCellWithIdentifier("PluginCell") as! PluginCell
-        NSNotificationCenter.defaultCenter().addObserverForName(ScriptsUpdatedNotification, object: nil, queue: NSOperationQueue.mainQueue()) { notification in
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: ScriptsUpdatedNotification), object: nil, queue: OperationQueue.main) { notification in
             self.loadScripts()
             self.tableView.reloadData()
         }
@@ -70,71 +70,71 @@ class PluginsTableViewController: UITableViewController {
             }
 
         }
-        keys = scripts.keys.sort()
-        if let index = keys.indexOf("Deleted") {
-            keys.removeAtIndex(index)
+        keys = scripts.keys.sorted()
+        if let index = keys.index(of: "Deleted") {
+            keys.remove(at: index)
             keys.append("Deleted")
         }
 
     }
 
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (self.changed) {
-            NSNotificationCenter.defaultCenter().postNotificationName(JSNotificationReloadRequired, object: nil);
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: JSNotificationReloadRequired), object: nil);
             self.changed = false;
         }
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return keys.count
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return scripts[keys[section]]?.count ?? 0
     }
 
-    func configureCell(originCell: UITableViewCell, indexPath: NSIndexPath) {
+    func configureCell(_ originCell: UITableViewCell, indexPath: IndexPath) {
         let script = scripts[keys[indexPath.section]]![indexPath.row]
         let cell = originCell as! PluginCell
         cell.titleText!.text = script.name
         cell.detailText!.text = script.scriptDescription
         let loaded = ScriptsManager.sharedInstance.loadedPlugins.contains(script.fileName)
         if loaded {
-            cell.accessoryType = .Checkmark;
+            cell.accessoryType = .checkmark;
         } else {
-            cell.accessoryType = .None;
+            cell.accessoryType = .none;
         }
 
         // Populate cell from the NSManagedObject instance
     }
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let script = scripts[keys[indexPath.section]]![indexPath.row]
         let loaded = ScriptsManager.sharedInstance.loadedPlugins.contains(script.fileName)
 
-        let cell = tableView.cellForRowAtIndexPath(indexPath)!
+        let cell = tableView.cellForRow(at: indexPath)!
         if loaded {
-            cell.accessoryType = .None;
+            cell.accessoryType = .none;
         } else {
-            cell.accessoryType = .Checkmark;
+            cell.accessoryType = .checkmark;
         }
         ScriptsManager.sharedInstance.setPlugin(script, loaded: !loaded)
         self.changed = true
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("PluginCell", forIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PluginCell", for: indexPath)
 
         self.configureCell(cell, indexPath: indexPath)
 
         return cell
     }
 
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return keys[section]
     }
 

@@ -32,11 +32,11 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureHairline()
-        hairLine.hidden = true
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LayersTableViewController.updateLayers), name: JSNotificationLayersGot, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LayersTableViewController.updateLayers), name: JSNotificationAddPane, object: nil)
+        hairLine.isHidden = true
+        NotificationCenter.default.addObserver(self, selector: #selector(LayersTableViewController.updateLayers), name: NSNotification.Name(rawValue: JSNotificationLayersGot), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(LayersTableViewController.updateLayers), name: NSNotification.Name(rawValue: JSNotificationAddPane), object: nil)
 
-        if let index = layersController.baseLayers.indexOf({ $0.active }) {
+        if let index = layersController.baseLayers.index(where: { $0.active }) {
             currentActiveIndex = index
         }
 
@@ -68,11 +68,11 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
 
     // MARK: - Table view data source
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch (tableView) {
         case panelTable:
             return layersController.panelNames.count;
@@ -86,32 +86,32 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
         return 0;
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
         switch (tableView) {
         case panelTable:
-            cell.textLabel?.text = layersController.panelLabels[indexPath.row]
-            if let image = UIImage(named: layersController.panelIcons[indexPath.row]) {
+            cell.textLabel?.text = layersController.panelLabels[(indexPath as NSIndexPath).row]
+            if let image = UIImage(named: layersController.panelIcons[(indexPath as NSIndexPath).row]) {
                 cell.imageView?.image = image
             } else {
                 cell.imageView?.image = UIImage(named: "ic_action_new_event")
             }
 
         case baseLayerTable:
-            let layer = layersController.baseLayers[indexPath.row]
+            let layer = layersController.baseLayers[(indexPath as NSIndexPath).row]
             cell.textLabel!.text = layer.layerName
             if layer.active {
-                cell.accessoryType = .Checkmark
+                cell.accessoryType = .checkmark
             } else {
-                cell.accessoryType = .None
+                cell.accessoryType = .none
             }
         case overlayLayerTable:
-            let layer = layersController.overlayLayers[indexPath.row]
+            let layer = layersController.overlayLayers[(indexPath as NSIndexPath).row]
             cell.textLabel!.text = layer.layerName
             if layer.active {
-                cell.accessoryType = .Checkmark
+                cell.accessoryType = .checkmark
             } else {
-                cell.accessoryType = .None
+                cell.accessoryType = .none
             }
         default:
             break;
@@ -119,40 +119,40 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
         return cell
     }
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch (tableView) {
         case panelTable:
-            NSNotificationCenter.defaultCenter().postNotificationName("SwitchToPanel", object: nil, userInfo: ["Panel": layersController.panelNames[indexPath.row]])
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "SwitchToPanel"), object: nil, userInfo: ["Panel": layersController.panelNames[(indexPath as NSIndexPath).row]])
             self.dismiss(nil)
         case baseLayerTable:
-            let layer = layersController.baseLayers[indexPath.row]
+            let layer = layersController.baseLayers[(indexPath as NSIndexPath).row]
             if layer.active {
                 return
             } else {
                 layer.active = true
                 layersController.baseLayers[currentActiveIndex].active = false
-                tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .Checkmark
-                let newIndexPath = NSIndexPath(forRow: currentActiveIndex, inSection: indexPath.section)
-                tableView.cellForRowAtIndexPath(newIndexPath)?.accessoryType = .None
-                currentActiveIndex = indexPath.row
-                NSNotificationCenter.defaultCenter().postNotificationName("WebViewExecuteJS", object: nil, userInfo: ["JS": "window.layerChooser.showLayer(\(layer.layerID))"])
+                tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+                let newIndexPath = IndexPath(row: currentActiveIndex, section: (indexPath as NSIndexPath).section)
+                tableView.cellForRow(at: newIndexPath)?.accessoryType = .none
+                currentActiveIndex = (indexPath as NSIndexPath).row
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "WebViewExecuteJS"), object: nil, userInfo: ["JS": "window.layerChooser.showLayer(\(layer.layerID))"])
 
             }
         case overlayLayerTable:
-            let layer = layersController.overlayLayers[indexPath.row]
+            let layer = layersController.overlayLayers[(indexPath as NSIndexPath).row]
             if layer.active {
                 layer.active = false
-                tableView.cellForRowAtIndexPath(indexPath)!.accessoryType = .None
-                NSNotificationCenter.defaultCenter().postNotificationName("WebViewExecuteJS", object: nil, userInfo: ["JS": "window.layerChooser.showLayer(\(layer.layerID), false)"])
+                tableView.cellForRow(at: indexPath)!.accessoryType = .none
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "WebViewExecuteJS"), object: nil, userInfo: ["JS": "window.layerChooser.showLayer(\(layer.layerID), false)"])
             } else {
                 layer.active = true
-                tableView.cellForRowAtIndexPath(indexPath)!.accessoryType = .Checkmark
-                NSNotificationCenter.defaultCenter().postNotificationName("WebViewExecuteJS", object: nil, userInfo: ["JS": "window.layerChooser.showLayer(\(layer.layerID), true)"])
+                tableView.cellForRow(at: indexPath)!.accessoryType = .checkmark
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "WebViewExecuteJS"), object: nil, userInfo: ["JS": "window.layerChooser.showLayer(\(layer.layerID), true)"])
             }
         default:
             break;
         }
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 
     /*
@@ -199,31 +199,31 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
         // Pass the selected object to the new view controller.
     }
     */
-    @IBAction func tabChanged(segment: UISegmentedControl) {
+    @IBAction func tabChanged(_ segment: UISegmentedControl) {
         switch segment.selectedSegmentIndex {
         case 0:
-            panelTable.hidden = false
-            baseLayerTable.hidden = true
-            overlayLayerTable.hidden = true
+            panelTable.isHidden = false
+            baseLayerTable.isHidden = true
+            overlayLayerTable.isHidden = true
         case 1:
-            panelTable.hidden = true
-            baseLayerTable.hidden = false
-            overlayLayerTable.hidden = true
+            panelTable.isHidden = true
+            baseLayerTable.isHidden = false
+            overlayLayerTable.isHidden = true
         case 2:
-            panelTable.hidden = true
-            baseLayerTable.hidden = true
-            overlayLayerTable.hidden = false
+            panelTable.isHidden = true
+            baseLayerTable.isHidden = true
+            overlayLayerTable.isHidden = false
         default:
             break
         }
     }
 
-    @IBAction func dismiss(sender: AnyObject?) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func dismiss(_ sender: AnyObject?) {
+        self.dismiss(animated: true, completion: nil)
     }
 
-    func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
-        return .TopAttached
+    func position(for bar: UIBarPositioning) -> UIBarPosition {
+        return .topAttached
     }
 
 

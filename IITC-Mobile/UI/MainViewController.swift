@@ -17,7 +17,7 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     
     var location = IITCLocation()
     
-    var userDefaults = NSUserDefaults(suiteName: ContainerIdentifier)!
+    var userDefaults = UserDefaults(suiteName: ContainerIdentifier)!
     
     var permalink: String = ""
     
@@ -30,10 +30,10 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
     func loadScripts() {
         var scripts = ScriptsManager.sharedInstance.getLoadedScripts()
-        let currentMode = IITCLocationMode(rawValue: userDefaults.integerForKey("pref_user_location_mode"))!
-        if currentMode != .NotShow {
+        let currentMode = IITCLocationMode(rawValue: userDefaults.integer(forKey: "pref_user_location_mode"))!
+        if currentMode != .notShow {
             scripts.append(ScriptsManager.sharedInstance.positionScript)
-                
+            
         }
         self.webView.loadScripts(scripts)
         loadIITCNeeded = false
@@ -41,54 +41,54 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     }
     
     func syncCookie() {
-        let containerPath = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier(ContainerIdentifier)!
-        let cookieDirPath = containerPath.URLByAppendingPathComponent("Library/Cookies", isDirectory: true)
-        let bakCookiePath = cookieDirPath.URLByAppendingPathComponent("Cookies.binarycookies", isDirectory: false)
-        if NSFileManager.defaultManager().fileExistsAtPath(bakCookiePath.path!) {
+        let containerPath = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContainerIdentifier)!
+        let cookieDirPath = containerPath.appendingPathComponent("Library/Cookies", isDirectory: true)
+        let bakCookiePath = cookieDirPath.appendingPathComponent("Cookies.binarycookies", isDirectory: false)
+        if FileManager.default.fileExists(atPath: bakCookiePath.path) {
             return
         }
         
-        let libraryPath = NSFileManager.defaultManager().URLsForDirectory(.LibraryDirectory, inDomains: .UserDomainMask).last!
-        let oriCookiePath = libraryPath.URLByAppendingPathComponent("Cookies/Cookies.binarycookies", isDirectory: false)
-        if !NSFileManager.defaultManager().fileExistsAtPath(oriCookiePath.path!) {
+        let libraryPath = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).last!
+        let oriCookiePath = libraryPath.appendingPathComponent("Cookies/Cookies.binarycookies", isDirectory: false)
+        if !FileManager.default.fileExists(atPath: oriCookiePath.path) {
             return
         }
-        try? NSFileManager.defaultManager().createDirectoryAtURL(cookieDirPath, withIntermediateDirectories: true, attributes: nil)
-        try? NSFileManager.defaultManager().copyItemAtURL(oriCookiePath, toURL: bakCookiePath)
+        try? FileManager.default.createDirectory(at: cookieDirPath, withIntermediateDirectories: true, attributes: nil)
+        try? FileManager.default.copyItem(at: oriCookiePath, to: bakCookiePath)
     }
 
     func configureWebView() {
-        self.webView = IITCWebView(frame: CGRectZero)
+        self.webView = IITCWebView(frame: CGRect.zero)
 
         self.webView.translatesAutoresizingMaskIntoConstraints = false
         self.webView.navigationDelegate = self
-        self.webView.UIDelegate = self
+        self.webView.uiDelegate = self
         self.view.addSubview(self.webView);
 
         var constraints = [NSLayoutConstraint]()
-        constraints.append(NSLayoutConstraint.init(item: self.topLayoutGuide, attribute: .Bottom, relatedBy: .Equal, toItem: self.webView, attribute: .Top, multiplier: 1.0, constant: 0))
-        constraints.append(NSLayoutConstraint.init(item: self.bottomLayoutGuide, attribute: .Top, relatedBy: .Equal, toItem: self.webView, attribute: .Bottom, multiplier: 1.0, constant: 0))
-        constraints.append(NSLayoutConstraint.init(item: self.view, attribute: .Leading, relatedBy: .Equal, toItem: self.webView, attribute: .Leading, multiplier: 1.0, constant: 0))
-        constraints.append(NSLayoutConstraint.init(item: self.view, attribute: .Trailing, relatedBy: .Equal, toItem: self.webView, attribute: .Trailing, multiplier: 1.0, constant: 0))
+        constraints.append(NSLayoutConstraint.init(item: self.topLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: self.webView, attribute: .top, multiplier: 1.0, constant: 0))
+        constraints.append(NSLayoutConstraint.init(item: self.bottomLayoutGuide, attribute: .top, relatedBy: .equal, toItem: self.webView, attribute: .bottom, multiplier: 1.0, constant: 0))
+        constraints.append(NSLayoutConstraint.init(item: self.view, attribute: .leading, relatedBy: .equal, toItem: self.webView, attribute: .leading, multiplier: 1.0, constant: 0))
+        constraints.append(NSLayoutConstraint.init(item: self.view, attribute: .trailing, relatedBy: .equal, toItem: self.webView, attribute: .trailing, multiplier: 1.0, constant: 0))
         self.view.addConstraints(constraints)
 
-        self.webView.addObserver(self, forKeyPath: "estimatedProgress", options: .New, context: nil)
-        self.view.bringSubviewToFront(webProgressView)
+        self.webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
+        self.view.bringSubview(toFront: webProgressView)
         reloadIITC()
     }
 
     func configureNotification() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MainViewController.bootFinished), name: JSNotificationBootFinished, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MainViewController.setCurrentPanel(_:)), name: JSNotificationPaneChanged, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MainViewController.setIITCProgress(_:)), name: JSNotificationProgressChanged, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MainViewController.reloadIITC), name: JSNotificationReloadRequired, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(MainViewController.sharedAction(_:)), name:JSNotificationSharedAction, object:nil)
-        NSNotificationCenter.defaultCenter().addObserverForName("SwitchToPanel", object: nil, queue: NSOperationQueue.mainQueue()) {
+        NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.bootFinished), name: NSNotification.Name(rawValue: JSNotificationBootFinished), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.setCurrentPanel(_:)), name: NSNotification.Name(rawValue: JSNotificationPaneChanged), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.setIITCProgress(_:)), name: NSNotification.Name(rawValue: JSNotificationProgressChanged), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.reloadIITC), name: NSNotification.Name(rawValue: JSNotificationReloadRequired), object: nil)
+        NotificationCenter.default.addObserver(self, selector:#selector(MainViewController.sharedAction(_:)), name:NSNotification.Name(rawValue: JSNotificationSharedAction), object:nil)
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "SwitchToPanel"), object: nil, queue: OperationQueue.main) {
             (notification) in
-            let panel = notification.userInfo!["Panel"] as! String
+            let panel = (notification as NSNotification).userInfo!["Panel"] as! String
             self.switchToPanel(panel)
         }
-        NSNotificationCenter.defaultCenter().addObserverForName(JSNotificationPermalinkChanged, object: nil, queue: NSOperationQueue.mainQueue()) {
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: JSNotificationPermalinkChanged), object: nil, queue: OperationQueue.main) {
             (notification) in
             if let permalink = notification.userInfo?["data"] as? String {
                 self.permalink = permalink
@@ -105,27 +105,27 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     }
 
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String:AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey:Any]?, context: UnsafeMutableRawPointer?) {
         if (keyPath == "estimatedProgress") {
             let progress: Double = self.webView.estimatedProgress
             if progress >= 0.8 {
-                if let host = self.webView.URL?.host {
-                    if host.containsString("ingress") && self.loadIITCNeeded {
+                if let host = self.webView.url?.host {
+                    if host.contains("ingress") && self.loadIITCNeeded {
                         self.loadScripts()
                     }
                 }
             }
             self.webProgressView.setProgress(Float(progress), animated: true)
             if progress == 1.0 {
-                UIView.animateWithDuration(1, animations: {
+                UIView.animate(withDuration: 1, animations: {
                     () -> Void in
                     self.webProgressView.alpha = 0
-                }) { result in
+                }, completion: { result in
                     self.webProgressView.progress = 0
-                }
+                }) 
             } else {
                 self.webProgressView.alpha = 1
             }
@@ -137,51 +137,51 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         // Dispose of any resources that can be recreated.
     }
 
-    func webView(webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: () -> Void) {
-        let alertController: UIAlertController = UIAlertController(title: message, message: "", preferredStyle: .Alert)
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .Cancel, handler: {
+    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
+        let alertController: UIAlertController = UIAlertController(title: message, message: "", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: {
             (action: UIAlertAction) -> Void in
             completionHandler()
         }))
-        self.presentViewController(alertController, animated: true, completion: {
+        self.present(alertController, animated: true, completion: {
             () -> Void in
         })
     }
     
-    func webView(webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: (Bool) -> Void) {
-        let alertController: UIAlertController = UIAlertController(title: message, message: "", preferredStyle: .Alert)
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .Default, handler: {
+    func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
+        let alertController: UIAlertController = UIAlertController(title: message, message: "", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: {
             (action: UIAlertAction) -> Void in
             completionHandler(true)
         }))
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Cancel, handler: {
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
             (action: UIAlertAction) -> Void in
             completionHandler(false)
         }))
-        self.presentViewController(alertController, animated: true, completion: {
+        self.present(alertController, animated: true, completion: {
             () -> Void in
         })
     }
 
-    func webView(webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: (String?) -> Void) {
-        let alertController = UIAlertController(title: prompt, message: webView.URL!.host, preferredStyle: .Alert)
-        alertController.addTextFieldWithConfigurationHandler({
+    func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
+        let alertController = UIAlertController(title: prompt, message: webView.url!.host, preferredStyle: .alert)
+        alertController.addTextField(configurationHandler: {
             (textField: UITextField) -> Void in
             textField.text = defaultText
         })
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .Default, handler: {
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: {
             (action: UIAlertAction) -> Void in
             let input = alertController.textFields!.first!.text!
             completionHandler(input)
         }))
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Cancel, handler: {
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
             (action: UIAlertAction) -> Void in
             completionHandler(nil)
         }))
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
 
-    @IBAction func backButtonPressed(sender: AnyObject) {
+    @IBAction func backButtonPressed(_ sender: AnyObject) {
         if !self.backPanel.isEmpty {
             let panel = self.backPanel.removeLast()
 
@@ -189,12 +189,12 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
             self.backButtonPressed = true
         }
         if self.backPanel.isEmpty {
-            self.backButton.enabled = false
+            self.backButton.isEnabled = false
         }
     }
 
-    @IBAction func locationButtonPressed(aa: AnyObject) {
-        let prefPersistentZoom = userDefaults.boolForKey("pref_persistent_zoom")
+    @IBAction func locationButtonPressed(_ aa: AnyObject) {
+        let prefPersistentZoom = userDefaults.bool(forKey: "pref_persistent_zoom")
         if prefPersistentZoom {
             self.webView.evaluateJavaScript("window.map.locate({setView : true, maxZoom : map.getZoom()})")
         } else {
@@ -203,37 +203,37 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
     }
 
-    @IBAction func settingsButtonPressed(sender: AnyObject) {
-        let vc = SettingsViewController(style: .Grouped)
+    @IBAction func settingsButtonPressed(_ sender: AnyObject) {
+        let vc = SettingsViewController(style: .grouped)
         vc.neverShowPrivacySettings = true
         vc.showDoneButton = false
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
-    @IBAction func reloadButtonPressed(aa: AnyObject) {
-        reloadIITC()
+    @IBAction func reloadButtonPressed(_ aa: AnyObject) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue:JSNotificationReloadRequired), object:nil)
     }
 
-    @IBAction func linkButtonPressed(sender: AnyObject) {
-        let alert = UIAlertController(title: "Input intel URL", message: nil, preferredStyle: .Alert)
-        alert.addTextFieldWithConfigurationHandler {
+    @IBAction func linkButtonPressed(_ sender: AnyObject) {
+        let alert = UIAlertController(title: "Input intel URL", message: nil, preferredStyle: .alert)
+        alert.addTextField {
             textField in
             textField.text = self.permalink
         }
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: {
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {
             action in
             let urlString = alert.textFields![0].text ?? ""
             if urlString == self.permalink {
                 return
             }
-            if let urlComponent = NSURLComponents(string: urlString) where urlComponent.host == "www.ingress.com" {
-                self.webView.loadRequest(NSURLRequest(URL: urlComponent.URL!))
+            if let urlComponent = URLComponents(string: urlString) , urlComponent.host == "www.ingress.com" {
+                self.webView.load(URLRequest(url: urlComponent.url!))
                 self.loadIITCNeeded = true
             }
         }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
 
     }
     
@@ -245,8 +245,8 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     var currentPanelID = "map"
     var backPanel = [String]()
     var backButtonPressed = false
-    func setCurrentPanel(notification: NSNotification) {
-        guard let panel = notification.userInfo?["paneID"] as? String else {
+    func setCurrentPanel(_ notification: Notification) {
+        guard let panel = (notification as NSNotification).userInfo?["paneID"] as? String else {
             return
         }
 
@@ -261,33 +261,33 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
                 // don't push current pane to backstack if this method was called via back button
         else if (!self.backButtonPressed) {
             self.backPanel.append(self.currentPanelID)
-            self.backButton.enabled = true
+            self.backButton.isEnabled = true
         }
 
         self.backButtonPressed = false
         self.currentPanelID = panel;
     }
 
-    func switchToPanel(pane: String) {
+    func switchToPanel(_ pane: String) {
         self.webView.evaluateJavaScript(String(format: "window.show('%@')", pane))
     }
 
     func reloadIITC() {
         self.loadIITCNeeded = true
-        if userDefaults.boolForKey("pref_force_desktop") {
-            self.webView.loadRequest(NSURLRequest(URL: NSURL(string: "https://www.ingress.com/intel?vp=f")!))
+        if userDefaults.bool(forKey: "pref_force_desktop") {
+            self.webView.load(URLRequest(url: URL(string: "https://www.ingress.com/intel?vp=f")!))
         } else {
-            self.webView.loadRequest(NSURLRequest(URL: NSURL(string: "https://www.ingress.com/intel")!))
+            self.webView.load(URLRequest(url: URL(string: "https://www.ingress.com/intel")!))
 
         }
     }
 
-    func setIITCProgress(notification: NSNotification) {
-        if let progress = notification.userInfo?["data"] as? Double {
+    func setIITCProgress(_ notification: Notification) {
+        if let progress = (notification as NSNotification).userInfo?["data"] as? Double {
             if progress != -1 {
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
             } else {
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+                UIApplication.shared.isNetworkActivityIndicatorVisible = true
             }
         }
     }
@@ -296,26 +296,26 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         self.webView.evaluateJavaScript("window.layerChooser.getLayers()")
     }
 
-    func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
 //        print(#function)
 //        print(navigationAction.request.mainDocumentURL)
         if let urlString = navigationAction.request.mainDocumentURL?.absoluteString {
-            if urlString.containsString("accounts.google"){
+            if urlString.contains("accounts.google"){
                 self.loadIITCNeeded = true
             }
         }
-        decisionHandler(.Allow)
+        decisionHandler(.allow)
     }
     
     
-    func sharedAction(notification:NSNotification) {
-        let activityItem = notification.userInfo!["data"] as! [AnyObject]
+    func sharedAction(_ notification:Notification) {
+        let activityItem = (notification as NSNotification).userInfo!["data"] as! [AnyObject]
         let activityViewController = UIActivityViewController(activityItems: activityItem, applicationActivities: [OpenInMapActivity()])
-        activityViewController.excludedActivityTypes = [UIActivityTypeAddToReadingList]
-        if activityViewController.respondsToSelector(Selector("popoverPresentationController")) {
+        activityViewController.excludedActivityTypes = [UIActivityType.addToReadingList]
+        if activityViewController.responds(to: #selector(getter: UIViewController.popoverPresentationController)) {
             activityViewController.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItems?.first
         }
-        self.presentViewController(activityViewController, animated: true, completion: nil)
+        self.present(activityViewController, animated: true, completion: nil)
     }
 }
 

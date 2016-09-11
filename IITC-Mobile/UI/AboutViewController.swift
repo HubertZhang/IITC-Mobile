@@ -13,28 +13,28 @@ class AboutViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet weak var textView: UITextView!
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         let tracker = GAI.sharedInstance().defaultTracker
-        tracker.set(kGAIScreenName, value: "About")
+        tracker?.set(kGAIScreenName, value: "About")
             
         let builder = GAIDictionaryBuilder.createScreenView()
-        tracker.send(builder.build() as [NSObject : AnyObject])
+        tracker?.send(builder!.build() as NSDictionary as! [AnyHashable : Any])
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let path = NSBundle.mainBundle().URLForResource("About", withExtension: "html")
-        let htmlString = try! String(contentsOfURL: path!)
-        guard let data = htmlString.dataUsingEncoding(NSUTF8StringEncoding) else {
+        let path = Bundle.main.url(forResource: "About", withExtension: "html")
+        let htmlString = try! String(contentsOf: path!)
+        guard let data = htmlString.data(using: String.Encoding.utf8) else {
             return
         }
-        let options : [String:AnyObject] = [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType, NSCharacterEncodingDocumentAttribute: NSUTF8StringEncoding]
+        let options : [String:Any] = [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType, NSCharacterEncodingDocumentAttribute: NSNumber(value:String.Encoding.utf8.rawValue)]
         textView.attributedText = try! NSAttributedString(data:data, options:options, documentAttributes: nil)
         // Do any additional setup after loading the view.
     }
     
-    func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
         return true
     }
 

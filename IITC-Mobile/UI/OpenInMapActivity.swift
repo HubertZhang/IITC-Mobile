@@ -10,40 +10,40 @@ import UIKit
 import MapKit
 
 class OpenInMapActivity: UIActivity {
-    var url: NSURL?
+    var url: URL?
     var title: String?
     var mapItem: MKMapItem?
     
-    override class func activityCategory() -> UIActivityCategory {
-        return .Share
+    override class var activityCategory : UIActivityCategory {
+        return .share
     }
     
-    override func activityType() -> String? {
-        return "OpenInMapActivity"
+    override var activityType : UIActivityType? {
+        return UIActivityType(rawValue: "OpenInMapActivity")
     }
     
-    override func activityTitle() -> String? {
+    override var activityTitle : String? {
         return "Maps"
     }
     
-    override func activityImage() -> UIImage? {
+    override var activityImage : UIImage? {
         return UIImage(named: "maps_app_icon")
     }
     
-    override func canPerformWithActivityItems(activityItems: [AnyObject]) -> Bool {
+    override func canPerform(withActivityItems activityItems: [Any]) -> Bool {
         if activityItems.count == 3 {
-            if let url = activityItems[1] as? NSURL {
+            if let url = activityItems[1] as? URL {
                 return url.absoluteString.hasPrefix("https://www.ingress.com")
             }
         }
         return false
     }
     
-    override func prepareWithActivityItems(activityItems: [AnyObject]) {
+    override func prepare(withActivityItems activityItems: [Any]) {
         if let title = activityItems[0] as? String {
             self.title = title
         }
-        if let url = activityItems[1] as? NSURL {
+        if let url = activityItems[1] as? URL {
             self.url = url
         }
         if let pos = activityItems[2] as? [AnyObject] {
@@ -54,9 +54,9 @@ class OpenInMapActivity: UIActivity {
         }
     }
     
-    override func performActivity() {
+    override func perform() {
         self.mapItem?.name = self.title
-        self.mapItem?.openInMapsWithLaunchOptions(nil)
+        self.mapItem?.openInMaps(launchOptions: nil)
         self.activityDidFinish(true)
     }
 }

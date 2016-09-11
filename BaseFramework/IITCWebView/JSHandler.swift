@@ -20,57 +20,57 @@ public let JSNotificationAddPane: String = "JSNotificationAddPane"
 
 class JSHandler: NSObject, WKScriptMessageHandler {
 
-    func userContentController(userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         let call: [String:AnyObject] = message.body as! [String:AnyObject]
         let function = call["functionName"] as! String
         if (call["args"] is String) {
             if (call["args"] as! String == "") {
                 let selfSelector: Selector = NSSelectorFromString(function)
-                if self.respondsToSelector(selfSelector) {
-                    self.performSelector(selfSelector)
+                if self.responds(to: selfSelector) {
+                    self.perform(selfSelector)
                 } else {
                     NSLog("%@ not implemented", function)
                 }
             } else {
-                let selfSelector: Selector = NSSelectorFromString(function.stringByAppendingString(":"))
-                if self.respondsToSelector(selfSelector) {
-                    self.performSelector(selfSelector, withObject: call["args"])
+                let selfSelector: Selector = NSSelectorFromString(function + ":")
+                if self.responds(to: selfSelector) {
+                    self.perform(selfSelector, with: call["args"])
                 }
             }
         } else if (call["args"] is NSNumber || call["args"] is NSArray) {
-            let selfSelector = NSSelectorFromString(function.stringByAppendingString(":"));
-            if (self.respondsToSelector(selfSelector)) {
-                self.performSelector(selfSelector, withObject: call["args"]);
+            let selfSelector = NSSelectorFromString(function + ":");
+            if (self.responds(to: selfSelector)) {
+                self.perform(selfSelector, with: call["args"]);
             } else {
                 NSLog("%@ not implemented", function);
             }
         } else {
-            NSLog(message.body.description);
+            NSLog((message.body as AnyObject).description);
         }
     }
 
-    func intentPosLink(args: [AnyObject]) {
+    func intentPosLink(_ args: [AnyObject]) {
         let isPortal: Bool = args[4] as! Bool
         let lat = args[0] as! Double
         let lng = args[1] as! Double
         let zoom: Int = args[2] as! Int
-        var url: NSURL
+        var url: URL
         if isPortal {
-            url = NSURL(string: "https://www.ingress.com/intel?pll=\(lat),\(lng)&z=\(zoom)")!
+            url = URL(string: "https://www.ingress.com/intel?pll=\(lat),\(lng)&z=\(zoom)")!
         } else {
-            url = NSURL(string: "https://www.ingress.com/intel?ll=\(lat),\(lng)&z=\(zoom)")!
+            url = URL(string: "https://www.ingress.com/intel?ll=\(lat),\(lng)&z=\(zoom)")!
         }
 //        var locationURL = NSURL(string: "maps://?ll=\(lat),\(lng)")!
         //    NSString *title = args[3];
         //
-        NSNotificationCenter.defaultCenter().postNotificationName(JSNotificationSharedAction, object: self, userInfo: ["data": [args[3], url, [lat, lng, zoom]]])
+        NotificationCenter.default.post(name: Notification.Name(rawValue: JSNotificationSharedAction), object: self, userInfo: ["data": [args[3], url, [lat, lng, zoom]]])
         //    mIitc.startActivity(ShareActivity.forPosition(mIitc, lat, lng, zoom, title, isPortal));
     }
 
     // share a string to the IITC share activity. only uses the share tab.
 
-    func shareString(str: String) {
-        NSNotificationCenter.defaultCenter().postNotificationName(JSNotificationSharedAction, object: self, userInfo: ["data": [str]])
+    func shareString(_ str: String) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: JSNotificationSharedAction), object: self, userInfo: ["data": [str]])
     }
 
     // disable javascript injection while spinner is enabled
@@ -82,12 +82,12 @@ class JSHandler: NSObject, WKScriptMessageHandler {
 
     // copy link to specific portal to android clipboard
 
-    func ioscopy(s: String) {
-        UIPasteboard.generalPasteboard().string = s
+    func ioscopy(_ s: String) {
+        UIPasteboard.general.string = s
     }
 
-    func switchToPane(paneID: String) {
-        NSNotificationCenter.defaultCenter().postNotificationName(JSNotificationPaneChanged, object: self, userInfo: ["paneID": paneID])
+    func switchToPane(_ paneID: String) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: JSNotificationPaneChanged), object: self, userInfo: ["paneID": paneID])
     }
 
     //- (void) dialogFocused:(NSString *) dialogID {
@@ -101,12 +101,12 @@ class JSHandler: NSObject, WKScriptMessageHandler {
 
 
     func bootFinished() {
-        NSNotificationCenter.defaultCenter().postNotificationName(JSNotificationBootFinished, object: self)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: JSNotificationBootFinished), object: self)
     }
     // get layers and list them in a dialog
 
-    func setLayers(layers: [AnyObject]) {
-        NSNotificationCenter.defaultCenter().postNotificationName(JSNotificationLayersGot, object: self, userInfo: ["layers": layers])
+    func setLayers(_ layers: [AnyObject]) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: JSNotificationLayersGot), object: self, userInfo: ["layers": layers])
     }
 
     //
@@ -140,7 +140,7 @@ class JSHandler: NSObject, WKScriptMessageHandler {
     //}
 
 
-    func addPane(pane: [AnyObject]) {
+    func addPane(_ pane: [AnyObject]) {
         if pane.count < 2 {
             return
         }
@@ -154,7 +154,7 @@ class JSHandler: NSObject, WKScriptMessageHandler {
         if pane.count >= 3  {
             icon = pane[2] as? String ?? "ic_action_new_event"
         }
-        NSNotificationCenter.defaultCenter().postNotificationName(JSNotificationAddPane, object: self, userInfo: ["name": name, "label":label, "icon":icon])
+        NotificationCenter.default.post(name: Notification.Name(rawValue: JSNotificationAddPane), object: self, userInfo: ["name": name, "label":label, "icon":icon])
 
     }
 
@@ -177,17 +177,17 @@ class JSHandler: NSObject, WKScriptMessageHandler {
     //}
 
 
-    func setProgress(progress: Int) {
-        NSNotificationCenter.defaultCenter().postNotificationName(JSNotificationProgressChanged, object: self, userInfo: ["data": progress])
+    func setProgress(_ progress: Int) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: JSNotificationProgressChanged), object: self, userInfo: ["data": progress])
     }
 
-    func setPermalink(href: String) {
-        NSNotificationCenter.defaultCenter().postNotificationName(JSNotificationPermalinkChanged, object: self, userInfo: ["data": href])
+    func setPermalink(_ href: String) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: JSNotificationPermalinkChanged), object: self, userInfo: ["data": href])
     }
 
     func reloadIITC() {
 
-        NSNotificationCenter.defaultCenter().postNotificationName(JSNotificationReloadRequired, object: self, userInfo: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: JSNotificationReloadRequired), object: self, userInfo: nil)
     }
 
 }

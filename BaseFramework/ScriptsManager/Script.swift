@@ -8,29 +8,29 @@
 
 import UIKit
 
-public class Script: NSObject {
-    public var fileName: String
-    public var version: String?
-    public var name: String?
-    public var category: String
-    public var scriptDescription: String?
-    public var filePath: NSURL
-    public var downloadURL: String?
-    public var updateURL: String?
-    public var fileContent: String
-    public var isUserScript: Bool = false
+open class Script: NSObject {
+    open var fileName: String
+    open var version: String?
+    open var name: String?
+    open var category: String
+    open var scriptDescription: String?
+    open var filePath: URL
+    open var downloadURL: String?
+    open var updateURL: String?
+    open var fileContent: String
+    open var isUserScript: Bool = false
 
-    init(coreJS filePath: NSURL, withName name: String) throws {
-        self.fileContent = try String(contentsOfURL: filePath)
+    init(coreJS filePath: URL, withName name: String) throws {
+        self.fileContent = try String(contentsOf: filePath)
         self.name = name
-        self.filePath = filePath.URLByResolvingSymlinksInPath!
-        self.fileName = filePath.lastPathComponent!
+        self.filePath = filePath.resolvingSymlinksInPath()
+        self.fileName = filePath.lastPathComponent
         self.category = "Core"
         super.init()
     }
 
-    init(atFilePath filePath: NSURL) throws {
-        self.fileContent = try String(contentsOfURL: filePath)
+    init(atFilePath filePath: URL) throws {
+        self.fileContent = try String(contentsOf: filePath)
         let attributes = Script.getJSAttributes(fileContent)
         self.version = attributes["version"];
         self.updateURL = attributes["updateURL"];
@@ -38,35 +38,35 @@ public class Script: NSObject {
         self.name = attributes["name"];
         self.category = attributes["category"] ?? "Undefined"
         self.scriptDescription = attributes["description"];
-        self.filePath = filePath.URLByResolvingSymlinksInPath!
-        self.fileName = filePath.lastPathComponent!
+        self.filePath = filePath.resolvingSymlinksInPath()
+        self.fileName = filePath.lastPathComponent
         super.init()
     }
 
-    static func getJSAttributes(fileContent: String) -> Dictionary<String, String> {
+    static func getJSAttributes(_ fileContent: String) -> Dictionary<String, String> {
         var attributes = Dictionary<String, String>()
 
         do {
-            guard let range1 = fileContent.rangeOfString("==UserScript==") else {
+            guard let range1 = fileContent.range(of: "==UserScript==") else {
                 return attributes
             }
-            guard let range2 = fileContent.rangeOfString("==/UserScript==") else {
+            guard let range2 = fileContent.range(of: "==/UserScript==") else {
                 return attributes
             }
             var e: NSRegularExpression
-            e = try NSRegularExpression(pattern: "//.*?@([^\\s]*)\\s*(.*)", options: NSRegularExpressionOptions(rawValue: 0))
-            let header = fileContent.substringWithRange(Range<String.Index>(range1.endIndex.successor() ..< range2.startIndex))
-            for line in header.componentsSeparatedByString("\n") {
+            e = try NSRegularExpression(pattern: "//.*?@([^\\s]*)\\s*(.*)", options: NSRegularExpression.Options(rawValue: 0))
+            let header = fileContent.substring(with: Range<String.Index>(range1.upperBound ..< range2.lowerBound))
+            for line in header.components(separatedBy: "\n") {
 //                print(line)
-                let search = e.matchesInString(line, options: NSMatchingOptions(rawValue: 0), range: NSMakeRange(0, (line as NSString).length))
+                let search = e.matches(in: line, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, (line as NSString).length))
                 if (search.count > 0) {
 //                    print(search[0].rangeAtIndex(1))
 //                    print(search[0].rangeAtIndex(2))
-                    var start = line.startIndex.advancedBy(search[0].rangeAtIndex(1).location)
-                    var end = start.advancedBy(search[0].rangeAtIndex(1).length - 1)
+                    var start = line.characters.index(line.startIndex, offsetBy: search[0].rangeAt(1).location)
+                    var end = line.characters.index(start, offsetBy: search[0].rangeAt(1).length - 1)
                     let rangeId = line[start ... end]
-                    start = line.startIndex.advancedBy(search[0].rangeAtIndex(2).location)
-                    end = start.advancedBy(search[0].rangeAtIndex(2).length - 1)
+                    start = line.characters.index(line.startIndex, offsetBy: search[0].rangeAt(2).location)
+                    end = line.characters.index(start, offsetBy: search[0].rangeAt(2).length - 1)
                     let rangeDetail = line[start ... end]
                     attributes[rangeId] = rangeDetail
                 }

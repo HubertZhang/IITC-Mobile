@@ -10,16 +10,16 @@ import UIKit
 import CoreLocation
 
 public enum IITCLocationMode: Int {
-    case NotShow = 0
-    case ShowPosition = 1
-    case ShowPositionAndOrientation = 2
+    case notShow = 0
+    case showPosition = 1
+    case showPositionAndOrientation = 2
 }
 
-public class IITCLocation: NSObject, CLLocationManagerDelegate {
+open class IITCLocation: NSObject, CLLocationManagerDelegate {
     let locationManager = CLLocationManager()
-    var currentMode = IITCLocationMode.NotShow
+    var currentMode = IITCLocationMode.notShow
     
-    var userDefaults = NSUserDefaults(suiteName: ContainerIdentifier)!
+    var userDefaults = UserDefaults(suiteName: ContainerIdentifier)!
     public override init() {
         super.init()
         locationManager.delegate = self;
@@ -27,18 +27,18 @@ public class IITCLocation: NSObject, CLLocationManagerDelegate {
 
         // Set a movement threshold for new events.
         locationManager.distanceFilter = 1; // meters
-        currentMode = IITCLocationMode(rawValue: userDefaults.integerForKey("pref_user_location_mode"))!
-        if currentMode != .NotShow {
+        currentMode = IITCLocationMode(rawValue: userDefaults.integer(forKey: "pref_user_location_mode"))!
+        if currentMode != .notShow {
             self.startUpdate()
         }
-        userDefaults.addObserver(self, forKeyPath: "pref_user_location_mode", options: .New, context: nil)
+        userDefaults.addObserver(self, forKeyPath: "pref_user_location_mode", options: .new, context: nil)
 
     }
 
-    override public func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String:AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey:Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "pref_user_location_mode" {
-            currentMode = IITCLocationMode(rawValue: userDefaults.integerForKey("pref_user_location_mode"))!
-            if currentMode != .NotShow {
+            currentMode = IITCLocationMode(rawValue: userDefaults.integer(forKey: "pref_user_location_mode"))!
+            if currentMode != .notShow {
                 self.startUpdate()
             } else {
                 self.stopUpdate()
@@ -47,7 +47,7 @@ public class IITCLocation: NSObject, CLLocationManagerDelegate {
     }
 
     func startUpdate() {
-        if CLLocationManager.authorizationStatus() == .NotDetermined {
+        if CLLocationManager.authorizationStatus() == .notDetermined {
             locationManager.requestWhenInUseAuthorization()
         }
         locationManager.startUpdatingLocation()
@@ -57,25 +57,25 @@ public class IITCLocation: NSObject, CLLocationManagerDelegate {
         locationManager.stopUpdatingLocation()
     }
 
-    public func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    open func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = manager.location!
         var notification = ""
-        if self.currentMode != .NotShow {
+        if self.currentMode != .notShow {
             notification = "if(window.plugin && window.plugin.userLocation)\nwindow.plugin.userLocation.onLocationChange(\(location.coordinate.latitude), \(location.coordinate.longitude));"
         }
 
-        if self.currentMode == .ShowPositionAndOrientation {
+        if self.currentMode == .showPositionAndOrientation {
             notification += "if(window.plugin && window.plugin.userLocation)\nwindow.plugin.userLocation.onOrientationChange(\(location.course));"
         }
-        NSNotificationCenter.defaultCenter().postNotificationName("WebViewExecuteJS", object: nil, userInfo: ["JS": notification])
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "WebViewExecuteJS"), object: nil, userInfo: ["JS": notification])
 
     }
 
-    public func locationManager(manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+    open func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         NSLog("Heading:%@", newHeading.description)
     }
 
-    public func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        NSLog("Error:%@", error.debugDescription)
+    open func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        NSLog("Error:%@", error.localizedDescription)
     }
 }

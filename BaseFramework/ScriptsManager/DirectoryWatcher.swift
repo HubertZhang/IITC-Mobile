@@ -9,14 +9,14 @@
 import UIKit
 
 protocol DirectoryWatcherDelegate {
-    func directoryDidChange(folderWatcher: DirectoryWatcher)
+    func directoryDidChange(_ folderWatcher: DirectoryWatcher)
 }
 
 class DirectoryWatcher: NSObject {
-    var path :NSURL
-    var source: dispatch_source_t!
+    var path :URL
+    var source: DispatchSource!
     var delegate: DirectoryWatcherDelegate
-    init(_ dirPath:NSURL, delegate:DirectoryWatcherDelegate) {
+    init(_ dirPath:URL, delegate:DirectoryWatcherDelegate) {
         path = dirPath
         self.delegate = delegate
         super.init()
@@ -24,17 +24,17 @@ class DirectoryWatcher: NSObject {
     }
     
     func o() {
-        let observerQueue = dispatch_queue_create("aaa", DISPATCH_QUEUE_CONCURRENT)
-        let fileDescr = open(path.fileSystemRepresentation, O_EVTONLY);// observe file system events for particular path - you can pass here Documents directory path
+        let observerQueue = DispatchQueue(label: "aaa", attributes: DispatchQueue.Attributes.concurrent)
+        let fileDescr = open((path as NSURL).fileSystemRepresentation, O_EVTONLY);// observe file system events for particular path - you can pass here Documents directory path
         //observer queue is my private dispatch_queue_t object
         if fileDescr < 0 {
             return
         }
-        source = dispatch_source_create(DISPATCH_SOURCE_TYPE_VNODE, UInt(fileDescr), DISPATCH_VNODE_ATTRIB | DISPATCH_VNODE_WRITE | DISPATCH_VNODE_LINK | DISPATCH_VNODE_EXTEND, observerQueue);// create dispatch_source object to observe vnode events
-        dispatch_source_set_registration_handler(source, {
+        source = DispatchSource.makeFileSystemObjectSource(fileDescriptor: fileDescr, eventMask: [.attrib , .write , .link , .extend], queue: observerQueue) /*Migrator FIXME: Use DispatchSourceFileSystemObject to avoid the cast*/ as! DispatchSource;// create dispatch_source object to observe vnode events
+        source.setRegistrationHandler(handler: {
 //            print("registered for observation");
             //event handler is called each time file system event of selected type (DISPATCH_VNODE_*) has occurred
-            dispatch_source_set_event_handler(self.source, {
+            self.source.setEventHandler(handler: {
 
 //                let flags = dispatch_source_get_data(self.source);//obtain flags
 //                print("%lu",flags);
@@ -63,13 +63,13 @@ class DirectoryWatcher: NSObject {
 //                print("\n\n");
                 });
             
-            dispatch_source_set_cancel_handler(self.source, {
+            self.source.setCancelHandler(handler: {
                 close(fileDescr);
                 });
             });
 //
 //        //we have to resume dispatch_objects
-        dispatch_resume(source);
+        source.resume();
 //
 //        return source;
     }

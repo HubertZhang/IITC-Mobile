@@ -10,7 +10,6 @@ import UIKit
 import BaseFramework
 import RxSwift
 import RxCocoa
-import RxBlocking
 import InAppSettingsKit
 import MBProgressHUD
 import Alamofire
@@ -21,17 +20,17 @@ import Alamofire
         self.delegate = self
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         let tracker = GAI.sharedInstance().defaultTracker
-        tracker.set(kGAIScreenName, value: "Settings")
+        tracker?.set(kGAIScreenName, value: "Settings")
 
-        let builder = GAIDictionaryBuilder.createScreenView()
-        tracker.send(builder.build() as [NSObject:AnyObject])
+        let builder = GAIDictionaryBuilder.createScreenView()!
+        tracker?.send(builder.build() as NSDictionary as! [AnyHashable: Any])
     }
 
     override init(style: UITableViewStyle) {
         super.init(style: style)
-        let defaults = NSUserDefaults(suiteName: ContainerIdentifier)
+        let defaults = UserDefaults(suiteName: ContainerIdentifier)
         self.settingsStore = IASKSettingsStoreUserDefaults(userDefaults: defaults)
     }
 
@@ -39,17 +38,17 @@ import Alamofire
         super.init(coder: aDecoder)
     }
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
-    func settingsViewController(sender: IASKAppSettingsViewController!, buttonTappedForSpecifier specifier: IASKSpecifier!) {
+    func settingsViewController(_ sender: IASKAppSettingsViewController!, buttonTappedFor specifier: IASKSpecifier!) {
         if (specifier.key() == "pref_plugins") {
-            let vc = self.navigationController!.storyboard!.instantiateViewControllerWithIdentifier("pluginsViewController")
+            let vc = self.navigationController!.storyboard!.instantiateViewController(withIdentifier: "pluginsViewController")
             self.navigationController!.pushViewController(vc, animated: true)
         } else if (specifier.key() == "pref_update") {
-            let hud = MBProgressHUD.showHUDAddedTo(self.navigationController!.view, animated: true);
-            hud.mode = MBProgressHUDMode.AnnularDeterminate;
+            let hud = MBProgressHUD.showAdded(to: self.navigationController!.view, animated: true);
+            hud.mode = MBProgressHUDMode.annularDeterminate;
             hud.label.text = "Updating...";
             var finished = 0
             let all = ScriptsManager.sharedInstance.storedPlugins.count + 2
@@ -65,65 +64,65 @@ import Alamofire
                 hud.label.text = "Scanning..."
                 ScriptsManager.sharedInstance.loadAllPlugins()
                 ScriptsManager.sharedInstance.loadUserMainScript()
-                hud.hideAnimated(true)
+                hud.hide(animated: true)
             }, onDisposed: {
                 () -> Void in
             })
 
         } else if specifier.key() == "pref_about" {
-            let vc = self.navigationController!.storyboard!.instantiateViewControllerWithIdentifier("aboutViewController")
+            let vc = self.navigationController!.storyboard!.instantiateViewController(withIdentifier: "aboutViewController")
             self.navigationController!.pushViewController(vc, animated: true)
         } else if specifier.key() == "pref_new" {
-            let vc = self.navigationController!.storyboard!.instantiateViewControllerWithIdentifier("whatsNewViewController")
+            let vc = self.navigationController!.storyboard!.instantiateViewController(withIdentifier: "whatsNewViewController")
             self.navigationController!.pushViewController(vc, animated: true)
         } else if specifier.key() == "pref_adv_download_test" {
-            let alert = UIAlertController(title: "Download test build", message: "Warning: download script may override IITC script you added. Continue?", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: {
+            let alert = UIAlertController(title: "Download test build", message: "Warning: download script may override IITC script you added. Continue?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {
                 action in
-                let hud = MBProgressHUD.showHUDAddedTo(self.navigationController!.view, animated: true);
-                hud.mode = MBProgressHUDMode.AnnularDeterminate;
+                let hud = MBProgressHUD.showAdded(to: self.navigationController!.view, animated: true);
+                hud.mode = MBProgressHUDMode.annularDeterminate;
                 hud.label.text = "Downloading IITC script...";
 
-                Alamofire.download(.GET, "https://secure.jonatkins.com/iitc/test/total-conversion-build.user.js", destination: {
-                    (url, response) -> NSURL in
+                Alamofire.download("https://secure.jonatkins.com/iitc/test/total-conversion-build.user.js" as URLStringConvertible, to: {
+                    (url, response) -> URL in
                     let pathComponent = response.suggestedFilename
-                    let downloadPath = ScriptsManager.sharedInstance.userScriptsPath.URLByAppendingPathComponent("total-conversion-build.user.js")
-                    if NSFileManager.defaultManager().fileExistsAtPath(downloadPath.path!) {
+                    let downloadPath = ScriptsManager.sharedInstance.userScriptsPath.appendingPathComponent("total-conversion-build.user.js")
+                    if FileManager.default.fileExists(atPath: downloadPath.path) {
                         do {
-                            try NSFileManager.defaultManager().removeItemAtPath(downloadPath.path!)
+                            try FileManager.default.removeItem(atPath: downloadPath.path)
                         } catch {
 
                         }
                     }
                     return downloadPath
-                }).progress {
+                    }, withMethod: .get , parameters: nil, encoding: ParameterEncoding.url, headers: nil).progress {
                     bytesRead, totalBytesRead, totalBytesExpectedToRead in
 
                     // This closure is NOT called on the main queue for performance
                     // reasons. To update your ui, dispatch to the main queue.
-                    dispatch_async(dispatch_get_main_queue()) {
+                    DispatchQueue.main.async {
                         hud.progress = Float(totalBytesRead) / Float(totalBytesExpectedToRead)
                     }
                 }.response {
                     request, response, _, error in
 
-                    hud.hideAnimated(true)
+                    hud.hide(animated: true)
                     if error != nil {
-                        let alert1 = UIAlertController(title: "Error", message: error!.localizedDescription, preferredStyle: .Alert)
-                        alert1.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
-                        self.presentViewController(alert1, animated: true, completion: nil)
+                        let alert1 = UIAlertController(title: "Error", message: error!.localizedDescription, preferredStyle: .alert)
+                        alert1.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                        self.present(alert1, animated: true, completion: nil)
                     }
                 }
 
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
 
         }
     }
 
-    func settingsViewControllerDidEnd(sender: IASKAppSettingsViewController!) {
+    func settingsViewControllerDidEnd(_ sender: IASKAppSettingsViewController!) {
 
     }
 }
