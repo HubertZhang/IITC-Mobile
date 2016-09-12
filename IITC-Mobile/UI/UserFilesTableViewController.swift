@@ -24,7 +24,7 @@ class UserFilesTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         userScriptsPath = ScriptsManager.sharedInstance.userScriptsPath
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: ScriptsUpdatedNotification), object: nil, queue: OperationQueue.main) {
+        NotificationCenter.default.addObserver(forName: ScriptsUpdatedNotification, object: nil, queue: OperationQueue.main) {
             notification in
             self.updateContent()
             self.tableView.reloadData()

@@ -9,14 +9,14 @@
 import UIKit
 import WebKit
 
-public let JSNotificationLayersGot: String = "JSNotificationLayersGot"
-public let JSNotificationPaneChanged: String = "JSNotificationPaneChanged"
-public let JSNotificationBootFinished: String = "JSNotificationBootFinished"
-public let JSNotificationReloadRequired: String = "JSNotificationReloadRequired"
-public let JSNotificationSharedAction: String = "JSNotificationSharedAction"
-public let JSNotificationProgressChanged: String = "JSNotificationProgressChanged"
-public let JSNotificationPermalinkChanged: String = "JSNotificationPermalinkChanged"
-public let JSNotificationAddPane: String = "JSNotificationAddPane"
+public let JSNotificationLayersGot = Notification.Name(rawValue: "JSNotificationLayersGot")
+public let JSNotificationPaneChanged = Notification.Name(rawValue: "JSNotificationPaneChanged")
+public let JSNotificationBootFinished = Notification.Name(rawValue: "JSNotificationBootFinished")
+public let JSNotificationReloadRequired = Notification.Name(rawValue: "JSNotificationReloadRequired")
+public let JSNotificationSharedAction = Notification.Name(rawValue: "JSNotificationSharedAction")
+public let JSNotificationProgressChanged = Notification.Name(rawValue: "JSNotificationProgressChanged")
+public let JSNotificationPermalinkChanged = Notification.Name(rawValue: "JSNotificationPermalinkChanged")
+public let JSNotificationAddPane = Notification.Name(rawValue:  "JSNotificationAddPane")
 
 class JSHandler: NSObject, WKScriptMessageHandler {
 
@@ -63,14 +63,14 @@ class JSHandler: NSObject, WKScriptMessageHandler {
 //        var locationURL = NSURL(string: "maps://?ll=\(lat),\(lng)")!
         //    NSString *title = args[3];
         //
-        NotificationCenter.default.post(name: Notification.Name(rawValue: JSNotificationSharedAction), object: self, userInfo: ["data": [args[3], url, [lat, lng, zoom]]])
+        NotificationCenter.default.post(name: JSNotificationSharedAction, object: self, userInfo: ["data": [args[3], url, [lat, lng, zoom]]])
         //    mIitc.startActivity(ShareActivity.forPosition(mIitc, lat, lng, zoom, title, isPortal));
     }
 
     // share a string to the IITC share activity. only uses the share tab.
 
     func shareString(_ str: String) {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: JSNotificationSharedAction), object: self, userInfo: ["data": [str]])
+        NotificationCenter.default.post(name: JSNotificationSharedAction, object: self, userInfo: ["data": [str]])
     }
 
     // disable javascript injection while spinner is enabled
@@ -87,7 +87,7 @@ class JSHandler: NSObject, WKScriptMessageHandler {
     }
 
     func switchToPane(_ paneID: String) {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: JSNotificationPaneChanged), object: self, userInfo: ["paneID": paneID])
+        NotificationCenter.default.post(name: JSNotificationPaneChanged, object: self, userInfo: ["paneID": paneID])
     }
 
     //- (void) dialogFocused:(NSString *) dialogID {
@@ -101,12 +101,12 @@ class JSHandler: NSObject, WKScriptMessageHandler {
 
 
     func bootFinished() {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: JSNotificationBootFinished), object: self)
+        NotificationCenter.default.post(name: JSNotificationBootFinished, object: self)
     }
     // get layers and list them in a dialog
 
     func setLayers(_ layers: [AnyObject]) {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: JSNotificationLayersGot), object: self, userInfo: ["layers": layers])
+        NotificationCenter.default.post(name: JSNotificationLayersGot, object: self, userInfo: ["layers": layers])
     }
 
     //
@@ -154,7 +154,7 @@ class JSHandler: NSObject, WKScriptMessageHandler {
         if pane.count >= 3  {
             icon = pane[2] as? String ?? "ic_action_new_event"
         }
-        NotificationCenter.default.post(name: Notification.Name(rawValue: JSNotificationAddPane), object: self, userInfo: ["name": name, "label":label, "icon":icon])
+        NotificationCenter.default.post(name: JSNotificationAddPane, object: self, userInfo: ["name": name, "label":label, "icon":icon])
 
     }
 
@@ -178,16 +178,15 @@ class JSHandler: NSObject, WKScriptMessageHandler {
 
 
     func setProgress(_ progress: Int) {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: JSNotificationProgressChanged), object: self, userInfo: ["data": progress])
+        NotificationCenter.default.post(name: JSNotificationProgressChanged, object: self, userInfo: ["data": progress])
     }
 
     func setPermalink(_ href: String) {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: JSNotificationPermalinkChanged), object: self, userInfo: ["data": href])
+        NotificationCenter.default.post(name: JSNotificationPermalinkChanged, object: self, userInfo: ["data": href])
     }
 
     func reloadIITC() {
-
-        NotificationCenter.default.post(name: Notification.Name(rawValue: JSNotificationReloadRequired), object: self, userInfo: nil)
+        NotificationCenter.default.post(name: JSNotificationReloadRequired, object: self, userInfo: nil)
     }
 
 }

@@ -11,7 +11,7 @@ import RxSwift
 import Alamofire
 import RxAlamofire
 
-public let ScriptsUpdatedNotification: String = "ScriptsUpdatedNotification"
+public let ScriptsUpdatedNotification = Notification.Name(rawValue: "ScriptsUpdatedNotification")
 public let ContainerIdentifier: String = "group.com.vuryleo.iitc"
 
 open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
@@ -232,7 +232,7 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         } else if folderWatcher == containerWatcher {
             self.loadAllPlugins()
             self.loadUserMainScript()
-            NotificationCenter.default.post(name: Notification.Name(rawValue: ScriptsUpdatedNotification), object: nil)
+            NotificationCenter.default.post(name:ScriptsUpdatedNotification, object: nil)
         }
     }
 }

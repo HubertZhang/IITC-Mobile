@@ -33,7 +33,7 @@ class PluginsTableViewController: UITableViewController {
         self.tableView.estimatedRowHeight = 80.0
         self.tableView.rowHeight = UITableViewAutomaticDimension;
 //        prototypeCell = self.tableView.dequeueReusableCellWithIdentifier("PluginCell") as! PluginCell
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: ScriptsUpdatedNotification), object: nil, queue: OperationQueue.main) { notification in
+        NotificationCenter.default.addObserver(forName: ScriptsUpdatedNotification, object: nil, queue: OperationQueue.main) { notification in
             self.loadScripts()
             self.tableView.reloadData()
         }
@@ -80,7 +80,7 @@ class PluginsTableViewController: UITableViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         if (self.changed) {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: JSNotificationReloadRequired), object: nil);
+            NotificationCenter.default.post(name: JSNotificationReloadRequired, object: nil);
             self.changed = false;
         }
     }

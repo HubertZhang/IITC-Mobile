@@ -26,9 +26,9 @@ class LayersController: NSObject {
 
     override init() {
         super.init()
-        NotificationCenter.default.addObserver(self, selector: #selector(LayersController.setLayers(_:)), name: NSNotification.Name(rawValue: JSNotificationLayersGot), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(LayersController.reload(_:)), name: NSNotification.Name(rawValue: JSNotificationReloadRequired), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(LayersController.addPane(_:)), name: NSNotification.Name(rawValue: JSNotificationAddPane), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(LayersController.setLayers(_:)), name: JSNotificationLayersGot, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(LayersController.reload(_:)), name: JSNotificationReloadRequired, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(LayersController.addPane(_:)), name: JSNotificationAddPane, object: nil)
     }
 
     deinit {

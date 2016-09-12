@@ -78,17 +78,17 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     }
 
     func configureNotification() {
-        NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.bootFinished), name: NSNotification.Name(rawValue: JSNotificationBootFinished), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.setCurrentPanel(_:)), name: NSNotification.Name(rawValue: JSNotificationPaneChanged), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.setIITCProgress(_:)), name: NSNotification.Name(rawValue: JSNotificationProgressChanged), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.reloadIITC), name: NSNotification.Name(rawValue: JSNotificationReloadRequired), object: nil)
-        NotificationCenter.default.addObserver(self, selector:#selector(MainViewController.sharedAction(_:)), name:NSNotification.Name(rawValue: JSNotificationSharedAction), object:nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.bootFinished), name: JSNotificationBootFinished, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.setCurrentPanel(_:)), name: JSNotificationPaneChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.setIITCProgress(_:)), name: JSNotificationProgressChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.reloadIITC), name: JSNotificationReloadRequired, object: nil)
+        NotificationCenter.default.addObserver(self, selector:#selector(MainViewController.sharedAction(_:)), name:JSNotificationSharedAction, object:nil)
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "SwitchToPanel"), object: nil, queue: OperationQueue.main) {
             (notification) in
             let panel = (notification as NSNotification).userInfo!["Panel"] as! String
             self.switchToPanel(panel)
         }
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: JSNotificationPermalinkChanged), object: nil, queue: OperationQueue.main) {
+        NotificationCenter.default.addObserver(forName: JSNotificationPermalinkChanged, object: nil, queue: OperationQueue.main) {
             (notification) in
             if let permalink = notification.userInfo?["data"] as? String {
                 self.permalink = permalink
@@ -211,7 +211,7 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     }
 
     @IBAction func reloadButtonPressed(_ aa: AnyObject) {
-        NotificationCenter.default.post(name: Notification.Name(rawValue:JSNotificationReloadRequired), object:nil)
+        NotificationCenter.default.post(name:JSNotificationReloadRequired, object:nil)
     }
 
     @IBAction func linkButtonPressed(_ sender: AnyObject) {

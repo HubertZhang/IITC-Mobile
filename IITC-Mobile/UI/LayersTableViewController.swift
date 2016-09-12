@@ -33,8 +33,8 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
         super.viewDidLoad()
         self.configureHairline()
         hairLine.isHidden = true
-        NotificationCenter.default.addObserver(self, selector: #selector(LayersTableViewController.updateLayers), name: NSNotification.Name(rawValue: JSNotificationLayersGot), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(LayersTableViewController.updateLayers), name: NSNotification.Name(rawValue: JSNotificationAddPane), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(LayersTableViewController.updateLayers), name: JSNotificationLayersGot, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(LayersTableViewController.updateLayers), name: JSNotificationAddPane, object: nil)
 
         if let index = layersController.baseLayers.index(where: { $0.active }) {
             currentActiveIndex = index

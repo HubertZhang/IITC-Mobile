@@ -74,10 +74,10 @@ class ActionViewController: UIViewController, WKUIDelegate, WKNavigationDelegate
     }
     
     func configureNotification() {
-        NotificationCenter.default.addObserver(self, selector: #selector(bootFinished), name: NSNotification.Name(rawValue: JSNotificationBootFinished), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(setCurrentPanel(_:)), name: NSNotification.Name(rawValue: JSNotificationPaneChanged), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadIITC), name: NSNotification.Name(rawValue: JSNotificationReloadRequired), object: nil)
-        NotificationCenter.default.addObserver(self, selector:#selector(sharedAction(_:)), name:NSNotification.Name(rawValue: JSNotificationSharedAction), object:nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(bootFinished), name: JSNotificationBootFinished, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(setCurrentPanel(_:)), name: JSNotificationPaneChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadIITC), name: JSNotificationReloadRequired, object: nil)
+        NotificationCenter.default.addObserver(self, selector:#selector(sharedAction(_:)), name:JSNotificationSharedAction, object:nil)
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "SwitchToPanel"), object: nil, queue: OperationQueue.main) {
             (notification) in
             let panel = (notification as NSNotification).userInfo!["Panel"] as! String
