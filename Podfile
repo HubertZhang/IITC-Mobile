@@ -1,14 +1,13 @@
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '8.0'
+platform :ios, '9.0'
 
 use_frameworks!
 
 abstract_target 'Base' do
-    pod 'RxSwift'
-    pod 'RxCocoa'
-    pod 'RxBlocking'
-    pod 'Alamofire'
-    pod 'RxAlamofire'
+    pod 'RxSwift', '~> 3.0.0-beta'
+    pod 'RxCocoa', '~> 3.0.0-beta'
+    pod 'Alamofire', '~> 4'
+    pod 'RxAlamofire', '~> 3.0.0-beta'
     
     target 'BaseFramework'
     abstract_target 'Application' do
