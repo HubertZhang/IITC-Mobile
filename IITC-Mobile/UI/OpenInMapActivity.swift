@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import BaseFramework
 
 class OpenInMapActivity: UIActivity {
     var url: URL?
@@ -47,8 +48,14 @@ class OpenInMapActivity: UIActivity {
             self.url = url
         }
         if let pos = activityItems[2] as? [AnyObject] {
-            let lat = pos[0] as! Double
-            let lng = pos[1] as! Double
+            var lat = pos[0] as! Double
+            var lng = pos[1] as! Double
+            let userDefaults = UserDefaults(suiteName: ContainerIdentifier)!
+            if userDefaults.bool(forKey: "pref_china_offset") {
+                if LocationTransform.isOutOfChina(lat:lat, lng: lng) {
+                    (lat, lng) = LocationTransform.wgs2gcj(wgsLat:lat, wgsLng: lng)
+                }
+            }
             let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lng)
             self.mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary: nil))
         }
