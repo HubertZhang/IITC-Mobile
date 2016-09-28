@@ -130,31 +130,19 @@ class UserFilesTableViewController: UITableViewController {
                 hud.mode = MBProgressHUDMode.annularDeterminate;
                 hud.label.text = "Downloading...";
 
-                Alamofire.download(url as URLStringConvertible, to: {
-                    (url, response) -> URL in
+                Alamofire.download(url, to: {
+                    (url, response) -> (URL, DownloadRequest.DownloadOptions) in
                     let pathComponent = response.suggestedFilename
                     downloadPath = downloadPath.appendingPathComponent(pathComponent!)
-                    if FileManager.default.fileExists(atPath: downloadPath.path) {
-                        do {
-                            try FileManager.default.removeItem(atPath: downloadPath.path)
-                        } catch {
-
-                        }
-                    }
-                    return downloadPath
-                }, withMethod: .get , parameters: nil, encoding: ParameterEncoding.url, headers: nil).progress {
-                    bytesRead, totalBytesRead, totalBytesExpectedToRead in
-
-                    // This closure is NOT called on the main queue for performance
-                    // reasons. To update your ui, dispatch to the main queue.
-                    DispatchQueue.main.async {
-                        hud.progress = Float(totalBytesRead) / Float(totalBytesExpectedToRead)
-                    }
+                    return (downloadPath, DownloadRequest.DownloadOptions.removePreviousFile)
+                }).downloadProgress {
+                    progress in
+                    hud.progressObject = progress
                 }.response {
-                    request, response, _, error in
+                    downloadResponse in
                     hud.hide(animated: true)
-                    if error != nil {
-                        let alert1 = UIAlertController(title: "Error", message: error!.localizedDescription, preferredStyle: .alert)
+                    if downloadResponse.error != nil {
+                        let alert1 = UIAlertController(title: "Error", message: downloadResponse.error!.localizedDescription, preferredStyle: .alert)
                         alert1.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
                         self.present(alert1, animated: true, completion: nil)
                     }

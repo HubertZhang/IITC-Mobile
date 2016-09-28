@@ -83,32 +83,22 @@ import Alamofire
                 hud.mode = MBProgressHUDMode.annularDeterminate;
                 hud.label.text = "Downloading IITC script...";
 
-                Alamofire.download("https://secure.jonatkins.com/iitc/test/total-conversion-build.user.js" as URLStringConvertible, to: {
-                    (url, response) -> URL in
-                    let pathComponent = response.suggestedFilename
+                Alamofire.download("https://secure.jonatkins.com/iitc/test/total-conversion-build.user.js", to: {
+                    (url, response) -> (destinationURL: URL, options: DownloadRequest.DownloadOptions) in
                     let downloadPath = ScriptsManager.sharedInstance.userScriptsPath.appendingPathComponent("total-conversion-build.user.js")
-                    if FileManager.default.fileExists(atPath: downloadPath.path) {
-                        do {
-                            try FileManager.default.removeItem(atPath: downloadPath.path)
-                        } catch {
-
-                        }
-                    }
-                    return downloadPath
-                    }, withMethod: .get , parameters: nil, encoding: ParameterEncoding.url, headers: nil).progress {
-                    bytesRead, totalBytesRead, totalBytesExpectedToRead in
+                    return (downloadPath, DownloadRequest.DownloadOptions.removePreviousFile)
+                    }).downloadProgress {
+                    progress in
 
                     // This closure is NOT called on the main queue for performance
                     // reasons. To update your ui, dispatch to the main queue.
-                    DispatchQueue.main.async {
-                        hud.progress = Float(totalBytesRead) / Float(totalBytesExpectedToRead)
-                    }
+                    hud.progressObject = progress
                 }.response {
-                    request, response, _, error in
+                    downloadResponse in
 
                     hud.hide(animated: true)
-                    if error != nil {
-                        let alert1 = UIAlertController(title: "Error", message: error!.localizedDescription, preferredStyle: .alert)
+                    if downloadResponse.error != nil {
+                        let alert1 = UIAlertController(title: "Error", message: downloadResponse.error!.localizedDescription, preferredStyle: .alert)
                         alert1.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
                         self.present(alert1, animated: true, completion: nil)
                     }
