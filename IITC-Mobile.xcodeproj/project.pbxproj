@@ -32,6 +32,7 @@
 		B4E2F00B1D05D06C00D2D86B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4E2F00A1D05D06C00D2D86B /* Assets.xcassets */; };
 		B4E2F00E1D05D06C00D2D86B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4E2F00C1D05D06C00D2D86B /* LaunchScreen.storyboard */; };
 		B4E2F0191D05D06C00D2D86B /* IITC_MobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E2F0181D05D06C00D2D86B /* IITC_MobileTests.swift */; };
+		B4ED0CB61D9BF6D00038EB33 /* LocationTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4ED0CB51D9BF6D00038EB33 /* LocationTransform.swift */; };
 		B4F840331D0AD1AF00C58690 /* BaseFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = B4F840321D0AD1AF00C58690 /* BaseFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B4F840371D0AD1AF00C58690 /* BaseFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4F840301D0AD1AF00C58690 /* BaseFramework.framework */; };
 		B4F840381D0AD1AF00C58690 /* BaseFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B4F840301D0AD1AF00C58690 /* BaseFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -146,6 +147,7 @@
 		B4E2F0241D05D50D00D2D86B /* Script.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Script.swift; sourceTree = "<group>"; };
 		B4E2F0261D05D51F00D2D86B /* ScriptsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptsManager.swift; sourceTree = "<group>"; };
 		B4E2F0291D05E63C00D2D86B /* JSHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSHandler.swift; sourceTree = "<group>"; };
+		B4ED0CB51D9BF6D00038EB33 /* LocationTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTransform.swift; sourceTree = "<group>"; };
 		B4F840301D0AD1AF00C58690 /* BaseFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BaseFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4F840321D0AD1AF00C58690 /* BaseFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseFramework.h; sourceTree = "<group>"; };
 		B4F840341D0AD1AF00C58690 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -322,6 +324,7 @@
 		B4F840311D0AD1AF00C58690 /* BaseFramework */ = {
 			isa = PBXGroup;
 			children = (
+				B4ED0CB51D9BF6D00038EB33 /* LocationTransform.swift */,
 				B405EEC91D0602C200110D9E /* scripts */,
 				B4E2F0231D05D4E700D2D86B /* ScriptsManager */,
 				B4E2F0281D05E5F400D2D86B /* IITCWebView */,
@@ -673,6 +676,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4F840551D0AD50A00C58690 /* JSHandler.swift in Sources */,
+				B4ED0CB61D9BF6D00038EB33 /* LocationTransform.swift in Sources */,
 				B4F840521D0AD50300C58690 /* Script.swift in Sources */,
 				B4F840511D0AD50000C58690 /* DirectoryWatcher.swift in Sources */,
 				B4F840541D0AD50800C58690 /* IITCWebView.swift in Sources */,
