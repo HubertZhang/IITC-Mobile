@@ -33,6 +33,7 @@
 		B4E2F00E1D05D06C00D2D86B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4E2F00C1D05D06C00D2D86B /* LaunchScreen.storyboard */; };
 		B4E2F0191D05D06C00D2D86B /* IITC_MobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E2F0181D05D06C00D2D86B /* IITC_MobileTests.swift */; };
 		B4ED0CB61D9BF6D00038EB33 /* LocationTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4ED0CB51D9BF6D00038EB33 /* LocationTransform.swift */; };
+		B4ED0CB81D9E6F990038EB33 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4ED0CB71D9E6F990038EB33 /* WebViewController.swift */; };
 		B4F840331D0AD1AF00C58690 /* BaseFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = B4F840321D0AD1AF00C58690 /* BaseFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B4F840371D0AD1AF00C58690 /* BaseFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4F840301D0AD1AF00C58690 /* BaseFramework.framework */; };
 		B4F840381D0AD1AF00C58690 /* BaseFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B4F840301D0AD1AF00C58690 /* BaseFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -148,6 +149,7 @@
 		B4E2F0261D05D51F00D2D86B /* ScriptsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptsManager.swift; sourceTree = "<group>"; };
 		B4E2F0291D05E63C00D2D86B /* JSHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSHandler.swift; sourceTree = "<group>"; };
 		B4ED0CB51D9BF6D00038EB33 /* LocationTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTransform.swift; sourceTree = "<group>"; };
+		B4ED0CB71D9E6F990038EB33 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		B4F840301D0AD1AF00C58690 /* BaseFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BaseFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4F840321D0AD1AF00C58690 /* BaseFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseFramework.h; sourceTree = "<group>"; };
 		B4F840341D0AD1AF00C58690 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 				B42BE7621D073C7800A0A0CB /* AboutViewController.swift */,
 				B4B328491D10F3AF007AA6D5 /* UserFilesTableViewController.swift */,
 				B44856FA1D1AB78F0082B1E7 /* WhatsNewViewController.swift */,
+				B4ED0CB71D9E6F990038EB33 /* WebViewController.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -651,6 +654,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B42BE7591D072D1B00A0A0CB /* OpenInMapActivity.swift in Sources */,
+				B4ED0CB81D9E6F990038EB33 /* WebViewController.swift in Sources */,
 				B44856FB1D1AB78F0082B1E7 /* WhatsNewViewController.swift in Sources */,
 				B405EECC1D066FC900110D9E /* LayersTableViewController.swift in Sources */,
 				B405EED11D06969C00110D9E /* SettingsViewControllerNew.swift in Sources */,
