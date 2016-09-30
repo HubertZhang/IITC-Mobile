@@ -317,5 +317,15 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         }
         self.present(activityViewController, animated: true, completion: nil)
     }
+    
+    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        let vc = self.storyboard!.instantiateViewController(withIdentifier: "webview") as! UINavigationController
+        let vc1 = vc.viewControllers[0] as! WebViewController
+        vc1.configuration = configuration
+        self.navigationController?.present(vc, animated: true, completion: nil)
+        vc1.loadViewIfNeeded()
+        return vc1.webView
+    }
+    
 }
 
