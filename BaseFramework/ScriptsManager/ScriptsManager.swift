@@ -172,7 +172,7 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
             guard let url = script.updateURL else {
                 return Observable<(String, Script)>.just(("", script))
             }
-            return Alamofire.request(url as! URLRequestConvertible).rx.string().map {
+            return Alamofire.request(url).rx.string().map {
                 string -> (String, Script) in
                 return (string, script)
             }
@@ -190,7 +190,7 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
                 }
             }
             if shouldDownload {
-                return Alamofire.request(attribute["downloadURL"]! as! URLRequestConvertible).rx.string().map {
+                return Alamofire.request(attribute["downloadURL"]!).rx.string().map {
                     string in
                     do {
                         var prefix: URL
