@@ -29,4 +29,6 @@ report.html
 
 # cocoapods
 Pods/
-IITC-Mobile/scripts
+
+# IITC scripts
+BaseFramework/scripts
