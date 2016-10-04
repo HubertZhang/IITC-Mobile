@@ -83,7 +83,7 @@ import Alamofire
                 hud.mode = MBProgressHUDMode.annularDeterminate;
                 hud.label.text = "Downloading IITC script...";
 
-                Alamofire.download("https://secure.jonatkins.com/iitc/test/total-conversion-build.user.js", to: {
+                Alamofire.download("https://iitc.me/build/test/total-conversion-build.user.js", to: {
                     (url, response) -> (destinationURL: URL, options: DownloadRequest.DownloadOptions) in
                     let downloadPath = ScriptsManager.sharedInstance.userScriptsPath.appendingPathComponent("total-conversion-build.user.js")
                     return (downloadPath, DownloadRequest.DownloadOptions.removePreviousFile)
