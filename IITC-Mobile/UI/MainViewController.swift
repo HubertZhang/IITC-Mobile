@@ -283,8 +283,8 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     }
 
     func setIITCProgress(_ notification: Notification) {
-        if let progress = (notification as NSNotification).userInfo?["data"] as? Double {
-            if progress != -1 {
+        if let progress = (notification as NSNotification).userInfo?["data"] as? NSNumber {
+            if progress.doubleValue == -1 || progress.doubleValue == 1 {
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
             } else {
                 UIApplication.shared.isNetworkActivityIndicatorVisible = true

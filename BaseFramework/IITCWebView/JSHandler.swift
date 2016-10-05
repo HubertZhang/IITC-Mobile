@@ -177,7 +177,7 @@ class JSHandler: NSObject, WKScriptMessageHandler {
     //}
 
 
-    func setProgress(_ progress: Int) {
+    func setProgress(_ progress: NSNumber) {
         NotificationCenter.default.post(name: JSNotificationProgressChanged, object: self, userInfo: ["data": progress])
     }
 
