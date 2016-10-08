@@ -11,7 +11,7 @@ import MobileCoreServices
 import WebKit
 import BaseFramework
 
-class ActionViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
+class ActionViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, URLSessionDelegate, URLSessionDownloadDelegate {
     
     var webView: IITCWebView!
     
@@ -28,7 +28,13 @@ class ActionViewController: UIViewController, WKUIDelegate, WKNavigationDelegate
     @IBOutlet weak var navigationBar: UINavigationBar!
     
     var loadIITCNeeded = true
-    
+
+    lazy var session: URLSession = {
+        let config = URLSessionConfiguration.background(withIdentifier: "com.vuryleo.iitcmobile.background")
+        config.sharedContainerIdentifier = ContainerIdentifier
+        return URLSession(configuration: config, delegate: self, delegateQueue: nil)
+    }()
+
     func loadScripts() {
         self.webView.loadScripts(ScriptsManager.sharedInstance.getLoadedScripts())
         loadIITCNeeded = false
@@ -52,7 +58,33 @@ class ActionViewController: UIViewController, WKUIDelegate, WKNavigationDelegate
         try? FileManager.default.copyItem(at: bakCookiePath, to: cookiePath)
     }
 
-    
+    func handleJSFileURL(_ url: URL) {
+        let alert = UIAlertController(title: "Save JS File to IITC?", message: "A JavaScript file detected. Would you like to save this file to IITC (as a Plugin)?\nURL:\(url.absoluteString)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {
+            action in
+            let task = self.session.downloadTask(with: url)
+            task.resume()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        let containerPath = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContainerIdentifier)!
+        let userScriptsPath = containerPath.appendingPathComponent("userScripts", isDirectory: true)
+        guard let filename = downloadTask.response?.suggestedFilename else {
+            return
+        }
+//        print(filename)
+        let destURL = userScriptsPath.appendingPathComponent(filename)
+        try? FileManager.default.removeItem(at: destURL)
+        do {
+            try FileManager.default.moveItem(at: location, to: destURL)
+        } catch let e {
+            print(e.localizedDescription)
+        }
+    }
+
     func configureWebView() {
         syncCookie()
         self.webView = IITCWebView(frame: CGRect.zero)
@@ -106,6 +138,11 @@ class ActionViewController: UIViewController, WKUIDelegate, WKNavigationDelegate
                             
                             OperationQueue.main.addOperation {
                                 self.webView.load(URLRequest(url: wrappedURL))
+                            }
+                        } else if wrappedURL.pathExtension == "js" {
+                            OperationQueue.main.addOperation {
+                                self.webView.loadHTMLString("JSFile", baseURL: nil)
+                                self.handleJSFileURL(wrappedURL)
                             }
                         } else {
                             OperationQueue.main.addOperation {
