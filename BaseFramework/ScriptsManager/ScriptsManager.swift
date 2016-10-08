@@ -217,6 +217,9 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
             if url.lastPathComponent == "com.google.iid-keypair.plist" {
                 continue
             }
+            if url.lastPathComponent == "Inbox" {
+                continue
+            }
             let containerFileURL = userScriptsPath.appendingPathComponent(url.lastPathComponent)
             if !FileManager.default.fileExists(atPath: containerFileURL.path) {
                 try? FileManager.default.copyItem(at: url, to: containerFileURL)
