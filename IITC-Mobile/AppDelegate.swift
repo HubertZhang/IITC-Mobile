@@ -61,5 +61,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey: Any] = [:]) -> Bool {
+        let containerPath = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContainerIdentifier)!
+        let userScriptsPath = containerPath.appendingPathComponent("userScripts", isDirectory: true)
+        let filename = url.lastPathComponent
+        if filename == "" {
+            return true
+        }
+        //        print(filename)
+        let destURL = userScriptsPath.appendingPathComponent(filename)
+        try? FileManager.default.removeItem(at: destURL)
+        do {
+            try FileManager.default.copyItem(at: url, to: destURL)
+        } catch let e {
+            print(e.localizedDescription)
+        }
+        return false
+    }
 }
 
