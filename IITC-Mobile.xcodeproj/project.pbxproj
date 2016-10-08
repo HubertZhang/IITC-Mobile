@@ -19,6 +19,10 @@
 		B42BE7611D073C0400A0A0CB /* About.html in Resources */ = {isa = PBXBuildFile; fileRef = B42BE7601D073C0400A0A0CB /* About.html */; };
 		B42BE7631D073C7800A0A0CB /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BE7621D073C7800A0A0CB /* AboutViewController.swift */; };
 		B42BE7651D07529300A0A0CB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B42BE7641D07529300A0A0CB /* GoogleService-Info.plist */; };
+		B44417661DA50D8900960F11 /* JSFile_22x29.png in Resources */ = {isa = PBXBuildFile; fileRef = B44417621DA50D8900960F11 /* JSFile_22x29.png */; };
+		B44417671DA50D8900960F11 /* JSFile_44x58.png in Resources */ = {isa = PBXBuildFile; fileRef = B44417631DA50D8900960F11 /* JSFile_44x58.png */; };
+		B44417681DA50D8900960F11 /* JSFile_64x64.png in Resources */ = {isa = PBXBuildFile; fileRef = B44417641DA50D8900960F11 /* JSFile_64x64.png */; };
+		B44417691DA50D8900960F11 /* JSFile_320x320.png in Resources */ = {isa = PBXBuildFile; fileRef = B44417651DA50D8900960F11 /* JSFile_320x320.png */; };
 		B44856F91D1AB17A0082B1E7 /* WhatsNew.html in Resources */ = {isa = PBXBuildFile; fileRef = B44856F81D1AB17A0082B1E7 /* WhatsNew.html */; };
 		B44856FB1D1AB78F0082B1E7 /* WhatsNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44856FA1D1AB78F0082B1E7 /* WhatsNewViewController.swift */; };
 		B48156E61D72EAF00041D2CA /* LayersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B405EECB1D066FC900110D9E /* LayersTableViewController.swift */; };
@@ -130,6 +134,10 @@
 		B42BE7621D073C7800A0A0CB /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		B42BE7641D07529300A0A0CB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B42BE7681D08BFA300A0A0CB /* DirectoryWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectoryWatcher.swift; sourceTree = "<group>"; };
+		B44417621DA50D8900960F11 /* JSFile_22x29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JSFile_22x29.png; sourceTree = "<group>"; };
+		B44417631DA50D8900960F11 /* JSFile_44x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JSFile_44x58.png; sourceTree = "<group>"; };
+		B44417641DA50D8900960F11 /* JSFile_64x64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JSFile_64x64.png; sourceTree = "<group>"; };
+		B44417651DA50D8900960F11 /* JSFile_320x320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JSFile_320x320.png; sourceTree = "<group>"; };
 		B44856F81D1AB17A0082B1E7 /* WhatsNew.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = WhatsNew.html; sourceTree = "<group>"; };
 		B44856FA1D1AB78F0082B1E7 /* WhatsNewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhatsNewViewController.swift; sourceTree = "<group>"; };
 		B4B328491D10F3AF007AA6D5 /* UserFilesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFilesTableViewController.swift; sourceTree = "<group>"; };
@@ -253,6 +261,17 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		B44417611DA50D4F00960F11 /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				B44417621DA50D8900960F11 /* JSFile_22x29.png */,
+				B44417631DA50D8900960F11 /* JSFile_44x58.png */,
+				B44417641DA50D8900960F11 /* JSFile_64x64.png */,
+				B44417651DA50D8900960F11 /* JSFile_320x320.png */,
+			);
+			path = icons;
+			sourceTree = "<group>";
+		};
 		B4E2EFF71D05D06C00D2D86B = {
 			isa = PBXGroup;
 			children = (
@@ -280,6 +299,7 @@
 		B4E2F0021D05D06C00D2D86B /* IITC-Mobile */ = {
 			isa = PBXGroup;
 			children = (
+				B44417611DA50D4F00960F11 /* icons */,
 				B4F8405C1D0B285800C58690 /* Default-iitc.png */,
 				B4F8405D1D0B285800C58690 /* Default-iitc@2x.png */,
 				B42BE75A1D07342700A0A0CB /* IITC-Mobile-Bridging-Header.h */,
@@ -500,14 +520,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B44417671DA50D8900960F11 /* JSFile_44x58.png in Resources */,
 				B4B3284C1D117970007AA6D5 /* IITC.entitlements in Resources */,
+				B44417661DA50D8900960F11 /* JSFile_22x29.png in Resources */,
 				B44856F91D1AB17A0082B1E7 /* WhatsNew.html in Resources */,
 				B42BE7611D073C0400A0A0CB /* About.html in Resources */,
 				B4E2F00E1D05D06C00D2D86B /* LaunchScreen.storyboard in Resources */,
+				B44417681DA50D8900960F11 /* JSFile_64x64.png in Resources */,
 				B4F8405E1D0B285800C58690 /* Default-iitc.png in Resources */,
 				B4F8405F1D0B285800C58690 /* Default-iitc@2x.png in Resources */,
 				B405EED21D06969C00110D9E /* Settings.bundle in Resources */,
 				B4E2F00B1D05D06C00D2D86B /* Assets.xcassets in Resources */,
+				B44417691DA50D8900960F11 /* JSFile_320x320.png in Resources */,
 				B4E2F0091D05D06C00D2D86B /* Main.storyboard in Resources */,
 				B42BE7651D07529300A0A0CB /* GoogleService-Info.plist in Resources */,
 			);
