@@ -10,6 +10,7 @@ import UIKit
 import MBProgressHUD
 import Google.Analytics
 import BaseFramework
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -30,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
         let hud = MBProgressHUD.showAdded(to: self.window!.rootViewController!.view, animated: true)
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high).async(execute: {
+        DispatchQueue.global().async(execute: {
             ScriptsManager.sharedInstance.getLoadedScripts()
             DispatchQueue.main.async(execute: {
                 hud.hide(animated: true)
