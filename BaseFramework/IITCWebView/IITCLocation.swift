@@ -77,11 +77,9 @@ open class IITCLocation: NSObject, CLLocationManagerDelegate {
             }
             notification += "if(window.plugin && window.plugin.userLocation)\nwindow.plugin.userLocation.onOrientationChange(\(newHeading.magneticHeading));"
         }
-        NSLog("Heading:%@", newHeading.description)
         NotificationCenter.default.post(name: Notification.Name(rawValue: "WebViewExecuteJS"), object: nil, userInfo: ["JS": notification])
     }
 
     open func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        NSLog("Error:%@", error.localizedDescription)
     }
 }
