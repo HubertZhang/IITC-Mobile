@@ -230,6 +230,9 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
                 self.webView.load(URLRequest(url: urlComponent.url!))
                 self.loadIITCNeeded = true
             }
+            if urlString == "https://ops.irde.net/iitc" {
+                self.webView.load(URLRequest(url: URL(string:urlString)!))
+            }
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         

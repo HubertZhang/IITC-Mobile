@@ -51,10 +51,12 @@ open class IITCLocation: NSObject, CLLocationManagerDelegate {
             locationManager.requestWhenInUseAuthorization()
         }
         locationManager.startUpdatingLocation()
+        locationManager.startUpdatingHeading()
     }
 
     func stopUpdate() {
         locationManager.stopUpdatingLocation()
+        locationManager.stopUpdatingHeading()
     }
 
     open func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -63,16 +65,20 @@ open class IITCLocation: NSObject, CLLocationManagerDelegate {
         if self.currentMode != .notShow {
             notification = "if(window.plugin && window.plugin.userLocation)\nwindow.plugin.userLocation.onLocationChange(\(location.coordinate.latitude), \(location.coordinate.longitude));"
         }
-
-        if self.currentMode == .showPositionAndOrientation {
-            notification += "if(window.plugin && window.plugin.userLocation)\nwindow.plugin.userLocation.onOrientationChange(\(location.course));"
-        }
         NotificationCenter.default.post(name: Notification.Name(rawValue: "WebViewExecuteJS"), object: nil, userInfo: ["JS": notification])
 
     }
 
     open func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        var notification = ""
+        if self.currentMode == .showPositionAndOrientation {
+            if newHeading.headingAccuracy < 0 {
+                return
+            }
+            notification += "if(window.plugin && window.plugin.userLocation)\nwindow.plugin.userLocation.onOrientationChange(\(newHeading.magneticHeading));"
+        }
         NSLog("Heading:%@", newHeading.description)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "WebViewExecuteJS"), object: nil, userInfo: ["JS": notification])
     }
 
     open func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
