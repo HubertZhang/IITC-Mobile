@@ -207,6 +207,7 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         let vc = SettingsViewController(style: .grouped)
         vc.neverShowPrivacySettings = true
         vc.showDoneButton = false
+        vc.title = "Settings"
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
