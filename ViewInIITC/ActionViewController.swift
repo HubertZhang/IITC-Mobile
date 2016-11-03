@@ -139,6 +139,21 @@ class ActionViewController: UIViewController, WKUIDelegate, WKNavigationDelegate
                             OperationQueue.main.addOperation {
                                 self.webView.load(URLRequest(url: wrappedURL))
                             }
+                        } else if wrappedURL.host == "maps.apple.com" {
+                            var components = URLComponents(url: wrappedURL, resolvingAgainstBaseURL: false)!
+                            let ll = components.queryItems?.filter({ item -> Bool in
+                                return item.name == "ll"
+                            })
+                            if (ll?.count ?? 0) > 0 {
+                                var newURLComponents = URLComponents(string: "https://www.ingress.com/intel")!
+                                newURLComponents.queryItems=[ll![0]]
+                                if let newURL = newURLComponents.url {
+                                    OperationQueue.main.addOperation {
+                                        self.webView.load(URLRequest(url: newURL))
+                                    }
+                                }
+                            }
+                            
                         } else if wrappedURL.pathExtension == "js" {
                             OperationQueue.main.addOperation {
                                 self.webView.loadHTMLString("JSFile", baseURL: nil)
@@ -147,7 +162,7 @@ class ActionViewController: UIViewController, WKUIDelegate, WKNavigationDelegate
                         } else {
                             OperationQueue.main.addOperation {
                                 self.webProgressView.isHidden = true
-                                self.webView.loadHTMLString("Link not supported", baseURL: nil)
+                                self.webView.loadHTMLString("Link not supported:\(wrappedURL.absoluteString)", baseURL: nil)
                             }
                         }
                     })

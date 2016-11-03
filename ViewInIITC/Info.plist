@@ -33,15 +33,19 @@
 	</dict>
 	<key>NSExtension</key>
 	<dict>
+		<key>NSExtensionActionWantsFullScreenPresentation</key>
+		<true/>
 		<key>NSExtensionAttributes</key>
 		<dict>
 			<key>NSExtensionActivationRule</key>
 			<dict>
-				<key>NSExtensionActivationSupportsText</key>
-				<true/>
-				<key>NSExtensionActivationSupportsWebURLWithMaxCount</key>
-				<integer>10</integer>
-			</dict>
+        		<key>NSExtensionActivationDictionaryVersion</key>
+        		<integer>2</integer>
+        		<key>NSExtensionActivationSupportsWebURLWithMaxCount</key>
+        		<integer>10</integer>
+        		<key>NSExtensionActivationSupportsText</key>
+        		<true/>
+    		</dict>
 			<key>NSExtensionActivationUsesStrictMatching</key>
 			<integer>2</integer>
 		</dict>
