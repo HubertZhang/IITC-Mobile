@@ -1,10 +1,14 @@
 PODS:
   - Alamofire (4.0.1)
-  - FirebaseAnalytics (3.4.2):
+  - FirebaseAnalytics (3.5.1):
+    - FirebaseCore (~> 3.4)
     - FirebaseInstanceID (~> 1.0)
     - GoogleInterchangeUtilities (~> 1.2)
     - GoogleSymbolUtilities (~> 1.1)
-    - GoogleUtilities (~> 1.2)
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseCore (3.4.4):
+    - GoogleInterchangeUtilities (~> 1.2)
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
   - FirebaseInstanceID (1.0.8)
   - Google/Analytics (3.0.3):
     - Google/Core
@@ -12,47 +16,48 @@ PODS:
   - Google/Core (3.0.3):
     - FirebaseAnalytics (~> 3.2)
   - GoogleAnalytics (3.17.0)
-  - GoogleInterchangeUtilities (1.2.1):
-    - GoogleSymbolUtilities (~> 1.0)
-  - GoogleSymbolUtilities (1.1.1)
-  - GoogleUtilities (1.3.1):
-    - GoogleSymbolUtilities (~> 1.0)
+  - GoogleInterchangeUtilities (1.2.2):
+    - GoogleSymbolUtilities (~> 1.1)
+  - GoogleSymbolUtilities (1.1.2)
+  - GoogleToolboxForMac/Defines (2.1.0)
+  - GoogleToolboxForMac/NSData+zlib (2.1.0):
+    - GoogleToolboxForMac/Defines (= 2.1.0)
   - InAppSettingsKit (2.8)
   - MBProgressHUD (1.0.0)
-  - RxAlamofire (3.0.0-beta.1):
-    - RxAlamofire/Core (= 3.0.0-beta.1)
-  - RxAlamofire/Core (3.0.0-beta.1):
+  - RxAlamofire (3.0.0):
+    - RxAlamofire/Core (= 3.0.0)
+  - RxAlamofire/Core (3.0.0):
     - Alamofire (~> 4.0)
-    - RxCocoa (~> 3.0.0-beta.1)
-    - RxSwift (~> 3.0.0-beta.1)
-  - RxCocoa (3.0.0-beta.1):
-    - RxSwift (~> 3.0.0-beta.1)
-  - RxSwift (3.0.0-beta.1)
+    - RxSwift (~> 3.0)
+  - RxCocoa (3.0.0):
+    - RxSwift (~> 3.0)
+  - RxSwift (3.0.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4)
   - Google/Analytics
   - InAppSettingsKit
   - MBProgressHUD
-  - RxAlamofire (~> 3.0.0-beta)
-  - RxCocoa (~> 3.0.0-beta)
-  - RxSwift (~> 3.0.0-beta)
+  - RxAlamofire (~> 3)
+  - RxCocoa (~> 3)
+  - RxSwift (~> 3)
 
 SPEC CHECKSUMS:
   Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
-  FirebaseAnalytics: 3f5358d9104adf159cc8d99b7b501e50099a39ad
+  FirebaseAnalytics: 6e58fc9b397664369ac7617fb0ba93fab6ba7b5b
+  FirebaseCore: d0ed25f27b6f9158eccc439f1be6f92e81207e28
   FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
   Google: 813c467362eabc11385f5a5cc9ad0cb651a58f4e
   GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
-  GoogleInterchangeUtilities: def8415a862effc67d549d5b5b0b9c7a2f97d4de
-  GoogleSymbolUtilities: 33117db1b5f290c6fbf259585e4885b4c84b98d7
-  GoogleUtilities: 56c5ac05b7aa5dc417a1bb85221a9516e04d7032
+  GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
+  GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
+  GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
   InAppSettingsKit: fe3e73f8f9530cdd6270065cd7df7b3773f557e6
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
-  RxAlamofire: 3e62073fbe1c0269c942af44b073c10d9dda81ab
-  RxCocoa: 8cecf331302b8ae5381bbab1bccba4ede2eae6a8
-  RxSwift: 0823e8d7969c23bfa9ddfb2afa4881e424a1a710
+  RxAlamofire: 0b1fa48f545fffe7f7a28af2086bcaa3b5946cc9
+  RxCocoa: 0a2f3ae381cf16f4021a4cee7a4420f83058a965
+  RxSwift: a930cd662f5b4a7ca9dc3518585dba91dadf497c
 
-PODFILE CHECKSUM: 53bc659e12157e87571cbd7548c639f165acff6a
+PODFILE CHECKSUM: 34acc3303af4b6f7b1016d5859175386db96a9f6
 
 COCOAPODS: 1.1.0.rc.2
