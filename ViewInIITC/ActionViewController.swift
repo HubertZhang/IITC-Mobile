@@ -266,7 +266,6 @@ class ActionViewController: UIViewController, WKUIDelegate, WKNavigationDelegate
         }
         components.scheme = "iitc"
         components.host = ""
-        print(components.url)
         self.extensionContext?.open(components.url!, completionHandler: {
             result in
             self.done()
