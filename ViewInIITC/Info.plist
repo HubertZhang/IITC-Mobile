@@ -21,11 +21,11 @@
 	<key>CFBundlePackageType</key>
 	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.2</string>
+	<string>2.2.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>5</string>
+	<string>1</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -39,13 +39,13 @@
 		<dict>
 			<key>NSExtensionActivationRule</key>
 			<dict>
-        		<key>NSExtensionActivationDictionaryVersion</key>
-        		<integer>2</integer>
-        		<key>NSExtensionActivationSupportsWebURLWithMaxCount</key>
-        		<integer>10</integer>
-        		<key>NSExtensionActivationSupportsText</key>
-        		<true/>
-    		</dict>
+				<key>NSExtensionActivationDictionaryVersion</key>
+				<integer>2</integer>
+				<key>NSExtensionActivationSupportsText</key>
+				<true/>
+				<key>NSExtensionActivationSupportsWebURLWithMaxCount</key>
+				<integer>10</integer>
+			</dict>
 			<key>NSExtensionActivationUsesStrictMatching</key>
 			<integer>2</integer>
 		</dict>
