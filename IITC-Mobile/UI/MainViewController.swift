@@ -327,5 +327,12 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         }
         self.present(activityViewController, animated: true, completion: nil)
     }
+
+    //MARK: Segue Handler
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "layerChooser" {
+            self.webView.evaluateJavaScript("window.layerChooser.getLayers()")
+        }
+    }
 }
 
