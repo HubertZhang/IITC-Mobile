@@ -51,9 +51,6 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
         let libraryPath = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).last!
         let oriCookiePath = libraryPath.appendingPathComponent("Cookies/Cookies.binarycookies", isDirectory: false)
-        if !FileManager.default.fileExists(atPath: oriCookiePath.path) {
-            return
-        }
         try? FileManager.default.createDirectory(at: cookieDirPath, withIntermediateDirectories: true, attributes: nil)
         try? FileManager.default.copyItem(at: oriCookiePath, to: bakCookiePath)
     }
