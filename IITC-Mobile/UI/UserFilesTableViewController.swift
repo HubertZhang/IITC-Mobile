@@ -149,7 +149,7 @@ class UserFilesTableViewController: UITableViewController {
                 }
             } else {
                 let alert1 = UIAlertController(title: "Error", message: "Not a legal URL", preferredStyle: .alert)
-                alert1.addAction(UIAlertAction(title: nil, style: .cancel, handler: nil))
+                alert1.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
                 self.present(alert1, animated: true, completion: nil)
             }
         }))
