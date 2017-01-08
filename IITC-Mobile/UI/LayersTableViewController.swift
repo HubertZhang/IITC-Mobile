@@ -120,6 +120,7 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         switch (tableView) {
         case panelTable:
             NotificationCenter.default.post(name: Notification.Name(rawValue: "SwitchToPanel"), object: nil, userInfo: ["Panel": layersController.panelNames[(indexPath as NSIndexPath).row]])
@@ -152,7 +153,6 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
         default:
             break;
         }
-        tableView.deselectRow(at: indexPath, animated: true)
     }
 
     /*
