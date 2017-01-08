@@ -36,31 +36,27 @@ class LayersController: NSObject {
     }
 
     func setLayers(_ notification: Notification) {
-        guard let layers = (notification as NSNotification).userInfo?["layers"] as? [AnyObject] else {
+        guard let layers = (notification as NSNotification).userInfo?["layers"] as? [String] else {
             return
         }
         self.baseLayers = []
         self.overlayLayers = []
-        if let tempLayers = (try? JSONSerialization.jsonObject(with: (String(describing: layers[0])).data(using: String.Encoding.ascii)!, options: .allowFragments)) as? [AnyObject] {
-            for tempLayer in tempLayers {
-                if let layer = tempLayer as? [String:AnyObject] {
-                    let layerObject = Layer()
-                    layerObject.layerName = layer["name"] as! String
-                    layerObject.layerID = (layer["layerId"] as! NSNumber).intValue
-                    layerObject.active = layer["active"] as! Bool
-                    baseLayers.append(layerObject)
-                }
+        if let tempLayers = (try? JSONSerialization.jsonObject(with: layers[0].data(using: .utf8)!, options: .allowFragments)) as? [[String:Any]] {
+            for layer in tempLayers {
+                let layerObject = Layer()
+                layerObject.layerName = layer["name"] as! String
+                layerObject.layerID = (layer["layerId"] as!NSNumber).intValue
+                layerObject.active = layer["active"] as! Bool
+                baseLayers.append(layerObject)
             }
         }
-        if let tempLayers = (try? JSONSerialization.jsonObject(with: (String(describing: layers[1])).data(using: String.Encoding.ascii)!, options: .allowFragments)) as? [AnyObject] {
+        if let tempLayers = (try? JSONSerialization.jsonObject(with: layers[1].data(using: .utf8)!, options: .allowFragments)) as? [[String:Any]] {
             for layer in tempLayers {
-                if let layer = layer as? [String:AnyObject] {
-                    let layerObject = Layer()
-                    layerObject.layerName = layer["name"] as! String
-                    layerObject.layerID = (layer["layerId"] as! NSNumber).intValue
-                    layerObject.active = layer["active"] as! Bool
-                    overlayLayers.append(layerObject)
-                }
+                let layerObject = Layer()
+                layerObject.layerName = layer["name"] as! String
+                layerObject.layerID = (layer["layerId"] as! NSNumber).intValue
+                layerObject.active = layer["active"] as! Bool
+                overlayLayers.append(layerObject)
             }
         }
     }
