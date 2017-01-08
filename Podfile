@@ -5,7 +5,6 @@ use_frameworks!
 
 abstract_target 'Base' do
     pod 'RxSwift', '~> 3'
-    pod 'RxCocoa', '~> 3'
     pod 'Alamofire', '~> 4'
     pod 'RxAlamofire', '~> 3'
     
