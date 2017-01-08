@@ -9,7 +9,6 @@
 import UIKit
 import BaseFramework
 import RxSwift
-import RxCocoa
 import InAppSettingsKit
 import MBProgressHUD
 import Alamofire
@@ -26,6 +25,9 @@ import Alamofire
 
         let builder = GAIDictionaryBuilder.createScreenView()!
         tracker?.send(builder.build() as NSDictionary as! [AnyHashable: Any])
+        for index in self.tableView.indexPathsForSelectedRows ?? [] {
+            self.tableView.deselectRow(at: index, animated: true)
+        }
     }
 
     override init(style: UITableViewStyle) {
