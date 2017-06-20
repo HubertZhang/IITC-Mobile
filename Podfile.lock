@@ -1,59 +1,70 @@
 PODS:
-  - Alamofire (4.2.0)
-  - FirebaseAnalytics (3.6.0):
-    - FirebaseCore (~> 3.4)
-    - FirebaseInstanceID (~> 1.0)
-    - GoogleInterchangeUtilities (~> 1.2)
-    - GoogleSymbolUtilities (~> 1.1)
+  - Alamofire (4.5.0)
+  - Firebase/Core (4.0.4):
+    - FirebaseAnalytics (= 4.0.2)
+    - FirebaseCore (= 4.0.4)
+  - FirebaseAnalytics (4.0.2):
+    - FirebaseCore (~> 4.0)
+    - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseCore (3.4.6):
-    - GoogleInterchangeUtilities (~> 1.2)
+  - FirebaseCore (4.0.4):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseInstanceID (1.0.8)
-  - Google/Analytics (3.0.3):
-    - Google/Core
-    - GoogleAnalytics (~> 3.12)
-  - Google/Core (3.0.3):
-    - FirebaseAnalytics (~> 3.2)
-  - GoogleAnalytics (3.17.0)
-  - GoogleInterchangeUtilities (1.2.2):
-    - GoogleSymbolUtilities (~> 1.1)
-  - GoogleSymbolUtilities (1.1.2)
-  - GoogleToolboxForMac/Defines (2.1.0)
-  - GoogleToolboxForMac/NSData+zlib (2.1.0):
-    - GoogleToolboxForMac/Defines (= 2.1.0)
+    - nanopb (~> 0.3)
+  - FirebaseInstanceID (2.0.0):
+    - FirebaseCore (~> 4.0)
+  - GoogleToolboxForMac/Defines (2.1.1)
+  - GoogleToolboxForMac/NSData+zlib (2.1.1):
+    - GoogleToolboxForMac/Defines (= 2.1.1)
+  - Highlightr (1.1.0)
   - InAppSettingsKit (2.8.1)
   - MBProgressHUD (1.0.0)
-  - RxAlamofire (3.0.2):
-    - RxAlamofire/Core (= 3.0.2)
-  - RxAlamofire/Core (3.0.2):
+  - nanopb (0.3.8):
+    - nanopb/decode (= 0.3.8)
+    - nanopb/encode (= 0.3.8)
+  - nanopb/decode (0.3.8)
+  - nanopb/encode (0.3.8)
+  - RxAlamofire (3.0.3):
+    - RxAlamofire/Core (= 3.0.3)
+  - RxAlamofire/Core (3.0.3):
     - Alamofire (~> 4.0)
     - RxSwift (~> 3.0)
-  - RxSwift (3.1.0)
+  - RxSwift (3.6.0)
+  - WBWebViewConsole (1.0.2)
 
 DEPENDENCIES:
   - Alamofire (~> 4)
-  - Google/Analytics
+  - Firebase/Core
+  - Highlightr
   - InAppSettingsKit
   - MBProgressHUD
   - RxAlamofire (~> 3)
   - RxSwift (~> 3)
+  - WBWebViewConsole (from `https://github.com/Hubertzhang/WBWebViewConsole.git`)
+
+EXTERNAL SOURCES:
+  WBWebViewConsole:
+    :git: https://github.com/Hubertzhang/WBWebViewConsole.git
+
+CHECKOUT OPTIONS:
+  WBWebViewConsole:
+    :commit: 86f7e102364a922755d766c878b2d89e1279ae10
+    :git: https://github.com/Hubertzhang/WBWebViewConsole.git
 
 SPEC CHECKSUMS:
-  Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
-  FirebaseAnalytics: 9c67af0ebeb8d2146c9b4ea2616439affa947b58
-  FirebaseCore: 03da1cb32615569bbc2830a22f9ad753d9a02ef5
-  FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
-  Google: 813c467362eabc11385f5a5cc9ad0cb651a58f4e
-  GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
-  GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
-  GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
-  GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
+  Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
+  Firebase: 1492bf04e1b73a7353b4fb2cf5a20bac9692f341
+  FirebaseAnalytics: ad41720e3e67fc63fbe3d2948d3e26932a8de311
+  FirebaseCore: cfc042628ef9f20debe09c0eb683135fcd404cb4
+  FirebaseInstanceID: 9fbf536668f4d3f0880e7438456dabd1376e294b
+  GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
+  Highlightr: 519911a0a9a040d76e591f6fe58bb5177c8bdaa3
   InAppSettingsKit: 94d2fba3ccd700fc4e32c6d09fabcc0af2426744
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
-  RxAlamofire: bc53604b29fd2d220cfaa490c736cc4500819f34
-  RxSwift: 83ff553e7593fdfdcb2562933a64c0284dffdadc
+  nanopb: 22bc080fa3955e2116b6ff3ee6c2cb3c15ab97cb
+  RxAlamofire: 5eb39188c4917ad98127c0ecb4878a61b7517003
+  RxSwift: a0925c7fb11fbe60055285f6f2062241aa37a175
+  WBWebViewConsole: 1288737d136b44a281cc654828339127f959e21c
 
-PODFILE CHECKSUM: 50b17c7af4f6fe97832e5809f596374b592bb70e
+PODFILE CHECKSUM: 3888b5f6c2e190645a4981754089b6414f7e979e
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.2.1

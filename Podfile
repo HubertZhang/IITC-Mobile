@@ -11,11 +11,12 @@ abstract_target 'Base' do
     target 'BaseFramework'
     abstract_target 'Application' do
         pod 'MBProgressHUD'
-        pod 'Google/Analytics'
-#        pod 'Google/SignIn'
+        pod 'Firebase/Core'
 
         target 'IITC-Mobile' do
             pod 'InAppSettingsKit'
+            pod 'Highlightr'
+            pod 'WBWebViewConsole', :git => 'https://github.com/Hubertzhang/WBWebViewConsole.git'
         end
         
         target 'ViewInIITC'
