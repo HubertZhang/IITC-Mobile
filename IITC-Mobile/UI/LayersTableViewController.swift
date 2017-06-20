@@ -120,12 +120,13 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
         switch (tableView) {
         case panelTable:
             NotificationCenter.default.post(name: Notification.Name(rawValue: "SwitchToPanel"), object: nil, userInfo: ["Panel": layersController.panelNames[(indexPath as NSIndexPath).row]])
+            tableView.deselectRow(at: indexPath, animated: true)
             self.dismiss(nil)
         case baseLayerTable:
+            tableView.deselectRow(at: indexPath, animated: true)
             let layer = layersController.baseLayers[(indexPath as NSIndexPath).row]
             if layer.active {
                 return
@@ -150,6 +151,7 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
                 tableView.cellForRow(at: indexPath)!.accessoryType = .checkmark
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "WebViewExecuteJS"), object: nil, userInfo: ["JS": "window.layerChooser.showLayer(\(layer.layerID), true)"])
             }
+            tableView.deselectRow(at: indexPath, animated: true)
         default:
             break;
         }
