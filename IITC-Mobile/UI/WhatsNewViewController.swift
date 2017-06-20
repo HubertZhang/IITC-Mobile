@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 class WhatsNewViewController: UIViewController, UITextViewDelegate {
     
@@ -14,11 +15,9 @@ class WhatsNewViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var textView: UITextView!
     
     override func viewWillAppear(_ animated: Bool) {
-        let tracker = GAI.sharedInstance().defaultTracker
-        tracker?.set(kGAIScreenName, value: "WhatsNew")
-        
-        let builder = GAIDictionaryBuilder.createScreenView()!
-        tracker?.send(builder.build() as Dictionary)
+        Analytics.logEvent("enter_screen", parameters: [
+            "screen_name":"WhatsNew",
+            ])
     }
     
     override func viewDidLoad() {

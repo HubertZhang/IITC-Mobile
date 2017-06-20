@@ -12,6 +12,7 @@ import RxSwift
 import InAppSettingsKit
 import MBProgressHUD
 import Alamofire
+import FirebaseAnalytics
 
 @objc class SettingsViewController: IASKAppSettingsViewController, IASKSettingsDelegate {
 
@@ -20,14 +21,10 @@ import Alamofire
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        let tracker = GAI.sharedInstance().defaultTracker
-        tracker?.set(kGAIScreenName, value: "Settings")
-
-        let builder = GAIDictionaryBuilder.createScreenView()!
-        tracker?.send(builder.build() as NSDictionary as! [AnyHashable: Any])
-        for index in self.tableView.indexPathsForSelectedRows ?? [] {
-            self.tableView.deselectRow(at: index, animated: true)
-        }
+        Analytics.logEvent("enter_screen", parameters: [
+            "screen_name":"Settings",
+            ])
+        self.clearsSelectionOnViewWillAppear = true
     }
 
     override init(style: UITableViewStyle) {

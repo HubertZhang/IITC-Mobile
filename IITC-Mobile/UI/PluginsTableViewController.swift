@@ -8,6 +8,7 @@
 
 import UIKit
 import BaseFramework
+import FirebaseAnalytics
 
 class PluginCell: UITableViewCell {
 
@@ -20,11 +21,9 @@ class PluginsTableViewController: UITableViewController {
 //    var prototypeCell : PluginCell!
 
     override func viewWillAppear(_ animated: Bool) {
-        let tracker = GAI.sharedInstance().defaultTracker
-        tracker?.set(kGAIScreenName, value: "Plugins")
-        
-        let builder = GAIDictionaryBuilder.createScreenView()!
-        tracker?.send(builder.build() as NSDictionary as! [AnyHashable: Any])
+        Analytics.logEvent("enter_screen", parameters: [
+            "screen_name":"Plugins",
+            ])
     }
     
     override func viewDidLoad() {
