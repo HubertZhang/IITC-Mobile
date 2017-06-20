@@ -137,6 +137,10 @@ class PluginsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return keys[section]
     }
+    
+    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return keys
+    }
 
 //    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 //        return heights[keys[indexPath.section]]![indexPath.row]
