@@ -29,18 +29,6 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
     @IBOutlet weak var webProgressView: UIProgressView!
 
-    func loadScripts() {
-        var scripts = ScriptsManager.sharedInstance.getLoadedScripts()
-        let currentMode = IITCLocationMode(rawValue: userDefaults.integer(forKey: "pref_user_location_mode"))!
-        if currentMode != .notShow {
-            scripts.append(ScriptsManager.sharedInstance.positionScript)
-
-        }
-        self.webView.loadScripts(scripts)
-        loadIITCNeeded = false
-        syncCookie()
-    }
-
     func syncCookie() {
         let containerPath = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContainerIdentifier)!
         let cookieDirPath = containerPath.appendingPathComponent("Library/Cookies", isDirectory: true)
@@ -109,13 +97,6 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
         if (keyPath == "estimatedProgress") {
             let progress: Double = self.webView.estimatedProgress
-            if progress >= 0.8 {
-                if let host = self.webView.url?.host {
-                    if host.contains("ingress") && self.loadIITCNeeded {
-                        self.loadScripts()
-                    }
-                }
-            }
             self.webProgressView.setProgress(Float(progress), animated: true)
             if progress == 1.0 {
                 UIView.animate(withDuration: 1, animations: {
@@ -209,7 +190,21 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         //        print(navigationAction.request.mainDocumentURL)
         if let urlString = navigationAction.request.mainDocumentURL?.absoluteString {
             if urlString.contains("accounts.google") {
+                self.webView.configuration.userContentController.removeAllUserScripts()
                 self.loadIITCNeeded = true
+            }
+            if urlString.contains("ingress.com/intel") && self.loadIITCNeeded {
+                self.webView.configuration.userContentController.removeAllUserScripts()
+                var scripts = ScriptsManager.sharedInstance.getLoadedScripts()
+                let currentMode = IITCLocationMode(rawValue: userDefaults.integer(forKey: "pref_user_location_mode"))!
+                if currentMode != .notShow {
+                    scripts.append(ScriptsManager.sharedInstance.positionScript)
+                }
+                for script in scripts {
+                    self.webView.configuration.userContentController.addUserScript(WKUserScript.init(source: script.fileContent, injectionTime: .atDocumentEnd, forMainFrameOnly: true))
+                }
+                self.loadIITCNeeded = false
+                syncCookie()
             }
         }
         decisionHandler(.allow)
