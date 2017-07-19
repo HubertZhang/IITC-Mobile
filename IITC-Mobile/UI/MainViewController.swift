@@ -9,10 +9,12 @@
 import UIKit
 import WebKit
 import BaseFramework
+import WBWebViewConsole
 
 class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
     var webView: IITCWebView!
+    var enableDebug: Bool = true
     var loadIITCNeeded = true
     var layersController: LayersController = LayersController.sharedInstance
 
@@ -44,7 +46,11 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     }
 
     func configureWebView() {
-        self.webView = IITCWebView(frame: CGRect.zero)
+        if enableDebug {
+            self.webView = IITC1WebView(frame: CGRect.zero)
+        } else {
+            self.webView = IITCWebView(frame: CGRect.zero)
+        }
 
         self.webView.translatesAutoresizingMaskIntoConstraints = false
         self.webView.navigationDelegate = self
@@ -137,9 +143,7 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
             (action: UIAlertAction) -> Void in
             completionHandler()
         }))
-        self.present(alertController, animated: true, completion: {
-            () -> Void in
-        })
+        self.present(alertController, animated: true, completion: nil)
     }
 
     func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
@@ -152,9 +156,7 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
             (action: UIAlertAction) -> Void in
             completionHandler(false)
         }))
-        self.present(alertController, animated: true, completion: {
-            () -> Void in
-        })
+        self.present(alertController, animated: true, completion: nil)
     }
 
     func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
@@ -186,15 +188,26 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
     //MARK: WKNavigationDelegate
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        //        print(#function)
-        //        print(navigationAction.request.mainDocumentURL)
+        if enableDebug {
+            let r = (self.webView as! IITC1WebView).jsBridge.handleWebViewRequest(navigationAction.request)
+            if r {
+                decisionHandler(.cancel)
+                return
+            }
+        }
+        
         if let urlString = navigationAction.request.mainDocumentURL?.absoluteString {
             if urlString.contains("accounts.google") {
                 self.webView.configuration.userContentController.removeAllUserScripts()
                 self.loadIITCNeeded = true
             }
             if urlString.contains("ingress.com/intel") && self.loadIITCNeeded {
-                self.webView.configuration.userContentController.removeAllUserScripts()
+                if enableDebug {
+                    (self.webView as! IITC1WebView).console.clearMessages()
+                    (self.webView as! IITC1WebView).wb_removeAllUserScripts()
+                } else {
+                    self.webView.configuration.userContentController.removeAllUserScripts()
+                }
                 var scripts = ScriptsManager.sharedInstance.getLoadedScripts()
                 let currentMode = IITCLocationMode(rawValue: userDefaults.integer(forKey: "pref_user_location_mode"))!
                 if currentMode != .notShow {
@@ -245,6 +258,15 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         NotificationCenter.default.post(name: JSNotificationReloadRequired, object: nil)
     }
 
+    @IBAction func debugButtonPressed(_ sender: Any) {
+        if enableDebug {
+            let vc = WBWebDebugConsoleViewController(console: (self.webView as! IITC1WebView).console)!
+            vc.modalPresentationStyle = UIModalPresentationStyle.popover
+            vc.popoverPresentationController?.barButtonItem = sender as? UIBarButtonItem
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+    
     @IBAction func linkButtonPressed(_ sender: AnyObject) {
         let alert = UIAlertController(title: "Input intel URL", message: nil, preferredStyle: .alert)
         alert.addTextField {
