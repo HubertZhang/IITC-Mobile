@@ -57,11 +57,8 @@ open class Script: NSObject {
             e = try NSRegularExpression(pattern: "//.*?@([^\\s]*)\\s*(.*)", options: NSRegularExpression.Options(rawValue: 0))
             let header = fileContent.substring(with: Range<String.Index>(range1.upperBound ..< range2.lowerBound))
             for line in header.components(separatedBy: "\n") {
-//                print(line)
                 let search = e.matches(in: line, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, (line as NSString).length))
                 if (search.count > 0) {
-//                    print(search[0].rangeAtIndex(1))
-//                    print(search[0].rangeAtIndex(2))
                     var start = line.characters.index(line.startIndex, offsetBy: search[0].rangeAt(1).location)
                     var end = line.characters.index(start, offsetBy: search[0].rangeAt(1).length - 1)
                     let rangeId = line[start ... end]
@@ -74,8 +71,6 @@ open class Script: NSObject {
         } catch _ as NSError {
 
         }
-
-//        print(attributes)
         return attributes
     }
 
