@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>GCM_SENDER_ID</key>
+	<string>238477957742</string>
+	<key>DATABASE_URL</key>
+	<string>https://iitc-mobile-28ab3.firebaseio.com</string>
 	<key>TRACKING_ID</key>
 	<string>UA-78916995-1</string>
 	<key>PLIST_VERSION</key>
