@@ -31,6 +31,7 @@
 		B4B3284A1D10F3AF007AA6D5 /* UserFilesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B328491D10F3AF007AA6D5 /* UserFilesTableViewController.swift */; };
 		B4B3284C1D117970007AA6D5 /* IITC.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = B4B3284B1D117970007AA6D5 /* IITC.entitlements */; };
 		B4B3284E1D1179C4007AA6D5 /* IITC-Action.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = B4B3284D1D1179C4007AA6D5 /* IITC-Action.entitlements */; };
+		B4B9DEB31EFDB258009BFCC3 /* IITC1WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B9DEB21EFDB258009BFCC3 /* IITC1WebView.swift */; };
 		B4E2F0041D05D06C00D2D86B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E2F0031D05D06C00D2D86B /* AppDelegate.swift */; };
 		B4E2F0061D05D06C00D2D86B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E2F0051D05D06C00D2D86B /* MainViewController.swift */; };
 		B4E2F0091D05D06C00D2D86B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4E2F0071D05D06C00D2D86B /* Main.storyboard */; };
@@ -145,6 +146,7 @@
 		B4B328491D10F3AF007AA6D5 /* UserFilesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFilesTableViewController.swift; sourceTree = "<group>"; };
 		B4B3284B1D117970007AA6D5 /* IITC.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = IITC.entitlements; sourceTree = "<group>"; };
 		B4B3284D1D1179C4007AA6D5 /* IITC-Action.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "IITC-Action.entitlements"; sourceTree = "<group>"; };
+		B4B9DEB21EFDB258009BFCC3 /* IITC1WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IITC1WebView.swift; sourceTree = "<group>"; };
 		B4E2F0001D05D06C00D2D86B /* IITC-Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IITC-Mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4E2F0031D05D06C00D2D86B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B4E2F0051D05D06C00D2D86B /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 				B44856FA1D1AB78F0082B1E7 /* WhatsNewViewController.swift */,
 				B4ED0CB71D9E6F990038EB33 /* WebViewController.swift */,
 				B410BFA21EF9BC3F001B441D /* JSFileViewController.swift */,
+				B4B9DEB21EFDB258009BFCC3 /* IITC1WebView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -685,6 +688,7 @@
 				B44856FB1D1AB78F0082B1E7 /* WhatsNewViewController.swift in Sources */,
 				B405EECC1D066FC900110D9E /* LayersTableViewController.swift in Sources */,
 				B405EED11D06969C00110D9E /* SettingsViewControllerNew.swift in Sources */,
+				B4B9DEB31EFDB258009BFCC3 /* IITC1WebView.swift in Sources */,
 				B410BFA31EF9BC3F001B441D /* JSFileViewController.swift in Sources */,
 				B405EECE1D06832200110D9E /* LayersController.swift in Sources */,
 				B4B3284A1D10F3AF007AA6D5 /* UserFilesTableViewController.swift in Sources */,
