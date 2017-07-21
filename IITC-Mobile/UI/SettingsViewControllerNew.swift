@@ -17,20 +17,22 @@ import FirebaseAnalytics
 @objc class SettingsViewController: IASKAppSettingsViewController, IASKSettingsDelegate {
 
     override func viewDidLoad() {
+        super.viewDidLoad()
         self.delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         Analytics.logEvent("enter_screen", parameters: [
             "screen_name":"Settings",
             ])
-        self.clearsSelectionOnViewWillAppear = true
     }
 
     override init(style: UITableViewStyle) {
         super.init(style: style)
         let defaults = UserDefaults(suiteName: ContainerIdentifier)
         self.settingsStore = IASKSettingsStoreUserDefaults(userDefaults: defaults)
+        self.clearsSelectionOnViewWillAppear = true
     }
 
     required init?(coder aDecoder: NSCoder) {
