@@ -400,6 +400,7 @@
 				11551FAB75C95E9E8A422848 /* [CP] Copy Pods Resources */,
 				B4F8403C1D0AD1AF00C58690 /* Embed Frameworks */,
 				B4F8404F1D0AD26900C58690 /* Embed App Extensions */,
+				B4D443631F21DD7E00EFB5D1 /* Set Version in Settings.bundle */,
 			);
 			buildRules = (
 			);
@@ -645,6 +646,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Base-Application-ViewInIITC/Pods-Base-Application-ViewInIITC-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		B4D443631F21DD7E00EFB5D1 /* Set Version in Settings.bundle */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Set Version in Settings.bundle";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "version=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"$PROJECT_DIR/$INFOPLIST_FILE\")\n/usr/libexec/PlistBuddy -c \"Set PreferenceSpecifiers:1:DefaultValue $version\" \"$CODESIGNING_FOLDER_PATH/Settings.bundle/Root.plist\"\n";
 		};
 		B7FDA0BD49D78636739F1B48 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
