@@ -10,6 +10,7 @@ import UIKit
 import MBProgressHUD
 import Firebase
 import BaseFramework
+import StoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -29,6 +30,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 hud.hide(animated: true)
             })
         })
+        
+        SKPaymentQueue.default().add(InAppPurchaseManager.default)
+        
         return true
     }
 
