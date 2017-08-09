@@ -532,6 +532,45 @@
             </objects>
             <point key="canvasLocation" x="934" y="1010"/>
         </scene>
+        <!--Console Purchase View Controller-->
+        <scene sceneID="NgY-ME-58e">
+            <objects>
+                <viewController storyboardIdentifier="purchase" id="bVX-L7-Ix6" customClass="ConsolePurchaseViewController" customModule="IITC_Mobile" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="mB9-af-xXX"/>
+                        <viewControllerLayoutGuide type="bottom" id="3FV-cc-QWd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Tmw-v8-cAX">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QbT-sL-Jd5">
+                                <rect key="frame" x="91" y="79" width="193" height="216"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pv3-qj-bqA">
+                                <rect key="frame" x="131" y="374" width="113" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Purchase"/>
+                                <connections>
+                                    <action selector="purchaseButtonClicked:" destination="bVX-L7-Ix6" eventType="touchUpInside" id="3j1-LS-pYe"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="label" destination="QbT-sL-Jd5" id="3b4-zr-OO6"/>
+                        <outlet property="purchaseButton" destination="Pv3-qj-bqA" id="fGK-kC-5lW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="neX-43-QER" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="933.60000000000002" y="1675.4122938530736"/>
+        </scene>
     </scenes>
     <resources>
         <image name="ic_action_about" width="24" height="24"/>

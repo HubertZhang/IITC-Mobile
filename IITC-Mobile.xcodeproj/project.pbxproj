@@ -16,6 +16,7 @@
 		B405EED21D06969C00110D9E /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B405EED01D06969C00110D9E /* Settings.bundle */; };
 		B405EED61D0726D700110D9E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B405EED51D0726D700110D9E /* CoreLocation.framework */; };
 		B410BFA31EF9BC3F001B441D /* JSFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B410BFA21EF9BC3F001B441D /* JSFileViewController.swift */; };
+		B41C02491F233B9700AAAEAC /* ConsolePurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41C02481F233B9700AAAEAC /* ConsolePurchaseViewController.swift */; };
 		B42BE7591D072D1B00A0A0CB /* OpenInMapActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BE7581D072D1B00A0A0CB /* OpenInMapActivity.swift */; };
 		B42BE7611D073C0400A0A0CB /* About.html in Resources */ = {isa = PBXBuildFile; fileRef = B42BE7601D073C0400A0A0CB /* About.html */; };
 		B42BE7631D073C7800A0A0CB /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BE7621D073C7800A0A0CB /* AboutViewController.swift */; };
@@ -133,6 +134,7 @@
 		B405EED31D0726BA00110D9E /* IITCLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IITCLocation.swift; sourceTree = "<group>"; };
 		B405EED51D0726D700110D9E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		B410BFA21EF9BC3F001B441D /* JSFileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSFileViewController.swift; sourceTree = "<group>"; };
+		B41C02481F233B9700AAAEAC /* ConsolePurchaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsolePurchaseViewController.swift; sourceTree = "<group>"; };
 		B42BE7581D072D1B00A0A0CB /* OpenInMapActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenInMapActivity.swift; sourceTree = "<group>"; };
 		B42BE75A1D07342700A0A0CB /* IITC-Mobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IITC-Mobile-Bridging-Header.h"; sourceTree = "<group>"; };
 		B42BE7601D073C0400A0A0CB /* About.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = About.html; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 				B4ED0CB71D9E6F990038EB33 /* WebViewController.swift */,
 				B410BFA21EF9BC3F001B441D /* JSFileViewController.swift */,
 				B4B9DEB21EFDB258009BFCC3 /* IITC1WebView.swift */,
+				B41C02481F233B9700AAAEAC /* ConsolePurchaseViewController.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -717,6 +720,7 @@
 				B405EED11D06969C00110D9E /* SettingsViewControllerNew.swift in Sources */,
 				B4B9DEB31EFDB258009BFCC3 /* IITC1WebView.swift in Sources */,
 				B410BFA31EF9BC3F001B441D /* JSFileViewController.swift in Sources */,
+				B41C02491F233B9700AAAEAC /* ConsolePurchaseViewController.swift in Sources */,
 				B405EECE1D06832200110D9E /* LayersController.swift in Sources */,
 				B4B3284A1D10F3AF007AA6D5 /* UserFilesTableViewController.swift in Sources */,
 				B4E2F0061D05D06C00D2D86B /* MainViewController.swift in Sources */,
