@@ -14,7 +14,7 @@ import WBWebViewConsole
 class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
     var webView: IITCWebView!
-    var enableDebug: Bool = true
+    var enableDebug: Bool = false
     var loadIITCNeeded = true
     var layersController: LayersController = LayersController.sharedInstance
 
@@ -260,7 +260,14 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
     @IBAction func debugButtonPressed(_ sender: Any) {
         if enableDebug {
-            let vc = WBWebDebugConsoleViewController(console: (self.webView as! IITC1WebView).console)!
+            let vc = WBWebDebugConsoleViewController(console: (self.webView as! IITC1WebView).console!)!
+            vc.modalPresentationStyle = UIModalPresentationStyle.popover
+            vc.popoverPresentationController?.barButtonItem = sender as? UIBarButtonItem
+            self.present(vc, animated: true, completion: nil)
+        } else {
+            guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "purchase") else {
+                return
+            }
             vc.modalPresentationStyle = UIModalPresentationStyle.popover
             vc.popoverPresentationController?.barButtonItem = sender as? UIBarButtonItem
             self.present(vc, animated: true, completion: nil)
