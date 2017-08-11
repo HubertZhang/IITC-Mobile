@@ -32,3 +32,6 @@ Pods/
 
 # IITC scripts
 BaseFramework/scripts
+
+# Openssl
+OpenSSL-for-iPhone/
