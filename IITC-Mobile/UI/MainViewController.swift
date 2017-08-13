@@ -27,6 +27,7 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     var backPanel = [String]()
     var backButtonPressed = false
 
+    var debugButton: UIBarButtonItem!
     @IBOutlet weak var backButton: UIBarButtonItem!
 
     @IBOutlet weak var webProgressView: UIProgressView!
@@ -87,13 +88,51 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
             }
         }
     }
+    
+    func configureDebugButton() {
+        debugButton = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_bug_report"), style: .plain, target: self, action: #selector(debugButtonPressed(_:)))
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
+        if NSUbiquitousKeyValueStore.default().longLong(forKey: ConsoleStateKey) != 0 {
+            if userDefaults.bool(forKey: "pref_console") {
+                enableDebug = true
+            }
+        }
+        configureDebugButton()
         configureWebView()
         configureNotification()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if enableDebug && !self.webView.isKind(of: IITC1WebView.self) {
+            let alert = UIAlertController(title: "Console not loaded", message: "You have enabled Debug Console but it did not load. Please restart IITC to load Debug Console.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+        if enableDebug {
+            guard var buttons = self.navigationItem.rightBarButtonItems else {
+                return
+            }
+            if buttons.last != self.debugButton {
+                buttons.append(self.debugButton)
+                self.navigationItem.rightBarButtonItems = buttons
+            }
+        } else {
+            guard var buttons = self.navigationItem.rightBarButtonItems else {
+                return
+            }
+            if buttons.last == self.debugButton {
+                buttons.popLast()
+                self.navigationItem.rightBarButtonItems = buttons
+            }
+        }
     }
 
     deinit {
