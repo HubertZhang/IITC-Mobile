@@ -17,6 +17,7 @@
 		B405EED61D0726D700110D9E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B405EED51D0726D700110D9E /* CoreLocation.framework */; };
 		B410BFA31EF9BC3F001B441D /* JSFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B410BFA21EF9BC3F001B441D /* JSFileViewController.swift */; };
 		B41C02491F233B9700AAAEAC /* ConsolePurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41C02481F233B9700AAAEAC /* ConsolePurchaseViewController.swift */; };
+		B423BA911F3F6A9700F262A0 /* AppleIncRootCertificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = B423BA901F3F6A9700F262A0 /* AppleIncRootCertificate.cer */; };
 		B42BE7591D072D1B00A0A0CB /* OpenInMapActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BE7581D072D1B00A0A0CB /* OpenInMapActivity.swift */; };
 		B42BE7611D073C0400A0A0CB /* About.html in Resources */ = {isa = PBXBuildFile; fileRef = B42BE7601D073C0400A0A0CB /* About.html */; };
 		B42BE7631D073C7800A0A0CB /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BE7621D073C7800A0A0CB /* AboutViewController.swift */; };
@@ -137,6 +138,7 @@
 		B405EED51D0726D700110D9E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		B410BFA21EF9BC3F001B441D /* JSFileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSFileViewController.swift; sourceTree = "<group>"; };
 		B41C02481F233B9700AAAEAC /* ConsolePurchaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsolePurchaseViewController.swift; sourceTree = "<group>"; };
+		B423BA901F3F6A9700F262A0 /* AppleIncRootCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = AppleIncRootCertificate.cer; sourceTree = "<group>"; };
 		B42BE7581D072D1B00A0A0CB /* OpenInMapActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenInMapActivity.swift; sourceTree = "<group>"; };
 		B42BE75A1D07342700A0A0CB /* IITC-Mobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IITC-Mobile-Bridging-Header.h"; sourceTree = "<group>"; };
 		B42BE7601D073C0400A0A0CB /* About.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = About.html; sourceTree = "<group>"; };
@@ -296,6 +298,7 @@
 		B4BA26151F3DB8FE000FDFB6 /* RMStore */ = {
 			isa = PBXGroup;
 			children = (
+				B423BA901F3F6A9700F262A0 /* AppleIncRootCertificate.cer */,
 				B4BA261C1F3DFD45000FDFB6 /* openssl.framework */,
 				B4BA26181F3DF36E000FDFB6 /* RMAppReceipt.h */,
 				B4BA26191F3DF36E000FDFB6 /* RMAppReceipt.m */,
@@ -572,6 +575,7 @@
 				B4E2F00B1D05D06C00D2D86B /* Assets.xcassets in Resources */,
 				B44417691DA50D8900960F11 /* JSFile_320x320.png in Resources */,
 				B4E2F0091D05D06C00D2D86B /* Main.storyboard in Resources */,
+				B423BA911F3F6A9700F262A0 /* AppleIncRootCertificate.cer in Resources */,
 				B42BE7651D07529300A0A0CB /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

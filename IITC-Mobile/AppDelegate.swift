@@ -31,6 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
         })
         
+        let certURL = Bundle.main.url(forResource: "AppleIncRootCertificate", withExtension: "cer")
+        RMAppReceipt.setAppleRootCertificateURL(certURL!)
         SKPaymentQueue.default().add(InAppPurchaseManager.default)
         
         return true
