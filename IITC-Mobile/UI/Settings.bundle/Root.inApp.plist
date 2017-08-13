@@ -74,15 +74,41 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
+			<string>pref_console_cat</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>IASKButtonSpecifier</string>
+			<key>Title</key>
+			<string>pref_console_not_purchased</string>
+			<key>Key</key>
+			<string>pref_console_not_purchased</string>
+			<key>IASKTextAlignment</key>
+			<string>IASKUITextAlignmentLeft</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>pref_console</string>
+			<key>Key</key>
+			<string>pref_console</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
 			<string>pref_misc_cat</string>
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
+			<string>IASKButtonSpecifier</string>
 			<key>Title</key>
-			<string>pref_advanced_options</string>
-			<key>File</key>
-			<string>Advanced</string>
+			<string>pref_adv_download_test</string>
+			<key>Key</key>
+			<string>pref_adv_download_test</string>
 			<key>IASKTextAlignment</key>
 			<string>IASKUITextAlignmentLeft</string>
 		</dict>
