@@ -19,6 +19,13 @@ import FirebaseAnalytics
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
+        #if !DEBUG
+        if NSUbiquitousKeyValueStore.default().longLong(forKey: ConsoleStateKey) == 0 {
+            self.setHiddenKeys(["pref_console"], animated: false)
+        } else {
+            self.setHiddenKeys(["pref_console_not_purchased"], animated: false)
+        }
+        #endif
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -28,11 +35,32 @@ import FirebaseAnalytics
             ])
     }
 
+    let defaults = UserDefaults(suiteName: ContainerIdentifier)
+    
     override init(style: UITableViewStyle) {
         super.init(style: style)
-        let defaults = UserDefaults(suiteName: ContainerIdentifier)
         self.settingsStore = IASKSettingsStoreUserDefaults(userDefaults: defaults)
         self.clearsSelectionOnViewWillAppear = true
+        defaults?.addObserver(self, forKeyPath: "pref_console", options: [.old, .new], context: nil)
+    }
+    
+    deinit {
+        defaults?.removeObserver(self, forKeyPath: "pref_console")
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "pref_console" {
+            guard let change = change else {
+                return
+            }
+            let oldKey = (change[.oldKey] as? NSNumber)?.boolValue ?? false
+            let newKey = (change[.newKey] as? NSNumber)?.boolValue ?? false
+            if oldKey != newKey {
+                let alert = UIAlertController(title: "Change not applied yet", message: "Please restart IITC-iOS to enable or disable Debug Console", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -55,7 +83,7 @@ import FirebaseAnalytics
             let all = ScriptsManager.sharedInstance.storedPlugins.count + 2
             ScriptsManager.sharedInstance.updatePlugins().subscribeOn(SerialDispatchQueueScheduler.init(internalSerialQueueName: "com.cradle.IITC-Mobile.network")).observeOn(MainScheduler.instance).subscribe(onNext: {
                 (result) -> Void in
-                finished = finished + 1
+                finished += 1
                 hud.progress = Float(finished) / Float(all)
             }, onError: {
                 (e) -> Void in
@@ -110,6 +138,12 @@ import FirebaseAnalytics
 
             self.present(alert, animated: true, completion: nil)
 
+        } else if specifier.key() == "pref_console_not_purchased" {
+            guard let vc = self.navigationController?.storyboard?.instantiateViewController(withIdentifier: "purchase") else {
+                return
+            }
+            vc.modalPresentationStyle = UIModalPresentationStyle.formSheet
+            self.present(vc, animated: true, completion: nil)
         }
     }
 
