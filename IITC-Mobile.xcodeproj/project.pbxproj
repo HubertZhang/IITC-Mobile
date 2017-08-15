@@ -423,6 +423,7 @@
 			buildConfigurationList = B4E2F01D1D05D06C00D2D86B /* Build configuration list for PBXNativeTarget "IITC-Mobile" */;
 			buildPhases = (
 				B7FDA0BD49D78636739F1B48 /* [CP] Check Pods Manifest.lock */,
+				B4BA261B1F3DF4BE000FDFB6 /* SwiftLint */,
 				B4E2EFFC1D05D06C00D2D86B /* Sources */,
 				B4E2EFFD1D05D06C00D2D86B /* Frameworks */,
 				B4E2EFFE1D05D06C00D2D86B /* Resources */,
@@ -682,6 +683,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Base-Application-ViewInIITC/Pods-Base-Application-ViewInIITC-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		B4BA261B1F3DF4BE000FDFB6 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 		B4D443631F21DD7E00EFB5D1 /* Set Version in Settings.bundle */ = {
 			isa = PBXShellScriptBuildPhase;
