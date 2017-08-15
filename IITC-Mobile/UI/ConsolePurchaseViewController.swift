@@ -16,8 +16,11 @@ class ConsolePurchaseViewController: UIViewController {
     var products: [SKProduct] = [SKProduct]()
     var hud: MBProgressHUD?
     
-    @IBOutlet weak var label: UILabel!
     @IBOutlet weak var purchaseButton: UIButton!
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var priceLabel: UILabel!
+    @IBOutlet weak var descriptionTextView: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
         InAppPurchaseManager.default.uiDelegate = self
@@ -29,10 +32,6 @@ class ConsolePurchaseViewController: UIViewController {
         else {
             print("Cannot perform In App Purchases.")
         }
-    }
-    
-    deinit {
-        InAppPurchaseManager.default.uiDelegate = nil
     }
 
     override func didReceiveMemoryWarning() {
@@ -51,6 +50,15 @@ class ConsolePurchaseViewController: UIViewController {
         }
     }
     
+    @IBAction func doneButtonClicked(_ sender: Any) {
+        InAppPurchaseManager.default.uiDelegate = nil
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func restoreButtonClicked(_ sender: Any) {
+        SKPaymentQueue.default().restoreCompletedTransactions()
+    }
+
     /*
     // MARK: - Navigation
 
@@ -68,7 +76,16 @@ extension ConsolePurchaseViewController: SKProductsRequestDelegate {
         if response.products.count != 0 {
             for product in response.products {
                 print("product: \(product)")
-                self.label.text = String.init(format: "ID:%@\nTitle:%@\nDescription:%@\nPrice:%@\n", product.productIdentifier, product.localizedTitle, product.localizedDescription, product.price.description(withLocale: product.priceLocale))
+                self.titleLabel.text = product.localizedTitle
+                let priceFormatter = NumberFormatter()
+                priceFormatter.numberStyle = .currency
+                priceFormatter.locale = product.priceLocale
+                self.priceLabel.text = priceFormatter.string(from: product.price)
+                #if DEBUG
+                    self.descriptionTextView.text = String.init(format: "ID:%@\nTitle:%@\nDescription:%@\nPrice:%@\n", product.productIdentifier, product.localizedTitle, product.localizedDescription, product.price.description(withLocale: product.priceLocale))
+                #else
+                    self.descriptionTextView.text = product.localizedDescription
+                #endif
                 self.purchaseButton.isEnabled = true
                 self.products.append(product)
             }
@@ -80,66 +97,56 @@ extension ConsolePurchaseViewController: SKProductsRequestDelegate {
     }
 }
 
-extension ConsolePurchaseViewController: SKPaymentTransactionObserver {
-    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-        for transaction in transactions {
-            switch (transaction.transactionState) {
-            // Call the appropriate custom method for the transaction state.
-            case .purchasing:
-                if hud == nil {
-                    hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                    hud?.label.text = "Purchasing"
-                } else {
-                    hud?.show(animated: true)
-                }
-                break;
-            case .deferred:
-                if hud == nil {
-                    
-                } else {
-                    hud?.label.text = "Deferred"
-                    hud?.hide(animated: true, afterDelay: 5)
-                }
-                //                [self showTransactionAsInProgress:transaction deferred:YES];
-                break;
-            case .failed:
-                if hud == nil {
-                    
-                } else {
-                    hud?.label.text = "Failed"
-                    hud?.hide(animated: true, afterDelay: 5)
-                }
-                let alert = UIAlertController(title: "Purchase Failed", message: transaction.error?.localizedDescription ?? "Unknown Error", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-                print("Failed!")
-                //                [self failedTransaction:transaction];
-                break;
-            case .purchased:
-                if hud == nil {
-                    
-                } else {
-                    hud?.label.text = "Purchased"
-                    hud?.hide(animated: true, afterDelay: 5)
-                }
-                break;
-            case .restored:
-                if hud == nil {
-                    
-                } else {
-                    hud?.label.text = "Restored"
-                    hud?.hide(animated: true, afterDelay: 5)
-                }
-                break;
-            }
+extension ConsolePurchaseViewController: InAppPurchaseUIDelegate {
+    func purchasing() {
+        if hud == nil {
+            hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud?.removeFromSuperViewOnHide = false
+            hud?.label.text = "Purchasing"
+        } else {
+            hud?.show(animated: true)
         }
     }
     
-    func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
-        print(#function)
+    func deferred() {
+        if hud == nil {
+            
+        } else {
+            hud?.label.text = "Deferred"
+            hud?.hide(animated: true, afterDelay: 5)
+        }
     }
     
-    func paymentQueue(_ queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction]) {
-        print(#function)
+    func failed(with error: Error?) {
+        if hud == nil {
+            
+        } else {
+            hud?.hide(animated: true)
+        }
+        let alert = UIAlertController(title: "Purchase Failed", message: error?.localizedDescription ?? "Unknown Error", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func purchased() {
+        if hud == nil {
+            
+        } else {
+            hud?.hide(animated: true)
+            let alert = UIAlertController(title: "Console Purchased!", message: "Please restart IITC-iOS to enable Debug Console! Debug Console can be turned off in Settings.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func restored() {
+        if hud == nil {
+            
+        } else {
+            hud?.hide(animated: true)
+            let alert = UIAlertController(title: "Purchase Restored", message: "Please restart IITC-iOS to enable Debug Console! Debug Console can be turned off in Settings.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 }
