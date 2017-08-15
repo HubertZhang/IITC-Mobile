@@ -182,7 +182,7 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
             (action: UIAlertAction) -> Void in
             completionHandler()
         }))
-        self.present(alertController, animated: true, completion: nil)
+        self.topViewController()?.present(alertController, animated: true)
     }
 
     func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
@@ -195,7 +195,7 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
             (action: UIAlertAction) -> Void in
             completionHandler(false)
         }))
-        self.present(alertController, animated: true, completion: nil)
+        self.topViewController()?.present(alertController, animated: true, completion: nil)
     }
 
     func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
@@ -213,7 +213,7 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
             (action: UIAlertAction) -> Void in
             completionHandler(nil)
         }))
-        self.present(alertController, animated: true, completion: nil)
+        self.topViewController()?.present(alertController, animated: true, completion: nil)
     }
 
     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
@@ -227,6 +227,8 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
     //MARK: WKNavigationDelegate
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+//        print(navigationAction.request)
+//        print(navigationAction.request.mainDocumentURL)
         if enableDebug {
             let r = (self.webView as! IITC1WebView).jsBridge.handleWebViewRequest(navigationAction.request)
             if r {
@@ -234,13 +236,19 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
                 return
             }
         }
-        
+//        print("Allowed")
         if let urlString = navigationAction.request.mainDocumentURL?.absoluteString {
-            if urlString.contains("accounts.google") {
-                self.webView.configuration.userContentController.removeAllUserScripts()
+            if urlString.contains("google.com") {
+//                print("Allowed1")
+                if enableDebug {
+                    (self.webView as! IITC1WebView).console.clearMessages()
+                    (self.webView as! IITC1WebView).wb_removeAllUserScripts()
+                } else {
+                    self.webView.configuration.userContentController.removeAllUserScripts()
+                }
                 self.loadIITCNeeded = true
-            }
-            if urlString.contains("ingress.com/intel") && self.loadIITCNeeded {
+            } else if urlString.contains("ingress.com/intel") && self.loadIITCNeeded {
+//                print("Allowed2")
                 if enableDebug {
                     (self.webView as! IITC1WebView).console.clearMessages()
                     (self.webView as! IITC1WebView).wb_removeAllUserScripts()
@@ -300,9 +308,11 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     @IBAction func debugButtonPressed(_ sender: Any) {
         if enableDebug {
             let vc = WBWebDebugConsoleViewController(console: (self.webView as! IITC1WebView).console!)!
-            vc.modalPresentationStyle = UIModalPresentationStyle.popover
-            vc.popoverPresentationController?.barButtonItem = sender as? UIBarButtonItem
-            self.present(vc, animated: true, completion: nil)
+            let vc1 = UINavigationController.init(rootViewController: vc)
+            vc.navigationItem.leftBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: .done, target: vc, action: #selector(WBWebDebugConsoleViewController.dismissSelf))
+            vc1.modalPresentationStyle = UIModalPresentationStyle.popover
+            vc1.popoverPresentationController?.barButtonItem = sender as? UIBarButtonItem
+            self.present(vc1, animated: true, completion: nil)
         } else {
             guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "purchase") else {
                 return
@@ -393,6 +403,24 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         if segue.identifier == "layerChooser" {
             self.webView.evaluateJavaScript("window.layerChooser.getLayers()")
         }
+    }
+    
+    func topViewController() -> UIViewController? {
+        if self.isBeingPresented {
+            return self
+        } else {
+            var v = UIApplication.shared.keyWindow?.rootViewController
+            while v?.presentedViewController != nil {
+                v = v?.presentedViewController
+            }
+            return v
+        }
+    }
+}
+
+extension WBWebDebugConsoleViewController {
+    func dismissSelf() {
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
