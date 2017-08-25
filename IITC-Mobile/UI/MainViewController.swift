@@ -102,6 +102,9 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
                 enableDebug = true
             }
         }
+        #if arch(i386) || arch(x86_64)
+            enableDebug = true
+        #endif
         configureDebugButton()
         configureWebView()
         configureNotification()
