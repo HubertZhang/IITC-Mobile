@@ -250,7 +250,7 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         }
 //        print("Allowed")
         if let urlString = navigationAction.request.mainDocumentURL?.absoluteString {
-            if urlString.contains("google.com") {
+            if urlString.contains("google.com") || urlString.contains("ops.irde.net") {
 //                print("Allowed1")
                 if enableDebug {
                     (self.webView as! IITC1WebView).console.clearMessages()
@@ -258,6 +258,8 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
                 } else {
                     self.webView.configuration.userContentController.removeAllUserScripts()
                 }
+                self.backPanel.removeAll()
+                self.backButton.isEnabled = false
                 self.loadIITCNeeded = true
             } else if urlString.contains("ingress.com/intel") && self.loadIITCNeeded {
 //                print("Allowed2")
@@ -379,6 +381,7 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         // map pane is top-lvl. clear stack.
         if (panel == "map") {
             self.backPanel.removeAll()
+            self.backButton.isEnabled = false
         }
         // don't push current pane to backstack if this method was called via back button
         else if (!self.backButtonPressed) {
