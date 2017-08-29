@@ -67,7 +67,6 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
         self.webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
         self.view.bringSubview(toFront: webProgressView)
-        reloadIITC()
     }
 
     func configureNotification() {
@@ -108,6 +107,8 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         configureDebugButton()
         configureWebView()
         configureNotification()
+        
+        reloadIITC()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -166,6 +167,10 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
     func reloadIITC() {
         self.loadIITCNeeded = true
+        let userAgent = userDefaults.string(forKey: "pref_useragent")
+        if userAgent != "" {
+            self.webView.customUserAgent = userAgent
+        }
         if userDefaults.bool(forKey: "pref_force_desktop") {
             self.webView.load(URLRequest(url: URL(string: "https://www.ingress.com/intel?vp=f")!))
         } else {
@@ -225,6 +230,10 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         vc1.configuration = configuration
         self.navigationController?.present(vc, animated: true, completion: nil)
         vc1.loadViewIfNeeded()
+        let userAgent = userDefaults.string(forKey: "pref_useragent")
+        if userAgent != "" {
+            vc1.webView.customUserAgent = userAgent
+        }
         return vc1.webView
     }
 
