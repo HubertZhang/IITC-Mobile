@@ -124,6 +124,16 @@
 		</dict>
 		<dict>
 			<key>Type</key>
+			<string>IASKButtonSpecifier</string>
+			<key>Title</key>
+			<string>pref_custom_useragent</string>
+			<key>Key</key>
+			<string>pref_useragent_button</string>
+			<key>IASKTextAlignment</key>
+			<string>IASKUITextAlignmentLeft</string>
+		</dict>
+		<dict>
+			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
 			<string>pref_china_offset</string>

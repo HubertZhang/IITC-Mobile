@@ -144,6 +144,9 @@ import FirebaseAnalytics
             }
             vc.modalPresentationStyle = UIModalPresentationStyle.formSheet
             self.present(vc, animated: true, completion: nil)
+        } else if specifier.key() == "pref_useragent_button" {
+            let vc = self.navigationController!.storyboard!.instantiateViewController(withIdentifier: "userAgentViewController")
+            self.navigationController!.pushViewController(vc, animated: true)
         }
     }
 
