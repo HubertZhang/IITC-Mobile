@@ -16,7 +16,7 @@ abstract_target 'Base' do
         target 'IITC-Mobile' do
             pod 'InAppSettingsKit'
             pod 'Highlightr'
-            pod 'WBWebViewConsole', :git => 'https://github.com/Hubertzhang/WBWebViewConsole.git'
+            pod 'WBWebViewConsole', :git => 'https://github.com/Hubertzhang/WBWebViewConsole.git', :branch => 'table'
         end
         
         target 'ViewInIITC'
