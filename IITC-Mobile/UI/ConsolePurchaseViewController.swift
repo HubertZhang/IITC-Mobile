@@ -20,7 +20,7 @@ class ConsolePurchaseViewController: UIViewController {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
-    @IBOutlet weak var descriptionTextView: UITextView!
+    @IBOutlet weak var descriptionLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         InAppPurchaseManager.default.uiDelegate = self
@@ -82,9 +82,9 @@ extension ConsolePurchaseViewController: SKProductsRequestDelegate {
                 priceFormatter.locale = product.priceLocale
                 self.priceLabel.text = priceFormatter.string(from: product.price)
                 #if DEBUG
-                    self.descriptionTextView.text = String.init(format: "ID:%@\nTitle:%@\nDescription:%@\nPrice:%@\n", product.productIdentifier, product.localizedTitle, product.localizedDescription, product.price.description(withLocale: product.priceLocale))
+                    self.descriptionLabel.text = String.init(format: "ID:%@\nTitle:%@\nDescription:%@\nPrice:%@\n", product.productIdentifier, product.localizedTitle, product.localizedDescription, product.price.description(withLocale: product.priceLocale))
                 #else
-                    self.descriptionTextView.text = product.localizedDescription
+                    self.descriptionLabel.text = product.localizedDescription
                 #endif
                 self.purchaseButton.isEnabled = true
                 self.products.append(product)
