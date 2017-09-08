@@ -49,28 +49,6 @@
                                 </connections>
                             </barButtonItem>
                         </leftBarButtonItems>
-                        <rightBarButtonItems>
-                            <barButtonItem image="ic_settings" id="4sv-BR-2Y4">
-                                <connections>
-                                    <action selector="settingsButtonPressed:" destination="BYZ-38-t0r" id="Xm2-QO-LEp"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem image="ic_my_location" id="tgY-wa-dH9">
-                                <connections>
-                                    <action selector="locationButtonPressed:" destination="BYZ-38-t0r" id="pwu-bp-1aH"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem systemItem="refresh" id="I6m-OA-euM">
-                                <connections>
-                                    <action selector="reloadButtonPressed:" destination="BYZ-38-t0r" id="MCZ-uj-qN3"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem image="ic_link" id="jyp-Xj-Qpl">
-                                <connections>
-                                    <action selector="linkButtonPressed:" destination="BYZ-38-t0r" id="8Mr-we-bWL"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="backButton" destination="iRa-nn-Jvd" id="My4-5p-EG0"/>
@@ -842,10 +820,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Default-iitc.png" width="76" height="76"/>
-        <image name="ic_link" width="24" height="24"/>
-        <image name="ic_my_location" width="24" height="24"/>
-        <image name="ic_settings" width="24" height="24"/>
         <image name="Console-1" width="320" height="240"/>
         <image name="Console-2" width="320" height="240"/>
         <image name="ic_console" width="120" height="120"/>

@@ -88,8 +88,33 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         }
     }
     
+    func configureRightButtons() {
+        var buttons = [UIBarButtonItem]()
+        let settingsButton = UIButton(frame: CGRect(x:0,y:0,width:32,height:24))
+        settingsButton.setImage(#imageLiteral(resourceName: "ic_settings"), for: .normal)
+        settingsButton.addTarget(self, action: #selector(settingsButtonPressed(_:)), for: .touchUpInside)
+        buttons.append(UIBarButtonItem(customView: settingsButton))
+        
+        let locationButton = UIButton(frame: CGRect(x:0,y:0,width:32,height:24))
+        locationButton.setImage(#imageLiteral(resourceName: "ic_my_location"), for: .normal)
+        locationButton.addTarget(self, action: #selector(locationButtonPressed(_:)), for: .touchUpInside)
+        buttons.append(UIBarButtonItem(customView: locationButton))
+        
+        let reloadButton = UIButton(frame: CGRect(x:0,y:0,width:32,height:24))
+        reloadButton.setImage(#imageLiteral(resourceName: "ic_refresh"), for: .normal)
+        reloadButton.addTarget(self, action: #selector(reloadButtonPressed(_:)), for: .touchUpInside)
+        buttons.append(UIBarButtonItem(customView: reloadButton))
+        
+        let linkButton = UIButton(frame: CGRect(x:0,y:0,width:32,height:24))
+        linkButton.setImage(#imageLiteral(resourceName: "ic_link"), for: .normal)
+        linkButton.addTarget(self, action: #selector(linkButtonPressed(_:)), for: .touchUpInside)
+        buttons.append(UIBarButtonItem(customView: linkButton))
+        
+        self.navigationItem.setRightBarButtonItems(buttons, animated: true)
+    }
+    
     func configureDebugButton() {
-        debugButton = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_bug_report"), style: .plain, target: self, action: #selector(debugButtonPressed(_:)))
+        debugButton = UIBarButtonItem(title: ">_", style: .plain, target: self, action: #selector(debugButtonPressed(_:)))
     }
 
     override func viewDidLoad() {
@@ -105,6 +130,7 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
             enableDebug = true
         #endif
         configureDebugButton()
+        configureRightButtons()
         configureWebView()
         configureNotification()
         
