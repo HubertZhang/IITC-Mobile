@@ -46,6 +46,7 @@ class PluginsTableViewController: UITableViewController {
 
     var scripts = [String: [Script]]()
     var keys = [String]()
+    var sectionTitles = [String]()
 //    var heights = [String:[CGFloat]]()
 
     var changed = false
@@ -74,6 +75,9 @@ class PluginsTableViewController: UITableViewController {
             keys.remove(at: index)
             keys.append("Deleted")
         }
+        sectionTitles = keys.map({ (section) -> String in
+            return section[section.startIndex...section.startIndex].uppercased()
+        })
 
     }
 
@@ -138,7 +142,7 @@ class PluginsTableViewController: UITableViewController {
     }
     
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        return keys
+        return sectionTitles
     }
 
 //    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
