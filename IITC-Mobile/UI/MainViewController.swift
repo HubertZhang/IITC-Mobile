@@ -368,6 +368,7 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         alert.addTextField {
             textField in
             textField.text = self.permalink
+            textField.keyboardType = .URL
         }
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {
             action in
