@@ -10,6 +10,21 @@ import UIKit
 import StoreKit
 import MBProgressHUD
 
+func image(from color:UIColor) -> UIImage
+{
+    let rect = CGRect(x:0.0, y:0.0, width:1.0, height:1.0)
+    UIGraphicsBeginImageContext(rect.size)
+    let context = UIGraphicsGetCurrentContext()
+    
+    context?.setFillColor(color.cgColor)
+    context?.fill(rect);
+    
+    let image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image!;
+}
+
 class ConsolePurchaseViewController: UIViewController {
 
     let productIds: [String] = ["com.hubertzhang.iitcmobile.console"]
@@ -19,7 +34,6 @@ class ConsolePurchaseViewController: UIViewController {
     @IBOutlet weak var purchaseButton: UIButton!
     
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +46,18 @@ class ConsolePurchaseViewController: UIViewController {
         else {
             print("Cannot perform In App Purchases.")
         }
+        self.purchaseButton.clipsToBounds = true
+        self.purchaseButton.layer.cornerRadius = 15
+        self.purchaseButton.layer.borderColor = UIColor.lightGray.cgColor
+        
+        self.purchaseButton.layer.borderWidth = 3
+        
+        self.purchaseButton.setTitleColor(UIColor.white, for: .normal)
+        self.purchaseButton.setTitleColor(UIColor.lightGray, for: .disabled)
+        self.purchaseButton.setTitleColor(#colorLiteral(red: 0.006442983169, green: 0.4781559706, blue: 0.9985900521, alpha: 1), for: .highlighted)
+        self.purchaseButton.setBackgroundImage(image(from: UIColor.white), for: .highlighted)
+        self.purchaseButton.setBackgroundImage(image(from: UIColor.white), for: .disabled)
+        self.purchaseButton.setBackgroundImage(image(from: #colorLiteral(red: 0.006442983169, green: 0.4781559706, blue: 0.9985900521, alpha: 1)), for: .normal)
     }
 
     override func didReceiveMemoryWarning() {
@@ -80,13 +106,14 @@ extension ConsolePurchaseViewController: SKProductsRequestDelegate {
                 let priceFormatter = NumberFormatter()
                 priceFormatter.numberStyle = .currency
                 priceFormatter.locale = product.priceLocale
-                self.priceLabel.text = priceFormatter.string(from: product.price)
+                self.purchaseButton.setTitle(priceFormatter.string(from: product.price), for: .normal)
+                self.purchaseButton.layer.borderColor = #colorLiteral(red: 0.006442983169, green: 0.4781559706, blue: 0.9985900521, alpha: 1).cgColor
+                self.purchaseButton.isEnabled = true
                 #if DEBUG
                     self.descriptionLabel.text = String.init(format: "ID:%@\nTitle:%@\nDescription:%@\nPrice:%@\n", product.productIdentifier, product.localizedTitle, product.localizedDescription, product.price.description(withLocale: product.priceLocale))
                 #else
                     self.descriptionLabel.text = product.localizedDescription
                 #endif
-                self.purchaseButton.isEnabled = true
                 self.products.append(product)
             }
             
