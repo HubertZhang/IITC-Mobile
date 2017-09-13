@@ -20,8 +20,8 @@ class LayersController: NSObject {
 
     var baseLayers = [Layer]()
     var overlayLayers = [Layer]()
-    var panelNames = ["info", "all", "faction", "alert"]
-    var panelLabels = ["Info", "All", "Faction", "Alert"]
+    var panelNames = ["info", "all", "faction", "alerts"]
+    var panelLabels = ["Info", "All", "Faction", "Alerts"]
     var panelIcons = ["ic_action_about", "ic_action_view_as_list", "ic_action_cc_bcc", "ic_action_warning"]
 
     override init() {
