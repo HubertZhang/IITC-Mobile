@@ -44,7 +44,7 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last!
         let mainScriptPath = libraryScriptsPath.appendingPathComponent("total-conversion-build.user.js")
         let copied = FileManager.default.fileExists(atPath: mainScriptPath.path)
-        let currentVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+        let currentVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
         let oldVersion = userDefaults.string(forKey: "Version") ?? "0.0.0"
         let upgraded = currentVersion.compare(oldVersion, options: .numeric) != .orderedSame
         if !copied || upgraded {
@@ -53,13 +53,17 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
             try? FileManager.default.copyItem(at: Bundle(for: ScriptsManager.classForCoder()).resourceURL!.appendingPathComponent("scripts", isDirectory: true), to: libraryScriptsPath)
             userDefaults.set(currentVersion, forKey: "Version")
         }
-        mainScript = try! Script(atFilePath: libraryScriptsPath.appendingPathComponent("total-conversion-build.user.js"))
-        mainScript.category = "Core"
-        hookScript = try! Script(coreJS: libraryScriptsPath.appendingPathComponent("ios-hooks.js"), withName: "hook")
-        let currentBuild = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
+        let currentBuild = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "0"
         let buildNumber = Int(currentBuild) ?? 0
-        hookScript.fileContent = String(format: hookScript.fileContent, currentVersion, buildNumber)
-        positionScript = try! Script(coreJS: libraryScriptsPath.appendingPathComponent("user-location.user.js"), withName: "position")
+        do {
+            mainScript = try Script(atFilePath: libraryScriptsPath.appendingPathComponent("total-conversion-build.user.js"))
+            mainScript.category = "Core"
+            hookScript = try Script(coreJS: libraryScriptsPath.appendingPathComponent("ios-hooks.js"), withName: "hook")
+            hookScript.fileContent = String(format: hookScript.fileContent, currentVersion, buildNumber)
+            positionScript = try Script(coreJS: libraryScriptsPath.appendingPathComponent("user-location.user.js"), withName: "position")
+        } catch {
+            exit(-1)
+        }
         loadedPluginNames = userDefaults.array(forKey: "LoadedPlugins") as? [String] ?? [String]()
         loadedPlugins = Set<String>(loadedPluginNames)
 
@@ -104,7 +108,7 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
     }
 
     func loadPluginInDirectory(_ url: URL) -> [Script] {
-        try! FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
+        try? FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
         guard let directoryContents = try? FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: .skipsHiddenFiles) else {
             return []
         }
@@ -193,19 +197,21 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
                 return Alamofire.request(attribute["downloadURL"]!).rx.string().map {
                     string in
                     do {
-                        var prefix: URL
+                        var pathPrefix: URL
                         if script.category == "Core" {
-                            prefix = self.libraryScriptsPath
+                            pathPrefix = self.libraryScriptsPath
                         } else {
-                            prefix = self.libraryPluginsPath
+                            pathPrefix = self.libraryPluginsPath
                         }
-                        prefix.appendPathComponent(script.fileName)
-                        try string.write(to: prefix, atomically: true, encoding: String.Encoding.utf8)
+
+                        pathPrefix.appendPathComponent(script.fileName)
+                        try string.write(to: pathPrefix, atomically: true, encoding: String.Encoding.utf8)
                     } catch let e as NSError {
                         print(e)
                     }
                 }
             }
+
             return Observable<Void>.just(Void())
 
         }
@@ -235,7 +241,8 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         } else if folderWatcher == containerWatcher {
             self.loadAllPlugins()
             self.loadUserMainScript()
-            NotificationCenter.default.post(name:ScriptsUpdatedNotification, object: nil)
+            NotificationCenter.default.post(name: ScriptsUpdatedNotification, object: nil)
         }
     }
+
 }

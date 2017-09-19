@@ -32,19 +32,19 @@ open class Script: NSObject {
     init(atFilePath filePath: URL) throws {
         self.fileContent = try String(contentsOf: filePath)
         let attributes = Script.getJSAttributes(fileContent)
-        self.version = attributes["version"];
-        self.updateURL = attributes["updateURL"];
-        self.downloadURL = attributes["downloadURL"];
-        self.name = attributes["name"];
+        self.version = attributes["version"]
+        self.updateURL = attributes["updateURL"]
+        self.downloadURL = attributes["downloadURL"]
+        self.name = attributes["name"]
         self.category = attributes["category"] ?? "Undefined"
-        self.scriptDescription = attributes["description"];
+        self.scriptDescription = attributes["description"]
         self.filePath = filePath.resolvingSymlinksInPath()
         self.fileName = filePath.lastPathComponent
         super.init()
     }
 
-    static func getJSAttributes(_ fileContent: String) -> Dictionary<String, String> {
-        var attributes = Dictionary<String, String>()
+    static func getJSAttributes(_ fileContent: String) -> [String: String] {
+        var attributes = [String: String]()
 
         do {
             guard let range1 = fileContent.range(of: "==UserScript==") else {
@@ -54,17 +54,17 @@ open class Script: NSObject {
                 return attributes
             }
             var e: NSRegularExpression
-            e = try NSRegularExpression(pattern: "//.*?@([^\\s]*)\\s*(.*)", options: NSRegularExpression.Options(rawValue: 0))
-            let header = fileContent.substring(with: Range<String.Index>(range1.upperBound ..< range2.lowerBound))
+            e = try NSRegularExpression(pattern: "//.*?@([^\\s]*)\\s*(.*)")
+            let header = fileContent.substring(with: Range<String.Index>(range1.upperBound..<range2.lowerBound))
             for line in header.components(separatedBy: "\n") {
-                let search = e.matches(in: line, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, (line as NSString).length))
+                let search = e.matches(in: line, options: [], range: NSRange(location: 0, length: line.utf16.count))
                 if (search.count > 0) {
                     var start = line.characters.index(line.startIndex, offsetBy: search[0].rangeAt(1).location)
                     var end = line.characters.index(start, offsetBy: search[0].rangeAt(1).length - 1)
-                    let rangeId = line[start ... end]
+                    let rangeId = line[start...end]
                     start = line.characters.index(line.startIndex, offsetBy: search[0].rangeAt(2).location)
                     end = line.characters.index(start, offsetBy: search[0].rangeAt(2).length - 1)
-                    let rangeDetail = line[start ... end]
+                    let rangeDetail = line[start...end]
                     attributes[rangeId] = rangeDetail
                 }
             }
