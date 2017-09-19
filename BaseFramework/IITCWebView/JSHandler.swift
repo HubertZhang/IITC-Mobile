@@ -16,15 +16,21 @@ public let JSNotificationReloadRequired = Notification.Name(rawValue: "JSNotific
 public let JSNotificationSharedAction = Notification.Name(rawValue: "JSNotificationSharedAction")
 public let JSNotificationProgressChanged = Notification.Name(rawValue: "JSNotificationProgressChanged")
 public let JSNotificationPermalinkChanged = Notification.Name(rawValue: "JSNotificationPermalinkChanged")
-public let JSNotificationAddPane = Notification.Name(rawValue:  "JSNotificationAddPane")
+public let JSNotificationAddPane = Notification.Name(rawValue: "JSNotificationAddPane")
 
 class JSHandler: NSObject, WKScriptMessageHandler {
 
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        let call: [String:AnyObject] = message.body as! [String:AnyObject]
-        let function = call["functionName"] as! String
-        if (call["args"] is String) {
-            if (call["args"] as! String == "") {
+        guard let call = message.body as? [String: Any] else {
+            NSLog("Unrecognized call %@", (message.body as AnyObject).description)
+            return
+        }
+        guard let function = call["functionName"] as? String else {
+            NSLog("Missing functionName %@", (message.body as AnyObject).description)
+            return
+        }
+        if let args = call["args"] as? String {
+            if args == "" {
                 let selfSelector: Selector = NSSelectorFromString(function)
                 if self.responds(to: selfSelector) {
                     self.perform(selfSelector)
@@ -34,37 +40,32 @@ class JSHandler: NSObject, WKScriptMessageHandler {
             } else {
                 let selfSelector: Selector = NSSelectorFromString(function + ":")
                 if self.responds(to: selfSelector) {
-                    self.perform(selfSelector, with: call["args"])
+                    self.perform(selfSelector, with: args)
                 }
             }
         } else if (call["args"] is NSNumber || call["args"] is NSArray) {
-            let selfSelector = NSSelectorFromString(function + ":");
+            let selfSelector = NSSelectorFromString(function + ":")
             if (self.responds(to: selfSelector)) {
-                self.perform(selfSelector, with: call["args"]);
+                self.perform(selfSelector, with: call["args"])
             } else {
-                NSLog("%@ not implemented", function);
+                NSLog("%@ not implemented", function)
             }
         } else {
-            NSLog((message.body as AnyObject).description);
+            NSLog((message.body as AnyObject).description)
         }
     }
 
     func intentPosLink(_ args: [AnyObject]) {
-        let isPortal: Bool = args[4] as! Bool
-        let lat = args[0] as! Double
-        let lng = args[1] as! Double
-        let zoom: Int = args[2] as! Int
+        guard let isPortal = args[4] as? Bool, let lat = args[0] as? Double, let lng = args[1] as? Double, let zoom: Int = args[2] as? Int else {
+            return
+        }
         var url: URL
         if isPortal {
             url = URL(string: "https://www.ingress.com/intel?pll=\(lat),\(lng)&z=\(zoom)")!
         } else {
             url = URL(string: "https://www.ingress.com/intel?ll=\(lat),\(lng)&z=\(zoom)")!
         }
-//        var locationURL = NSURL(string: "maps://?ll=\(lat),\(lng)")!
-        //    NSString *title = args[3];
-        //
         NotificationCenter.default.post(name: JSNotificationSharedAction, object: self, userInfo: ["data": [args[3], url, [lat, lng, zoom]]])
-        //    mIitc.startActivity(ShareActivity.forPosition(mIitc, lat, lng, zoom, title, isPortal));
     }
 
     // share a string to the IITC share activity. only uses the share tab.
@@ -103,6 +104,7 @@ class JSHandler: NSObject, WKScriptMessageHandler {
     func bootFinished() {
         NotificationCenter.default.post(name: JSNotificationBootFinished, object: self)
     }
+
     // get layers and list them in a dialog
 
     func setLayers(_ layers: [AnyObject]) {
@@ -151,10 +153,10 @@ class JSHandler: NSObject, WKScriptMessageHandler {
             return
         }
         var icon = "ic_action_new_event"
-        if pane.count >= 3  {
+        if pane.count >= 3 {
             icon = pane[2] as? String ?? "ic_action_new_event"
         }
-        NotificationCenter.default.post(name: JSNotificationAddPane, object: self, userInfo: ["name": name, "label":label, "icon":icon])
+        NotificationCenter.default.post(name: JSNotificationAddPane, object: self, userInfo: ["name": name, "label": label, "icon": icon])
 
     }
 

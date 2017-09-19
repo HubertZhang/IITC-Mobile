@@ -18,7 +18,7 @@ import WebKit
         super.init(frame: frame, configuration: configuration)
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "WebViewExecuteJS"), object: nil, queue: nil) {
             (notification) -> Void in
-            let JS = (notification as NSNotification).userInfo!["JS"] as! String
+            let JS = notification.userInfo?["JS"] as? String ?? ";"
             self.evaluateJavaScript(JS)
         }
     }
@@ -34,13 +34,21 @@ import WebKit
         super.init(frame: CGRect.zero, configuration: configuration)
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "WebViewExecuteJS"), object: nil, queue: nil) {
             (notification) -> Void in
-            let JS = (notification as NSNotification).userInfo!["JS"] as! String
+            let JS = notification.userInfo?["JS"] as? String ?? ";"
             self.evaluateJavaScript(JS)
         }
     }
 
     required public init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        let configuration = WKWebViewConfiguration()
+        let handler = JSHandler()
+        configuration.userContentController.add(handler, name: "ios")
+        super.init(frame: .zero, configuration: configuration)
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "WebViewExecuteJS"), object: nil, queue: nil) {
+            (notification) -> Void in
+            let JS = notification.userInfo?["JS"] as? String ?? ";"
+            self.evaluateJavaScript(JS)
+        }
     }
 
     deinit {
@@ -48,20 +56,22 @@ import WebKit
     }
 
     open func evaluateJavaScript(_ javaScriptString: String) {
-        self.evaluateJavaScript(javaScriptString) {
-            (response, error) -> Void in
+        self.evaluateJavaScript(javaScriptString, completionHandler: nil)
+//        {
+//            (response, error) -> Void in
 //            print(response)
 //            print(error)
-        }
+//        }
     }
 
     open func loadScripts(_ scripts: [Script]) {
         for script in scripts {
-            self.evaluateJavaScript(script.fileContent) {
-                (response, error) -> Void in
+            self.evaluateJavaScript(script.fileContent)
+//            {
+//                (response, error) -> Void in
 //                print(NSDate())
 //                print(error)
-            }
+//            }
         }
     }
 }

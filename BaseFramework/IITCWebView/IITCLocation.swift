@@ -18,24 +18,25 @@ public enum IITCLocationMode: Int {
 open class IITCLocation: NSObject, CLLocationManagerDelegate {
     let locationManager = CLLocationManager()
     var currentMode = IITCLocationMode.notShow
-    
+
     var userDefaults = UserDefaults(suiteName: ContainerIdentifier)!
+
     public override init() {
         super.init()
-        locationManager.delegate = self;
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
 
         // Set a movement threshold for new events.
-        locationManager.distanceFilter = 1; // meters
+        locationManager.distanceFilter = 1
+        // meters
         currentMode = IITCLocationMode(rawValue: userDefaults.integer(forKey: "pref_user_location_mode"))!
         if currentMode != .notShow {
             self.startUpdate()
         }
         userDefaults.addObserver(self, forKeyPath: "pref_user_location_mode", options: .new, context: nil)
-
     }
 
-    override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey:Any]?, context: UnsafeMutableRawPointer?) {
+    override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "pref_user_location_mode" {
             currentMode = IITCLocationMode(rawValue: userDefaults.integer(forKey: "pref_user_location_mode"))!
             if currentMode != .notShow {
