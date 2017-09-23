@@ -12,30 +12,28 @@ import BaseFramework
 import WBWebViewConsole
 
 class IITC1WebView: IITCWebView, WBWebView {
-    var wb_userScripts : [Any] {
-        get {
-            return self.configuration.userContentController.userScripts
-        }
+    var wb_userScripts: [Any] {
+        return self.configuration.userContentController.userScripts
     }
-    
-    
+
+
     var jsBridge: WBWebViewJSBridge!
     var console: WBWebViewConsole!
-    
-    
+
+
     public override init(frame: CGRect) {
         super.init(frame: frame)
         jsBridge = WBWebViewJSBridge(webView: self)
-        jsBridge.interfaceName = "WKWebViewBridge";
-        jsBridge.readyEventName = "WKWebViewBridgeReady";
-        jsBridge.invokeScheme = "wkwebview-bridge://invoke";
+        jsBridge.interfaceName = "WKWebViewBridge"
+        jsBridge.readyEventName = "WKWebViewBridgeReady"
+        jsBridge.invokeScheme = "wkwebview-bridge://invoke"
         console = WBWebViewConsole(webView: self)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func wb_add(_ userScript: WBWebViewUserScript!) {
         if userScript.scriptInjectionTime == .atDocumentEnd {
             self.configuration.userContentController.addUserScript(WKUserScript(source: userScript.source, injectionTime: .atDocumentEnd, forMainFrameOnly: userScript.isForMainFrameOnly))
@@ -43,7 +41,7 @@ class IITC1WebView: IITCWebView, WBWebView {
             self.configuration.userContentController.addUserScript(WKUserScript(source: userScript.source, injectionTime: .atDocumentStart, forMainFrameOnly: userScript.isForMainFrameOnly))
         }
     }
-    
+
     func wb_removeAllUserScripts() {
         var wbScript: WKUserScript?
         var wbConsoleScript: WKUserScript?
@@ -63,7 +61,7 @@ class IITC1WebView: IITCWebView, WBWebView {
             self.configuration.userContentController.addUserScript(wbConsoleScript!)
         }
     }
-    
+
     func wb_evaluateJavaScript(_ javaScriptString: String!, completionHandler: ((String?, Error?) -> Void)!) {
         self.evaluateJavaScript(javaScriptString) {
             (response, error) -> Void in

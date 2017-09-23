@@ -11,21 +11,21 @@ import UIKit
 import BaseFramework
 
 class MultiLineTextInputTableViewCell: UITableViewCell {
-    
+
     @IBOutlet weak var placeholder: UILabel!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
-    
+
     weak var tableView: UITableView?
-    
+
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     /// Custom setter so we can initialise the height of the text view
     var textString: String {
         get {
@@ -33,22 +33,22 @@ class MultiLineTextInputTableViewCell: UITableViewCell {
         }
         set {
             textView.text = newValue
-            
+
             textViewDidChange(textView)
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         // Disable scrolling inside the text view so we enlarge to fitted size
         textView.isScrollEnabled = false
         textView.delegate = self
     }
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
+
         if selected {
             textView.becomeFirstResponder()
         } else {
@@ -66,20 +66,20 @@ extension MultiLineTextInputTableViewCell: UITextViewDelegate {
         }
         let size = textView.bounds.size
         let newSize = textView.sizeThatFits(CGSize(width: size.width, height: CGFloat.greatestFiniteMagnitude))
-        
+
         // Resize the cell only when cell's size is changed
         if size.height != newSize.height {
             UIView.setAnimationsEnabled(false)
             tableView?.beginUpdates()
             tableView?.endUpdates()
             UIView.setAnimationsEnabled(true)
-            
+
             //if let thisIndexPath = tableView?.indexPathForCell(self) {
             //    tableView?.scrollToRowAtIndexPath(thisIndexPath, atScrollPosition: .Bottom, animated: false)
             //}
         }
     }
-    
+
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
             textView.resignFirstResponder()
@@ -88,13 +88,13 @@ extension MultiLineTextInputTableViewCell: UITextViewDelegate {
             return true
         }
     }
-    
+
     func textViewDidEndEditing(_ textView: UITextView) {
         UserDefaults(suiteName: ContainerIdentifier)!.set(textView.text, forKey: "pref_useragent")
     }
 }
 
-class PredefinedUserAgentCell : UITableViewCell {
+class PredefinedUserAgentCell: UITableViewCell {
     @IBOutlet weak var browserName: UILabel!
     @IBOutlet weak var userAgent: UILabel!
 }
@@ -102,12 +102,12 @@ class PredefinedUserAgentCell : UITableViewCell {
 class UserAgentTableViewController: UITableViewController {
 
     var userDefaults = UserDefaults(suiteName: ContainerIdentifier)!
-    
+
     let predefinedUserAgents: [(String, String)] = [
         ("Safari iOS 10.3.1", "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Mobile/14E8301"),
         ("Chrome iOS 10.3.1", "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) CriOS/60.0.3112.89 Mobile/14E8301 Safari/602.1")
     ]
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -137,7 +137,7 @@ class UserAgentTableViewController: UITableViewController {
             return 0
         }
     }
-    
+
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
@@ -149,7 +149,7 @@ class UserAgentTableViewController: UITableViewController {
         }
     }
 
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
@@ -170,14 +170,16 @@ class UserAgentTableViewController: UITableViewController {
             return UITableViewCell()
         }
     }
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 {
             tableView.deselectRow(at: indexPath, animated: true)
-            
-            let cell = tableView.cellForRow(at: [0,0]) as! MultiLineTextInputTableViewCell
+
+            guard let cell = tableView.cellForRow(at: [0, 0]) as? MultiLineTextInputTableViewCell else {
+                return
+            }
             cell.textString = predefinedUserAgents[indexPath.row].1
-            
+
             UserDefaults(suiteName: ContainerIdentifier)!.set(predefinedUserAgents[indexPath.row].1, forKey: "pref_useragent")
 
         }

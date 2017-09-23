@@ -22,17 +22,17 @@ class PluginsTableViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         Analytics.logEvent("enter_screen", parameters: [
-            "screen_name":"Plugins",
-            ])
+            "screen_name": "Plugins"
+        ])
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.clearsSelectionOnViewWillAppear = false
         self.tableView.estimatedRowHeight = 80.0
-        self.tableView.rowHeight = UITableViewAutomaticDimension;
+        self.tableView.rowHeight = UITableViewAutomaticDimension
 //        prototypeCell = self.tableView.dequeueReusableCellWithIdentifier("PluginCell") as! PluginCell
-        NotificationCenter.default.addObserver(forName: ScriptsUpdatedNotification, object: nil, queue: OperationQueue.main) { notification in
+        NotificationCenter.default.addObserver(forName: ScriptsUpdatedNotification, object: nil, queue: OperationQueue.main) { _ in
             self.loadScripts()
             self.tableView.reloadData()
         }
@@ -50,6 +50,7 @@ class PluginsTableViewController: UITableViewController {
 //    var heights = [String:[CGFloat]]()
 
     var changed = false
+
     func loadScripts() {
         scripts = [String: [Script]]()
         keys = [String]()
@@ -83,8 +84,8 @@ class PluginsTableViewController: UITableViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         if (self.changed) {
-            NotificationCenter.default.post(name: JSNotificationReloadRequired, object: nil);
-            self.changed = false;
+            NotificationCenter.default.post(name: JSNotificationReloadRequired, object: nil)
+            self.changed = false
         }
     }
 
@@ -100,14 +101,16 @@ class PluginsTableViewController: UITableViewController {
 
     func configureCell(_ originCell: UITableViewCell, indexPath: IndexPath) {
         let script = scripts[keys[indexPath.section]]![indexPath.row]
-        let cell = originCell as! PluginCell
+        guard let cell = originCell as? PluginCell else {
+            return
+        }
         cell.titleText!.text = script.name
         cell.detailText!.text = script.scriptDescription
         let loaded = ScriptsManager.sharedInstance.loadedPlugins.contains(script.fileName)
         if loaded {
-            cell.accessoryType = .checkmark;
+            cell.accessoryType = .checkmark
         } else {
-            cell.accessoryType = .none;
+            cell.accessoryType = .none
         }
 
         // Populate cell from the NSManagedObject instance
@@ -119,9 +122,9 @@ class PluginsTableViewController: UITableViewController {
 
         let cell = tableView.cellForRow(at: indexPath)!
         if loaded {
-            cell.accessoryType = .none;
+            cell.accessoryType = .none
         } else {
-            cell.accessoryType = .checkmark;
+            cell.accessoryType = .checkmark
         }
         ScriptsManager.sharedInstance.setPlugin(script, loaded: !loaded)
         self.changed = true
@@ -140,7 +143,7 @@ class PluginsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return keys[section]
     }
-    
+
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         return sectionTitles
     }

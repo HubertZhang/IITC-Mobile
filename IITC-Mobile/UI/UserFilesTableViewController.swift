@@ -25,7 +25,7 @@ class UserFilesTableViewController: UITableViewController {
         super.viewDidLoad()
         userScriptsPath = ScriptsManager.sharedInstance.userScriptsPath
         NotificationCenter.default.addObserver(forName: ScriptsUpdatedNotification, object: nil, queue: OperationQueue.main) {
-            notification in
+            _ in
             self.updateContent()
             self.tableView.reloadData()
         }
@@ -47,10 +47,8 @@ class UserFilesTableViewController: UITableViewController {
             }
             contents.append(url.resolvingSymlinksInPath())
         }
-        for script in ScriptsManager.sharedInstance.storedPlugins {
-            if script.isUserScript {
-                recordedUserScripts.insert(script.filePath)
-            }
+        for script in ScriptsManager.sharedInstance.storedPlugins where script.isUserScript {
+            recordedUserScripts.insert(script.filePath)
         }
     }
 
@@ -91,13 +89,11 @@ class UserFilesTableViewController: UITableViewController {
     }
 
 
-
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-
 
 
     // Override to support editing the table view.
@@ -118,20 +114,17 @@ class UserFilesTableViewController: UITableViewController {
     @IBAction func addButtonClicked(_ sender: AnyObject) {
         var downloadPath = userScriptsPath!
         let alert = UIAlertController(title: "Input URL to add new scripts", message: nil, preferredStyle: .alert)
-        alert.addTextField {
-            textField in
-
-        }
+        alert.addTextField()
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {
-            action in
+            _ in
             let urlString = alert.textFields![0].text ?? ""
             if let url = URL(string: urlString) {
-                let hud = MBProgressHUD.showAdded(to: self.navigationController!.view, animated: true);
-                hud.mode = MBProgressHUDMode.annularDeterminate;
-                hud.label.text = "Downloading...";
+                let hud = MBProgressHUD.showAdded(to: self.navigationController!.view, animated: true)
+                hud.mode = MBProgressHUDMode.annularDeterminate
+                hud.label.text = "Downloading..."
 
                 Alamofire.download(url, to: {
-                    (url, response) -> (URL, DownloadRequest.DownloadOptions) in
+                    (_, response) -> (URL, DownloadRequest.DownloadOptions) in
                     let pathComponent = response.suggestedFilename
                     downloadPath = downloadPath.appendingPathComponent(pathComponent!)
                     return (downloadPath, DownloadRequest.DownloadOptions.removePreviousFile)
@@ -158,7 +151,7 @@ class UserFilesTableViewController: UITableViewController {
         self.present(alert, animated: true, completion: nil)
 
     }
-    
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation

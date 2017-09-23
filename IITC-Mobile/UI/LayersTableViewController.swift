@@ -19,6 +19,7 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var overlayLayerTable: UITableView!
 
     var hairLine: UIView = UIView()
+
     func configureHairline() {
         for parent in self.navigationController!.navigationBar.subviews {
             for childView in parent.subviews {
@@ -75,15 +76,15 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch (tableView) {
         case panelTable:
-            return layersController.panelNames.count;
+            return layersController.panelNames.count
         case baseLayerTable:
-            return layersController.baseLayers.count;
+            return layersController.baseLayers.count
         case overlayLayerTable:
-            return layersController.overlayLayers.count;
+            return layersController.overlayLayers.count
         default:
-            break;
+            break
         }
-        return 0;
+        return 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -114,7 +115,7 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
                 cell.accessoryType = .none
             }
         default:
-            break;
+            break
         }
         return cell
     }
@@ -153,7 +154,7 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
             }
             tableView.deselectRow(at: indexPath, animated: true)
         default:
-            break;
+            break
         }
     }
 

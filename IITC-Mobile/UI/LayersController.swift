@@ -36,40 +36,46 @@ class LayersController: NSObject {
     }
 
     func setLayers(_ notification: Notification) {
-        guard let layers = (notification as NSNotification).userInfo?["layers"] as? [String] else {
+        guard let layers = notification.userInfo?["layers"] as? [String] else {
             return
         }
         self.baseLayers = []
         self.overlayLayers = []
-        if let tempLayers = (try? JSONSerialization.jsonObject(with: layers[0].data(using: .utf8)!, options: .allowFragments)) as? [[String:Any]] {
+        if let tempLayers = (try? JSONSerialization.jsonObject(with: layers[0].data(using: .utf8)!, options: .allowFragments)) as? [[String: Any]] {
             for layer in tempLayers {
                 let layerObject = Layer()
-                layerObject.layerName = layer["name"] as! String
-                layerObject.layerID = (layer["layerId"] as!NSNumber).intValue
-                layerObject.active = layer["active"] as! Bool
+                guard let name = layer["name"] as? String, let ID = layer["layerId"] as? NSNumber, let actived = layer["active"] as? Bool else {
+                    continue
+                }
+                layerObject.layerName = name
+                layerObject.layerID = ID.intValue
+                layerObject.active = actived
                 baseLayers.append(layerObject)
             }
         }
-        if let tempLayers = (try? JSONSerialization.jsonObject(with: layers[1].data(using: .utf8)!, options: .allowFragments)) as? [[String:Any]] {
+        if let tempLayers = (try? JSONSerialization.jsonObject(with: layers[1].data(using: .utf8)!, options: .allowFragments)) as? [[String: Any]] {
             for layer in tempLayers {
                 let layerObject = Layer()
-                layerObject.layerName = layer["name"] as! String
-                layerObject.layerID = (layer["layerId"] as! NSNumber).intValue
-                layerObject.active = layer["active"] as! Bool
+                guard let name = layer["name"] as? String, let ID = layer["layerId"] as? NSNumber, let actived = layer["active"] as? Bool else {
+                    continue
+                }
+                layerObject.layerName = name
+                layerObject.layerID = ID.intValue
+                layerObject.active = actived
                 overlayLayers.append(layerObject)
             }
         }
     }
 
     func addPane(_ notification: Notification) {
-        guard let info = (notification as NSNotification).userInfo as? [String:String] else {
+        guard let info = notification.userInfo as? [String: String] else {
             return
         }
         self.panelNames.append(info["name"]!)
         self.panelLabels.append(info["label"]!)
         self.panelIcons.append(info["icon"] ?? "ic_action_new_event")
     }
-    
+
     func reload(_ notification: Notification) {
         panelNames = ["info", "all", "faction", "alert"]
         panelLabels = ["Info", "All", "Faction", "Alert"]

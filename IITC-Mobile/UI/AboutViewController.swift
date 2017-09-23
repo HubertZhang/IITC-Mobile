@@ -13,26 +13,26 @@ class AboutViewController: UIViewController, UITextViewDelegate {
 
 
     @IBOutlet weak var textView: UITextView!
-    
+
     override func viewWillAppear(_ animated: Bool) {
         Analytics.logEvent("enter_screen", parameters: [
-            "screen_name":"About",
-            ])
+            "screen_name": "About"
+        ])
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         let path = Bundle.main.url(forResource: "About", withExtension: "html")
-        let htmlString = try! String(contentsOf: path!)
-        guard let data = htmlString.data(using: String.Encoding.utf8) else {
+        let htmlString = try? String(contentsOf: path!)
+        guard let data = htmlString?.data(using: String.Encoding.utf8) else {
             return
         }
-        let options : [String:Any] = [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType, NSCharacterEncodingDocumentAttribute: NSNumber(value:String.Encoding.utf8.rawValue)]
-        textView.attributedText = try! NSAttributedString(data:data, options:options, documentAttributes: nil)
-        textView.scrollRangeToVisible(NSMakeRange(0, 0))
+        let options: [String: Any] = [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType, NSCharacterEncodingDocumentAttribute: NSNumber(value: String.Encoding.utf8.rawValue)]
+        textView.attributedText = try? NSAttributedString(data: data, options: options, documentAttributes: nil)
+        textView.scrollRangeToVisible(NSRange(location: 0, length: 0))
     }
-    
+
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
         return true
     }
@@ -41,7 +41,7 @@ class AboutViewController: UIViewController, UITextViewDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
 
     /*
     // MARK: - Navigation
