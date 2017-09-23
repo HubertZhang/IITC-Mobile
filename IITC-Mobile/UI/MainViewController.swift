@@ -11,7 +11,7 @@ import WebKit
 import BaseFramework
 import WBWebViewConsole
 
-class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
+class MainViewController: UIViewController {
 
     var webView: IITCWebView!
     var enableDebug: Bool = false
@@ -56,7 +56,7 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         self.webView.translatesAutoresizingMaskIntoConstraints = false
         self.webView.navigationDelegate = self
         self.webView.uiDelegate = self
-        self.view.addSubview(self.webView);
+        self.view.addSubview(self.webView)
 
         var constraints = [NSLayoutConstraint]()
         constraints.append(NSLayoutConstraint.init(item: self.topLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: self.webView, attribute: .top, multiplier: 1.0, constant: 0))
@@ -75,9 +75,11 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.setIITCProgress(_:)), name: JSNotificationProgressChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.reloadIITC), name: JSNotificationReloadRequired, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.sharedAction(_:)), name: JSNotificationSharedAction, object: nil)
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "SwitchToPanel"), object: nil, queue: OperationQueue.main) {
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "SwitchToPanel"), object: nil, queue: OperationQueue.main) {
             (notification) in
-            let panel = (notification as NSNotification).userInfo!["Panel"] as! String
+            guard let panel = notification.userInfo?["Panel"] as? String else {
+                return
+            }
             self.switchToPanel(panel)
         }
         NotificationCenter.default.addObserver(forName: JSNotificationPermalinkChanged, object: nil, queue: OperationQueue.main) {
@@ -87,32 +89,32 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
             }
         }
     }
-    
+
     func configureRightButtons() {
         var buttons = [UIBarButtonItem]()
-        let settingsButton = UIButton(frame: CGRect(x:0,y:0,width:32,height:24))
-        settingsButton.setImage(#imageLiteral(resourceName: "ic_settings"), for: .normal)
+        let settingsButton = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 24))
+        settingsButton.setImage(#imageLiteral(resourceName:"ic_settings"), for: .normal)
         settingsButton.addTarget(self, action: #selector(settingsButtonPressed(_:)), for: .touchUpInside)
         buttons.append(UIBarButtonItem(customView: settingsButton))
-        
-        let locationButton = UIButton(frame: CGRect(x:0,y:0,width:32,height:24))
-        locationButton.setImage(#imageLiteral(resourceName: "ic_my_location"), for: .normal)
+
+        let locationButton = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 24))
+        locationButton.setImage(#imageLiteral(resourceName:"ic_my_location"), for: .normal)
         locationButton.addTarget(self, action: #selector(locationButtonPressed(_:)), for: .touchUpInside)
         buttons.append(UIBarButtonItem(customView: locationButton))
-        
-        let reloadButton = UIButton(frame: CGRect(x:0,y:0,width:32,height:24))
-        reloadButton.setImage(#imageLiteral(resourceName: "ic_refresh"), for: .normal)
+
+        let reloadButton = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 24))
+        reloadButton.setImage(#imageLiteral(resourceName:"ic_refresh"), for: .normal)
         reloadButton.addTarget(self, action: #selector(reloadButtonPressed(_:)), for: .touchUpInside)
         buttons.append(UIBarButtonItem(customView: reloadButton))
-        
-        let linkButton = UIButton(frame: CGRect(x:0,y:0,width:32,height:24))
-        linkButton.setImage(#imageLiteral(resourceName: "ic_link"), for: .normal)
+
+        let linkButton = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 24))
+        linkButton.setImage(#imageLiteral(resourceName:"ic_link"), for: .normal)
         linkButton.addTarget(self, action: #selector(linkButtonPressed(_:)), for: .touchUpInside)
         buttons.append(UIBarButtonItem(customView: linkButton))
-        
+
         self.navigationItem.setRightBarButtonItems(buttons, animated: true)
     }
-    
+
     func configureDebugButton() {
         debugButton = UIBarButtonItem(title: ">_", style: .plain, target: self, action: #selector(debugButtonPressed(_:)))
     }
@@ -126,27 +128,27 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
                 enableDebug = true
             }
         }
-        #if arch(i386) || arch(x86_64)
-            enableDebug = true
-        #endif
+#if arch(i386) || arch(x86_64)
+        enableDebug = true
+#endif
         configureDebugButton()
         configureRightButtons()
         configureWebView()
         configureNotification()
-        
+
         reloadIITC()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if enableDebug && !self.webView.isKind(of: IITC1WebView.self) {
-            let alert = UIAlertController(title: "Console not loaded", message: "You have enabled Debug Console but it did not load. Please restart IITC to load Debug Console.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        }
-        
+
         if enableDebug {
+            if !self.webView.isKind(of: IITC1WebView.self) {
+                let alert = UIAlertController(title: "Console not loaded", message: "You have enabled Debug Console but it did not load. Please restart IITC to load Debug Console.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                return
+            }
             guard var buttons = self.navigationItem.rightBarButtonItems else {
                 return
             }
@@ -159,7 +161,7 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
                 return
             }
             if buttons.last == self.debugButton {
-                buttons.popLast()
+                _ = buttons.popLast()
                 self.navigationItem.rightBarButtonItems = buttons
             }
         }
@@ -177,7 +179,7 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
                 UIView.animate(withDuration: 1, animations: {
                     () -> Void in
                     self.webProgressView.alpha = 0
-                }, completion: { result in
+                }, completion: { _ in
                     self.webProgressView.progress = 0
                 })
             } else {
@@ -209,108 +211,7 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         self.webView.evaluateJavaScript(String(format: "window.show('%@')", pane))
     }
 
-    //MARK: WKUIDelegate
-    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
-        let alertController: UIAlertController = UIAlertController(title: message, message: "", preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: {
-            (action: UIAlertAction) -> Void in
-            completionHandler()
-        }))
-        self.topViewController()?.present(alertController, animated: true)
-    }
-
-    func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
-        let alertController: UIAlertController = UIAlertController(title: message, message: "", preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: {
-            (action: UIAlertAction) -> Void in
-            completionHandler(true)
-        }))
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
-            (action: UIAlertAction) -> Void in
-            completionHandler(false)
-        }))
-        self.topViewController()?.present(alertController, animated: true, completion: nil)
-    }
-
-    func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
-        let alertController = UIAlertController(title: prompt, message: webView.url!.host, preferredStyle: .alert)
-        alertController.addTextField(configurationHandler: {
-            (textField: UITextField) -> Void in
-            textField.text = defaultText
-        })
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: {
-            (action: UIAlertAction) -> Void in
-            let input = alertController.textFields!.first!.text!
-            completionHandler(input)
-        }))
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
-            (action: UIAlertAction) -> Void in
-            completionHandler(nil)
-        }))
-        self.topViewController()?.present(alertController, animated: true, completion: nil)
-    }
-
-    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
-        let vc = self.storyboard!.instantiateViewController(withIdentifier: "webview") as! UINavigationController
-        let vc1 = vc.viewControllers[0] as! WebViewController
-        vc1.configuration = configuration
-        self.navigationController?.present(vc, animated: true, completion: nil)
-        vc1.loadViewIfNeeded()
-        let userAgent = userDefaults.string(forKey: "pref_useragent")
-        if userAgent != "" {
-            vc1.webView.customUserAgent = userAgent
-        }
-        return vc1.webView
-    }
-
-    //MARK: WKNavigationDelegate
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-//        print(navigationAction.request)
-//        print(navigationAction.request.mainDocumentURL)
-        if enableDebug {
-            let r = (self.webView as! IITC1WebView).jsBridge.handleWebViewRequest(navigationAction.request)
-            if r {
-                decisionHandler(.cancel)
-                return
-            }
-        }
-//        print("Allowed")
-        if let urlString = navigationAction.request.mainDocumentURL?.absoluteString {
-            if urlString.contains("google.com") || urlString.contains("ops.irde.net") {
-//                print("Allowed1")
-                if enableDebug {
-                    (self.webView as! IITC1WebView).console.clearMessages()
-                    (self.webView as! IITC1WebView).wb_removeAllUserScripts()
-                } else {
-                    self.webView.configuration.userContentController.removeAllUserScripts()
-                }
-                self.backPanel.removeAll()
-                self.backButton.isEnabled = false
-                self.loadIITCNeeded = true
-            } else if urlString.contains("ingress.com/intel") && self.loadIITCNeeded {
-//                print("Allowed2")
-                if enableDebug {
-                    (self.webView as! IITC1WebView).console.clearMessages()
-                    (self.webView as! IITC1WebView).wb_removeAllUserScripts()
-                } else {
-                    self.webView.configuration.userContentController.removeAllUserScripts()
-                }
-                var scripts = ScriptsManager.sharedInstance.getLoadedScripts()
-                let currentMode = IITCLocationMode(rawValue: userDefaults.integer(forKey: "pref_user_location_mode"))!
-                if currentMode != .notShow {
-                    scripts.append(ScriptsManager.sharedInstance.positionScript)
-                }
-                for script in scripts {
-                    self.webView.configuration.userContentController.addUserScript(WKUserScript.init(source: script.fileContent, injectionTime: .atDocumentEnd, forMainFrameOnly: true))
-                }
-                self.loadIITCNeeded = false
-                syncCookie()
-            }
-        }
-        decisionHandler(.allow)
-    }
-
-    //MARK: Toolbar Buttons
+    // MARK: Toolbar Buttons
     @IBAction func backButtonPressed(_ sender: AnyObject) {
         if !self.backPanel.isEmpty {
             let panel = self.backPanel.removeLast()
@@ -362,7 +263,7 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
             self.present(vc, animated: true, completion: nil)
         }
     }
-    
+
     @IBAction func linkButtonPressed(_ sender: AnyObject) {
         let alert = UIAlertController(title: "Input intel URL", message: nil, preferredStyle: .alert)
         alert.addTextField {
@@ -371,7 +272,7 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
             textField.keyboardType = .URL
         }
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {
-            action in
+            _ in
             let urlString = alert.textFields![0].text ?? ""
             if urlString == self.permalink {
                 return
@@ -390,14 +291,14 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
     }
 
-    //MARK: IITC Callbacks
+    // MARK: IITC Callbacks
     func bootFinished() {
         self.webView.evaluateJavaScript("window.layerChooser.getLayers()")
         self.webView.evaluateJavaScript("if(urlPortalLL[0] != undefined) window.selectPortalByLatLng(urlPortalLL[0],urlPortalLL[1]);")
     }
 
     func setCurrentPanel(_ notification: Notification) {
-        guard let panel = (notification as NSNotification).userInfo?["paneID"] as? String else {
+        guard let panel = notification.userInfo?["paneID"] as? String else {
             return
         }
 
@@ -417,11 +318,11 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         }
 
         self.backButtonPressed = false
-        self.currentPanelID = panel;
+        self.currentPanelID = panel
     }
 
     func setIITCProgress(_ notification: Notification) {
-        if let progress = (notification as NSNotification).userInfo?["data"] as? NSNumber {
+        if let progress = notification.userInfo?["data"] as? NSNumber {
             if progress.doubleValue == -1 || progress.doubleValue == 1 {
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
             } else {
@@ -431,22 +332,22 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     }
 
     func sharedAction(_ notification: Notification) {
-        let activityItem = (notification as NSNotification).userInfo!["data"] as! [Any]
+        let activityItem = notification.userInfo?["data"] as? [Any] ?? [Any]()
         let activityViewController = UIActivityViewController(activityItems: activityItem, applicationActivities: [OpenInMapActivity()])
         activityViewController.excludedActivityTypes = [UIActivityType.addToReadingList]
-        if activityViewController.responds(to: #selector(getter: UIViewController.popoverPresentationController)) {
+        if activityViewController.responds(to: #selector(getter:UIViewController.popoverPresentationController)) {
             activityViewController.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItems?.first
         }
         self.present(activityViewController, animated: true, completion: nil)
     }
 
-    //MARK: Segue Handler
+    // MARK: Segue Handler
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "layerChooser" {
             self.webView.evaluateJavaScript("window.layerChooser.getLayers()")
         }
     }
-    
+
     func topViewController() -> UIViewController? {
         if self.isBeingPresented {
             return self
@@ -460,9 +361,116 @@ class MainViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     }
 }
 
+extension MainViewController: WKUIDelegate {
+    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
+        let alertController: UIAlertController = UIAlertController(title: message, message: "", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: {
+            _ -> Void in
+            completionHandler()
+        }))
+        self.topViewController()?.present(alertController, animated: true)
+    }
+
+    func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
+        let alertController: UIAlertController = UIAlertController(title: message, message: "", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: {
+            _ -> Void in
+            completionHandler(true)
+        }))
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
+            _ -> Void in
+            completionHandler(false)
+        }))
+        self.topViewController()?.present(alertController, animated: true, completion: nil)
+    }
+
+    func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
+        let alertController = UIAlertController(title: prompt, message: webView.url!.host, preferredStyle: .alert)
+        alertController.addTextField(configurationHandler: {
+            (textField: UITextField) -> Void in
+            textField.text = defaultText
+        })
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: {
+            _ -> Void in
+            let input = alertController.textFields!.first!.text!
+            completionHandler(input)
+        }))
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
+            _ -> Void in
+            completionHandler(nil)
+        }))
+        self.topViewController()?.present(alertController, animated: true, completion: nil)
+    }
+
+    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        guard let vc = self.storyboard!.instantiateViewController(withIdentifier: "webview") as? UINavigationController else {
+            return nil
+        }
+        guard let vc1 = vc.viewControllers[0] as? WebViewController else {
+            return nil
+        }
+        vc1.configuration = configuration
+        self.navigationController?.present(vc, animated: true, completion: nil)
+        vc1.loadViewIfNeeded()
+        let userAgent = userDefaults.string(forKey: "pref_useragent")
+        if userAgent != "" {
+            vc1.webView.customUserAgent = userAgent
+        }
+        return vc1.webView
+    }
+}
+
+extension MainViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+//        print(navigationAction.request)
+//        print(navigationAction.request.mainDocumentURL)
+        if enableDebug {
+            let r = (self.webView as! IITC1WebView).jsBridge.handleWebViewRequest(navigationAction.request)
+            if r {
+                decisionHandler(.cancel)
+                return
+            }
+        }
+//        print("Allowed")
+        if let urlString = navigationAction.request.mainDocumentURL?.absoluteString {
+            if urlString.contains("google.com") || urlString.contains("ops.irde.net") {
+//                print("Allowed1")
+                if enableDebug {
+                    (self.webView as! IITC1WebView).console.clearMessages()
+                    (self.webView as! IITC1WebView).wb_removeAllUserScripts()
+                } else {
+                    self.webView.configuration.userContentController.removeAllUserScripts()
+                }
+                self.backPanel.removeAll()
+                self.backButton.isEnabled = false
+                self.loadIITCNeeded = true
+            } else if urlString.contains("ingress.com/intel") && self.loadIITCNeeded {
+//                print("Allowed2")
+                if enableDebug {
+                    (self.webView as! IITC1WebView).console.clearMessages()
+                    (self.webView as! IITC1WebView).wb_removeAllUserScripts()
+                } else {
+                    self.webView.configuration.userContentController.removeAllUserScripts()
+                }
+                var scripts = ScriptsManager.sharedInstance.getLoadedScripts()
+                let currentMode = IITCLocationMode(rawValue: userDefaults.integer(forKey: "pref_user_location_mode"))!
+                if currentMode != .notShow {
+                    scripts.append(ScriptsManager.sharedInstance.positionScript)
+                }
+                for script in scripts {
+                    self.webView.configuration.userContentController.addUserScript(WKUserScript.init(source: script.fileContent, injectionTime: .atDocumentEnd, forMainFrameOnly: true))
+                }
+                self.loadIITCNeeded = false
+                syncCookie()
+            }
+        }
+        decisionHandler(.allow)
+    }
+
+}
+
 extension WBWebDebugConsoleViewController {
     func dismissSelf() {
         self.dismiss(animated: true, completion: nil)
     }
 }
-
