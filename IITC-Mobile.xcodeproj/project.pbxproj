@@ -155,8 +155,8 @@
 		B47B46841F22417D0011CC5C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		B4A270D71F553B6D00A2770F /* UserAgentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAgentTableViewController.swift; sourceTree = "<group>"; };
 		B4B328491D10F3AF007AA6D5 /* UserFilesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFilesTableViewController.swift; sourceTree = "<group>"; };
-		B4B3284B1D117970007AA6D5 /* IITC.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = IITC.entitlements; sourceTree = "<group>"; };
-		B4B3284D1D1179C4007AA6D5 /* IITC-Action.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "IITC-Action.entitlements"; sourceTree = "<group>"; };
+		B4B3284B1D117970007AA6D5 /* IITC.entitlements */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = IITC.entitlements; sourceTree = "<group>"; };
+		B4B3284D1D1179C4007AA6D5 /* IITC-Action.entitlements */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "IITC-Action.entitlements"; sourceTree = "<group>"; };
 		B4B9DEB21EFDB258009BFCC3 /* IITC1WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IITC1WebView.swift; sourceTree = "<group>"; };
 		B4BA26181F3DF36E000FDFB6 /* RMAppReceipt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMAppReceipt.h; sourceTree = "<group>"; };
 		B4BA26191F3DF36E000FDFB6 /* RMAppReceipt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMAppReceipt.m; sourceTree = "<group>"; };
@@ -537,6 +537,7 @@
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 4L3DQ24Q2N;
 						LastSwiftMigration = 0800;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -1088,11 +1089,13 @@
 				CODE_SIGN_ENTITLEMENTS = "ViewInIITC/IITC-Action.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 4L3DQ24Q2N;
 				INFOPLIST_FILE = ViewInIITC/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vuryleo.iitcmobile.viewplugin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 			};
@@ -1106,11 +1109,13 @@
 				CODE_SIGN_ENTITLEMENTS = "ViewInIITC/IITC-Action.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 4L3DQ24Q2N;
 				INFOPLIST_FILE = ViewInIITC/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vuryleo.iitcmobile.viewplugin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 			};
