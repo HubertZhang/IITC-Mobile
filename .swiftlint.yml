@@ -6,6 +6,10 @@ included: # paths to ignore during linting. Takes precedence over `included`.
 disabled_rules:
   - line_length
   - identifier_name
+  - vertical_whitespace
+  - control_statement
+  - closure_parameter_position
+  - discarded_notification_center_observer
 
 force_cast: warning # implicitly
 force_try:
