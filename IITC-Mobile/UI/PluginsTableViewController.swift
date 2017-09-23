@@ -126,6 +126,8 @@ class PluginsTableViewController: UITableViewController {
         } else {
             cell.accessoryType = .checkmark
         }
+        tableView.beginUpdates()
+        tableView.endUpdates()
         ScriptsManager.sharedInstance.setPlugin(script, loaded: !loaded)
         self.changed = true
         tableView.deselectRow(at: indexPath, animated: true)

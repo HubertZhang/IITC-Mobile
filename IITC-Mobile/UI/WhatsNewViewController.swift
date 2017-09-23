@@ -18,6 +18,13 @@ class WhatsNewViewController: UIViewController, UITextViewDelegate {
         Analytics.logEvent("enter_screen", parameters: [
             "screen_name": "WhatsNew"
         ])
+        if #available(iOS 11.0, *) {
+            textView.textContainerInset.left = self.view.safeAreaInsets.left + 12
+            textView.textContainerInset.right = self.view.safeAreaInsets.right + 12
+        } else {
+            textView.textContainerInset.left = 12
+            textView.textContainerInset.right = 12
+        }
     }
 
     override func viewDidLoad() {
@@ -29,8 +36,18 @@ class WhatsNewViewController: UIViewController, UITextViewDelegate {
             return
         }
         let options: [String: Any] = [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType, NSCharacterEncodingDocumentAttribute: NSNumber(value: String.Encoding.utf8.rawValue)]
-        textView.attributedText = try! NSAttributedString(data: data, options: options, documentAttributes: nil)
-        textView.scrollRangeToVisible(NSRange(location: 0, length: 0))
+        textView.attributedText = try? NSAttributedString(data: data, options: options, documentAttributes: nil)
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        textView.setContentOffset(CGPoint.zero, animated: false)
+    }
+
+    @available(iOS 11.0, *)
+    override func viewSafeAreaInsetsDidChange() {
+        textView.textContainerInset.left = self.view.safeAreaInsets.left + 12
+        textView.textContainerInset.right = self.view.safeAreaInsets.right + 12
     }
 
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {

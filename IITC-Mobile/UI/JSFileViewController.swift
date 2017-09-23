@@ -42,6 +42,19 @@ class JSFileViewController: UIViewController {
                 hud.hide(animated: true)
             })
         })
+        if #available(iOS 11.0, *) {
+            textView.textContainerInset.left = self.view.safeAreaInsets.left + 12
+            textView.textContainerInset.right = self.view.safeAreaInsets.right + 12
+        } else {
+            textView.textContainerInset.left = 12
+            textView.textContainerInset.right = 12
+        }
+    }
+
+    @available(iOS 11.0, *)
+    override func viewSafeAreaInsetsDidChange() {
+        textView.textContainerInset.left = self.view.safeAreaInsets.left + 12
+        textView.textContainerInset.right = self.view.safeAreaInsets.right + 12
     }
 
     override func didReceiveMemoryWarning() {
