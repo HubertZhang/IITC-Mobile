@@ -9,7 +9,7 @@
 import UIKit
 import StoreKit
 
-protocol InAppPurchaseUIDelegate {
+protocol InAppPurchaseUIDelegate: class {
     func purchasing()
     func deferred()
     func failed(with error: Error?)
@@ -29,16 +29,16 @@ enum ConsoleState: Int64 {
 
 class InAppPurchaseManager: NSObject {
     static let `default` = InAppPurchaseManager()
-    
+
     var receiptRequestTime = 0
-    var uiDelegate: InAppPurchaseUIDelegate?
+    weak var uiDelegate: InAppPurchaseUIDelegate?
     let iCloudStorage = NSUbiquitousKeyValueStore.default()
-    
+
     override init() {
         super.init()
         verifyReciept()
     }
-    
+
     func verifyReciept() {
         guard let receipt = RMAppReceipt.bundle() else {
             if receiptRequestTime > 5 {
@@ -52,7 +52,7 @@ class InAppPurchaseManager: NSObject {
             request.start()
             return
         }
-        
+
         if receipt.contains(inAppPurchaseOfProductIdentifier: "com.hubertzhang.iitcmobile.console") {
             iCloudStorage.set(ConsoleState.enabled.rawValue, forKey: ConsoleStateKey)
             iCloudStorage.synchronize()
@@ -77,7 +77,7 @@ extension InAppPurchaseManager: SKPaymentTransactionObserver {
                 break
             case .failed:
                 print("Failed!")
-                self.uiDelegate?.failed(with:transaction.error)
+                self.uiDelegate?.failed(with: transaction.error)
                 queue.finishTransaction(transaction)
                 break
             case .purchased:
@@ -111,9 +111,8 @@ extension InAppPurchaseManager: SKRequestDelegate {
     func requestDidFinish(_ request: SKRequest) {
         self.verifyReciept()
     }
-    
+
     func request(_ request: SKRequest, didFailWithError error: Error) {
         print(request, error)
     }
 }
-
