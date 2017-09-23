@@ -199,6 +199,63 @@
             </objects>
             <point key="canvasLocation" x="3125.5999999999999" y="353.9730134932534"/>
         </scene>
+        <!--Plugins-->
+        <scene sceneID="Bmb-aL-sSy">
+            <objects>
+                <tableViewController storyboardIdentifier="pluginsSearchTableViewController" title="Plugins" id="rbU-Zy-hkU" customClass="PluginsSearchTableViewController" customModule="IITC_Mobile" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="59" sectionHeaderHeight="28" sectionFooterHeight="28" id="N8Q-Ma-F4n">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PluginCell" rowHeight="65" id="I1R-4r-u80" customClass="PluginCell" customModule="IITC_Mobile" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="65"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="I1R-4r-u80" id="zLI-85-CaV">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="64.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xWI-qG-HKp">
+                                            <rect key="frame" x="16" y="16" width="343" height="19.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oME-a4-b2w">
+                                            <rect key="frame" x="16" y="35.5" width="343" height="13.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="oME-a4-b2w" secondAttribute="trailing" id="0Dj-rE-2nK"/>
+                                        <constraint firstItem="xWI-qG-HKp" firstAttribute="leading" secondItem="zLI-85-CaV" secondAttribute="leadingMargin" id="AV2-kt-oH4"/>
+                                        <constraint firstItem="oME-a4-b2w" firstAttribute="top" secondItem="xWI-qG-HKp" secondAttribute="bottom" id="KwE-r4-WUM"/>
+                                        <constraint firstItem="xWI-qG-HKp" firstAttribute="top" secondItem="zLI-85-CaV" secondAttribute="topMargin" constant="5" id="MSn-GG-VqT"/>
+                                        <constraint firstItem="oME-a4-b2w" firstAttribute="leading" secondItem="zLI-85-CaV" secondAttribute="leadingMargin" id="SA2-5X-6AH"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="oME-a4-b2w" secondAttribute="bottom" constant="5" id="ULV-Gb-fkn"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="xWI-qG-HKp" secondAttribute="trailing" id="r9v-cg-93l"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="detailText" destination="oME-a4-b2w" id="RbN-m3-f1H"/>
+                                    <outlet property="titleText" destination="xWI-qG-HKp" id="366-Qq-M8B"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="rbU-Zy-hkU" id="CzT-m2-oVn"/>
+                            <outlet property="delegate" destination="rbU-Zy-hkU" id="hmN-cD-bnI"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Plugins" id="aXi-i6-FEO">
+                        <barButtonItem key="rightBarButtonItem" title="User Scripts" id="MM8-SK-UHe"/>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="M71-zp-O1g" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4628" y="1010"/>
+        </scene>
         <!--Layers-->
         <scene sceneID="iZi-Hd-0cN">
             <objects>
