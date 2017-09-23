@@ -13,6 +13,11 @@ import WBWebViewConsole
 
 class MainViewController: UIViewController {
 
+    @available(iOS 11.0, *)
+    override func prefersHomeIndicatorAutoHidden() -> Bool {
+        return true
+    }
+
     var webView: IITCWebView!
     var enableDebug: Bool = false
     var loadIITCNeeded = true
@@ -52,7 +57,11 @@ class MainViewController: UIViewController {
         } else {
             self.webView = IITCWebView(frame: CGRect.zero)
         }
-
+        if #available(iOS 11.0, *) {
+            self.webView.scrollView.contentInsetAdjustmentBehavior = .never
+        } else {
+            // Fallback on earlier versions
+        }
         self.webView.translatesAutoresizingMaskIntoConstraints = false
         self.webView.navigationDelegate = self
         self.webView.uiDelegate = self
@@ -60,10 +69,10 @@ class MainViewController: UIViewController {
 
         var constraints = [NSLayoutConstraint]()
         constraints.append(NSLayoutConstraint.init(item: self.topLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: self.webView, attribute: .top, multiplier: 1.0, constant: 0))
-        constraints.append(NSLayoutConstraint.init(item: self.bottomLayoutGuide, attribute: .top, relatedBy: .equal, toItem: self.webView, attribute: .bottom, multiplier: 1.0, constant: 0))
+        constraints.append(NSLayoutConstraint.init(item: self.view, attribute: .bottom, relatedBy: .equal, toItem: self.webView, attribute: .bottom, multiplier: 1.0, constant: 0))
         constraints.append(NSLayoutConstraint.init(item: self.view, attribute: .leading, relatedBy: .equal, toItem: self.webView, attribute: .leading, multiplier: 1.0, constant: 0))
         constraints.append(NSLayoutConstraint.init(item: self.view, attribute: .trailing, relatedBy: .equal, toItem: self.webView, attribute: .trailing, multiplier: 1.0, constant: 0))
-        self.view.addConstraints(constraints)
+        NSLayoutConstraint.activate(constraints)
 
         self.webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
         self.view.bringSubview(toFront: webProgressView)
