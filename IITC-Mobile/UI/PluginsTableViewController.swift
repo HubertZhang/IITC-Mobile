@@ -18,7 +18,8 @@ class PluginCell: UITableViewCell {
 
 class PluginsTableViewController: UITableViewController {
 
-//    var prototypeCell : PluginCell!
+    var searchController: UISearchController!
+    var resultsTableController: PluginsSearchTableViewController!
 
     override func viewWillAppear(_ animated: Bool) {
         Analytics.logEvent("enter_screen", parameters: [
@@ -31,12 +32,31 @@ class PluginsTableViewController: UITableViewController {
         self.clearsSelectionOnViewWillAppear = false
         self.tableView.estimatedRowHeight = 80.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
-//        prototypeCell = self.tableView.dequeueReusableCellWithIdentifier("PluginCell") as! PluginCell
+
+        resultsTableController = self.storyboard?.instantiateViewController(withIdentifier: "pluginsSearchTableViewController") as? PluginsSearchTableViewController
+
+        // We want ourselves to be the delegate for this filtered table so didSelectRowAtIndexPath(_:) is called for both tables.
+
+        searchController = UISearchController(searchResultsController: resultsTableController)
+        searchController.searchResultsUpdater = self
+        if #available(iOS 11.0, *) {
+            self.navigationItem.searchController = searchController
+        } else {
+            searchController.searchBar.sizeToFit()
+            tableView.tableHeaderView = searchController.searchBar
+        }
+
+        searchController.delegate = self
+        searchController.dimsBackgroundDuringPresentation = true // default is YES
+        searchController.searchBar.delegate = self    // so we can monitor text changes + others
+
         NotificationCenter.default.addObserver(forName: ScriptsUpdatedNotification, object: nil, queue: OperationQueue.main) { _ in
             self.loadScripts()
             self.tableView.reloadData()
         }
         loadScripts()
+
+        definesPresentationContext = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,40 +66,30 @@ class PluginsTableViewController: UITableViewController {
 
     var scripts = [String: [Script]]()
     var keys = [String]()
-    var sectionTitles = [String]()
-//    var heights = [String:[CGFloat]]()
+    var allScripts = [Script]()
 
     var changed = false
 
     func loadScripts() {
         scripts = [String: [Script]]()
         keys = [String]()
+        allScripts = [Script]()
         let temp = ScriptsManager.sharedInstance.storedPlugins
         for script in temp {
-//            prototypeCell.titleText.text = script.name
-//            prototypeCell.detailText.text = script.scriptDescription
-//            prototypeCell.setNeedsLayout()
-//            prototypeCell.contentView.layoutIfNeeded()
-//            let height = prototypeCell.contentView.systemLayoutSizeFittingSize(UILayoutFittingExpandedSize).height + 1
             if scripts[script.category] != nil {
                 scripts[script.category]!.append(script)
-//                heights[script.category]!.append(height)
             } else {
                 scripts[script.category] = [script]
-//                heights[script.category] = [height]
-
             }
-
         }
         keys = scripts.keys.sorted()
         if let index = keys.index(of: "Deleted") {
             keys.remove(at: index)
             keys.append("Deleted")
         }
-        sectionTitles = keys.map({ (section) -> String in
-            return section[section.startIndex...section.startIndex].uppercased()
-        })
-
+        for key in keys {
+            allScripts.append(contentsOf: scripts[key] ?? [Script]())
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -145,62 +155,83 @@ class PluginsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return keys[section]
     }
+}
 
-    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        return sectionTitles
+extension PluginsTableViewController: UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
+    // MARK: - UISearchBarDelegate
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 
-//    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        return heights[keys[indexPath.section]]![indexPath.row]
-//    }
-//    
-//    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        return heights[keys[indexPath.section]]![indexPath.row]
-//    }
+    // MARK: - UISearchControllerDelegate
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    func presentSearchController(_ searchController: UISearchController) {
+        //debugPrint("UISearchControllerDelegate invoked method: \(__FUNCTION__).")
     }
-    */
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    func willPresentSearchController(_ searchController: UISearchController) {
+        //debugPrint("UISearchControllerDelegate invoked method: \(__FUNCTION__).")
     }
-    */
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
+    func didPresentSearchController(_ searchController: UISearchController) {
+        //debugPrint("UISearchControllerDelegate invoked method: \(__FUNCTION__).")
     }
-    */
 
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
+    func willDismissSearchController(_ searchController: UISearchController) {
+        self.tableView.reloadData()
     }
-    */
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func didDismissSearchController(_ searchController: UISearchController) {
+        //debugPrint("UISearchControllerDelegate invoked method: \(__FUNCTION__).")
     }
-    */
 
+    // MARK: - UISearchResultsUpdating
+
+    func updateSearchResults(for searchController: UISearchController) {
+        // Strip out all the leading and trailing spaces.
+        let whitespaceCharacterSet = CharacterSet.whitespaces
+        let strippedString = searchController.searchBar.text!.trimmingCharacters(in: whitespaceCharacterSet)
+        let searchItems = strippedString.components(separatedBy: " ") as [String]
+
+        // Build all the "AND" expressions for each value in the searchString.
+        let andMatchPredicates: [NSPredicate] = searchItems.map { searchString in
+            // Each searchString creates an OR predicate for: name, category, scriptDescription.
+            //
+            // Example if searchItems contains "iphone 599 2007":
+            //      name CONTAINS[c] "iphone"
+            //      name CONTAINS[c] "599"
+            //
+
+            // Below we use NSExpression represent expressions in our predicates.
+            // NSPredicate is made up of smaller, atomic parts: two NSExpressions (a left-hand value and a right-hand value).
+
+            // Name field matching.
+            let nameExpression = NSExpression(forKeyPath: "name")
+            let categoryExpression = NSExpression(forKeyPath: "category")
+            let descriptionExpression = NSExpression(forKeyPath: "scriptDescription")
+            let searchStringExpression = NSExpression(forConstantValue: searchString)
+
+            let nameSearchComparisonPredicate = NSComparisonPredicate(leftExpression: nameExpression, rightExpression: searchStringExpression, modifier: .direct, type: .contains, options: .caseInsensitive)
+            let categorySearchComparisonPredicate = NSComparisonPredicate(leftExpression: categoryExpression, rightExpression: searchStringExpression, modifier: .direct, type: .contains, options: .caseInsensitive)
+            let descriptionSearchComparisonPredicate = NSComparisonPredicate(leftExpression: descriptionExpression, rightExpression: searchStringExpression, modifier: .direct, type: .contains, options: .caseInsensitive)
+
+            // Add this OR predicate to our master AND predicate.
+            let orMatchPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [nameSearchComparisonPredicate, categorySearchComparisonPredicate, descriptionSearchComparisonPredicate])
+
+            return orMatchPredicate
+        }
+
+        // Match up the fields of the Product object.
+        let finalCompoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: andMatchPredicates)
+
+        let filteredScripts = allScripts.filter {
+            finalCompoundPredicate.evaluate(with: $0)
+        }
+
+        // Hand over the filtered results to our search results table.
+        let resultsController = searchController.searchResultsController as! PluginsSearchTableViewController
+        resultsController.resultScripts = filteredScripts
+        resultsController.tableView.reloadData()
+    }
 }
