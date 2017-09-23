@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
 
         FirebaseApp.configure()
-        
+
         let hud = MBProgressHUD.showAdded(to: self.window!.rootViewController!.view, animated: true)
         DispatchQueue.global().async(execute: {
             _ = ScriptsManager.sharedInstance.getLoadedScripts()
@@ -30,11 +30,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 hud.hide(animated: true)
             })
         })
-        
+
         let certURL = Bundle.main.url(forResource: "AppleIncRootCertificate", withExtension: "cer")
         RMAppReceipt.setAppleRootCertificateURL(certURL!)
         SKPaymentQueue.default().add(InAppPurchaseManager.default)
-        
+
         return true
     }
 
@@ -79,4 +79,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return false
     }
 }
-
