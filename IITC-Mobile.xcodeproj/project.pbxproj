@@ -28,6 +28,7 @@
 		B44417691DA50D8900960F11 /* JSFile_320x320.png in Resources */ = {isa = PBXBuildFile; fileRef = B44417651DA50D8900960F11 /* JSFile_320x320.png */; };
 		B44856F91D1AB17A0082B1E7 /* WhatsNew.html in Resources */ = {isa = PBXBuildFile; fileRef = B44856F81D1AB17A0082B1E7 /* WhatsNew.html */; };
 		B44856FB1D1AB78F0082B1E7 /* WhatsNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44856FA1D1AB78F0082B1E7 /* WhatsNewViewController.swift */; };
+		B47461161F769E1D00BFD2CA /* PluginsSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47461151F769E1D00BFD2CA /* PluginsSearchTableViewController.swift */; };
 		B47B46851F22417D0011CC5C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B47B46841F22417D0011CC5C /* StoreKit.framework */; };
 		B48156E61D72EAF00041D2CA /* LayersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B405EECB1D066FC900110D9E /* LayersTableViewController.swift */; };
 		B48156E71D72EAF30041D2CA /* LayersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B405EECD1D06832200110D9E /* LayersController.swift */; };
@@ -152,6 +153,7 @@
 		B44417651DA50D8900960F11 /* JSFile_320x320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JSFile_320x320.png; sourceTree = "<group>"; };
 		B44856F81D1AB17A0082B1E7 /* WhatsNew.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = WhatsNew.html; sourceTree = "<group>"; };
 		B44856FA1D1AB78F0082B1E7 /* WhatsNewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhatsNewViewController.swift; sourceTree = "<group>"; };
+		B47461151F769E1D00BFD2CA /* PluginsSearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginsSearchTableViewController.swift; sourceTree = "<group>"; };
 		B47B46841F22417D0011CC5C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		B4A270D71F553B6D00A2770F /* UserAgentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAgentTableViewController.swift; sourceTree = "<group>"; };
 		B4B328491D10F3AF007AA6D5 /* UserFilesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFilesTableViewController.swift; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 				B405EED01D06969C00110D9E /* Settings.bundle */,
 				B4E2F0051D05D06C00D2D86B /* MainViewController.swift */,
 				B405EE071D05FD1400110D9E /* PluginsTableViewController.swift */,
+				B47461151F769E1D00BFD2CA /* PluginsSearchTableViewController.swift */,
 				B405EECB1D066FC900110D9E /* LayersTableViewController.swift */,
 				B405EECD1D06832200110D9E /* LayersController.swift */,
 				B42BE7581D072D1B00A0A0CB /* OpenInMapActivity.swift */,
@@ -759,6 +762,7 @@
 				B405EECC1D066FC900110D9E /* LayersTableViewController.swift in Sources */,
 				B405EED11D06969C00110D9E /* SettingsViewControllerNew.swift in Sources */,
 				B4BA261A1F3DF36E000FDFB6 /* RMAppReceipt.m in Sources */,
+				B47461161F769E1D00BFD2CA /* PluginsSearchTableViewController.swift in Sources */,
 				B4B9DEB31EFDB258009BFCC3 /* IITC1WebView.swift in Sources */,
 				B4A270D81F553B6D00A2770F /* UserAgentTableViewController.swift in Sources */,
 				B410BFA31EF9BC3F001B441D /* JSFileViewController.swift in Sources */,
