@@ -245,4 +245,8 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         }
     }
 
+    open func reloadSettings() {
+        loadedPluginNames = userDefaults.array(forKey: "LoadedPlugins") as? [String] ?? [String]()
+        loadedPlugins = Set<String>(loadedPluginNames)
+    }
 }
