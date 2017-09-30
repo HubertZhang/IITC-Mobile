@@ -42,12 +42,17 @@ class MainViewController: UIViewController {
         let cookieDirPath = containerPath.appendingPathComponent("Library/Cookies", isDirectory: true)
         let bakCookiePath = cookieDirPath.appendingPathComponent("Cookies.binarycookies", isDirectory: false)
         if FileManager.default.fileExists(atPath: bakCookiePath.path) {
-            return
+            do {
+                try FileManager.default.removeItem(atPath: bakCookiePath.path)
+            } catch let error {
+                debugPrint("error occurred, here are the details:\n \(error)")
+            }
+        } else {
+            try? FileManager.default.createDirectory(at: cookieDirPath, withIntermediateDirectories: true, attributes: nil)
         }
 
         let libraryPath = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).last!
         let oriCookiePath = libraryPath.appendingPathComponent("Cookies/Cookies.binarycookies", isDirectory: false)
-        try? FileManager.default.createDirectory(at: cookieDirPath, withIntermediateDirectories: true, attributes: nil)
         try? FileManager.default.copyItem(at: oriCookiePath, to: bakCookiePath)
     }
 
