@@ -61,7 +61,7 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
         // Dispose of any resources that can be recreated.
     }
 
-    func updateLayers() {
+    @objc func updateLayers() {
         self.panelTable.reloadData()
         self.baseLayerTable.reloadData()
         self.overlayLayerTable.reloadData()

@@ -20,7 +20,7 @@ import FirebaseAnalytics
         super.viewDidLoad()
         self.delegate = self
 #if !DEBUG
-        if NSUbiquitousKeyValueStore.default().longLong(forKey: ConsoleStateKey) == 0 {
+        if NSUbiquitousKeyValueStore.default.longLong(forKey: ConsoleStateKey) == 0 {
             self.setHiddenKeys(["pref_console"], animated: false)
         } else {
             self.setHiddenKeys(["pref_console_not_purchased"], animated: false)
@@ -113,7 +113,7 @@ import FirebaseAnalytics
                 hud.label.text = "Downloading IITC script..."
 
                 Alamofire.download("https://iitc.me/build/test/total-conversion-build.user.js", to: {
-                    _ -> (destinationURL: URL, options: DownloadRequest.DownloadOptions) in
+                    _, _ -> (destinationURL: URL, options: DownloadRequest.DownloadOptions) in
                     let downloadPath = ScriptsManager.sharedInstance.userScriptsPath.appendingPathComponent("total-conversion-build.user.js")
                     return (downloadPath, DownloadRequest.DownloadOptions.removePreviousFile)
                 }).downloadProgress {

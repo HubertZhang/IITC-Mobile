@@ -35,7 +35,7 @@ class AboutViewController: UIViewController, UITextViewDelegate {
         guard let data = htmlString?.data(using: String.Encoding.utf8) else {
             return
         }
-        let options: [String: Any] = [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType, NSCharacterEncodingDocumentAttribute: NSNumber(value: String.Encoding.utf8.rawValue)]
+        let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: NSNumber(value: String.Encoding.utf8.rawValue)]
         textView.attributedText = try? NSAttributedString(data: data, options: options, documentAttributes: nil)
     }
 

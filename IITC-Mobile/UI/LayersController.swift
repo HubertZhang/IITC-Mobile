@@ -35,7 +35,7 @@ class LayersController: NSObject {
         NotificationCenter.default.removeObserver(self)
     }
 
-    func setLayers(_ notification: Notification) {
+    @objc func setLayers(_ notification: Notification) {
         guard let layers = notification.userInfo?["layers"] as? [String] else {
             return
         }
@@ -67,7 +67,7 @@ class LayersController: NSObject {
         }
     }
 
-    func addPane(_ notification: Notification) {
+    @objc func addPane(_ notification: Notification) {
         guard let info = notification.userInfo as? [String: String] else {
             return
         }
@@ -76,7 +76,7 @@ class LayersController: NSObject {
         self.panelIcons.append(info["icon"] ?? "ic_action_new_event")
     }
 
-    func reload(_ notification: Notification) {
+    @objc func reload(_ notification: Notification) {
         panelNames = ["info", "all", "faction", "alert"]
         panelLabels = ["Info", "All", "Faction", "Alert"]
         panelIcons = ["ic_action_about", "ic_action_view_as_list", "ic_action_cc_bcc", "ic_action_warning"]

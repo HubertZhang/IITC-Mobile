@@ -234,7 +234,7 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
         reloadIITC()
     }
 
-    func bootFinished() {
+    @objc func bootFinished() {
         getLayers()
         self.webView.evaluateJavaScript("if(urlPortalLL[0] != undefined) window.selectPortalByLatLng(urlPortalLL[0],urlPortalLL[1]);")
     }
@@ -243,7 +243,7 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
     var backPanel = [String]()
     var backButtonPressed = false
 
-    func setCurrentPanel(_ notification: Notification) {
+    @objc func setCurrentPanel(_ notification: Notification) {
         guard let panel = (notification as NSNotification).userInfo?["paneID"] as? String else {
             return
         }
@@ -270,7 +270,7 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
         self.webView.evaluateJavaScript(String(format: "window.show('%@')", pane))
     }
 
-    func reloadIITC() {
+    @objc func reloadIITC() {
         self.loadIITCNeeded = true
         let userAgent = userDefaults.string(forKey: "pref_useragent")
         if userAgent != "" {
@@ -283,7 +283,7 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
         self.webView.evaluateJavaScript("window.layerChooser.getLayers()")
     }
 
-    func sharedAction(_ notification: Notification) {
+    @objc func sharedAction(_ notification: Notification) {
         self.webView.evaluateJavaScript("window.dialog({text:\"Not supported in Action\"})")
     }
 }

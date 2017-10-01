@@ -32,7 +32,7 @@ class InAppPurchaseManager: NSObject {
 
     var receiptRequestTime = 0
     weak var uiDelegate: InAppPurchaseUIDelegate?
-    let iCloudStorage = NSUbiquitousKeyValueStore.default()
+    let iCloudStorage = NSUbiquitousKeyValueStore.default
 
     override init() {
         super.init()

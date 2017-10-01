@@ -55,7 +55,7 @@ class JSHandler: NSObject, WKScriptMessageHandler {
         }
     }
 
-    func intentPosLink(_ args: [AnyObject]) {
+    @objc func intentPosLink(_ args: [AnyObject]) {
         guard let isPortal = args[4] as? Bool, let lat = args[0] as? Double, let lng = args[1] as? Double, let zoom: Int = args[2] as? Int else {
             return
         }
@@ -70,7 +70,7 @@ class JSHandler: NSObject, WKScriptMessageHandler {
 
     // share a string to the IITC share activity. only uses the share tab.
 
-    func shareString(_ str: String) {
+    @objc func shareString(_ str: String) {
         NotificationCenter.default.post(name: JSNotificationSharedAction, object: self, userInfo: ["data": [str]])
     }
 
@@ -83,11 +83,11 @@ class JSHandler: NSObject, WKScriptMessageHandler {
 
     // copy link to specific portal to android clipboard
 
-    func ioscopy(_ s: String) {
+    @objc func ioscopy(_ s: String) {
         UIPasteboard.general.string = s
     }
 
-    func switchToPane(_ paneID: String) {
+    @objc func switchToPane(_ paneID: String) {
         NotificationCenter.default.post(name: JSNotificationPaneChanged, object: self, userInfo: ["paneID": paneID])
     }
 
@@ -101,13 +101,13 @@ class JSHandler: NSObject, WKScriptMessageHandler {
     //}
 
 
-    func bootFinished() {
+    @objc func bootFinished() {
         NotificationCenter.default.post(name: JSNotificationBootFinished, object: self)
     }
 
     // get layers and list them in a dialog
 
-    func setLayers(_ layers: [AnyObject]) {
+    @objc func setLayers(_ layers: [AnyObject]) {
         NotificationCenter.default.post(name: JSNotificationLayersGot, object: self, userInfo: ["layers": layers])
     }
 
@@ -142,7 +142,7 @@ class JSHandler: NSObject, WKScriptMessageHandler {
     //}
 
 
-    func addPane(_ pane: [AnyObject]) {
+    @objc func addPane(_ pane: [AnyObject]) {
         if pane.count < 2 {
             return
         }
@@ -179,15 +179,15 @@ class JSHandler: NSObject, WKScriptMessageHandler {
     //}
 
 
-    func setProgress(_ progress: NSNumber) {
+    @objc func setProgress(_ progress: NSNumber) {
         NotificationCenter.default.post(name: JSNotificationProgressChanged, object: self, userInfo: ["data": progress])
     }
 
-    func setPermalink(_ href: String) {
+    @objc func setPermalink(_ href: String) {
         NotificationCenter.default.post(name: JSNotificationPermalinkChanged, object: self, userInfo: ["data": href])
     }
 
-    func reloadIITC() {
+    @objc func reloadIITC() {
         NotificationCenter.default.post(name: JSNotificationReloadRequired, object: self, userInfo: nil)
     }
 

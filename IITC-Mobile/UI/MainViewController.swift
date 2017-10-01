@@ -137,7 +137,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
-        if NSUbiquitousKeyValueStore.default().longLong(forKey: ConsoleStateKey) != 0 {
+        if NSUbiquitousKeyValueStore.default.longLong(forKey: ConsoleStateKey) != 0 {
             if userDefaults.bool(forKey: "pref_console") {
                 enableDebug = true
             }
@@ -207,7 +207,7 @@ class MainViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    func reloadIITC() {
+    @objc func reloadIITC() {
         self.loadIITCNeeded = true
         let userAgent = userDefaults.string(forKey: "pref_useragent")
         if userAgent != "" {
@@ -306,12 +306,12 @@ class MainViewController: UIViewController {
     }
 
     // MARK: IITC Callbacks
-    func bootFinished() {
+    @objc func bootFinished() {
         self.webView.evaluateJavaScript("window.layerChooser.getLayers()")
         self.webView.evaluateJavaScript("if(urlPortalLL[0] != undefined) window.selectPortalByLatLng(urlPortalLL[0],urlPortalLL[1]);")
     }
 
-    func setCurrentPanel(_ notification: Notification) {
+    @objc func setCurrentPanel(_ notification: Notification) {
         guard let panel = notification.userInfo?["paneID"] as? String else {
             return
         }
@@ -335,7 +335,7 @@ class MainViewController: UIViewController {
         self.currentPanelID = panel
     }
 
-    func setIITCProgress(_ notification: Notification) {
+    @objc func setIITCProgress(_ notification: Notification) {
         if let progress = notification.userInfo?["data"] as? NSNumber {
             if progress.doubleValue == 1 {
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
@@ -345,7 +345,7 @@ class MainViewController: UIViewController {
         }
     }
 
-    func sharedAction(_ notification: Notification) {
+    @objc func sharedAction(_ notification: Notification) {
         let activityItem = notification.userInfo?["data"] as? [Any] ?? [Any]()
         let activityViewController = UIActivityViewController(activityItems: activityItem, applicationActivities: [OpenInMapActivity()])
         activityViewController.excludedActivityTypes = [UIActivityType.addToReadingList]
@@ -484,7 +484,7 @@ extension MainViewController: WKNavigationDelegate {
 }
 
 extension WBWebDebugConsoleViewController {
-    func dismissSelf() {
+    @objc func dismissSelf() {
         self.dismiss(animated: true, completion: nil)
     }
 }
