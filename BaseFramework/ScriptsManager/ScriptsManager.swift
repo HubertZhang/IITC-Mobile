@@ -183,37 +183,27 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         }.flatMap {
             string, script -> Observable<Void> in
             let attribute = Script.getJSAttributes(string)
-            var shouldDownload = false
-            if let newVersion = attribute["version"] {
-                if let oldVersion = script.version {
-                    if newVersion.compare(oldVersion, options: .numeric) != .orderedDescending {
-                        shouldDownload = true
-                    }
+            guard let downloadURL = attribute["downloadURL"]?.first else {
+                return Observable<Void>.just(Void())
+            }
+            guard let newVersion = attribute["version"]?.first, let oldVersion = script.version else {
+                return Observable<Void>.just(Void())
+            }
+            if newVersion.compare(oldVersion, options: .numeric) != .orderedAscending {
+                return Observable<Void>.just(Void())
+            }
+            return Alamofire.request(downloadURL).rx.string().map {
+                string in
+                var pathPrefix: URL
+                if script.category == "Core" {
+                    pathPrefix = self.libraryScriptsPath
                 } else {
-                    shouldDownload = true
+                    pathPrefix = self.libraryPluginsPath
                 }
+
+                pathPrefix.appendPathComponent(script.fileName)
+                try string.write(to: pathPrefix, atomically: true, encoding: String.Encoding.utf8)
             }
-            if shouldDownload {
-                return Alamofire.request(attribute["downloadURL"]!).rx.string().map {
-                    string in
-                    do {
-                        var pathPrefix: URL
-                        if script.category == "Core" {
-                            pathPrefix = self.libraryScriptsPath
-                        } else {
-                            pathPrefix = self.libraryPluginsPath
-                        }
-
-                        pathPrefix.appendPathComponent(script.fileName)
-                        try string.write(to: pathPrefix, atomically: true, encoding: String.Encoding.utf8)
-                    } catch let e as NSError {
-                        print(e)
-                    }
-                }
-            }
-
-            return Observable<Void>.just(Void())
-
         }
     }
 
