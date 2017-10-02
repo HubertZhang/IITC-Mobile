@@ -122,7 +122,7 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
         }
     }
 
-    func extensionURLItemHandler(item: NSSecureCoding?, error: Error!) -> Void {
+    func extensionURLItemHandler(item: NSSecureCoding?, error: Error!) {
         guard let wrappedURL = item as? URL else {
             return
         }
