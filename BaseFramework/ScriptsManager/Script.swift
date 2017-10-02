@@ -32,44 +32,56 @@ open class Script: NSObject {
     init(atFilePath filePath: URL) throws {
         self.fileContent = try String(contentsOf: filePath)
         let attributes = Script.getJSAttributes(fileContent)
-        self.version = attributes["version"]
-        self.updateURL = attributes["updateURL"]
-        self.downloadURL = attributes["downloadURL"]
-        self.name = attributes["name"]
-        self.category = attributes["category"] ?? "Undefined"
-        self.scriptDescription = attributes["description"]
+        self.version = attributes["version"]?.first
+        self.updateURL = attributes["updateURL"]?.first
+        self.downloadURL = attributes["downloadURL"]?.first
+        self.name = attributes["name"]?.first
+        self.category = attributes["category"]?.first ?? "Undefined"
+        self.scriptDescription = attributes["description"]?.first
         self.filePath = filePath.resolvingSymlinksInPath()
         self.fileName = filePath.lastPathComponent
         super.init()
     }
 
-    static func getJSAttributes(_ fileContent: String) -> [String: String] {
-        var attributes = [String: String]()
+    static func getJSAttributes(_ fileContent: String) -> [String: [String]] {
+        var attributes = [String: [String]]()
 
-        do {
-            guard let range1 = fileContent.range(of: "==UserScript==") else {
-                return attributes
-            }
-            guard let range2 = fileContent.range(of: "==/UserScript==") else {
-                return attributes
-            }
-            var e: NSRegularExpression
-            e = try NSRegularExpression(pattern: "//.*?@([^\\s]*)\\s*(.*)")
-            let header = fileContent[range1.upperBound..<range2.lowerBound]
-            for line in header.components(separatedBy: "\n") {
-                let search = e.matches(in: line, options: [], range: NSRange(location: 0, length: line.utf16.count))
-                if (search.count > 0) {
-                    var start = line.characters.index(line.startIndex, offsetBy: search[0].range(at: 1).location)
-                    var end = line.characters.index(start, offsetBy: search[0].range(at: 1).length - 1)
-                    let rangeId = String(line[start...end])
-                    start = line.characters.index(line.startIndex, offsetBy: search[0].range(at: 2).location)
-                    end = line.characters.index(start, offsetBy: search[0].range(at: 2).length - 1)
-                    let rangeDetail = String(line[start...end])
-                    attributes[rangeId] = rangeDetail
-                }
-            }
-        } catch _ as NSError {
+        guard let range1 = fileContent.range(of: "==UserScript==") else {
+            return attributes
+        }
+        guard let range2 = fileContent.range(of: "==/UserScript==") else {
+            return attributes
+        }
 
+        let header = fileContent[range1.upperBound..<range2.lowerBound]
+        for line in header.components(separatedBy: "\n") {
+            var keyNS: NSString?, valueNS: NSString?
+            let scanner = Scanner(string: line)
+
+            // Skip to "@"
+            scanner.scanUpToCharacters(from: CharacterSet(charactersIn: "@"), into: nil)
+
+            // Read key until whitespace
+            if scanner.isAtEnd {
+                continue
+            }
+            scanner.scanString("@", into: nil)
+            scanner.scanUpToCharacters(from: .whitespaces, into: &keyNS)
+
+            // Read value until "\r" or "\n"
+            if scanner.isAtEnd {
+                continue
+            }
+            scanner.scanUpToCharacters(from: .newlines, into: &valueNS)
+
+            guard let key = keyNS as String?, let value = valueNS as String? else {
+                continue
+            }
+            if attributes[key] == nil {
+                attributes[key] = [value]
+            } else {
+                attributes[key]?.append(value)
+            }
         }
         return attributes
     }
