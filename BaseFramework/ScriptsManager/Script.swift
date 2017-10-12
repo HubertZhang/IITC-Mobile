@@ -9,11 +9,11 @@
 import UIKit
 
 open class Script: NSObject {
-    open var fileName: String
-    open var version: String?
-    open var name: String?
-    open var category: String
-    open var scriptDescription: String?
+    @objc open var fileName: String
+    @objc open var version: String?
+    @objc open var name: String?
+    @objc open var category: String
+    @objc open var scriptDescription: String?
     open var filePath: URL
     open var downloadURL: String?
     open var updateURL: String?
