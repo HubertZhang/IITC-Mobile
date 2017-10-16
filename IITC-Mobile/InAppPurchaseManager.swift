@@ -8,6 +8,7 @@
 
 import UIKit
 import StoreKit
+import BaseFramework
 
 protocol InAppPurchaseUIDelegate: class {
     func purchasing()
@@ -17,14 +18,23 @@ protocol InAppPurchaseUIDelegate: class {
     func restored()
 }
 
-let ReceiptVerifiedKey = "receipt_verified"
-let ConsoleStateKey = "console_state"
-let ConsoleTransactionKey = "console_transaction_identifier"
+let ConsoleStateKey = "iap_console_enabled"
 
-enum ConsoleState: Int64 {
-    case disabled = 0
-    case purchased = 1
-    case enabled = 2
+//enum ConsoleState: Int64 {
+//    case disabled = 0
+//    case enabled = 2
+//}
+//
+//enum PurchaseState: Int64 {
+//    case notPurchased
+//    case purchased
+//}
+
+enum ReceiptType: Int64 {
+    case notExist = 0
+    case normal = 1
+    case sandbox = 2
+    case simulator = 3
 }
 
 class InAppPurchaseManager: NSObject {
@@ -33,32 +43,57 @@ class InAppPurchaseManager: NSObject {
     var receiptRequestTime = 0
     weak var uiDelegate: InAppPurchaseUIDelegate?
     let iCloudStorage = NSUbiquitousKeyValueStore.default
+    let defaults = UserDefaults(suiteName: ContainerIdentifier)
+
+    var consolePurchased: Bool = false
+    var receiptType: ReceiptType = .notExist
 
     override init() {
         super.init()
-        verifyReciept()
+        verifyReceipt()
+        if defaults?.bool(forKey: "pref_console") ?? false {
+            if !self.consolePurchased {
+                defaults?.set(false, forKey: "pref_console")
+                defaults?.synchronize()
+            }
+        }
     }
 
-    func verifyReciept() {
+    func getReceiptType() -> ReceiptType {
+        guard let receiptPath = Bundle.main.appStoreReceiptURL?.path else {
+            return .notExist
+        }
+        if !FileManager.default.fileExists(atPath: receiptPath) {
+            return .notExist
+        }
+        if receiptPath.contains("sandboxReceipt") {
+            return .sandbox
+        }
+        if receiptPath.contains("CoreSimulator") {
+            return .simulator
+        }
+        return .normal
+    }
+
+    func requestReceipt() {
+        let request = SKReceiptRefreshRequest(receiptProperties: nil)
+        request.delegate = self
+        request.start()
+    }
+
+    func verifyReceipt() {
+        self.receiptType = getReceiptType()
         guard let receipt = RMAppReceipt.bundle() else {
-            if receiptRequestTime > 5 {
-                iCloudStorage.set(false, forKey: ReceiptVerifiedKey)
-                iCloudStorage.synchronize()
-                return
-            }
-            receiptRequestTime += 1
-            let request = SKReceiptRefreshRequest(receiptProperties: nil)
-            request.delegate = self
-            request.start()
+            receiptType = .notExist
+            consolePurchased = false
             return
         }
-
+        if !receipt.verifyReceiptHash() {
+            receiptType = .notExist
+            consolePurchased = false
+        }
         if receipt.contains(inAppPurchaseOfProductIdentifier: "com.hubertzhang.iitcmobile.console") {
-            iCloudStorage.set(ConsoleState.enabled.rawValue, forKey: ConsoleStateKey)
-            iCloudStorage.synchronize()
-        } else {
-            iCloudStorage.set(ConsoleState.disabled.rawValue, forKey: ConsoleStateKey)
-            iCloudStorage.synchronize()
+            consolePurchased = true
         }
     }
 }
@@ -68,36 +103,29 @@ extension InAppPurchaseManager: SKPaymentTransactionObserver {
         for transaction in transactions {
             switch (transaction.transactionState) {
             case .purchasing:
-                print("Purchasing...")
                 self.uiDelegate?.purchasing()
                 break
             case .deferred:
-                print("Deferred...")
                 self.uiDelegate?.deferred()
                 break
             case .failed:
-                print("Failed!")
                 self.uiDelegate?.failed(with: transaction.error)
                 queue.finishTransaction(transaction)
                 break
             case .purchased:
-                print("Purchased")
                 if transaction.payment.productIdentifier == "com.hubertzhang.iitcmobile.console" {
-                    iCloudStorage.set(transaction.transactionIdentifier, forKey: ConsoleTransactionKey)
-                    iCloudStorage.set(ConsoleState.purchased.rawValue, forKey: ConsoleStateKey)
-                    iCloudStorage.synchronize()
-                    self.verifyReciept()
+                    defer {
+                        self.verifyReceipt()
+                    }
                 }
                 self.uiDelegate?.purchased()
                 queue.finishTransaction(transaction)
                 break
             case .restored:
-                print("Restored")
                 if transaction.original!.payment.productIdentifier == "com.hubertzhang.iitcmobile.console" {
-                    iCloudStorage.set(transaction.original!.transactionIdentifier, forKey: ConsoleTransactionKey)
-                    iCloudStorage.set(ConsoleState.purchased.rawValue, forKey: ConsoleStateKey)
-                    iCloudStorage.synchronize()
-                    self.verifyReciept()
+                    defer {
+                        self.verifyReceipt()
+                    }
                 }
                 self.uiDelegate?.restored()
                 queue.finishTransaction(transaction)
@@ -109,7 +137,7 @@ extension InAppPurchaseManager: SKPaymentTransactionObserver {
 
 extension InAppPurchaseManager: SKRequestDelegate {
     func requestDidFinish(_ request: SKRequest) {
-        self.verifyReciept()
+        self.verifyReceipt()
     }
 
     func request(_ request: SKRequest, didFailWithError error: Error) {

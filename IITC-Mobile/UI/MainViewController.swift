@@ -137,7 +137,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
-        if NSUbiquitousKeyValueStore.default.longLong(forKey: ConsoleStateKey) != 0 {
+        if InAppPurchaseManager.default.consolePurchased {
             if userDefaults.bool(forKey: "pref_console") {
                 enableDebug = true
             }

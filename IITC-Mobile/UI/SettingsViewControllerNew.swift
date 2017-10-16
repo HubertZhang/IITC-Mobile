@@ -20,10 +20,10 @@ import FirebaseAnalytics
         super.viewDidLoad()
         self.delegate = self
 #if !DEBUG
-        if NSUbiquitousKeyValueStore.default.longLong(forKey: ConsoleStateKey) == 0 {
-            self.setHiddenKeys(["pref_console"], animated: false)
-        } else {
+        if InAppPurchaseManager.default.consolePurchased {
             self.setHiddenKeys(["pref_console_not_purchased"], animated: false)
+        } else {
+            self.setHiddenKeys(["pref_console"], animated: false)
         }
 #endif
     }
