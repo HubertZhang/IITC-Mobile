@@ -104,8 +104,10 @@ class UserAgentTableViewController: UITableViewController {
     var userDefaults = UserDefaults(suiteName: ContainerIdentifier)!
 
     let predefinedUserAgents: [(String, String)] = [
+        ("Safari iOS 11.0", "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A356 Safari/604.1"),
+        ("Chrome 61 over iOS 11.0", "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) CriOS/61.0.3163.73 Mobile/15A356 Safari/604.1"),
         ("Safari iOS 10.3.1", "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Mobile/14E8301"),
-        ("Chrome iOS 10.3.1", "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) CriOS/60.0.3112.89 Mobile/14E8301 Safari/602.1")
+        ("Chrome 60 over iOS 10.3.1", "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) CriOS/60.0.3112.89 Mobile/14E8301 Safari/602.1")
     ]
 
     override func viewDidLoad() {
