@@ -9,6 +9,7 @@
 import UIKit
 import StoreKit
 import MBProgressHUD
+import FirebaseAnalytics
 
 func image(from color: UIColor) -> UIImage {
     let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
@@ -59,6 +60,13 @@ class ConsolePurchaseViewController: UIViewController {
         self.purchaseButton.setBackgroundImage(image(from: #colorLiteral(red:0.006442983169, green:0.4781559706, blue:0.9985900521, alpha:1)), for: .normal)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Analytics.logEvent("enter_screen", parameters: [
+            "screen_name": "Purchase" as NSObject
+            ])
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -67,7 +75,6 @@ class ConsolePurchaseViewController: UIViewController {
     @IBAction func purchaseButtonClicked(_ sender: Any) {
         if SKPaymentQueue.canMakePayments() {
             if products.count > 0 {
-
                 let payment = SKPayment(product: products[0])
                 SKPaymentQueue.default().add(payment)
             }
