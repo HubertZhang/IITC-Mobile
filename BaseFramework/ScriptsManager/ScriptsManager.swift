@@ -217,10 +217,11 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
                 continue
             }
             let containerFileURL = userScriptsPath.appendingPathComponent(url.lastPathComponent)
-            if !FileManager.default.fileExists(atPath: containerFileURL.path) {
-                try? FileManager.default.copyItem(at: url, to: containerFileURL)
-                try? FileManager.default.removeItem(at: url)
+            if FileManager.default.fileExists(atPath: containerFileURL.path) {
+                try? FileManager.default.removeItem(at: containerFileURL)
             }
+            try? FileManager.default.copyItem(at: url, to: containerFileURL)
+            try? FileManager.default.removeItem(at: url)
         }
 
     }
