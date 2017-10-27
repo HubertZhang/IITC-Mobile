@@ -122,7 +122,7 @@ extension InAppPurchaseManager: SKPaymentTransactionObserver {
                 queue.finishTransaction(transaction)
                 break
             case .restored:
-                if transaction.original!.payment.productIdentifier == "com.hubertzhang.iitcmobile.console" {
+                if transaction.original?.payment.productIdentifier == "com.hubertzhang.iitcmobile.console" {
                     defer {
                         self.verifyReceipt()
                     }
