@@ -14,7 +14,7 @@ import WebKit
     public init(frame: CGRect) {
         let configuration = WKWebViewConfiguration()
         let handler = JSHandler()
-        configuration.userContentController.add(handler, name: "ios")
+        handler.initHandlers(for: &configuration.userContentController)
         super.init(frame: frame, configuration: configuration)
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "WebViewExecuteJS"), object: nil, queue: nil) {
             (notification) -> Void in

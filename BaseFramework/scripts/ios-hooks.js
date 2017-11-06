@@ -1,27 +1,27 @@
 function Android() {
     this.copy = copy;
     function copy(text) {
-        window.webkit.messageHandlers.ios.postMessage({functionName: "ioscopy", args: text});
+        window.webkit.messageHandlers.ioscopy.postMessage(text);
     };
 
     this.reloadIITC = reloadIITC;
     function reloadIITC() {
-        window.webkit.messageHandlers.ios.postMessage({functionName: "reloadIITC", args: ""});
+        window.webkit.messageHandlers.reloadIITC.postMessage(null);
     };
 
     this.getFileRequestUrlPrefix = getFileRequestUrlPrefix;
     function getFileRequestUrlPrefix() {
-        window.webkit.messageHandlers.ios.postMessage({functionName: "getFileRequestUrlPrefix", args: ""});
+        window.webkit.messageHandlers.getFileRequestUrlPrefix.postMessage(null);
     };
 
     // this.setActiveHighlighter = setActiveHighlighter;
     // function setActiveHighlighter(name) {
-    //     window.webkit.messageHandlers.ios.postMessage({functionName: "setActiveHighlighter", args: name});
+    //     window.webkit.messageHandlers.setActiveHighlighter.postMessage(name);
     // };
 
     this.setPermalink = setPermalink;
     function setPermalink(href) {
-        window.webkit.messageHandlers.ios.postMessage({functionName: "setPermalink", args: href});
+        window.webkit.messageHandlers.setPermalink.postMessage(href);
     };
 
     this.getVersionName = getVersionName;
@@ -36,52 +36,52 @@ function Android() {
 
     this.dialogOpened = dialogOpened;
     function dialogOpened(id, boolValue) {
-        window.webkit.messageHandlers.ios.postMessage({functionName: "dialogOpened", args: [id, boolValue]});
+        window.webkit.messageHandlers.dialogOpened.postMessage([id, boolValue]);
     };
 
     this.switchToPane = switchToPane;
     function switchToPane(id) {
-        window.webkit.messageHandlers.ios.postMessage({functionName: "switchToPane", args: id});
+        window.webkit.messageHandlers.switchToPane.postMessage(id);
     };
 
     this.setLayers = setLayers;
     function setLayers(baseLayersJSON, overlayLayersJSON) {
-        window.webkit.messageHandlers.ios.postMessage({functionName: "setLayers", args: [baseLayersJSON, overlayLayersJSON]});
+        window.webkit.messageHandlers.setLayers.postMessage([baseLayersJSON, overlayLayersJSON]);
     };
 
     this.dialogOpened = dialogOpened;
     function dialogOpened(id, boolValue) {
-        window.webkit.messageHandlers.ios.postMessage({functionName: "dialogOpened", args: [id, boolValue]});
+        window.webkit.messageHandlers.dialogOpened.postMessage([id, boolValue]);
     };
 
     // this.addPortalHighlighter = addPortalHighlighter;
     // function addPortalHighlighter(name) {
-    //     window.webkit.messageHandlers.ios.postMessage({functionName: "addPortalHighlighter", args: name});
+    //     window.webkit.messageHandlers.addPortalHighlighter.postMessage(name);
     // };
 
     this.spinnerEnabled = spinnerEnabled;
     function spinnerEnabled(boolValue) {
-        window.webkit.messageHandlers.ios.postMessage({functionName: "spinnerEnabled", args: boolValue});
+        window.webkit.messageHandlers.spinnerEnabled.postMessage(boolValue);
     };
 
     this.setProgress = setProgress;
     function setProgress(progress) {
-        window.webkit.messageHandlers.ios.postMessage({functionName: "setProgress", args: progress});
+        window.webkit.messageHandlers.setProgress.postMessage(progress);
     };
 
     this.bootFinished = bootFinished;
     function bootFinished() {
-        window.webkit.messageHandlers.ios.postMessage({functionName: "bootFinished", args: ""});
+        window.webkit.messageHandlers.bootFinished.postMessage(null);
     };
 
     this.intentPosLink=intentPosLink;
     function intentPosLink(lat, lng, zoom, title, boolValue ){
-        window.webkit.messageHandlers.ios.postMessage({functionName: "intentPosLink", args:[lat,lng,zoom,title,boolValue]});
+        window.webkit.messageHandlers.intentPosLink.postMessage([lat,lng,zoom,title,boolValue]);
     };
     
     this.addPane=addPane;
     function addPane(name, label, icon) {
-        window.webkit.messageHandlers.ios.postMessage({functionName: "addPane", args:[name, label, icon]});
+        window.webkit.messageHandlers.addPane.postMessage([name, label, icon]);
     }
 }
 var android=new Android();

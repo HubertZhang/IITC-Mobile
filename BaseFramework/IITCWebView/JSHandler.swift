@@ -20,42 +20,41 @@ public let JSNotificationAddPane = Notification.Name(rawValue: "JSNotificationAd
 
 class JSHandler: NSObject, WKScriptMessageHandler {
 
-    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        guard let call = message.body as? [String: Any] else {
-            NSLog("Unrecognized call %@", (message.body as AnyObject).description)
-            return
-        }
-        guard let function = call["functionName"] as? String else {
-            NSLog("Missing functionName %@", (message.body as AnyObject).description)
-            return
-        }
-        if let args = call["args"] as? String {
-            if args == "" {
-                let selfSelector: Selector = NSSelectorFromString(function)
-                if self.responds(to: selfSelector) {
-                    self.perform(selfSelector)
-                } else {
-                    NSLog("%@ not implemented", function)
-                }
-            } else {
-                let selfSelector: Selector = NSSelectorFromString(function + ":")
-                if self.responds(to: selfSelector) {
-                    self.perform(selfSelector, with: args)
-                }
-            }
-        } else if (call["args"] is NSNumber || call["args"] is NSArray) {
-            let selfSelector = NSSelectorFromString(function + ":")
-            if (self.responds(to: selfSelector)) {
-                self.perform(selfSelector, with: call["args"])
-            } else {
-                NSLog("%@ not implemented", function)
-            }
-        } else {
-            NSLog((message.body as AnyObject).description)
+    static let interfaces = ["addPane", "addPortalHighlighter", "bootFinished", "copy", "dialogFocused", "dialogOpened", "getFileRequestUrlPrefix", "getVersionCode", "getVersionName", "intentPosLink", "reloadIITC", "saveFile", "setActiveHighlighter", "setFollowMode", "setLayers", "setPermalink", "setProgress", "shareString", "showZoom", "spinnerEnabled", "switchToPane", "updateIitc"]
+
+    func initHandlers(`for` userContentController: inout WKUserContentController) {
+        for interface in JSHandler.interfaces {
+            userContentController.add(self, name: interface)
         }
     }
 
-    @objc func intentPosLink(_ args: [AnyObject]) {
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        let interface = message.name
+        let arg = message.body
+        if arg is NSNull {
+            let selfSelector: Selector = NSSelectorFromString(interface)
+            if self.responds(to: selfSelector) {
+                self.perform(selfSelector)
+            } else {
+                NSLog("%@ not implemented", interface)
+            }
+        } else {
+            let selfSelector: Selector = NSSelectorFromString(interface + ":")
+            if self.responds(to: selfSelector) {
+                self.perform(selfSelector, with: arg)
+            } else {
+                NSLog("%@ not implemented", interface)
+            }
+        }
+    }
+
+    @objc func intentPosLink(_ args: Any) {
+        guard let args = args as? [AnyObject] else {
+            return
+        }
+        if args.count < 5 {
+            return
+        }
         guard let isPortal = args[4] as? Bool, let lat = args[0] as? Double, let lng = args[1] as? Double, let zoom: Int = args[2] as? Int else {
             return
         }
@@ -70,7 +69,10 @@ class JSHandler: NSObject, WKScriptMessageHandler {
 
     // share a string to the IITC share activity. only uses the share tab.
 
-    @objc func shareString(_ str: String) {
+    @objc func shareString(_ str: Any) {
+        guard let str = str as? String else {
+            return
+        }
         NotificationCenter.default.post(name: JSNotificationSharedAction, object: self, userInfo: ["data": [str]])
     }
 
@@ -83,11 +85,17 @@ class JSHandler: NSObject, WKScriptMessageHandler {
 
     // copy link to specific portal to android clipboard
 
-    @objc func ioscopy(_ s: String) {
+    @objc func ioscopy(_ s: Any) {
+        guard let s = s as? String else {
+            return
+        }
         UIPasteboard.general.string = s
     }
 
-    @objc func switchToPane(_ paneID: String) {
+    @objc func switchToPane(_ paneID: Any) {
+        guard let paneID = paneID as? String else {
+            return
+        }
         NotificationCenter.default.post(name: JSNotificationPaneChanged, object: self, userInfo: ["paneID": paneID])
     }
 
@@ -107,7 +115,10 @@ class JSHandler: NSObject, WKScriptMessageHandler {
 
     // get layers and list them in a dialog
 
-    @objc func setLayers(_ layers: [AnyObject]) {
+    @objc func setLayers(_ layers: Any) {
+        guard let layers = layers as? [AnyObject] else {
+            return
+        }
         NotificationCenter.default.post(name: JSNotificationLayersGot, object: self, userInfo: ["layers": layers])
     }
 
@@ -142,7 +153,10 @@ class JSHandler: NSObject, WKScriptMessageHandler {
     //}
 
 
-    @objc func addPane(_ pane: [AnyObject]) {
+    @objc func addPane(_ pane: Any) {
+        guard let pane = pane as? [AnyObject] else {
+            return
+        }
         if pane.count < 2 {
             return
         }
@@ -179,11 +193,17 @@ class JSHandler: NSObject, WKScriptMessageHandler {
     //}
 
 
-    @objc func setProgress(_ progress: NSNumber) {
+    @objc func setProgress(_ progress: Any) {
+        guard let progress = progress as? NSNumber else {
+            return
+        }
         NotificationCenter.default.post(name: JSNotificationProgressChanged, object: self, userInfo: ["data": progress])
     }
 
-    @objc func setPermalink(_ href: String) {
+    @objc func setPermalink(_ href: Any) {
+        guard let href = href as? String else {
+            return
+        }
         NotificationCenter.default.post(name: JSNotificationPermalinkChanged, object: self, userInfo: ["data": href])
     }
 
