@@ -39,6 +39,9 @@ class LayersController: NSObject {
         guard let layers = notification.userInfo?["layers"] as? [String] else {
             return
         }
+        if layers.count != 2 {
+            return
+        }
         self.baseLayers = []
         self.overlayLayers = []
         if let tempLayers = (try? JSONSerialization.jsonObject(with: layers[0].data(using: .utf8)!, options: .allowFragments)) as? [[String: Any]] {
@@ -71,9 +74,11 @@ class LayersController: NSObject {
         guard let info = notification.userInfo as? [String: String] else {
             return
         }
-        self.panelNames.append(info["name"]!)
-        self.panelLabels.append(info["label"]!)
-        self.panelIcons.append(info["icon"] ?? "ic_action_new_event")
+        if let name = info["name"], let label = info["label"] {
+            self.panelNames.append(name)
+            self.panelLabels.append(label)
+            self.panelIcons.append(info["icon"] ?? "ic_action_new_event")
+        }
     }
 
     @objc func reload(_ notification: Notification) {
