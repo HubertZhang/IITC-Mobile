@@ -19,7 +19,6 @@ class MainViewController: UIViewController {
     }
 
     var webView: IITCWebView!
-    var enableDebug: Bool = false
     var loadIITCNeeded = true
     var layersController: LayersController = LayersController.sharedInstance
 
@@ -57,16 +56,18 @@ class MainViewController: UIViewController {
     }
 
     func configureWebView() {
-        if enableDebug {
-            self.webView = IITC1WebView(frame: CGRect.zero)
-        } else {
-            self.webView = IITCWebView(frame: CGRect.zero)
+        self.webView = IITCWebView(frame: CGRect.zero)
+        if InAppPurchaseManager.default.consolePurchased {
+            if userDefaults.bool(forKey: "pref_console") {
+                self.webView.enableConsole()
+            }
         }
         if #available(iOS 11.0, *) {
             self.webView.scrollView.contentInsetAdjustmentBehavior = .never
         } else {
             // Fallback on earlier versions
         }
+        webView.configuration.selectionGranularity = .dynamic
         self.webView.translatesAutoresizingMaskIntoConstraints = false
         self.webView.navigationDelegate = self
         self.webView.uiDelegate = self
@@ -137,14 +138,6 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
-        if InAppPurchaseManager.default.consolePurchased {
-            if userDefaults.bool(forKey: "pref_console") {
-                enableDebug = true
-            }
-        }
-#if arch(i386) || arch(x86_64)
-        enableDebug = true
-#endif
         configureDebugButton()
         configureRightButtons()
         configureWebView()
@@ -156,13 +149,7 @@ class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        if enableDebug {
-            if !self.webView.isKind(of: IITC1WebView.self) {
-                let alert = UIAlertController(title: "Console not loaded", message: "You have enabled Debug Console but it did not load. Please restart IITC to load Debug Console.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-                return
-            }
+        if self.webView.consoleEnabled {
             guard var buttons = self.navigationItem.rightBarButtonItems else {
                 return
             }
@@ -261,20 +248,13 @@ class MainViewController: UIViewController {
     }
 
     @IBAction func debugButtonPressed(_ sender: Any) {
-        if enableDebug {
-            let vc = WBWebDebugConsoleViewController(console: (self.webView as! IITC1WebView).console!)!
+        if self.webView.consoleEnabled {
+            let vc = WBWebDebugConsoleViewController(console: self.webView.console!)!
             let vc1 = UINavigationController.init(rootViewController: vc)
             vc.navigationItem.leftBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: .done, target: vc, action: #selector(WBWebDebugConsoleViewController.dismissSelf))
             vc1.modalPresentationStyle = UIModalPresentationStyle.popover
             vc1.popoverPresentationController?.barButtonItem = sender as? UIBarButtonItem
             self.present(vc1, animated: true, completion: nil)
-        } else {
-            guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "purchase") else {
-                return
-            }
-            vc.modalPresentationStyle = UIModalPresentationStyle.popover
-            vc.popoverPresentationController?.barButtonItem = sender as? UIBarButtonItem
-            self.present(vc, animated: true, completion: nil)
         }
     }
 
@@ -436,10 +416,14 @@ extension MainViewController: WKUIDelegate {
 
 extension MainViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if webView != self.webView {
+            decisionHandler(.allow)
+            return
+        }
 //        print(navigationAction.request)
 //        print(navigationAction.request.mainDocumentURL)
-        if enableDebug {
-            let r = (self.webView as! IITC1WebView).jsBridge.handleWebViewRequest(navigationAction.request)
+        if self.webView.consoleEnabled {
+            let r = self.webView.jsBridge.handleWebViewRequest(navigationAction.request)
             if r {
                 decisionHandler(.cancel)
                 return
@@ -449,23 +433,19 @@ extension MainViewController: WKNavigationDelegate {
         if let urlString = navigationAction.request.mainDocumentURL?.absoluteString {
             if urlString.contains("google.com") || urlString.contains("ops.irde.net") {
 //                print("Allowed1")
-                if enableDebug {
-                    (self.webView as! IITC1WebView).console.clearMessages()
-                    (self.webView as! IITC1WebView).wb_removeAllUserScripts()
-                } else {
-                    self.webView.configuration.userContentController.removeAllUserScripts()
+                if self.webView.consoleEnabled {
+                    self.webView.console.clearMessages()
                 }
+                self.webView.wb_removeAllUserScripts()
                 self.backPanel.removeAll()
                 self.backButton.isEnabled = false
                 self.loadIITCNeeded = true
             } else if urlString.contains("ingress.com/intel") && self.loadIITCNeeded {
 //                print("Allowed2")
-                if enableDebug {
-                    (self.webView as! IITC1WebView).console.clearMessages()
-                    (self.webView as! IITC1WebView).wb_removeAllUserScripts()
-                } else {
-                    self.webView.configuration.userContentController.removeAllUserScripts()
+                if self.webView.consoleEnabled {
+                    self.webView.console.clearMessages()
                 }
+                self.webView.wb_removeAllUserScripts()
                 var scripts = ScriptsManager.sharedInstance.getLoadedScripts()
                 let currentMode = IITCLocationMode(rawValue: userDefaults.integer(forKey: "pref_user_location_mode"))!
                 if currentMode != .notShow {

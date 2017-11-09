@@ -36,7 +36,7 @@
 		B4B3284A1D10F3AF007AA6D5 /* UserFilesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B328491D10F3AF007AA6D5 /* UserFilesTableViewController.swift */; };
 		B4B3284C1D117970007AA6D5 /* IITC.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = B4B3284B1D117970007AA6D5 /* IITC.entitlements */; };
 		B4B3284E1D1179C4007AA6D5 /* IITC-Action.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = B4B3284D1D1179C4007AA6D5 /* IITC-Action.entitlements */; };
-		B4B9DEB31EFDB258009BFCC3 /* IITC1WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B9DEB21EFDB258009BFCC3 /* IITC1WebView.swift */; };
+		B4B9DEB31EFDB258009BFCC3 /* IITCWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B9DEB21EFDB258009BFCC3 /* IITCWebView.swift */; };
 		B4BA261A1F3DF36E000FDFB6 /* RMAppReceipt.m in Sources */ = {isa = PBXBuildFile; fileRef = B4BA26191F3DF36E000FDFB6 /* RMAppReceipt.m */; };
 		B4BA261D1F3DFD45000FDFB6 /* openssl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4BA261C1F3DFD45000FDFB6 /* openssl.framework */; };
 		B4C682731FB47CDD00B1B175 /* IITCWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C682721FB47CDD00B1B175 /* IITCWebView.swift */; };
@@ -129,7 +129,6 @@
 		961972141DB3BB4B8CD66052 /* Pods-Base-BaseFramework.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Base-BaseFramework.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Base-BaseFramework/Pods-Base-BaseFramework.debug.xcconfig"; sourceTree = "<group>"; };
 		9D7F6EA342F61B0D51EB54F1 /* Pods-BaseFramework.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseFramework.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BaseFramework/Pods-BaseFramework.debug.xcconfig"; sourceTree = "<group>"; };
 		9FCEBE38D27B82106A79D285 /* Pods_Base_Application_IITC_Mobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Base_Application_IITC_Mobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B405EE041D05EA6400110D9E /* IITCWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IITCWebView.swift; sourceTree = "<group>"; };
 		B405EE071D05FD1400110D9E /* PluginsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PluginsTableViewController.swift; sourceTree = "<group>"; };
 		B405EEC91D0602C200110D9E /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = scripts; sourceTree = "<group>"; };
 		B405EECB1D066FC900110D9E /* LayersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayersTableViewController.swift; sourceTree = "<group>"; };
@@ -159,7 +158,7 @@
 		B4B328491D10F3AF007AA6D5 /* UserFilesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFilesTableViewController.swift; sourceTree = "<group>"; };
 		B4B3284B1D117970007AA6D5 /* IITC.entitlements */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = IITC.entitlements; sourceTree = "<group>"; };
 		B4B3284D1D1179C4007AA6D5 /* IITC-Action.entitlements */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "IITC-Action.entitlements"; sourceTree = "<group>"; };
-		B4B9DEB21EFDB258009BFCC3 /* IITC1WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IITC1WebView.swift; sourceTree = "<group>"; };
+		B4B9DEB21EFDB258009BFCC3 /* IITCWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IITCWebView.swift; sourceTree = "<group>"; };
 		B4BA26181F3DF36E000FDFB6 /* RMAppReceipt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMAppReceipt.h; sourceTree = "<group>"; };
 		B4BA26191F3DF36E000FDFB6 /* RMAppReceipt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMAppReceipt.m; sourceTree = "<group>"; };
 		B4BA261C1F3DFD45000FDFB6 /* openssl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = openssl.framework; path = "OpenSSL-for-iPhone/openssl.framework"; sourceTree = SOURCE_ROOT; };
@@ -284,7 +283,7 @@
 				B44856FA1D1AB78F0082B1E7 /* WhatsNewViewController.swift */,
 				B4ED0CB71D9E6F990038EB33 /* WebViewController.swift */,
 				B410BFA21EF9BC3F001B441D /* JSFileViewController.swift */,
-				B4B9DEB21EFDB258009BFCC3 /* IITC1WebView.swift */,
+				B4B9DEB21EFDB258009BFCC3 /* IITCWebView.swift */,
 				B41C02481F233B9700AAAEAC /* ConsolePurchaseViewController.swift */,
 				B4A270D71F553B6D00A2770F /* UserAgentTableViewController.swift */,
 			);
@@ -795,7 +794,7 @@
 				B405EED11D06969C00110D9E /* SettingsViewControllerNew.swift in Sources */,
 				B4BA261A1F3DF36E000FDFB6 /* RMAppReceipt.m in Sources */,
 				B47461161F769E1D00BFD2CA /* PluginsSearchTableViewController.swift in Sources */,
-				B4B9DEB31EFDB258009BFCC3 /* IITC1WebView.swift in Sources */,
+				B4B9DEB31EFDB258009BFCC3 /* IITCWebView.swift in Sources */,
 				B4A270D81F553B6D00A2770F /* UserAgentTableViewController.swift in Sources */,
 				B410BFA31EF9BC3F001B441D /* JSFileViewController.swift in Sources */,
 				B41C02491F233B9700AAAEAC /* ConsolePurchaseViewController.swift in Sources */,
