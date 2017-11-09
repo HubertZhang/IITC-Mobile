@@ -18,17 +18,17 @@ public let JSNotificationProgressChanged = Notification.Name(rawValue: "JSNotifi
 public let JSNotificationPermalinkChanged = Notification.Name(rawValue: "JSNotificationPermalinkChanged")
 public let JSNotificationAddPane = Notification.Name(rawValue: "JSNotificationAddPane")
 
-class JSHandler: NSObject, WKScriptMessageHandler {
+open class JSHandler: NSObject, WKScriptMessageHandler {
 
     static let interfaces = ["addPane", "addPortalHighlighter", "bootFinished", "copy", "dialogFocused", "dialogOpened", "getFileRequestUrlPrefix", "getVersionCode", "getVersionName", "intentPosLink", "reloadIITC", "saveFile", "setActiveHighlighter", "setFollowMode", "setLayers", "setPermalink", "setProgress", "shareString", "showZoom", "spinnerEnabled", "switchToPane", "updateIitc"]
 
-    func initHandlers(`for` userContentController: inout WKUserContentController) {
+    open func initHandlers(`for` userContentController: inout WKUserContentController) {
         for interface in JSHandler.interfaces {
             userContentController.add(self, name: interface)
         }
     }
 
-    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         let interface = message.name
         let arg = message.body
         if arg is NSNull {
