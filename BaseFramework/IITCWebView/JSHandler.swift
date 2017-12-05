@@ -116,7 +116,7 @@ open class JSHandler: NSObject, WKScriptMessageHandler {
     // get layers and list them in a dialog
 
     @objc func setLayers(_ layers: Any) {
-        guard let layers = layers as? [AnyObject] else {
+        guard let layers = layers as? [String] else {
             return
         }
         NotificationCenter.default.post(name: JSNotificationLayersGot, object: self, userInfo: ["layers": layers])
