@@ -327,7 +327,7 @@ class MainViewController: UIViewController {
 
     @objc func sharedAction(_ notification: Notification) {
         let activityItem = notification.userInfo?["data"] as? [Any] ?? [Any]()
-        let activityViewController = UIActivityViewController(activityItems: activityItem, applicationActivities: [OpenInMapActivity()])
+        let activityViewController = UIActivityViewController(activityItems: activityItem, applicationActivities: [OpenInMapActivity(), CopyPortalLinkActivity(), OpenInGMapActivity()])
         activityViewController.excludedActivityTypes = [UIActivityType.addToReadingList]
         if activityViewController.responds(to: #selector(getter:UIViewController.popoverPresentationController)) {
             activityViewController.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItems?.first

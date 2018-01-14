@@ -1,37 +1,40 @@
 //
-//  OpenInMapActivity.swift
+//  OpenInGMapActivity.swift
 //  IITC-Mobile
 //
-//  Created by Hubert Zhang on 16/6/8.
-//  Copyright © 2016年 IITC. All rights reserved.
+//  Created by Hubert Zhang on 2018/1/15.
+//  Copyright © 2018年 IITC. All rights reserved.
 //
 
 import UIKit
-import MapKit
 import BaseFramework
 
-class OpenInMapActivity: UIActivity {
+class OpenInGMapActivity: UIActivity {
     var url: URL?
     var title: String?
-    var mapItem: MKMapItem?
+    var ll: (Double, Double)?
 
     override class var activityCategory: UIActivityCategory {
         return .share
     }
 
     override var activityType: UIActivityType? {
-        return UIActivityType(rawValue: "OpenInMapActivity")
+        return UIActivityType(rawValue: "OpenInGMapActivity")
     }
 
     override var activityTitle: String? {
-        return "Maps"
+        return "Open in Google Maps"
     }
 
     override var activityImage: UIImage? {
-        return UIImage(named: "maps_app_icon")
+        return UIImage(named: "gmaps_app_icon")
     }
 
     override func canPerform(withActivityItems activityItems: [Any]) -> Bool {
+        if !UIApplication.shared.canOpenURL(URL(string: "comgooglemapsurl://")!) {
+            return false
+        }
+
         if activityItems.count == 3 {
             if let url = activityItems[1] as? URL {
                 return url.absoluteString.hasPrefix("https://www.ingress.com")
@@ -47,24 +50,28 @@ class OpenInMapActivity: UIActivity {
         if let url = activityItems[1] as? URL {
             self.url = url
         }
-        if let pos = activityItems[2] as? [AnyObject] {
-            guard var lat = pos[0] as? Double, var lng = pos[1] as? Double else {
+        if let pos = activityItems[2] as? [String: Any] {
+            guard var lat = pos["lat"] as? Double, var lng = pos["lng"] as? Double else {
                 return
             }
+
             let userDefaults = UserDefaults(suiteName: ContainerIdentifier)!
             if userDefaults.bool(forKey: "pref_china_offset") {
                 if !LocationTransform.isOutOfChina(lat: lat, lng: lng) {
                     (lat, lng) = LocationTransform.wgs2gcj(wgsLat: lat, wgsLng: lng)
                 }
             }
-            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lng)
-            self.mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary: nil))
+            self.ll = (lat, lng)
         }
     }
 
     override func perform() {
-        self.mapItem?.name = self.title
-        self.mapItem?.openInMaps(launchOptions: nil)
+        if UIApplication.shared.canOpenURL(URL(string: "comgooglemapsurl://")!) {
+            if let ll = self.ll {
+                let url = URL(string: "comgooglemapsurl://www.google.com/maps/search/?api=1&query=\(ll.0),\(ll.1)")!
+                UIApplication.shared.openURL(url)
+            }
+        }
         self.activityDidFinish(true)
     }
 }
