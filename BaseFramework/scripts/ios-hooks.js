@@ -83,6 +83,11 @@ function Android() {
     function addPane(name, label, icon) {
         window.webkit.messageHandlers.addPane.postMessage([name, label, icon]);
     }
+    
+    this.shareString=shareString;
+    function shareString(string) {
+        window.webkit.messageHandlers.shareString.postMessage(string);
+    }
 }
 var android=new Android();
 
