@@ -64,7 +64,7 @@ open class JSHandler: NSObject, WKScriptMessageHandler {
         } else {
             url = URL(string: "https://www.ingress.com/intel?ll=\(lat),\(lng)&z=\(zoom)")!
         }
-        NotificationCenter.default.post(name: JSNotificationSharedAction, object: self, userInfo: ["data": [args[3], url, [lat, lng, zoom]]])
+        NotificationCenter.default.post(name: JSNotificationSharedAction, object: self, userInfo: ["data": [args[3], url, ["lat": lat, "lng": lng, "zoom": zoom]]])
     }
 
     // share a string to the IITC share activity. only uses the share tab.
