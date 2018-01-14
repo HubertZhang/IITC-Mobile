@@ -46,7 +46,10 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         let copied = FileManager.default.fileExists(atPath: mainScriptPath.path)
         let currentVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
         let oldVersion = userDefaults.string(forKey: "Version") ?? "0.0.0"
-        let upgraded = currentVersion.compare(oldVersion, options: .numeric) != .orderedSame
+        var upgraded = currentVersion.compare(oldVersion, options: .numeric) != .orderedSame
+        #if DEBUG
+        upgraded = true
+        #endif
         if !copied || upgraded {
             try? FileManager.default.createDirectory(at: containerPath, withIntermediateDirectories: true, attributes: nil)
             try? FileManager.default.removeItem(at: libraryScriptsPath)
