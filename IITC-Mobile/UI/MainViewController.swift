@@ -287,7 +287,7 @@ class MainViewController: UIViewController {
 
     // MARK: IITC Callbacks
     @objc func bootFinished() {
-        self.webView.evaluateJavaScript("window.layerChooser.getLayers()")
+        self.webView.evaluateJavaScript("window.layerChooser.getLayers();")
         self.webView.evaluateJavaScript("if(urlPortalLL[0] != undefined) window.selectPortalByLatLng(urlPortalLL[0],urlPortalLL[1]);")
     }
 
