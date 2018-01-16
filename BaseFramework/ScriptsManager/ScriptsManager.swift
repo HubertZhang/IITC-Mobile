@@ -47,6 +47,9 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         let currentVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
         let oldVersion = userDefaults.string(forKey: "Version") ?? "0.0.0"
         var upgraded = currentVersion.compare(oldVersion, options: .numeric) != .orderedSame
+        let currentBuild = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? ""
+        let oldBuild = userDefaults.string(forKey: "BuildVersion") ?? "0"
+        upgraded = upgraded || (currentBuild.compare(oldBuild, options: .numeric) != .orderedSame)
         #if DEBUG
         upgraded = true
         #endif
@@ -55,8 +58,8 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
             try? FileManager.default.removeItem(at: libraryScriptsPath)
             try? FileManager.default.copyItem(at: Bundle(for: ScriptsManager.classForCoder()).resourceURL!.appendingPathComponent("scripts", isDirectory: true), to: libraryScriptsPath)
             userDefaults.set(currentVersion, forKey: "Version")
+            userDefaults.set(currentBuild, forKey: "BuildVersion")
         }
-        let currentBuild = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "0"
         let buildNumber = Int(currentBuild) ?? 0
         do {
             mainScript = try Script(atFilePath: libraryScriptsPath.appendingPathComponent("total-conversion-build.user.js"))
