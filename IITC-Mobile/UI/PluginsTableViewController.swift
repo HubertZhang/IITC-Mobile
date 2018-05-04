@@ -14,6 +14,7 @@ class PluginCell: UITableViewCell {
 
     @IBOutlet weak var titleText: UILabel!
     @IBOutlet weak var detailText: UILabel!
+    @IBOutlet weak var markLabel: InsetsLabel!
 }
 
 class PluginsTableViewController: UITableViewController {
@@ -116,6 +117,15 @@ class PluginsTableViewController: UITableViewController {
         }
         cell.titleText!.text = script.name
         cell.detailText!.text = script.scriptDescription
+        if script.isUserScript {
+            cell.markLabel.text = "AddedByUser"
+            cell.markLabel.leftInset = 5
+            cell.markLabel.rightInset = 5
+            cell.markLabel.layer.cornerRadius = 5
+        } else {
+            cell.markLabel.text = ""
+            cell.markLabel.textInsets = .zero
+        }
         let loaded = ScriptsManager.sharedInstance.loadedPlugins.contains(script.fileName)
         if loaded {
             cell.accessoryType = .checkmark

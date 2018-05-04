@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="3SY-rW-zEI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="3SY-rW-zEI">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
@@ -154,16 +154,37 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="64.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="skx-aF-jRB">
-                                            <rect key="frame" x="16" y="16" width="343" height="19.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="skx-aF-jRB">
+                                            <rect key="frame" x="16" y="16" width="39.5" height="19.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="buG-YJ-JR7">
-                                            <rect key="frame" x="16" y="35.5" width="343" height="13.5"/>
+                                            <rect key="frame" x="16" y="35" width="343" height="14"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UserScript" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xxT-pL-Cpj" customClass="InsetsLabel" customModule="IITC_Mobile" customModuleProvider="target">
+                                            <rect key="frame" x="63.5" y="16" width="70" height="19"/>
+                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="leftInset">
+                                                    <real key="value" value="5"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="rightInset">
+                                                    <real key="value" value="5"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="bottomInset">
+                                                    <real key="value" value="0.0"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="topInset">
+                                                    <real key="value" value="0.0"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
                                         </label>
                                     </subviews>
                                     <constraints>
@@ -171,13 +192,17 @@
                                         <constraint firstItem="buG-YJ-JR7" firstAttribute="leading" secondItem="BC9-yC-eZa" secondAttribute="leadingMargin" id="3u4-81-Gh4"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="buG-YJ-JR7" secondAttribute="bottom" constant="5" id="5kk-sG-K8S"/>
                                         <constraint firstItem="skx-aF-jRB" firstAttribute="leading" secondItem="BC9-yC-eZa" secondAttribute="leadingMargin" id="6ZD-ak-gPF"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="skx-aF-jRB" secondAttribute="trailing" id="ESy-Ug-eEz"/>
+                                        <constraint firstItem="xxT-pL-Cpj" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="BC9-yC-eZa" secondAttribute="trailingMargin" id="Ebx-6I-3Iy"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="buG-YJ-JR7" secondAttribute="trailing" id="WRe-Zo-cBV"/>
+                                        <constraint firstItem="xxT-pL-Cpj" firstAttribute="top" secondItem="skx-aF-jRB" secondAttribute="top" id="kK5-Wx-9Q3"/>
                                         <constraint firstItem="buG-YJ-JR7" firstAttribute="top" secondItem="skx-aF-jRB" secondAttribute="bottom" id="kcG-vg-WYA"/>
+                                        <constraint firstItem="xxT-pL-Cpj" firstAttribute="leading" secondItem="skx-aF-jRB" secondAttribute="trailing" constant="8" id="mte-bI-rJl"/>
+                                        <constraint firstItem="xxT-pL-Cpj" firstAttribute="height" secondItem="skx-aF-jRB" secondAttribute="height" id="zBZ-zv-pgK"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="detailText" destination="buG-YJ-JR7" id="5hP-bQ-4GW"/>
+                                    <outlet property="markLabel" destination="xxT-pL-Cpj" id="hMS-37-7XN"/>
                                     <outlet property="titleText" destination="skx-aF-jRB" id="qU6-xG-e3W"/>
                                 </connections>
                             </tableViewCell>
