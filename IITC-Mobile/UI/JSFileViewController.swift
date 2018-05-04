@@ -12,7 +12,6 @@ import MBProgressHUD
 
 class JSFileViewController: UIViewController {
 
-    var highlightr = Highlightr.init()!
     @IBOutlet weak var textView: UITextView!
     var filePath: URL!
     var tempCode: NSAttributedString!
@@ -23,7 +22,7 @@ class JSFileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        highlightr.setTheme(to: "paraiso-dark")
+        
         textView.autocorrectionType = UITextAutocorrectionType.no
         textView.autocapitalizationType = UITextAutocapitalizationType.none
         textView.textColor = UIColor(white: 0.8, alpha: 1.0)
@@ -36,7 +35,9 @@ class JSFileViewController: UIViewController {
         let code = (try? String.init(contentsOf: self.filePath)) ?? "window"
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         DispatchQueue.global().async(execute: {
-            self.tempCode = self.highlightr.highlight(code, as: "js")
+            let highlightr = Highlightr()!
+            highlightr.setTheme(to: "paraiso-dark")
+            self.tempCode = highlightr.highlight(code, as: "javascript")
             DispatchQueue.main.async(execute: {
                 self.textView.attributedText = self.tempCode
                 hud.hide(animated: true)
