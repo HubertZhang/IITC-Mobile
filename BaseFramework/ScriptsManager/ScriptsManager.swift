@@ -15,7 +15,7 @@ public let ScriptsUpdatedNotification = Notification.Name(rawValue: "ScriptsUpda
 public let ContainerIdentifier: String = "group.com.vuryleo.iitc"
 
 open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
-    open static let sharedInstance = ScriptsManager()
+    public static let sharedInstance = ScriptsManager()
 
     open var storedPlugins = [Script]()
     var loadedPluginNames: [String]
