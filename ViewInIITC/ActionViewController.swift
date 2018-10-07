@@ -105,7 +105,7 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
         self.view.addConstraints(constraints)
 
         self.webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
-        self.view.bringSubview(toFront: webProgressView)
+        self.view.bringSubviewToFront(webProgressView)
     }
 
     func configureNotification() {
@@ -172,11 +172,10 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
         var founded = false
         for item in self.extensionContext?.inputItems ?? [] where item is NSExtensionItem {
             let inputItem = item as! NSExtensionItem
-            for provider in inputItem.attachments ?? [] where provider is NSItemProvider {
-                let itemProvider = provider as! NSItemProvider
-                if itemProvider.hasItemConformingToTypeIdentifier(kUTTypeURL as String) {
+            for provider in inputItem.attachments ?? [] {
+                if provider.hasItemConformingToTypeIdentifier(kUTTypeURL as String) {
                     founded = true
-                    itemProvider.loadItem(forTypeIdentifier: kUTTypeURL as String, options: nil, completionHandler: self.extensionURLItemHandler)
+                    provider.loadItem(forTypeIdentifier: kUTTypeURL as String, options: nil, completionHandler: self.extensionURLItemHandler)
                 }
             }
         }
