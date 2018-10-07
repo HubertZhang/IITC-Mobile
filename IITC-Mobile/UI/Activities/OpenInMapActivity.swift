@@ -15,12 +15,12 @@ class OpenInMapActivity: UIActivity {
     var title: String?
     var mapItem: MKMapItem?
 
-    override class var activityCategory: UIActivityCategory {
+    override class var activityCategory: UIActivity.Category {
         return .share
     }
 
-    override var activityType: UIActivityType? {
-        return UIActivityType(rawValue: "OpenInMapActivity")
+    override var activityType: UIActivity.ActivityType? {
+        return UIActivity.ActivityType(rawValue: "OpenInMapActivity")
     }
 
     override var activityTitle: String? {

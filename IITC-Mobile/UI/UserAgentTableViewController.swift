@@ -18,7 +18,7 @@ class MultiLineTextInputTableViewCell: UITableViewCell {
 
     weak var tableView: UITableView?
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
 
@@ -113,7 +113,7 @@ class UserAgentTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 60
         self.tableView.cellLayoutMarginsFollowReadableWidth = true
     }

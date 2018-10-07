@@ -11,11 +11,11 @@ import UIKit
 class CopyPortalLinkActivity: UIActivity {
     var url: URL?
 
-    override class var activityCategory: UIActivityCategory {
+    override class var activityCategory: UIActivity.Category {
         return .action
     }
 
-    override var activityType: UIActivityType {
+    override var activityType: UIActivity.ActivityType {
         return .copyToPasteboard
     }
 

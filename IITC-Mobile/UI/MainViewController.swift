@@ -14,7 +14,7 @@ import WBWebViewConsole
 class MainViewController: UIViewController {
 
     @available(iOS 11.0, *)
-    override func prefersHomeIndicatorAutoHidden() -> Bool {
+    override var prefersHomeIndicatorAutoHidden: Bool {
         return true
     }
 
@@ -81,7 +81,7 @@ class MainViewController: UIViewController {
         NSLayoutConstraint.activate(constraints)
 
         self.webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
-        self.view.bringSubview(toFront: webProgressView)
+        self.view.bringSubviewToFront(webProgressView)
     }
 
     func configureNotification() {
@@ -328,7 +328,7 @@ class MainViewController: UIViewController {
     @objc func sharedAction(_ notification: Notification) {
         let activityItem = notification.userInfo?["data"] as? [Any] ?? [Any]()
         let activityViewController = UIActivityViewController(activityItems: activityItem, applicationActivities: [OpenInMapActivity(), CopyPortalLinkActivity(), OpenInGMapActivity()])
-        activityViewController.excludedActivityTypes = [UIActivityType.addToReadingList]
+        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.addToReadingList]
         if activityViewController.responds(to: #selector(getter:UIViewController.popoverPresentationController)) {
             activityViewController.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItems?.first
         }

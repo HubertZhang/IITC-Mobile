@@ -33,7 +33,7 @@ class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         constraints.append(NSLayoutConstraint.init(item: self.view, attribute: .leading, relatedBy: .equal, toItem: self.webView, attribute: .leading, multiplier: 1.0, constant: 0))
         constraints.append(NSLayoutConstraint.init(item: self.view, attribute: .trailing, relatedBy: .equal, toItem: self.webView, attribute: .trailing, multiplier: 1.0, constant: 0))
         self.view.addConstraints(constraints)
-        self.view.bringSubview(toFront: webProgressView)
+        self.view.bringSubviewToFront(webProgressView)
 
         self.webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
         self.webView.addObserver(self, forKeyPath: "title", options: .new, context: nil)

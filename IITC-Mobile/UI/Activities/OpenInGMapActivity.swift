@@ -14,12 +14,12 @@ class OpenInGMapActivity: UIActivity {
     var title: String?
     var ll: (Double, Double)?
 
-    override class var activityCategory: UIActivityCategory {
+    override class var activityCategory: UIActivity.Category {
         return .share
     }
 
-    override var activityType: UIActivityType? {
-        return UIActivityType(rawValue: "OpenInGMapActivity")
+    override var activityType: UIActivity.ActivityType? {
+        return UIActivity.ActivityType(rawValue: "OpenInGMapActivity")
     }
 
     override var activityTitle: String? {

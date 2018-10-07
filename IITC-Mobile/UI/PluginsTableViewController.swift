@@ -32,7 +32,7 @@ class PluginsTableViewController: UITableViewController {
         super.viewDidLoad()
         self.clearsSelectionOnViewWillAppear = false
         self.tableView.estimatedRowHeight = 80.0
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
 
         resultsTableController = self.storyboard?.instantiateViewController(withIdentifier: "pluginsSearchTableViewController") as? PluginsSearchTableViewController
 

@@ -18,7 +18,7 @@ class PluginsSearchTableViewController: UITableViewController {
         self.clearsSelectionOnViewWillAppear = false
 //        self.automaticallyAdjustsScrollViewInsets = false
         self.tableView.estimatedRowHeight = 80.0
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
     }
 
     override func didReceiveMemoryWarning() {

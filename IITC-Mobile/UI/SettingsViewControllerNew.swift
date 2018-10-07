@@ -37,7 +37,7 @@ import FirebaseAnalytics
 
     let defaults = UserDefaults(suiteName: ContainerIdentifier)
 
-    override init(style: UITableViewStyle) {
+    override init(style: UITableView.Style) {
         super.init(style: style)
         self.settingsStore = IASKSettingsStoreUserDefaults(userDefaults: defaults)
         self.clearsSelectionOnViewWillAppear = true
