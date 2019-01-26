@@ -271,11 +271,11 @@ class MainViewController: UIViewController {
             if urlString == self.permalink {
                 return
             }
-            if let urlComponent = URLComponents(string: urlString), urlComponent.host == "www.ingress.com" {
+            if let urlComponent = URLComponents(string: urlString), urlComponent.host == "www.ingress.com" || urlComponent.host == "intel.ingress.com" {
                 self.webView.load(URLRequest(url: urlComponent.url!))
                 self.loadIITCNeeded = true
             }
-            if urlString == "https://ops.irde.net/iitc" {
+            if urlString.hasSuffix("https://ops.irde.net/iitc") {
                 self.webView.load(URLRequest(url: URL(string: urlString)!))
             }
         }))
@@ -440,8 +440,7 @@ extension MainViewController: WKNavigationDelegate {
                 self.backPanel.removeAll()
                 self.backButton.isEnabled = false
                 self.loadIITCNeeded = true
-            } else if urlString.contains("ingress.com/intel") && self.loadIITCNeeded {
-//                print("Allowed2")
+            } else if (urlString.contains("ingress.com/intel")||urlString.contains("intel.ingress.com")) && self.loadIITCNeeded {
                 if self.webView.consoleEnabled {
                     self.webView.console.clearMessages()
                 }
