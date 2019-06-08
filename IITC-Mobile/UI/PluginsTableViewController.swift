@@ -84,7 +84,7 @@ class PluginsTableViewController: UITableViewController {
             }
         }
         keys = scripts.keys.sorted()
-        if let index = keys.index(of: "Deleted") {
+        if let index = keys.firstIndex(of: "Deleted") {
             keys.remove(at: index)
             keys.append("Deleted")
         }

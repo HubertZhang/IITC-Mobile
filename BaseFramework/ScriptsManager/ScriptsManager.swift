@@ -88,7 +88,7 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         self.storedPlugins = loadPluginInDirectory(libraryPluginsPath)
         for plugin in loadPluginInDirectory(userScriptsPath) {
             plugin.isUserScript = true
-            let index = storedPlugins.index {
+            let index = storedPlugins.firstIndex {
                 oldPlugin -> Bool in
                 return oldPlugin.fileName == plugin.fileName
             }
@@ -144,7 +144,7 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         result.append(mainScript)
         result.append(hookScript)
         for name in loadedPluginNames {
-            let index = storedPlugins.index {
+            let index = storedPlugins.firstIndex {
                 plugin -> Bool in
                 return plugin.fileName == name
             }
@@ -160,7 +160,7 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
     }
 
     open func setPlugin(_ script: Script, loaded: Bool) {
-        let index = loadedPluginNames.index {
+        let index = loadedPluginNames.firstIndex {
             plugin -> Bool in
             return plugin == script.fileName
         }

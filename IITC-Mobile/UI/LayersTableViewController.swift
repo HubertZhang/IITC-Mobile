@@ -37,7 +37,7 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
         NotificationCenter.default.addObserver(self, selector: #selector(LayersTableViewController.updateLayers), name: JSNotificationLayersGot, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(LayersTableViewController.updateLayers), name: JSNotificationAddPane, object: nil)
 
-        if let index = layersController.baseLayers.index(where: { $0.active }) {
+        if let index = layersController.baseLayers.firstIndex(where: { $0.active }) {
             currentActiveIndex = index
         }
 
