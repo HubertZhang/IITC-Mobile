@@ -54,10 +54,10 @@ class ConsolePurchaseViewController: UIViewController {
 
         self.purchaseButton.setTitleColor(UIColor.white, for: .normal)
         self.purchaseButton.setTitleColor(UIColor.lightGray, for: .disabled)
-        self.purchaseButton.setTitleColor(#colorLiteral(red:0.006442983169, green:0.4781559706, blue:0.9985900521, alpha:1), for: .highlighted)
+        self.purchaseButton.setTitleColor(#colorLiteral(red:0.006442983169, green:0.4781559706, blue:0.9985900521, alpha:1), for:.highlighted)
         self.purchaseButton.setBackgroundImage(image(from: UIColor.white), for: .highlighted)
         self.purchaseButton.setBackgroundImage(image(from: UIColor.white), for: .disabled)
-        self.purchaseButton.setBackgroundImage(image(from: #colorLiteral(red:0.006442983169, green:0.4781559706, blue:0.9985900521, alpha:1)), for: .normal)
+        self.purchaseButton.setBackgroundImage(image(from: #colorLiteral(red:0.006442983169, green:0.4781559706, blue:0.9985900521, alpha:1)), for:.normal)
     }
 
     override func viewWillAppear(_ animated: Bool) {
