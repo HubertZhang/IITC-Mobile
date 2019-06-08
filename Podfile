@@ -4,9 +4,9 @@ platform :ios, '9.0'
 use_frameworks!
 
 abstract_target 'Base' do
-    pod 'RxSwift', '~> 4'
+    pod 'RxSwift', '~> 5'
     pod 'Alamofire', '~> 4'
-    pod 'RxAlamofire', '~> 4'
+    pod 'RxAlamofire', '~> 5'
     
     target 'BaseFramework'
     abstract_target 'Application' do
