@@ -403,6 +403,7 @@ extension MainViewController: WKUIDelegate {
         guard let vc1 = vc.viewControllers[0] as? WebViewController else {
             return nil
         }
+        configuration.userContentController.removeAllUserScripts()
         vc1.configuration = configuration
         self.navigationController?.present(vc, animated: true, completion: nil)
         vc1.loadViewIfNeeded()
