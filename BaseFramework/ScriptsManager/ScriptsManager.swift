@@ -111,6 +111,16 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
 
             }
         }
+        let userLocationURL = userScriptsPath.appendingPathComponent("user-location.user.js")
+        if FileManager.default.fileExists(atPath: userLocationURL.path) {
+            do {
+                positionScript = try Script(atFilePath: userLocationURL)
+                positionScript.category = "Core"
+                positionScript.isUserScript = true
+            } catch {
+                
+            }
+        }
     }
 
     func loadPluginInDirectory(_ url: URL) -> [Script] {
@@ -127,6 +137,9 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
                 continue
             }
             if pluginPath.lastPathComponent == "total-conversion-build.user.js" {
+                continue
+            }
+            if pluginPath.lastPathComponent == "user-location.user.js" {
                 continue
             }
 
