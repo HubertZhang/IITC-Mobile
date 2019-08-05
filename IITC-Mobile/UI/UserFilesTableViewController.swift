@@ -72,7 +72,9 @@ class UserFilesTableViewController: UITableViewController {
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FileCell", for: indexPath) as! FileCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "FileCell", for: indexPath) as? FileCell else {
+            return UITableViewCell()
+        }
 
         // Configure the cell...
         let url = contents[(indexPath as NSIndexPath).row]

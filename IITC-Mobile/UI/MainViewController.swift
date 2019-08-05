@@ -13,6 +13,8 @@ import WBWebViewConsole
 
 class MainViewController: UIViewController {
 
+    private var observationProgress: NSKeyValueObservation?
+
     @available(iOS 11.0, *)
     override var prefersHomeIndicatorAutoHidden: Bool {
         return true
@@ -73,14 +75,26 @@ class MainViewController: UIViewController {
         self.webView.uiDelegate = self
         self.view.addSubview(self.webView)
 
-        var constraints = [NSLayoutConstraint]()
-        constraints.append(NSLayoutConstraint.init(item: self.topLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: self.webView, attribute: .top, multiplier: 1.0, constant: 0))
-        constraints.append(NSLayoutConstraint.init(item: self.view, attribute: .bottom, relatedBy: .equal, toItem: self.webView, attribute: .bottom, multiplier: 1.0, constant: 0))
-        constraints.append(NSLayoutConstraint.init(item: self.view, attribute: .leading, relatedBy: .equal, toItem: self.webView, attribute: .leading, multiplier: 1.0, constant: 0))
-        constraints.append(NSLayoutConstraint.init(item: self.view, attribute: .trailing, relatedBy: .equal, toItem: self.webView, attribute: .trailing, multiplier: 1.0, constant: 0))
-        NSLayoutConstraint.activate(constraints)
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:[top][v]|", options: [], metrics: nil, views: ["v": self.webView!, "top": self.topLayoutGuide]))
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "|[v]|", options: [], metrics: nil, views: ["v": self.webView!]))
 
-        self.webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
+        self.observationProgress = self.webView.observe(\IITCWebView.estimatedProgress, changeHandler: { (_, change) in
+            guard let progress = change.newValue else {
+                return
+            }
+            self.webProgressView.setProgress(Float(progress), animated: true)
+            if progress == 1.0 {
+                UIView.animate(withDuration: 1, animations: {
+                    () -> Void in
+                    self.webProgressView.alpha = 0
+                }, completion: { _ in
+                    self.webProgressView.progress = 0
+                })
+            } else {
+                self.webProgressView.alpha = 1
+            }
+        })
+
         self.view.bringSubviewToFront(webProgressView)
     }
 
@@ -108,22 +122,22 @@ class MainViewController: UIViewController {
     func configureRightButtons() {
         var buttons = [UIBarButtonItem]()
         let settingsButton = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 24))
-        settingsButton.setImage(#imageLiteral(resourceName:"ic_settings"), for:.normal)
+        settingsButton.setImage(#imageLiteral(resourceName: "ic_settings"), for: .normal)
         settingsButton.addTarget(self, action: #selector(settingsButtonPressed(_:)), for: .touchUpInside)
         buttons.append(UIBarButtonItem(customView: settingsButton))
 
         let locationButton = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 24))
-        locationButton.setImage(#imageLiteral(resourceName:"ic_my_location"), for:.normal)
+        locationButton.setImage(#imageLiteral(resourceName: "ic_my_location"), for: .normal)
         locationButton.addTarget(self, action: #selector(locationButtonPressed(_:)), for: .touchUpInside)
         buttons.append(UIBarButtonItem(customView: locationButton))
 
         let reloadButton = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 24))
-        reloadButton.setImage(#imageLiteral(resourceName:"ic_refresh"), for:.normal)
+        reloadButton.setImage(#imageLiteral(resourceName: "ic_refresh"), for: .normal)
         reloadButton.addTarget(self, action: #selector(reloadButtonPressed(_:)), for: .touchUpInside)
         buttons.append(UIBarButtonItem(customView: reloadButton))
 
         let linkButton = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 24))
-        linkButton.setImage(#imageLiteral(resourceName:"ic_link"), for:.normal)
+        linkButton.setImage(#imageLiteral(resourceName: "ic_link"), for: .normal)
         linkButton.addTarget(self, action: #selector(linkButtonPressed(_:)), for: .touchUpInside)
         buttons.append(UIBarButtonItem(customView: linkButton))
 
@@ -169,24 +183,8 @@ class MainViewController: UIViewController {
     }
 
     deinit {
+        self.observationProgress = nil
         NotificationCenter.default.removeObserver(self)
-    }
-
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
-        if (keyPath == "estimatedProgress") {
-            let progress: Double = self.webView.estimatedProgress
-            self.webProgressView.setProgress(Float(progress), animated: true)
-            if progress == 1.0 {
-                UIView.animate(withDuration: 1, animations: {
-                    () -> Void in
-                    self.webProgressView.alpha = 0
-                }, completion: { _ in
-                    self.webProgressView.progress = 0
-                })
-            } else {
-                self.webProgressView.alpha = 1
-            }
-        }
     }
 
     override func didReceiveMemoryWarning() {

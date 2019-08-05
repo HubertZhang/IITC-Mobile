@@ -12,6 +12,7 @@ import WebKit
 import BaseFramework
 
 class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDownloadDelegate {
+    private var observationProgress: NSKeyValueObservation?
 
     var webView: IITCWebView!
     var location = IITCLocation()
@@ -97,14 +98,25 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
         self.webView.uiDelegate = self
         self.view.addSubview(self.webView)
 
-        var constraints = [NSLayoutConstraint]()
-        constraints.append(NSLayoutConstraint.init(item: self.topLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: self.webView, attribute: .top, multiplier: 1.0, constant: 0))
-        constraints.append(NSLayoutConstraint.init(item: self.view, attribute: .bottom, relatedBy: .equal, toItem: self.webView, attribute: .bottom, multiplier: 1.0, constant: 0))
-        constraints.append(NSLayoutConstraint.init(item: self.view, attribute: .leading, relatedBy: .equal, toItem: self.webView, attribute: .leading, multiplier: 1.0, constant: 0))
-        constraints.append(NSLayoutConstraint.init(item: self.view, attribute: .trailing, relatedBy: .equal, toItem: self.webView, attribute: .trailing, multiplier: 1.0, constant: 0))
-        self.view.addConstraints(constraints)
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:[top][v]|", options: [], metrics: nil, views: ["v": self.webView!, "top": self.topLayoutGuide]))
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "|[v]|", options: [], metrics: nil, views: ["v": self.webView!]))
 
-        self.webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
+        self.observationProgress = self.webView.observe(\IITCWebView.estimatedProgress, changeHandler: { (_, change) in
+            guard let progress = change.newValue else {
+                return
+            }
+            self.webProgressView.setProgress(Float(progress), animated: true)
+            if progress == 1.0 {
+                UIView.animate(withDuration: 1, animations: {
+                    () -> Void in
+                    self.webProgressView.alpha = 0
+                }, completion: { _ in
+                    self.webProgressView.progress = 0
+                })
+            } else {
+                self.webProgressView.alpha = 1
+            }
+        })
         self.view.bringSubviewToFront(webProgressView)
     }
 
@@ -171,7 +183,9 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
         self.loadIITCNeeded = true
         var founded = false
         for item in self.extensionContext?.inputItems ?? [] where item is NSExtensionItem {
-            let inputItem = item as! NSExtensionItem
+            guard let inputItem = item as? NSExtensionItem else {
+                continue
+            }
             for provider in inputItem.attachments ?? [] {
                 if provider.hasItemConformingToTypeIdentifier(kUTTypeURL as String) {
                     founded = true
@@ -192,24 +206,8 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
     }
 
     deinit {
+        self.observationProgress = nil
         NotificationCenter.default.removeObserver(self)
-    }
-
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
-        if (keyPath == "estimatedProgress") {
-            let progress: Double = self.webView.estimatedProgress
-            self.webProgressView.setProgress(Float(progress), animated: true)
-            if progress == 1.0 {
-                UIView.animate(withDuration: 1, animations: {
-                    () -> Void in
-                    self.webProgressView.alpha = 0
-                }, completion: { _ in
-                    self.webProgressView.progress = 0
-                })
-            } else {
-                self.webProgressView.alpha = 1
-            }
-        }
     }
 
     override func didReceiveMemoryWarning() {

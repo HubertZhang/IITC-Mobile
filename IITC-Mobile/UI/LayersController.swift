@@ -9,10 +9,16 @@
 import UIKit
 import BaseFramework
 
-class Layer: NSObject {
+class Layer: Codable {
     var layerID: Int = -1
     var layerName: String = ""
     var active: Bool = false
+
+    enum CodingKeys: String, CodingKey {
+        case layerID = "layerId"
+        case layerName = "name"
+        case active = "active"
+    }
 }
 
 class LayersController: NSObject {
@@ -44,29 +50,23 @@ class LayersController: NSObject {
         }
         self.baseLayers = []
         self.overlayLayers = []
-        if let tempLayers = (try? JSONSerialization.jsonObject(with: layers[0].data(using: .utf8)!, options: .allowFragments)) as? [[String: Any]] {
+        do {
+            let decoder = JSONDecoder()
+            let tempLayers = try decoder.decode([Layer].self, from: layers[0].data(using: .utf8)!)
             for layer in tempLayers {
-                let layerObject = Layer()
-                guard let name = layer["name"] as? String, let ID = layer["layerId"] as? NSNumber, let actived = layer["active"] as? Bool else {
-                    continue
-                }
-                layerObject.layerName = name
-                layerObject.layerID = ID.intValue
-                layerObject.active = actived
-                baseLayers.append(layerObject)
+                baseLayers.append(layer)
             }
+        } catch {
+            print(error.localizedDescription)
         }
-        if let tempLayers = (try? JSONSerialization.jsonObject(with: layers[1].data(using: .utf8)!, options: .allowFragments)) as? [[String: Any]] {
+        do {
+            let decoder = JSONDecoder()
+            let tempLayers = try decoder.decode([Layer].self, from: layers[1].data(using: .utf8)!)
             for layer in tempLayers {
-                let layerObject = Layer()
-                guard let name = layer["name"] as? String, let ID = layer["layerId"] as? NSNumber, let actived = layer["active"] as? Bool else {
-                    continue
-                }
-                layerObject.layerName = name
-                layerObject.layerID = ID.intValue
-                layerObject.active = actived
-                overlayLayers.append(layerObject)
+                overlayLayers.append(layer)
             }
+        } catch {
+            print(error.localizedDescription)
         }
     }
 

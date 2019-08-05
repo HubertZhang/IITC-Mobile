@@ -15,6 +15,7 @@ import Alamofire
 import FirebaseAnalytics
 
 @objc class SettingsViewController: IASKAppSettingsViewController, IASKSettingsDelegate {
+    let disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,7 +103,6 @@ import FirebaseAnalytics
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
             self.present(alert, animated: true, completion: nil)
-            break
         default:
             return
         }
@@ -163,7 +163,7 @@ import FirebaseAnalytics
                 })
             }, onDisposed: {
                 () -> Void in
-            })
+            }).disposed(by: self.disposeBag)
     }
 
     func settingsViewControllerDidEnd(_ sender: IASKAppSettingsViewController!) {

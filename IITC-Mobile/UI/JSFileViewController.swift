@@ -22,7 +22,6 @@ class JSFileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
         textView.autocorrectionType = UITextAutocorrectionType.no
         textView.autocapitalizationType = UITextAutocapitalizationType.none
         textView.textColor = UIColor(white: 0.8, alpha: 1.0)

@@ -54,10 +54,10 @@ class ConsolePurchaseViewController: UIViewController {
 
         self.purchaseButton.setTitleColor(UIColor.white, for: .normal)
         self.purchaseButton.setTitleColor(UIColor.lightGray, for: .disabled)
-        self.purchaseButton.setTitleColor(#colorLiteral(red:0.006442983169, green:0.4781559706, blue:0.9985900521, alpha:1), for:.highlighted)
+        self.purchaseButton.setTitleColor(#colorLiteral(red: 0.006442983169, green: 0.4781559706, blue: 0.9985900521, alpha: 1), for: .highlighted)
         self.purchaseButton.setBackgroundImage(image(from: UIColor.white), for: .highlighted)
         self.purchaseButton.setBackgroundImage(image(from: UIColor.white), for: .disabled)
-        self.purchaseButton.setBackgroundImage(image(from: #colorLiteral(red:0.006442983169, green:0.4781559706, blue:0.9985900521, alpha:1)), for:.normal)
+        self.purchaseButton.setBackgroundImage(image(from: #colorLiteral(red: 0.006442983169, green: 0.4781559706, blue: 0.9985900521, alpha: 1)), for: .normal)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -113,7 +113,7 @@ extension ConsolePurchaseViewController: SKProductsRequestDelegate {
                 priceFormatter.numberStyle = .currency
                 priceFormatter.locale = product.priceLocale
                 self.purchaseButton.setTitle(priceFormatter.string(from: product.price), for: .normal)
-                self.purchaseButton.layer.borderColor = #colorLiteral(red:0.006442983169, green:0.4781559706, blue:0.9985900521, alpha:1).cgColor
+                self.purchaseButton.layer.borderColor = #colorLiteral(red: 0.006442983169, green: 0.4781559706, blue: 0.9985900521, alpha: 1).cgColor
                 self.purchaseButton.isEnabled = true
 #if DEBUG
                 self.descriptionLabel.text = String.init(format: "ID:%@\nTitle:%@\nDescription:%@\nPrice:%@\n", product.productIdentifier, product.localizedTitle, product.localizedDescription, product.price.description(withLocale: product.priceLocale))

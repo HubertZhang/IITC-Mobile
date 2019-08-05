@@ -10,6 +10,8 @@ import UIKit
 import WebKit
 
 class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
+    private var observationProgress: NSKeyValueObservation?
+    private var observationTitle: NSKeyValueObservation?
 
     var configuration: WKWebViewConfiguration?
     var webView: WKWebView!
@@ -27,32 +29,13 @@ class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         self.webView.uiDelegate = self
         self.view.addSubview(self.webView)
 
-        var constraints = [NSLayoutConstraint]()
-        constraints.append(NSLayoutConstraint.init(item: self.topLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: self.webView, attribute: .top, multiplier: 1.0, constant: 0))
-        constraints.append(NSLayoutConstraint.init(item: self.bottomLayoutGuide, attribute: .top, relatedBy: .equal, toItem: self.webView, attribute: .bottom, multiplier: 1.0, constant: 0))
-        constraints.append(NSLayoutConstraint.init(item: self.view, attribute: .leading, relatedBy: .equal, toItem: self.webView, attribute: .leading, multiplier: 1.0, constant: 0))
-        constraints.append(NSLayoutConstraint.init(item: self.view, attribute: .trailing, relatedBy: .equal, toItem: self.webView, attribute: .trailing, multiplier: 1.0, constant: 0))
-        self.view.addConstraints(constraints)
-        self.view.bringSubviewToFront(webProgressView)
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:[top][v]|", options: [], metrics: nil, views: ["v": self.webView!, "top": self.topLayoutGuide]))
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "|[v]|", options: [], metrics: nil, views: ["v": self.webView!]))
 
-        self.webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
-        self.webView.addObserver(self, forKeyPath: "title", options: .new, context: nil)
-        // Do any additional setup after loading the view.
-    }
-
-    deinit {
-        self.webView.removeObserver(self, forKeyPath: "estimatedProgress")
-        self.webView.removeObserver(self, forKeyPath: "title")
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
-        if (keyPath == "estimatedProgress") {
-            let progress: Double = self.webView.estimatedProgress
+        self.observationProgress = self.webView.observe(\WKWebView.estimatedProgress, changeHandler: { (_, change) in
+            guard let progress = change.newValue else {
+                return
+            }
             self.webProgressView.setProgress(Float(progress), animated: true)
             if progress == 1.0 {
                 UIView.animate(withDuration: 1, animations: {
@@ -64,9 +47,25 @@ class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
             } else {
                 self.webProgressView.alpha = 1
             }
-        } else if (keyPath == "title") {
-            self.title = self.webView.title
-        }
+        })
+
+        self.observationTitle = self.webView.observe(\WKWebView.title, changeHandler: { (webView, _) in
+            self.title = webView.title
+        })
+
+        self.view.bringSubviewToFront(webProgressView)
+
+        // Do any additional setup after loading the view.
+    }
+
+    deinit {
+        self.observationTitle = nil
+        self.observationProgress = nil
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
 
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {

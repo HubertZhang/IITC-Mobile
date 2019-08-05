@@ -100,37 +100,34 @@ class InAppPurchaseManager: NSObject {
 
 extension InAppPurchaseManager: SKPaymentTransactionObserver {
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+        var needVerifyReceipt: Bool = false
         for transaction in transactions {
             switch (transaction.transactionState) {
             case .purchasing:
                 self.uiDelegate?.purchasing()
-                break
             case .deferred:
                 self.uiDelegate?.deferred()
-                break
             case .failed:
                 self.uiDelegate?.failed(with: transaction.error)
                 queue.finishTransaction(transaction)
-                break
             case .purchased:
                 if transaction.payment.productIdentifier == "com.hubertzhang.iitcmobile.console" {
-                    defer {
-                        self.verifyReceipt()
-                    }
+                    needVerifyReceipt = true
                 }
                 self.uiDelegate?.purchased()
                 queue.finishTransaction(transaction)
-                break
             case .restored:
                 if transaction.original?.payment.productIdentifier == "com.hubertzhang.iitcmobile.console" {
-                    defer {
-                        self.verifyReceipt()
-                    }
+                    needVerifyReceipt = true
                 }
                 self.uiDelegate?.restored()
                 queue.finishTransaction(transaction)
-                break
+            @unknown default:
+                fatalError()
             }
+        }
+        if needVerifyReceipt {
+            verifyReceipt()
         }
     }
 }
