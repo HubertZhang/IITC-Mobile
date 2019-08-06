@@ -116,6 +116,26 @@
 			<key>Type</key>
 			<string>IASKButtonSpecifier</string>
 			<key>Title</key>
+			<string>pref_change_iitc_original</string>
+			<key>Key</key>
+			<string>pref_change_iitc_original</string>
+			<key>IASKTextAlignment</key>
+			<string>IASKUITextAlignmentLeft</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>IASKButtonSpecifier</string>
+			<key>Title</key>
+			<string>pref_change_iitc_ce</string>
+			<key>Key</key>
+			<string>pref_change_iitc_ce</string>
+			<key>IASKTextAlignment</key>
+			<string>IASKUITextAlignmentLeft</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>IASKButtonSpecifier</string>
+			<key>Title</key>
 			<string>pref_force_plugin_update</string>
 			<key>Key</key>
 			<string>pref_update</string>

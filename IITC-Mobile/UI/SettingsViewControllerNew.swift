@@ -27,6 +27,7 @@ import FirebaseAnalytics
             self.setHiddenKeys(["pref_console"], animated: false)
         }
 #endif
+        self.showDoneButton = false
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -103,6 +104,14 @@ import FirebaseAnalytics
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
             self.present(alert, animated: true, completion: nil)
+        case "pref_change_iitc_original":
+            ScriptsManager.sharedInstance.switchIITCVersion(version: .original)
+            ScriptsManager.sharedInstance.loadUserMainScript()
+            ScriptsManager.sharedInstance.loadAllPlugins()
+        case "pref_change_iitc_ce":
+            ScriptsManager.sharedInstance.switchIITCVersion(version: .ce)
+            ScriptsManager.sharedInstance.loadUserMainScript()
+            ScriptsManager.sharedInstance.loadAllPlugins()
         default:
             return
         }

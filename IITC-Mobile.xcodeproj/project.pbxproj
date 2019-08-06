@@ -43,6 +43,7 @@
 		B4BA261D1F3DFD45000FDFB6 /* openssl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4BA261C1F3DFD45000FDFB6 /* openssl.framework */; };
 		B4C682731FB47CDD00B1B175 /* IITCWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C682721FB47CDD00B1B175 /* IITCWebView.swift */; };
 		B4CD6172209C070C00F5BFB8 /* InsetsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CD6171209C070C00F5BFB8 /* InsetsLabel.swift */; };
+		B4D39B5422F9E11F00D97CA1 /* ce in Resources */ = {isa = PBXBuildFile; fileRef = B4D39B5322F9E11F00D97CA1 /* ce */; };
 		B4E2F0041D05D06C00D2D86B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E2F0031D05D06C00D2D86B /* AppDelegate.swift */; };
 		B4E2F0061D05D06C00D2D86B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E2F0051D05D06C00D2D86B /* MainViewController.swift */; };
 		B4E2F0091D05D06C00D2D86B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4E2F0071D05D06C00D2D86B /* Main.storyboard */; };
@@ -169,6 +170,7 @@
 		B4BA261C1F3DFD45000FDFB6 /* openssl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = openssl.framework; path = "OpenSSL-for-iPhone/openssl.framework"; sourceTree = SOURCE_ROOT; };
 		B4C682721FB47CDD00B1B175 /* IITCWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IITCWebView.swift; sourceTree = "<group>"; };
 		B4CD6171209C070C00F5BFB8 /* InsetsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetsLabel.swift; sourceTree = "<group>"; };
+		B4D39B5322F9E11F00D97CA1 /* ce */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ce; sourceTree = "<group>"; };
 		B4E2F0001D05D06C00D2D86B /* IITC-Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IITC-Mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4E2F0031D05D06C00D2D86B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B4E2F0051D05D06C00D2D86B /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -405,6 +407,7 @@
 		B4F840311D0AD1AF00C58690 /* BaseFramework */ = {
 			isa = PBXGroup;
 			children = (
+				B4D39B5322F9E11F00D97CA1 /* ce */,
 				B4ED0CB51D9BF6D00038EB33 /* LocationTransform.swift */,
 				B405EEC91D0602C200110D9E /* scripts */,
 				B4E2F0231D05D4E700D2D86B /* ScriptsManager */,
@@ -616,6 +619,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4D39B5422F9E11F00D97CA1 /* ce in Resources */,
 				B4F840571D0ADAB600C58690 /* scripts in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

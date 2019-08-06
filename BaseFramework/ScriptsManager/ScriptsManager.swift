@@ -214,10 +214,14 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
             return Alamofire.request(downloadURL).rx.string().map {
                 string in
                 var pathPrefix: URL
-                if script.category == "Core" {
-                    pathPrefix = self.libraryScriptsPath
+                if script.isUserScript {
+                    pathPrefix = self.userScriptsPath
                 } else {
-                    pathPrefix = self.libraryPluginsPath
+                    if script.category == "Core" {
+                        pathPrefix = self.libraryScriptsPath
+                    } else {
+                        pathPrefix = self.libraryPluginsPath
+                    }
                 }
 
                 pathPrefix.appendPathComponent(script.fileName)
@@ -258,5 +262,15 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
     open func reloadSettings() {
         loadedPluginNames = userDefaults.array(forKey: "LoadedPlugins") as? [String] ?? [String]()
         loadedPlugins = Set<String>(loadedPluginNames)
+    }
+    
+    public enum Version: String {
+        case original = "scripts"
+        case ce = "ce"
+    }
+    
+    open func switchIITCVersion(version: Version) {
+        try? FileManager.default.removeItem(at: libraryScriptsPath)
+        try? FileManager.default.copyItem(at: Bundle(for: ScriptsManager.classForCoder()).resourceURL!.appendingPathComponent(version.rawValue, isDirectory: true), to: libraryScriptsPath)
     }
 }
