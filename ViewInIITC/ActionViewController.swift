@@ -62,8 +62,22 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
         let alert = UIAlertController(title: "Save JS File to IITC?", message: "A JavaScript file detected. Would you like to save this file to IITC (as a Plugin)?\nURL:\(url.absoluteString)", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {
             _ in
-            let task = self.session.downloadTask(with: url)
-            task.resume()
+            if url.scheme == "http" || url.scheme == "https" {
+                let task = self.session.downloadTask(with: url)
+                task.resume()
+            } else if url.isFileURL {
+                do {
+                    let containerPath = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContainerIdentifier)!
+                    let userScriptsPath = containerPath.appendingPathComponent("userScripts", isDirectory: true)
+                    let filename = url.lastPathComponent
+                    let destURL = userScriptsPath.appendingPathComponent(filename)
+                    try? FileManager.default.removeItem(at: destURL)
+                    try FileManager.default.copyItem(at: url, to: destURL)
+                } catch let e {
+                    print(e.localizedDescription)
+                }
+            }
+
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
