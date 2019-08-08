@@ -21,9 +21,9 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
     var loadedPluginNames: [String]
     open var loadedPlugins: Set<String>
 
-    open var mainScript: Script
-    var hookScript: Script
-    open var positionScript: Script
+    open var mainScript: Script!
+    var hookScript: Script!
+    open var positionScript: Script!
 
     var libraryScriptsPath: URL
     var libraryPluginsPath: URL
@@ -42,14 +42,13 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         userScriptsPath = containerPath.appendingPathComponent("userScripts", isDirectory: true)
         try? FileManager.default.createDirectory(at: userScriptsPath, withIntermediateDirectories: true, attributes: nil)
         documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last!
+
         let mainScriptPath = libraryScriptsPath.appendingPathComponent("total-conversion-build.user.js")
         let copied = FileManager.default.fileExists(atPath: mainScriptPath.path)
-        let currentVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
+
         let oldVersion = userDefaults.string(forKey: "Version") ?? "0.0.0"
-        var upgraded = currentVersion.compare(oldVersion, options: .numeric) != .orderedSame
-        let currentBuild = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? ""
         let oldBuild = userDefaults.string(forKey: "BuildVersion") ?? "0"
-        upgraded = upgraded || (currentBuild.compare(oldBuild, options: .numeric) != .orderedSame)
+        var upgraded = VersionTool.default.isVersionUpdated(from: oldVersion) || VersionTool.default.isSameBuild(with: oldBuild)
         #if DEBUG
         upgraded = true
         #endif
@@ -57,29 +56,20 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
             try? FileManager.default.createDirectory(at: containerPath, withIntermediateDirectories: true, attributes: nil)
             try? FileManager.default.removeItem(at: libraryScriptsPath)
             try? FileManager.default.copyItem(at: Bundle(for: ScriptsManager.classForCoder()).resourceURL!.appendingPathComponent("scripts", isDirectory: true), to: libraryScriptsPath)
-            userDefaults.set(currentVersion, forKey: "Version")
-            userDefaults.set(currentBuild, forKey: "BuildVersion")
+            userDefaults.set(VersionTool.default.currentVersion, forKey: "Version")
+            userDefaults.set(VersionTool.default.currentBuild, forKey: "BuildVersion")
         }
-        let buildNumber = Int(currentBuild) ?? 0
-        do {
-            mainScript = try Script(atFilePath: libraryScriptsPath.appendingPathComponent("total-conversion-build.user.js"))
-            mainScript.category = "Core"
-            hookScript = try Script(coreJS: libraryScriptsPath.appendingPathComponent("ios-hooks.js"), withName: "hook")
-            hookScript.fileContent = String(format: hookScript.fileContent, currentVersion, buildNumber)
-            positionScript = try Script(coreJS: libraryScriptsPath.appendingPathComponent("user-location.user.js"), withName: "position")
-        } catch {
-            exit(-1)
-        }
+
         loadedPluginNames = userDefaults.array(forKey: "LoadedPlugins") as? [String] ?? [String]()
         loadedPlugins = Set<String>(loadedPluginNames)
 
         super.init()
-//        print(userScriptsPath.absoluteString)
+
         syncDocumentAndContainer()
         documentWatcher = DirectoryWatcher(documentPath, delegate: self)
         containerWatcher = DirectoryWatcher(userScriptsPath, delegate: self)
 
-        loadUserMainScript()
+        loadMainScripts()
         loadAllPlugins()
 
     }
@@ -100,7 +90,21 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         }
     }
 
-    open func loadUserMainScript() {
+    open func loadMainScripts() {
+        let buildNumber = Int(VersionTool.default.currentBuild) ?? 0
+        do {
+            mainScript = try Script(atFilePath: libraryScriptsPath.appendingPathComponent("total-conversion-build.user.js"))
+            mainScript.category = "Core"
+            hookScript = try Script(coreJS: libraryScriptsPath.appendingPathComponent("ios-hooks.js"), withName: "hook")
+            hookScript.fileContent = String(format: hookScript.fileContent, VersionTool.default.currentVersion, buildNumber)
+            positionScript = try Script(coreJS: libraryScriptsPath.appendingPathComponent("user-location.user.js"), withName: "position")
+        } catch {
+
+        }
+        loadUserMainScript()
+    }
+
+    func loadUserMainScript() {
         let userURL = userScriptsPath.appendingPathComponent("total-conversion-build.user.js")
         if FileManager.default.fileExists(atPath: userURL.path) {
             do {
@@ -118,7 +122,7 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
                 positionScript.category = "Core"
                 positionScript.isUserScript = true
             } catch {
-                
+
             }
         }
     }
@@ -254,7 +258,7 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
             syncDocumentAndContainer()
         } else if folderWatcher == containerWatcher {
             self.loadAllPlugins()
-            self.loadUserMainScript()
+            self.loadMainScripts()
             NotificationCenter.default.post(name: ScriptsUpdatedNotification, object: nil)
         }
     }
@@ -263,12 +267,12 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         loadedPluginNames = userDefaults.array(forKey: "LoadedPlugins") as? [String] ?? [String]()
         loadedPlugins = Set<String>(loadedPluginNames)
     }
-    
+
     public enum Version: String {
         case original = "scripts"
         case ce = "ce"
     }
-    
+
     open func switchIITCVersion(version: Version) {
         try? FileManager.default.removeItem(at: libraryScriptsPath)
         try? FileManager.default.copyItem(at: Bundle(for: ScriptsManager.classForCoder()).resourceURL!.appendingPathComponent(version.rawValue, isDirectory: true), to: libraryScriptsPath)

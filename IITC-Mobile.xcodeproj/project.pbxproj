@@ -22,6 +22,7 @@
 		B42BE7611D073C0400A0A0CB /* About.html in Resources */ = {isa = PBXBuildFile; fileRef = B42BE7601D073C0400A0A0CB /* About.html */; };
 		B42BE7631D073C7800A0A0CB /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BE7621D073C7800A0A0CB /* AboutViewController.swift */; };
 		B42BE7651D07529300A0A0CB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B42BE7641D07529300A0A0CB /* GoogleService-Info.plist */; };
+		B4320D4E22FC147A009097EE /* VersionTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4320D4D22FC147A009097EE /* VersionTool.swift */; };
 		B44417661DA50D8900960F11 /* JSFile_22x29.png in Resources */ = {isa = PBXBuildFile; fileRef = B44417621DA50D8900960F11 /* JSFile_22x29.png */; };
 		B44417671DA50D8900960F11 /* JSFile_44x58.png in Resources */ = {isa = PBXBuildFile; fileRef = B44417631DA50D8900960F11 /* JSFile_44x58.png */; };
 		B44417681DA50D8900960F11 /* JSFile_64x64.png in Resources */ = {isa = PBXBuildFile; fileRef = B44417641DA50D8900960F11 /* JSFile_64x64.png */; };
@@ -150,6 +151,7 @@
 		B42BE7621D073C7800A0A0CB /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		B42BE7641D07529300A0A0CB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B42BE7681D08BFA300A0A0CB /* DirectoryWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectoryWatcher.swift; sourceTree = "<group>"; };
+		B4320D4D22FC147A009097EE /* VersionTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionTool.swift; sourceTree = "<group>"; };
 		B44417621DA50D8900960F11 /* JSFile_22x29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JSFile_22x29.png; sourceTree = "<group>"; };
 		B44417631DA50D8900960F11 /* JSFile_44x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JSFile_44x58.png; sourceTree = "<group>"; };
 		B44417641DA50D8900960F11 /* JSFile_64x64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JSFile_64x64.png; sourceTree = "<group>"; };
@@ -391,6 +393,7 @@
 				B42BE7681D08BFA300A0A0CB /* DirectoryWatcher.swift */,
 				B4E2F0241D05D50D00D2D86B /* Script.swift */,
 				B4E2F0261D05D51F00D2D86B /* ScriptsManager.swift */,
+				B4320D4D22FC147A009097EE /* VersionTool.swift */,
 			);
 			path = ScriptsManager;
 			sourceTree = "<group>";
@@ -801,6 +804,7 @@
 				B4F840521D0AD50300C58690 /* Script.swift in Sources */,
 				B4F840511D0AD50000C58690 /* DirectoryWatcher.swift in Sources */,
 				B4F840531D0AD50500C58690 /* ScriptsManager.swift in Sources */,
+				B4320D4E22FC147A009097EE /* VersionTool.swift in Sources */,
 				B4F840561D0AD50D00C58690 /* IITCLocation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
