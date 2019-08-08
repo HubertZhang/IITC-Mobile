@@ -106,11 +106,11 @@ import FirebaseAnalytics
             self.present(alert, animated: true, completion: nil)
         case "pref_change_iitc_original":
             ScriptsManager.sharedInstance.switchIITCVersion(version: .original)
-            ScriptsManager.sharedInstance.loadUserMainScript()
+            ScriptsManager.sharedInstance.loadMainScripts()
             ScriptsManager.sharedInstance.loadAllPlugins()
         case "pref_change_iitc_ce":
             ScriptsManager.sharedInstance.switchIITCVersion(version: .ce)
-            ScriptsManager.sharedInstance.loadUserMainScript()
+            ScriptsManager.sharedInstance.loadMainScripts()
             ScriptsManager.sharedInstance.loadAllPlugins()
         default:
             return
@@ -164,8 +164,8 @@ import FirebaseAnalytics
                 () -> Void in
                 hud.label.text = "Scanning..."
                 DispatchQueue.global().async(execute: {
+                    ScriptsManager.sharedInstance.loadMainScripts()
                     ScriptsManager.sharedInstance.loadAllPlugins()
-                    ScriptsManager.sharedInstance.loadUserMainScript()
                     DispatchQueue.main.async(execute: {
                         hud.hide(animated: true)
                     })
