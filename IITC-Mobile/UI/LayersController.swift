@@ -19,6 +19,17 @@ class Layer: Codable {
         case layerName = "name"
         case active = "active"
     }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        if let id = try? container.decode(Int.self, forKey: .layerID) {
+            layerID = id
+        } else if let idString = try? container.decode(String.self, forKey: .layerID) {
+            layerID = Int(idString) ?? -1
+        }
+        layerName = try container.decode(String.self, forKey: .layerName)
+        active = (try? container.decode(Bool.self, forKey: .active)) ?? false
+    }
 }
 
 class LayersController: NSObject {
