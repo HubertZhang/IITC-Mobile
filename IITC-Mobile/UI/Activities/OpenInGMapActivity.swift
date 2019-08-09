@@ -9,17 +9,13 @@
 import UIKit
 import BaseFramework
 
-class OpenInGMapActivity: UIActivity {
-    var url: URL?
-    var title: String?
-    var ll: (Double, Double)?
+class OpenInGMapActivity: OpenIn3rdMapActivity {
+    var ActivityType: String = "OpenInGMapActivity"
 
-    override class var activityCategory: UIActivity.Category {
-        return .share
-    }
+    var MapScheme: String = "comgooglemapsurl://"
 
-    override var activityType: UIActivity.ActivityType? {
-        return UIActivity.ActivityType(rawValue: "OpenInGMapActivity")
+    func constructURL() -> URL {
+        return URL(string: "comgooglemapsurl://www.google.com/maps/search/?api=1&query=\(latLng.0),\(latLng.1)")!
     }
 
     override var activityTitle: String? {
@@ -27,51 +23,6 @@ class OpenInGMapActivity: UIActivity {
     }
 
     override var activityImage: UIImage? {
-        return UIImage(named: "gmaps_app_icon")
-    }
-
-    override func canPerform(withActivityItems activityItems: [Any]) -> Bool {
-        if !UIApplication.shared.canOpenURL(URL(string: "comgooglemapsurl://")!) {
-            return false
-        }
-
-        if activityItems.count == 3 {
-            if let url = activityItems[1] as? URL {
-                return url.absoluteString.hasPrefix("https://www.ingress.com")
-            }
-        }
-        return false
-    }
-
-    override func prepare(withActivityItems activityItems: [Any]) {
-        if let title = activityItems[0] as? String {
-            self.title = title
-        }
-        if let url = activityItems[1] as? URL {
-            self.url = url
-        }
-        if let pos = activityItems[2] as? [String: Any] {
-            guard var lat = pos["lat"] as? Double, var lng = pos["lng"] as? Double else {
-                return
-            }
-
-            let userDefaults = UserDefaults(suiteName: ContainerIdentifier)!
-            if userDefaults.bool(forKey: "pref_china_offset") {
-                if !LocationTransform.isOutOfChina(lat: lat, lng: lng) {
-                    (lat, lng) = LocationTransform.wgs2gcj(wgsLat: lat, wgsLng: lng)
-                }
-            }
-            self.ll = (lat, lng)
-        }
-    }
-
-    override func perform() {
-        if UIApplication.shared.canOpenURL(URL(string: "comgooglemapsurl://")!) {
-            if let ll = self.ll {
-                let url = URL(string: "comgooglemapsurl://www.google.com/maps/search/?api=1&query=\(ll.0),\(ll.1)")!
-                UIApplication.shared.openURL(url)
-            }
-        }
-        self.activityDidFinish(true)
+        return #imageLiteral(resourceName: "map_goodle_app_icon")
     }
 }

@@ -64,6 +64,8 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>comgooglemapsurl</string>
+		<string>iosamap</string>
+		<string>baidumap</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

@@ -23,6 +23,9 @@
 		B42BE7631D073C7800A0A0CB /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BE7621D073C7800A0A0CB /* AboutViewController.swift */; };
 		B42BE7651D07529300A0A0CB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B42BE7641D07529300A0A0CB /* GoogleService-Info.plist */; };
 		B4320D4E22FC147A009097EE /* VersionTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4320D4D22FC147A009097EE /* VersionTool.swift */; };
+		B4320D5022FD1594009097EE /* OpenIn3rdMapActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4320D4F22FD1594009097EE /* OpenIn3rdMapActivity.swift */; };
+		B4320D5222FD1CCE009097EE /* OpenInAmapActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4320D5122FD1CCE009097EE /* OpenInAmapActivity.swift */; };
+		B4320D5422FD1F34009097EE /* OpenInBaiduMapActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4320D5322FD1F34009097EE /* OpenInBaiduMapActivity.swift */; };
 		B44417661DA50D8900960F11 /* JSFile_22x29.png in Resources */ = {isa = PBXBuildFile; fileRef = B44417621DA50D8900960F11 /* JSFile_22x29.png */; };
 		B44417671DA50D8900960F11 /* JSFile_44x58.png in Resources */ = {isa = PBXBuildFile; fileRef = B44417631DA50D8900960F11 /* JSFile_44x58.png */; };
 		B44417681DA50D8900960F11 /* JSFile_64x64.png in Resources */ = {isa = PBXBuildFile; fileRef = B44417641DA50D8900960F11 /* JSFile_64x64.png */; };
@@ -152,6 +155,9 @@
 		B42BE7641D07529300A0A0CB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B42BE7681D08BFA300A0A0CB /* DirectoryWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectoryWatcher.swift; sourceTree = "<group>"; };
 		B4320D4D22FC147A009097EE /* VersionTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionTool.swift; sourceTree = "<group>"; };
+		B4320D4F22FD1594009097EE /* OpenIn3rdMapActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenIn3rdMapActivity.swift; sourceTree = "<group>"; };
+		B4320D5122FD1CCE009097EE /* OpenInAmapActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenInAmapActivity.swift; sourceTree = "<group>"; };
+		B4320D5322FD1F34009097EE /* OpenInBaiduMapActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenInBaiduMapActivity.swift; sourceTree = "<group>"; };
 		B44417621DA50D8900960F11 /* JSFile_22x29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JSFile_22x29.png; sourceTree = "<group>"; };
 		B44417631DA50D8900960F11 /* JSFile_44x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JSFile_44x58.png; sourceTree = "<group>"; };
 		B44417641DA50D8900960F11 /* JSFile_64x64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JSFile_64x64.png; sourceTree = "<group>"; };
@@ -318,6 +324,9 @@
 				B42BE7581D072D1B00A0A0CB /* OpenInMapActivity.swift */,
 				B4779A30200BAD3F00EB34BD /* CopyPortalLinkActivity.swift */,
 				B4779A32200BB71100EB34BD /* OpenInGMapActivity.swift */,
+				B4320D4F22FD1594009097EE /* OpenIn3rdMapActivity.swift */,
+				B4320D5122FD1CCE009097EE /* OpenInAmapActivity.swift */,
+				B4320D5322FD1F34009097EE /* OpenInBaiduMapActivity.swift */,
 			);
 			path = Activities;
 			sourceTree = "<group>";
@@ -767,9 +776,11 @@
 				B4ED0CB81D9E6F990038EB33 /* WebViewController.swift in Sources */,
 				B44856FB1D1AB78F0082B1E7 /* WhatsNewViewController.swift in Sources */,
 				B405EECC1D066FC900110D9E /* LayersTableViewController.swift in Sources */,
+				B4320D5022FD1594009097EE /* OpenIn3rdMapActivity.swift in Sources */,
 				B405EED11D06969C00110D9E /* SettingsViewControllerNew.swift in Sources */,
 				B4BA261A1F3DF36E000FDFB6 /* RMAppReceipt.m in Sources */,
 				B47461161F769E1D00BFD2CA /* PluginsSearchTableViewController.swift in Sources */,
+				B4320D5422FD1F34009097EE /* OpenInBaiduMapActivity.swift in Sources */,
 				B4B9DEB31EFDB258009BFCC3 /* IITCWebView.swift in Sources */,
 				B4A270D81F553B6D00A2770F /* UserAgentTableViewController.swift in Sources */,
 				B410BFA31EF9BC3F001B441D /* JSFileViewController.swift in Sources */,
@@ -782,6 +793,7 @@
 				B42BE7631D073C7800A0A0CB /* AboutViewController.swift in Sources */,
 				B405EE081D05FD1400110D9E /* PluginsTableViewController.swift in Sources */,
 				B4779A31200BAD3F00EB34BD /* CopyPortalLinkActivity.swift in Sources */,
+				B4320D5222FD1CCE009097EE /* OpenInAmapActivity.swift in Sources */,
 				B4E2F0041D05D06C00D2D86B /* AppDelegate.swift in Sources */,
 				B4FEE9671F24E81900F3DD20 /* InAppPurchaseManager.swift in Sources */,
 			);
