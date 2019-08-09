@@ -48,7 +48,7 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
 
         let oldVersion = userDefaults.string(forKey: "Version") ?? "0.0.0"
         let oldBuild = userDefaults.string(forKey: "BuildVersion") ?? "0"
-        var upgraded = VersionTool.default.isVersionUpdated(from: oldVersion) || VersionTool.default.isSameBuild(with: oldBuild)
+        var upgraded = VersionTool.default.isVersionUpdated(from: oldVersion) || !VersionTool.default.isSameBuild(with: oldBuild)
         #if DEBUG
         upgraded = true
         #endif
