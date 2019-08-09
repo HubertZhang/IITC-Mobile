@@ -233,9 +233,9 @@ class MainViewController: UIViewController {
 
     @IBAction func settingsButtonPressed(_ sender: AnyObject) {
         let vc = SettingsViewController(style: .grouped)
-        vc.neverShowPrivacySettings = true
         vc.showDoneButton = false
         vc.title = "Settings"
+        vc.neverShowPrivacySettings = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
 

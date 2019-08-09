@@ -27,7 +27,6 @@ import FirebaseAnalytics
             self.setHiddenKeys(["pref_console"], animated: false)
         }
 #endif
-        self.showDoneButton = false
     }
 
     override func viewWillAppear(_ animated: Bool) {
