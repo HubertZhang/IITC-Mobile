@@ -92,12 +92,11 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
         switch (tableView) {
         case panelTable:
             cell.textLabel?.text = layersController.panelLabels[(indexPath as NSIndexPath).row]
-            if let image = UIImage(named: layersController.panelIcons[(indexPath as NSIndexPath).row]) {
-                cell.imageView?.image = image
-            } else {
-                cell.imageView?.image = UIImage(named: "ic_action_new_event")
+            let image = UIImage(named: layersController.panelIcons[(indexPath as NSIndexPath).row]) ?? UIImage(named: "ic_action_new_event")
+            cell.imageView?.image = image?.withRenderingMode(.alwaysTemplate)
+            if #available(iOS 13.0, *) {
+                cell.imageView?.tintColor = UIColor.label
             }
-
         case baseLayerTable:
             let layer = layersController.baseLayers[(indexPath as NSIndexPath).row]
             cell.textLabel!.text = layer.layerName

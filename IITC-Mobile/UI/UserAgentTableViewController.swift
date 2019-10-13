@@ -94,11 +94,6 @@ extension MultiLineTextInputTableViewCell: UITextViewDelegate {
     }
 }
 
-class PredefinedUserAgentCell: UITableViewCell {
-    @IBOutlet weak var browserName: UILabel!
-    @IBOutlet weak var userAgent: UILabel!
-}
-
 class UserAgentTableViewController: UITableViewController {
 
     var userDefaults = UserDefaults(suiteName: ContainerIdentifier)!
@@ -164,11 +159,9 @@ class UserAgentTableViewController: UITableViewController {
             cell.tableView = tableView
             return cell
         case 1:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "PredefinedCell", for: indexPath) as? PredefinedUserAgentCell else {
-                return UITableViewCell()
-            }
-            cell.browserName.text = predefinedUserAgents[indexPath.row].0
-            cell.userAgent.text = predefinedUserAgents[indexPath.row].1
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PredefinedCell", for: indexPath)
+            cell.textLabel?.text = predefinedUserAgents[indexPath.row].0
+            cell.detailTextLabel?.text = predefinedUserAgents[indexPath.row].1
 
             return cell
         default:
