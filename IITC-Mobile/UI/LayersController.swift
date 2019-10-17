@@ -19,7 +19,7 @@ class Layer: Codable {
         case layerName = "name"
         case active = "active"
     }
-    
+
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         if let id = try? container.decode(Int.self, forKey: .layerID) {

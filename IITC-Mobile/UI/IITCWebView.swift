@@ -26,6 +26,7 @@ class IITCWebView: WKWebView, WBWebView {
         let handler = JSHandler()
         handler.initHandlers(for: &configuration.userContentController)
         super.init(frame: frame, configuration: configuration)
+        self.isOpaque = false
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "WebViewExecuteJS"), object: nil, queue: nil) {
             (notification) -> Void in
             let JS = notification.userInfo?["JS"] as? String ?? ";"
