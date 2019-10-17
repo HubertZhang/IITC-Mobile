@@ -161,6 +161,7 @@ class UserAgentTableViewController: UITableViewController {
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "PredefinedCell", for: indexPath)
             cell.textLabel?.text = predefinedUserAgents[indexPath.row].0
+            cell.detailTextLabel?.numberOfLines = 0
             cell.detailTextLabel?.text = predefinedUserAgents[indexPath.row].1
 
             return cell
