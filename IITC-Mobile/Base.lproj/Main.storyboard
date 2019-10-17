@@ -55,10 +55,10 @@
             </objects>
             <point key="canvasLocation" x="1631" y="354"/>
         </scene>
-        <!--About-->
+        <!--Text View Controller-->
         <scene sceneID="aAM-JP-3vs">
             <objects>
-                <viewController storyboardIdentifier="aboutViewController" title="About" automaticallyAdjustsScrollViewInsets="NO" id="y5L-YV-8tI" customClass="AboutViewController" customModule="IITC_Mobile" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="textViewController" automaticallyAdjustsScrollViewInsets="NO" id="y5L-YV-8tI" customClass="TextViewController" customModule="IITC_Mobile" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Idj-JQ-0Od"/>
                         <viewControllerLayoutGuide type="bottom" id="fHZ-uV-iwy"/>
@@ -93,45 +93,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cDh-eS-ujB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2314" y="1010"/>
-        </scene>
-        <!--What's New-->
-        <scene sceneID="edo-A8-Qfo">
-            <objects>
-                <viewController storyboardIdentifier="whatsNewViewController" title="What's New" automaticallyAdjustsScrollViewInsets="NO" id="pC3-kS-O0n" customClass="WhatsNewViewController" customModule="IITC_Mobile" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="yyp-9P-RAe"/>
-                        <viewControllerLayoutGuide type="bottom" id="P6E-fA-SBd"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="LpJ-5c-31Z">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="auM-of-8sd">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
-                                <connections>
-                                    <outlet property="delegate" destination="pC3-kS-O0n" id="afi-Ps-j7g"/>
-                                </connections>
-                            </textView>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="auM-of-8sd" firstAttribute="leading" secondItem="LpJ-5c-31Z" secondAttribute="leading" id="592-lc-DKG"/>
-                            <constraint firstItem="auM-of-8sd" firstAttribute="top" secondItem="yyp-9P-RAe" secondAttribute="bottom" id="EJz-zl-0NI"/>
-                            <constraint firstAttribute="trailing" secondItem="auM-of-8sd" secondAttribute="trailing" id="OC7-on-eKC"/>
-                            <constraint firstAttribute="bottom" secondItem="auM-of-8sd" secondAttribute="bottom" id="pfK-ge-QZp"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="textView" destination="auM-of-8sd" id="v2Z-0m-6xR"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Rn5-cQ-wK4" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3126" y="1010"/>
         </scene>
         <!--Plugins-->
         <scene sceneID="CAy-dP-gfU">
@@ -317,7 +278,7 @@
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Cjq-Tl-Sj4"/>
                                     <barButtonItem style="plain" id="ADW-8C-DOR">
-                                        <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="CzY-RW-CIr">
+                                        <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="CzY-RW-CIr">
                                             <rect key="frame" x="21.5" y="6" width="332" height="32"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <segments>
@@ -338,7 +299,7 @@
                             </toolbar>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="ndK-DA-CnD" firstAttribute="top" secondItem="q9j-Ag-Ena" secondAttribute="bottom" id="0Eh-wt-fMv"/>
+                            <constraint firstAttribute="bottom" secondItem="q9j-Ag-Ena" secondAttribute="bottom" id="0Eh-wt-fMv"/>
                             <constraint firstItem="Erg-wX-VPt" firstAttribute="top" secondItem="IaC-C8-ac8" secondAttribute="bottom" id="2Mw-bc-D7A"/>
                             <constraint firstItem="Erg-wX-VPt" firstAttribute="leading" secondItem="Vzi-h4-bVE" secondAttribute="leading" id="BF4-gx-FIw"/>
                             <constraint firstAttribute="trailing" secondItem="IaC-C8-ac8" secondAttribute="trailing" id="SIf-wX-Ko4"/>
@@ -346,11 +307,11 @@
                             <constraint firstItem="IaC-C8-ac8" firstAttribute="top" secondItem="4q1-Gm-8Bl" secondAttribute="bottom" id="cfU-7u-ieT"/>
                             <constraint firstItem="IaC-C8-ac8" firstAttribute="leading" secondItem="Vzi-h4-bVE" secondAttribute="leading" id="ctn-bU-G7W"/>
                             <constraint firstAttribute="trailing" secondItem="q9j-Ag-Ena" secondAttribute="trailing" id="kvb-9r-N31"/>
-                            <constraint firstItem="ndK-DA-CnD" firstAttribute="top" secondItem="Erg-wX-VPt" secondAttribute="bottom" id="mp9-ld-u6d"/>
+                            <constraint firstAttribute="bottom" secondItem="Erg-wX-VPt" secondAttribute="bottom" id="mp9-ld-u6d"/>
                             <constraint firstItem="q9j-Ag-Ena" firstAttribute="leading" secondItem="Vzi-h4-bVE" secondAttribute="leading" id="n9d-Ba-7JK"/>
                             <constraint firstAttribute="trailing" secondItem="Erg-wX-VPt" secondAttribute="trailing" id="oOi-a6-4Lz"/>
                             <constraint firstItem="Mlv-MV-zhv" firstAttribute="top" secondItem="IaC-C8-ac8" secondAttribute="bottom" id="p1k-RF-TAb"/>
-                            <constraint firstItem="ndK-DA-CnD" firstAttribute="top" secondItem="Mlv-MV-zhv" secondAttribute="bottom" id="tAc-HW-Zvs"/>
+                            <constraint firstAttribute="bottom" secondItem="Mlv-MV-zhv" secondAttribute="bottom" id="tAc-HW-Zvs"/>
                             <constraint firstItem="q9j-Ag-Ena" firstAttribute="top" secondItem="IaC-C8-ac8" secondAttribute="bottom" id="vVO-71-20J"/>
                             <constraint firstItem="Mlv-MV-zhv" firstAttribute="leading" secondItem="Vzi-h4-bVE" secondAttribute="leading" id="xIy-DD-Zt0"/>
                         </constraints>

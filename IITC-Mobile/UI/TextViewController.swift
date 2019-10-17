@@ -1,5 +1,5 @@
 //
-//  AboutViewController.swift
+//  TextViewController.swift
 //  IITC-Mobile
 //
 //  Created by Hubert Zhang on 16/6/8.
@@ -9,14 +9,24 @@
 import UIKit
 import FirebaseAnalytics
 
-class AboutViewController: UIViewController, UITextViewDelegate {
+func loadHtmlFileToAttributeString(_ path: URL) -> NSAttributedString? {
+    let htmlData = try? Data(contentsOf: path)
+    let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
+        .documentType: NSAttributedString.DocumentType.html,
+        .characterEncoding: NSNumber(value: String.Encoding.utf8.rawValue)
+    ]
+    return try? NSAttributedString(data: htmlData!, options: options, documentAttributes: nil)
+}
 
+
+class TextViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet weak var textView: UITextView!
+    var attrStringBuilder: (() -> NSAttributedString?)?
 
     override func viewWillAppear(_ animated: Bool) {
         Analytics.logEvent("enter_screen", parameters: [
-            "screen_name": "About"
+            "screen_name": self.title ?? "TextView"
         ])
         if #available(iOS 11.0, *) {
             textView.textContainerInset.left = self.view.safeAreaInsets.left + 12
@@ -29,14 +39,12 @@ class AboutViewController: UIViewController, UITextViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let path = Bundle.main.url(forResource: "About", withExtension: "html")
-        let htmlString = try? String(contentsOf: path!)
-        guard let data = htmlString?.data(using: String.Encoding.utf8) else {
-            return
+        textView.attributedText = self.attrStringBuilder?()
+        if #available(iOS 13.0, *) {
+            textView.textColor = UIColor.label
+        } else {
+            // Fallback on earlier versions
         }
-        let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: NSNumber(value: String.Encoding.utf8.rawValue)]
-        textView.attributedText = try? NSAttributedString(data: data, options: options, documentAttributes: nil)
     }
 
     override func viewDidLayoutSubviews() {

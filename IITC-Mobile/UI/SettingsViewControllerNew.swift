@@ -72,10 +72,11 @@ import FirebaseAnalytics
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
-    func pushViewController(withIdentifier identifier: String) {
+    func pushViewController(withIdentifier identifier: String, config: (UIViewController) -> Void = {_ in return}) {
         guard let vc = self.navigationController?.storyboard?.instantiateViewController(withIdentifier: identifier) else {
             return
         }
+        config(vc)
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
@@ -84,9 +85,27 @@ import FirebaseAnalytics
         case "pref_plugins":
             self.pushViewController(withIdentifier: "pluginsViewController")
         case "pref_about":
-            self.pushViewController(withIdentifier: "aboutViewController")
+            self.pushViewController(withIdentifier: "textViewController") {(vc) in
+                guard let vc = vc as? TextViewController else {
+                    return
+                }
+                vc.title = "About"
+                vc.attrStringBuilder = {
+                    let path = Bundle.main.url(forResource: "About", withExtension: "html")
+                    return loadHtmlFileToAttributeString(path!)
+                }
+            }
         case "pref_new":
-            self.pushViewController(withIdentifier: "whatsNewViewController")
+            self.pushViewController(withIdentifier: "textViewController") {(vc) in
+                guard let vc = vc as? TextViewController else {
+                    return
+                }
+                vc.title = "What's New"
+                vc.attrStringBuilder = {
+                    let path = Bundle.main.url(forResource: "WhatsNew", withExtension: "html")
+                    return loadHtmlFileToAttributeString(path!)
+                }
+            }
         case "pref_useragent_button":
             self.pushViewController(withIdentifier: "userAgentViewController")
         case "pref_console_not_purchased":

@@ -20,7 +20,7 @@
 		B423BA911F3F6A9700F262A0 /* AppleIncRootCertificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = B423BA901F3F6A9700F262A0 /* AppleIncRootCertificate.cer */; };
 		B42BE7591D072D1B00A0A0CB /* OpenInMapActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BE7581D072D1B00A0A0CB /* OpenInMapActivity.swift */; };
 		B42BE7611D073C0400A0A0CB /* About.html in Resources */ = {isa = PBXBuildFile; fileRef = B42BE7601D073C0400A0A0CB /* About.html */; };
-		B42BE7631D073C7800A0A0CB /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BE7621D073C7800A0A0CB /* AboutViewController.swift */; };
+		B42BE7631D073C7800A0A0CB /* TextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BE7621D073C7800A0A0CB /* TextViewController.swift */; };
 		B42BE7651D07529300A0A0CB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B42BE7641D07529300A0A0CB /* GoogleService-Info.plist */; };
 		B4320D4E22FC147A009097EE /* VersionTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4320D4D22FC147A009097EE /* VersionTool.swift */; };
 		B4320D5022FD1594009097EE /* OpenIn3rdMapActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4320D4F22FD1594009097EE /* OpenIn3rdMapActivity.swift */; };
@@ -31,7 +31,6 @@
 		B44417681DA50D8900960F11 /* JSFile_64x64.png in Resources */ = {isa = PBXBuildFile; fileRef = B44417641DA50D8900960F11 /* JSFile_64x64.png */; };
 		B44417691DA50D8900960F11 /* JSFile_320x320.png in Resources */ = {isa = PBXBuildFile; fileRef = B44417651DA50D8900960F11 /* JSFile_320x320.png */; };
 		B44856F91D1AB17A0082B1E7 /* WhatsNew.html in Resources */ = {isa = PBXBuildFile; fileRef = B44856F81D1AB17A0082B1E7 /* WhatsNew.html */; };
-		B44856FB1D1AB78F0082B1E7 /* WhatsNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44856FA1D1AB78F0082B1E7 /* WhatsNewViewController.swift */; };
 		B47461161F769E1D00BFD2CA /* PluginsSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47461151F769E1D00BFD2CA /* PluginsSearchTableViewController.swift */; };
 		B4779A31200BAD3F00EB34BD /* CopyPortalLinkActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4779A30200BAD3F00EB34BD /* CopyPortalLinkActivity.swift */; };
 		B4779A33200BB71100EB34BD /* OpenInGMapActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4779A32200BB71100EB34BD /* OpenInGMapActivity.swift */; };
@@ -151,7 +150,7 @@
 		B42BE7581D072D1B00A0A0CB /* OpenInMapActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenInMapActivity.swift; sourceTree = "<group>"; };
 		B42BE75A1D07342700A0A0CB /* IITC-Mobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IITC-Mobile-Bridging-Header.h"; sourceTree = "<group>"; };
 		B42BE7601D073C0400A0A0CB /* About.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = About.html; sourceTree = "<group>"; };
-		B42BE7621D073C7800A0A0CB /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		B42BE7621D073C7800A0A0CB /* TextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewController.swift; sourceTree = "<group>"; };
 		B42BE7641D07529300A0A0CB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B42BE7681D08BFA300A0A0CB /* DirectoryWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectoryWatcher.swift; sourceTree = "<group>"; };
 		B4320D4D22FC147A009097EE /* VersionTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionTool.swift; sourceTree = "<group>"; };
@@ -163,7 +162,6 @@
 		B44417641DA50D8900960F11 /* JSFile_64x64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JSFile_64x64.png; sourceTree = "<group>"; };
 		B44417651DA50D8900960F11 /* JSFile_320x320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JSFile_320x320.png; sourceTree = "<group>"; };
 		B44856F81D1AB17A0082B1E7 /* WhatsNew.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = WhatsNew.html; sourceTree = "<group>"; };
-		B44856FA1D1AB78F0082B1E7 /* WhatsNewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhatsNewViewController.swift; sourceTree = "<group>"; };
 		B47461151F769E1D00BFD2CA /* PluginsSearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginsSearchTableViewController.swift; sourceTree = "<group>"; };
 		B4779A30200BAD3F00EB34BD /* CopyPortalLinkActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyPortalLinkActivity.swift; sourceTree = "<group>"; };
 		B4779A32200BB71100EB34BD /* OpenInGMapActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenInGMapActivity.swift; sourceTree = "<group>"; };
@@ -294,9 +292,8 @@
 				B405EECD1D06832200110D9E /* LayersController.swift */,
 				B42BE7601D073C0400A0A0CB /* About.html */,
 				B44856F81D1AB17A0082B1E7 /* WhatsNew.html */,
-				B42BE7621D073C7800A0A0CB /* AboutViewController.swift */,
+				B42BE7621D073C7800A0A0CB /* TextViewController.swift */,
 				B4B328491D10F3AF007AA6D5 /* UserFilesTableViewController.swift */,
-				B44856FA1D1AB78F0082B1E7 /* WhatsNewViewController.swift */,
 				B4ED0CB71D9E6F990038EB33 /* WebViewController.swift */,
 				B410BFA21EF9BC3F001B441D /* JSFileViewController.swift */,
 				B4B9DEB21EFDB258009BFCC3 /* IITCWebView.swift */,
@@ -660,11 +657,11 @@
 				"${BUILT_PRODUCTS_DIR}/RxAlamofire/RxAlamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 				"${BUILT_PRODUCTS_DIR}/Highlightr/Highlightr.framework",
 				"${BUILT_PRODUCTS_DIR}/InAppSettingsKit/InAppSettingsKit.framework",
-				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/WBWebViewConsole/WBWebViewConsole.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -672,11 +669,11 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAlamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Highlightr.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/InAppSettingsKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WBWebViewConsole.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -774,7 +771,6 @@
 			files = (
 				B42BE7591D072D1B00A0A0CB /* OpenInMapActivity.swift in Sources */,
 				B4ED0CB81D9E6F990038EB33 /* WebViewController.swift in Sources */,
-				B44856FB1D1AB78F0082B1E7 /* WhatsNewViewController.swift in Sources */,
 				B405EECC1D066FC900110D9E /* LayersTableViewController.swift in Sources */,
 				B4320D5022FD1594009097EE /* OpenIn3rdMapActivity.swift in Sources */,
 				B405EED11D06969C00110D9E /* SettingsViewControllerNew.swift in Sources */,
@@ -790,7 +786,7 @@
 				B4B3284A1D10F3AF007AA6D5 /* UserFilesTableViewController.swift in Sources */,
 				B4CD6172209C070C00F5BFB8 /* InsetsLabel.swift in Sources */,
 				B4E2F0061D05D06C00D2D86B /* MainViewController.swift in Sources */,
-				B42BE7631D073C7800A0A0CB /* AboutViewController.swift in Sources */,
+				B42BE7631D073C7800A0A0CB /* TextViewController.swift in Sources */,
 				B405EE081D05FD1400110D9E /* PluginsTableViewController.swift in Sources */,
 				B4779A31200BAD3F00EB34BD /* CopyPortalLinkActivity.swift in Sources */,
 				B4320D5222FD1CCE009097EE /* OpenInAmapActivity.swift in Sources */,
