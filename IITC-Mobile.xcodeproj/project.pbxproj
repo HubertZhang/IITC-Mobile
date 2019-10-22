@@ -26,6 +26,9 @@
 		B4320D5022FD1594009097EE /* OpenIn3rdMapActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4320D4F22FD1594009097EE /* OpenIn3rdMapActivity.swift */; };
 		B4320D5222FD1CCE009097EE /* OpenInAmapActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4320D5122FD1CCE009097EE /* OpenInAmapActivity.swift */; };
 		B4320D5422FD1F34009097EE /* OpenInBaiduMapActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4320D5322FD1F34009097EE /* OpenInBaiduMapActivity.swift */; };
+		B43CB307235B2FFC005B2F9F /* ConsoleInputActionButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43CB305235B2FFC005B2F9F /* ConsoleInputActionButtonViewController.swift */; };
+		B43CB308235B2FFC005B2F9F /* ConsoleInputActionButtonViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B43CB306235B2FFC005B2F9F /* ConsoleInputActionButtonViewController.xib */; };
+		B43CB30A235B41A9005B2F9F /* ConsoleInputActionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B43CB309235B41A9005B2F9F /* ConsoleInputActionView.xib */; };
 		B44417661DA50D8900960F11 /* JSFile_22x29.png in Resources */ = {isa = PBXBuildFile; fileRef = B44417621DA50D8900960F11 /* JSFile_22x29.png */; };
 		B44417671DA50D8900960F11 /* JSFile_44x58.png in Resources */ = {isa = PBXBuildFile; fileRef = B44417631DA50D8900960F11 /* JSFile_44x58.png */; };
 		B44417681DA50D8900960F11 /* JSFile_64x64.png in Resources */ = {isa = PBXBuildFile; fileRef = B44417641DA50D8900960F11 /* JSFile_64x64.png */; };
@@ -37,7 +40,16 @@
 		B47B46851F22417D0011CC5C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B47B46841F22417D0011CC5C /* StoreKit.framework */; };
 		B48156E61D72EAF00041D2CA /* LayersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B405EECB1D066FC900110D9E /* LayersTableViewController.swift */; };
 		B48156E71D72EAF30041D2CA /* LayersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B405EECD1D06832200110D9E /* LayersController.swift */; };
+		B4999BD52359AA350068B2E9 /* Console.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4999BD42359AA350068B2E9 /* Console.xcassets */; };
+		B4999BD82359ACEB0068B2E9 /* ConsoleInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4999BD62359ACEB0068B2E9 /* ConsoleInputViewController.swift */; };
+		B4999BD92359ACEB0068B2E9 /* ConsoleInputViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4999BD72359ACEB0068B2E9 /* ConsoleInputViewController.xib */; };
 		B4A270D81F553B6D00A2770F /* UserAgentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A270D71F553B6D00A2770F /* UserAgentTableViewController.swift */; };
+		B4A3C4D52358BF7A00AA0B16 /* ConsoleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A3C4D32358BF7A00AA0B16 /* ConsoleViewController.swift */; };
+		B4A3C4D62358BF7A00AA0B16 /* ConsoleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4A3C4D42358BF7A00AA0B16 /* ConsoleViewController.xib */; };
+		B4A3C4D82358C3E900AA0B16 /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A3C4D72358C3E900AA0B16 /* Console.swift */; };
+		B4A3C4DA2358C7EB00AA0B16 /* bridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A3C4D92358C7EB00AA0B16 /* bridges.swift */; };
+		B4A3C4DD2358CF1100AA0B16 /* ConsoleMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A3C4DB2358CF1100AA0B16 /* ConsoleMessageCell.swift */; };
+		B4A3C4DE2358CF1100AA0B16 /* ConsoleMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4A3C4DC2358CF1100AA0B16 /* ConsoleMessageCell.xib */; };
 		B4B3284A1D10F3AF007AA6D5 /* UserFilesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B328491D10F3AF007AA6D5 /* UserFilesTableViewController.swift */; };
 		B4B3284C1D117970007AA6D5 /* IITC.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = B4B3284B1D117970007AA6D5 /* IITC.entitlements */; };
 		B4B3284E1D1179C4007AA6D5 /* IITC-Action.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = B4B3284D1D1179C4007AA6D5 /* IITC-Action.entitlements */; };
@@ -71,6 +83,8 @@
 		B4F8405E1D0B285800C58690 /* Default-iitc.png in Resources */ = {isa = PBXBuildFile; fileRef = B4F8405C1D0B285800C58690 /* Default-iitc.png */; };
 		B4F8405F1D0B285800C58690 /* Default-iitc@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4F8405D1D0B285800C58690 /* Default-iitc@2x.png */; };
 		B4F840621D0B329A00C58690 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4E2F00A1D05D06C00D2D86B /* Assets.xcassets */; };
+		B4FA9F332361532C00570392 /* ScrollView+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FA9F322361532C00570392 /* ScrollView+Util.swift */; };
+		B4FC71D8235F5804000C8D2D /* ConsoleSuggestionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FC71D7235F5804000C8D2D /* ConsoleSuggestionTableViewController.swift */; };
 		B4FEE9671F24E81900F3DD20 /* InAppPurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FEE9661F24E81900F3DD20 /* InAppPurchaseManager.swift */; };
 		CD0AA3539E209D60347221CE /* Pods_Base_Application_ViewInIITC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58FE5A11DAC0598E26408B05 /* Pods_Base_Application_ViewInIITC.framework */; };
 /* End PBXBuildFile section */
@@ -157,6 +171,9 @@
 		B4320D4F22FD1594009097EE /* OpenIn3rdMapActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenIn3rdMapActivity.swift; sourceTree = "<group>"; };
 		B4320D5122FD1CCE009097EE /* OpenInAmapActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenInAmapActivity.swift; sourceTree = "<group>"; };
 		B4320D5322FD1F34009097EE /* OpenInBaiduMapActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenInBaiduMapActivity.swift; sourceTree = "<group>"; };
+		B43CB305235B2FFC005B2F9F /* ConsoleInputActionButtonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleInputActionButtonViewController.swift; sourceTree = "<group>"; };
+		B43CB306235B2FFC005B2F9F /* ConsoleInputActionButtonViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConsoleInputActionButtonViewController.xib; sourceTree = "<group>"; };
+		B43CB309235B41A9005B2F9F /* ConsoleInputActionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConsoleInputActionView.xib; sourceTree = "<group>"; };
 		B44417621DA50D8900960F11 /* JSFile_22x29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JSFile_22x29.png; sourceTree = "<group>"; };
 		B44417631DA50D8900960F11 /* JSFile_44x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JSFile_44x58.png; sourceTree = "<group>"; };
 		B44417641DA50D8900960F11 /* JSFile_64x64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JSFile_64x64.png; sourceTree = "<group>"; };
@@ -166,7 +183,16 @@
 		B4779A30200BAD3F00EB34BD /* CopyPortalLinkActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyPortalLinkActivity.swift; sourceTree = "<group>"; };
 		B4779A32200BB71100EB34BD /* OpenInGMapActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenInGMapActivity.swift; sourceTree = "<group>"; };
 		B47B46841F22417D0011CC5C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		B4999BD42359AA350068B2E9 /* Console.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Console.xcassets; sourceTree = "<group>"; };
+		B4999BD62359ACEB0068B2E9 /* ConsoleInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleInputViewController.swift; sourceTree = "<group>"; };
+		B4999BD72359ACEB0068B2E9 /* ConsoleInputViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConsoleInputViewController.xib; sourceTree = "<group>"; };
 		B4A270D71F553B6D00A2770F /* UserAgentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAgentTableViewController.swift; sourceTree = "<group>"; };
+		B4A3C4D32358BF7A00AA0B16 /* ConsoleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleViewController.swift; sourceTree = "<group>"; };
+		B4A3C4D42358BF7A00AA0B16 /* ConsoleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConsoleViewController.xib; sourceTree = "<group>"; };
+		B4A3C4D72358C3E900AA0B16 /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
+		B4A3C4D92358C7EB00AA0B16 /* bridges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bridges.swift; sourceTree = "<group>"; };
+		B4A3C4DB2358CF1100AA0B16 /* ConsoleMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleMessageCell.swift; sourceTree = "<group>"; };
+		B4A3C4DC2358CF1100AA0B16 /* ConsoleMessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConsoleMessageCell.xib; sourceTree = "<group>"; };
 		B4B328491D10F3AF007AA6D5 /* UserFilesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFilesTableViewController.swift; sourceTree = "<group>"; };
 		B4B3284B1D117970007AA6D5 /* IITC.entitlements */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = IITC.entitlements; sourceTree = "<group>"; };
 		B4B3284D1D1179C4007AA6D5 /* IITC-Action.entitlements */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "IITC-Action.entitlements"; sourceTree = "<group>"; };
@@ -201,6 +227,8 @@
 		B4F840481D0AD26900C58690 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B4F8405C1D0B285800C58690 /* Default-iitc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-iitc.png"; sourceTree = "<group>"; };
 		B4F8405D1D0B285800C58690 /* Default-iitc@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-iitc@2x.png"; sourceTree = "<group>"; };
+		B4FA9F322361532C00570392 /* ScrollView+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScrollView+Util.swift"; sourceTree = "<group>"; };
+		B4FC71D7235F5804000C8D2D /* ConsoleSuggestionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleSuggestionTableViewController.swift; sourceTree = "<group>"; };
 		B4FEE9661F24E81900F3DD20 /* InAppPurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchaseManager.swift; sourceTree = "<group>"; };
 		CCB7123F95D269260AC49273 /* Pods-BaseFramework.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseFramework.release.xcconfig"; path = "Pods/Target Support Files/Pods-BaseFramework/Pods-BaseFramework.release.xcconfig"; sourceTree = "<group>"; };
 		EB1AE8E89FA00B7C75842192 /* Pods-Base-Application-ViewInIITC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Base-Application-ViewInIITC.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Base-Application-ViewInIITC/Pods-Base-Application-ViewInIITC.debug.xcconfig"; sourceTree = "<group>"; };
@@ -315,6 +343,27 @@
 			path = icons;
 			sourceTree = "<group>";
 		};
+		B4A3C4D22358BF5200AA0B16 /* WebviewConsoleViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B4A3C4D32358BF7A00AA0B16 /* ConsoleViewController.swift */,
+				B4A3C4D42358BF7A00AA0B16 /* ConsoleViewController.xib */,
+				B4A3C4D72358C3E900AA0B16 /* Console.swift */,
+				B4A3C4D92358C7EB00AA0B16 /* bridges.swift */,
+				B4A3C4DB2358CF1100AA0B16 /* ConsoleMessageCell.swift */,
+				B4A3C4DC2358CF1100AA0B16 /* ConsoleMessageCell.xib */,
+				B4999BD42359AA350068B2E9 /* Console.xcassets */,
+				B4999BD62359ACEB0068B2E9 /* ConsoleInputViewController.swift */,
+				B4999BD72359ACEB0068B2E9 /* ConsoleInputViewController.xib */,
+				B43CB305235B2FFC005B2F9F /* ConsoleInputActionButtonViewController.swift */,
+				B43CB309235B41A9005B2F9F /* ConsoleInputActionView.xib */,
+				B43CB306235B2FFC005B2F9F /* ConsoleInputActionButtonViewController.xib */,
+				B4FC71D7235F5804000C8D2D /* ConsoleSuggestionTableViewController.swift */,
+				B4FA9F322361532C00570392 /* ScrollView+Util.swift */,
+			);
+			path = WebviewConsoleViewController;
+			sourceTree = "<group>";
+		};
 		B4AD2F35200BA74600A86F36 /* Activities */ = {
 			isa = PBXGroup;
 			children = (
@@ -366,6 +415,7 @@
 		B4E2F0021D05D06C00D2D86B /* IITC-Mobile */ = {
 			isa = PBXGroup;
 			children = (
+				B4A3C4D22358BF5200AA0B16 /* WebviewConsoleViewController */,
 				B4BA26151F3DB8FE000FDFB6 /* RMStore */,
 				B44417611DA50D4F00960F11 /* icons */,
 				B4F8405C1D0B285800C58690 /* Default-iitc.png */,
@@ -599,6 +649,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B43CB30A235B41A9005B2F9F /* ConsoleInputActionView.xib in Resources */,
 				B44417671DA50D8900960F11 /* JSFile_44x58.png in Resources */,
 				B4B3284C1D117970007AA6D5 /* IITC.entitlements in Resources */,
 				B44417661DA50D8900960F11 /* JSFile_22x29.png in Resources */,
@@ -609,11 +660,16 @@
 				B4F8405E1D0B285800C58690 /* Default-iitc.png in Resources */,
 				B4F8405F1D0B285800C58690 /* Default-iitc@2x.png in Resources */,
 				B405EED21D06969C00110D9E /* Settings.bundle in Resources */,
+				B4999BD92359ACEB0068B2E9 /* ConsoleInputViewController.xib in Resources */,
+				B43CB308235B2FFC005B2F9F /* ConsoleInputActionButtonViewController.xib in Resources */,
 				B4E2F00B1D05D06C00D2D86B /* Assets.xcassets in Resources */,
 				B44417691DA50D8900960F11 /* JSFile_320x320.png in Resources */,
+				B4A3C4D62358BF7A00AA0B16 /* ConsoleViewController.xib in Resources */,
+				B4999BD52359AA350068B2E9 /* Console.xcassets in Resources */,
 				B4E2F0091D05D06C00D2D86B /* Main.storyboard in Resources */,
 				B423BA911F3F6A9700F262A0 /* AppleIncRootCertificate.cer in Resources */,
 				B42BE7651D07529300A0A0CB /* GoogleService-Info.plist in Resources */,
+				B4A3C4DE2358CF1100AA0B16 /* ConsoleMessageCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -661,6 +717,8 @@
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 				"${BUILT_PRODUCTS_DIR}/Highlightr/Highlightr.framework",
 				"${BUILT_PRODUCTS_DIR}/InAppSettingsKit/InAppSettingsKit.framework",
+				"${BUILT_PRODUCTS_DIR}/RSKGrowingTextView/RSKGrowingTextView.framework",
+				"${BUILT_PRODUCTS_DIR}/RSKPlaceholderTextView/RSKPlaceholderTextView.framework",
 				"${BUILT_PRODUCTS_DIR}/WBWebViewConsole/WBWebViewConsole.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -673,6 +731,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Highlightr.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/InAppSettingsKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RSKGrowingTextView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RSKPlaceholderTextView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WBWebViewConsole.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -769,6 +829,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4A3C4D52358BF7A00AA0B16 /* ConsoleViewController.swift in Sources */,
 				B42BE7591D072D1B00A0A0CB /* OpenInMapActivity.swift in Sources */,
 				B4ED0CB81D9E6F990038EB33 /* WebViewController.swift in Sources */,
 				B405EECC1D066FC900110D9E /* LayersTableViewController.swift in Sources */,
@@ -779,18 +840,25 @@
 				B4320D5422FD1F34009097EE /* OpenInBaiduMapActivity.swift in Sources */,
 				B4B9DEB31EFDB258009BFCC3 /* IITCWebView.swift in Sources */,
 				B4A270D81F553B6D00A2770F /* UserAgentTableViewController.swift in Sources */,
+				B4A3C4D82358C3E900AA0B16 /* Console.swift in Sources */,
 				B410BFA31EF9BC3F001B441D /* JSFileViewController.swift in Sources */,
+				B4FC71D8235F5804000C8D2D /* ConsoleSuggestionTableViewController.swift in Sources */,
 				B4779A33200BB71100EB34BD /* OpenInGMapActivity.swift in Sources */,
 				B41C02491F233B9700AAAEAC /* ConsolePurchaseViewController.swift in Sources */,
 				B405EECE1D06832200110D9E /* LayersController.swift in Sources */,
 				B4B3284A1D10F3AF007AA6D5 /* UserFilesTableViewController.swift in Sources */,
 				B4CD6172209C070C00F5BFB8 /* InsetsLabel.swift in Sources */,
+				B4999BD82359ACEB0068B2E9 /* ConsoleInputViewController.swift in Sources */,
 				B4E2F0061D05D06C00D2D86B /* MainViewController.swift in Sources */,
 				B42BE7631D073C7800A0A0CB /* TextViewController.swift in Sources */,
+				B4A3C4DA2358C7EB00AA0B16 /* bridges.swift in Sources */,
 				B405EE081D05FD1400110D9E /* PluginsTableViewController.swift in Sources */,
+				B4A3C4DD2358CF1100AA0B16 /* ConsoleMessageCell.swift in Sources */,
 				B4779A31200BAD3F00EB34BD /* CopyPortalLinkActivity.swift in Sources */,
 				B4320D5222FD1CCE009097EE /* OpenInAmapActivity.swift in Sources */,
 				B4E2F0041D05D06C00D2D86B /* AppDelegate.swift in Sources */,
+				B4FA9F332361532C00570392 /* ScrollView+Util.swift in Sources */,
+				B43CB307235B2FFC005B2F9F /* ConsoleInputActionButtonViewController.swift in Sources */,
 				B4FEE9671F24E81900F3DD20 /* InAppPurchaseManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

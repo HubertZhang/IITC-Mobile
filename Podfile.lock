@@ -66,6 +66,9 @@ PODS:
     - nanopb/encode (= 0.3.901)
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
+  - RSKGrowingTextView (5.0.2):
+    - RSKPlaceholderTextView (= 5.0.2)
+  - RSKPlaceholderTextView (5.0.2)
   - RxAlamofire (5.0.0):
     - RxAlamofire/Core (= 5.0.0)
   - RxAlamofire/Core (5.0.0):
@@ -80,6 +83,7 @@ DEPENDENCIES:
   - Highlightr
   - InAppSettingsKit
   - MBProgressHUD
+  - RSKGrowingTextView
   - RxAlamofire (~> 5)
   - RxSwift (~> 5)
   - WBWebViewConsole (from `https://github.com/Hubertzhang/WBWebViewConsole.git`, branch `table`)
@@ -101,6 +105,8 @@ SPEC REPOS:
     - InAppSettingsKit
     - MBProgressHUD
     - nanopb
+    - RSKGrowingTextView
+    - RSKPlaceholderTextView
     - RxAlamofire
     - RxSwift
 
@@ -130,10 +136,12 @@ SPEC CHECKSUMS:
   InAppSettingsKit: 800853da39388780c15191846688c0974c5b13b5
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
+  RSKGrowingTextView: 9fdc68c8dabaacd54e23c316ff14b73aef034594
+  RSKPlaceholderTextView: df72ca93edfac185b98f51cb85e445f54ce8a163
   RxAlamofire: e7875a012aff55345672d0f70a2a9cd6aeb0f211
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
   WBWebViewConsole: 1288737d136b44a281cc654828339127f959e21c
 
-PODFILE CHECKSUM: 8582662ff34dd268a30198ba830570b35acc9d47
+PODFILE CHECKSUM: f67192ec44aa649c7063fb66332d751254966771
 
 COCOAPODS: 1.8.3
