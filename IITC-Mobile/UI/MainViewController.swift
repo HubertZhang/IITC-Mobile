@@ -245,7 +245,9 @@ class MainViewController: UIViewController {
 
     @IBAction func debugButtonPressed(_ sender: Any) {
         if self.webView.consoleEnabled {
-            let vc = WBWebDebugConsoleViewController(console: self.webView.console!)!
+//            let vc = WBWebDebugConsoleViewController(console: self.webView.console!)!
+            let vc = ConsoleViewController()
+            vc.console = self.webView.console
             let vc1 = UINavigationController.init(rootViewController: vc)
             vc.navigationItem.leftBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: .done, target: vc, action: #selector(WBWebDebugConsoleViewController.dismissSelf))
             vc1.modalPresentationStyle = UIModalPresentationStyle.popover
