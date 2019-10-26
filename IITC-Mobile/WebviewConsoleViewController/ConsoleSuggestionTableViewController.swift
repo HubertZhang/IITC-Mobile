@@ -26,6 +26,8 @@ class ConsoleSuggestionTableViewController: UITableViewController {
         self.tableView.allowsSelection = true
         self.tableView.bounces = false
         self.tableView.backgroundColor = UIColor.gray
+
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "defaultCell")
     }
 
     func update(suggestions: [String]) {
@@ -47,7 +49,7 @@ class ConsoleSuggestionTableViewController: UITableViewController {
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .default, reuseIdentifier: "defaultCell")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "defaultCell", for: indexPath)
 
         cell.indentationLevel = 1
         cell.textLabel?.text = self.suggestions[indexPath.row]
