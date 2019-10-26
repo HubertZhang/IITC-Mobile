@@ -14,6 +14,12 @@ import MBProgressHUD
 import Alamofire
 import FirebaseAnalytics
 
+extension UserDefaults {
+    @objc dynamic var pref_console: Bool {
+        return bool(forKey: "pref_console")
+    }
+}
+
 @objc class SettingsViewController: IASKAppSettingsViewController, IASKSettingsDelegate {
     let disposeBag = DisposeBag()
 
@@ -42,26 +48,15 @@ import FirebaseAnalytics
         super.init(style: style)
         self.settingsStore = IASKSettingsStoreUserDefaults(userDefaults: defaults)
         self.clearsSelectionOnViewWillAppear = true
-        defaults?.addObserver(self, forKeyPath: "pref_console", options: [.old, .new], context: nil)
-    }
-
-    deinit {
-        defaults?.removeObserver(self, forKeyPath: "pref_console")
-    }
-
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == "pref_console" {
-            guard let change = change else {
-                return
-            }
-            let oldKey = (change[.oldKey] as? NSNumber)?.boolValue ?? false
-            let newKey = (change[.newKey] as? NSNumber)?.boolValue ?? false
+        defaults?.observe(\.pref_console, changeHandler: { (_, change) in
+            let oldKey = change.oldValue ?? false
+            let newKey = change.newValue ?? false
             if oldKey != newKey {
                 let alert = UIAlertController(title: "Change not applied yet", message: "Please restart IITC-iOS to enable or disable Debug Console", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             }
-        }
+        })
     }
 
     required init?(coder aDecoder: NSCoder) {

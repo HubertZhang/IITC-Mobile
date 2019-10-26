@@ -15,6 +15,12 @@ public enum IITCLocationMode: Int {
     case showPositionAndOrientation = 2
 }
 
+extension UserDefaults {
+    @objc dynamic var pref_user_location_mode: Int {
+        return integer(forKey: "pref_user_location_mode")
+    }
+}
+
 open class IITCLocation: NSObject, CLLocationManagerDelegate {
     let locationManager = CLLocationManager()
     var currentMode = IITCLocationMode.notShow
@@ -29,17 +35,13 @@ open class IITCLocation: NSObject, CLLocationManagerDelegate {
         // Set a movement threshold for new events.
         locationManager.distanceFilter = 1
         // meters
-        currentMode = IITCLocationMode(rawValue: userDefaults.integer(forKey: "pref_user_location_mode"))!
+        currentMode = IITCLocationMode(rawValue: userDefaults.pref_user_location_mode)!
         if currentMode != .notShow {
             self.startUpdate()
         }
-        userDefaults.addObserver(self, forKeyPath: "pref_user_location_mode", options: .new, context: nil)
-    }
-
-    override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == "pref_user_location_mode" {
-            currentMode = IITCLocationMode(rawValue: userDefaults.integer(forKey: "pref_user_location_mode"))!
-            if currentMode != .notShow {
+        userDefaults.observe(\.pref_user_location_mode) { (ud, _) in
+            self.currentMode = IITCLocationMode(rawValue: ud.pref_user_location_mode)!
+            if self.currentMode != .notShow {
                 self.startUpdate()
             } else {
                 self.stopUpdate()

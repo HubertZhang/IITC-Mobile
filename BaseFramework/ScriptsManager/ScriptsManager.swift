@@ -57,7 +57,6 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
     let sharedScriptsPath = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContainerIdentifier)!.appendingPathComponent("scripts", isDirectory: true)
     public var userScriptsPath = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContainerIdentifier)!.appendingPathComponent("userScripts", isDirectory: true)
 
-    private var observations: [NSKeyValueObservation] = []
     override init() {
         try? FileManager.default.createDirectory(at: userScriptsPath, withIntermediateDirectories: true, attributes: nil)
 
@@ -70,12 +69,12 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
 
         checkUpgrade()
 
-        observations.append(userDefaults.observe(\.pref_iitc_version) { (defaults, _) in
+        userDefaults.observe(\.pref_iitc_version) { (defaults, _) in
             guard let v = ScriptsManager.Version(rawValue: defaults.pref_iitc_version ?? "release") else {
                 return
             }
             self.switchIITCVersion(version: v)
-        })
+        }
 
         syncDocumentAndContainer()
         documentWatcher = DirectoryWatcher(documentPath, delegate: self)
@@ -85,13 +84,6 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         hookScript.fileContent = String(format: hookScript.fileContent, VersionTool.default.currentVersion, Int(VersionTool.default.currentBuild) ?? 0)
 
         reloadScripts()
-    }
-
-    deinit {
-        for v in self.observations {
-            v.invalidate()
-        }
-        self.observations = []
     }
 
     func checkUpgrade() {
