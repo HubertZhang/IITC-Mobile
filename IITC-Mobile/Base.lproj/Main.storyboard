@@ -790,7 +790,7 @@
                                     <outlet property="textView" destination="Sbc-B6-4Ql" id="Xpr-Yv-Pp4"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PredefinedCell" textLabel="2nn-NA-n71" detailTextLabel="des-IC-3bt" rowHeight="86" style="IBUITableViewCellStyleSubtitle" id="eUb-GB-bu6" customClass="PredefinedUserAgentCell" customModule="IITC_Mobile" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PredefinedCell" textLabel="2nn-NA-n71" detailTextLabel="des-IC-3bt" rowHeight="86" style="IBUITableViewCellStyleSubtitle" id="eUb-GB-bu6">
                                 <rect key="frame" x="0.0" y="124.5" width="375" height="86"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" tableViewCell="eUb-GB-bu6" id="Xwr-Hm-FLo">
