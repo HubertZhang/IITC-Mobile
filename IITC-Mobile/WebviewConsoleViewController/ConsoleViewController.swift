@@ -119,7 +119,7 @@ extension ConsoleViewController: UITableViewDataSource {
 
         let message = self.console.messages(at: indexPath.row)
         cell.message.text = message.getMessage()
-        cell.location.text = "line: \(message.getLine())"
+        cell.location.text = message.getLocation()
 
         cell.setStyle(message: message)
 

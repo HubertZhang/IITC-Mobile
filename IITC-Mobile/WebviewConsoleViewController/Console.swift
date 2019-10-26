@@ -134,20 +134,9 @@ enum ConsoleMessageLevel {
 
 protocol ConsoleMessageProtocol {
     func getSource() -> ConsoleMessageSource
-
     func getLevel() -> ConsoleMessageLevel
-//    @property (nonatomic, strong) NSString * message;
-//    var message: String {get}
     func getMessage() -> String
-//    @property (nonatomic) NSInteger line;
-//    var line: Int{get}
-    func getLine() -> Int
-//    @property (nonatomic) NSInteger column;
-//    var column: Int{get}
-//    @property (nonatomic, strong) NSString * url;
-//    var url: String{get}
-//
-//    @property (nonatomic, strong) NSString * caller;
+    func getLocation() -> String
 }
 
 protocol Console {

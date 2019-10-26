@@ -64,8 +64,8 @@ extension WBWebViewConsoleMessage: ConsoleMessageProtocol {
         return self.message
     }
 
-    func getLine() -> Int {
-        return self.line
+    func getLocation() -> String {
+        return self.caller ?? "unknown"
     }
 
     func getSource() -> ConsoleMessageSource {
