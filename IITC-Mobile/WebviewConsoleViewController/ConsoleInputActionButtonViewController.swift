@@ -114,37 +114,22 @@ class ConsoleInputActionButtonViewController: UIViewController {
     }
 
     func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
-        if gestureRecognizer.state == .began {
-            for view in buttonsView.arrangedSubviews {
-                guard let view = view as? ConsoleInputActionView else {
-                    continue
-                }
-                view.isHighlighted = false
-                view.updateStatus()
+        let location = gestureRecognizer.location(in: buttonsView)
+        for view in buttonsView.arrangedSubviews {
+            guard let view = view as? ConsoleInputActionView else {
+                continue
             }
-        } else if gestureRecognizer.state == .changed {
-            let location = gestureRecognizer.location(in: buttonsView)
-            for view in buttonsView.arrangedSubviews {
-                guard let view = view as? ConsoleInputActionView else {
-                    continue
-                }
-                view.isHighlighted = view.frame.contains(location)
-                view.updateStatus()
-            }
-        } else if gestureRecognizer.state == .ended {
-            let location = gestureRecognizer.location(in: buttonsView)
-            for view in buttonsView.arrangedSubviews {
-                guard let view = view as? ConsoleInputActionView else {
-                    continue
-                }
-                view.isHighlighted = false
-                view.updateStatus()
-                if view.frame.contains(location) {
+            view.isHighlighted = false
+            if view.frame.contains(location) {
+                if gestureRecognizer.state == .changed {
+                    view.isHighlighted = true
+                } else if gestureRecognizer.state == .ended {
                     if !view.isDisabled() {
                         view.action()
                     }
                 }
             }
+            view.updateStatus()
         }
     }
 

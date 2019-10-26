@@ -70,8 +70,11 @@ class ConsoleViewController: UIViewController {
         consoleInputViewController.view.translatesAutoresizingMaskIntoConstraints = false
 
         self.view.addSubview(consoleInputViewController.view)
-         NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:[v]|", options: [], metrics: nil, views: ["v": consoleInputViewController.view, "bottom": self.bottomLayoutGuide]))
-         NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "|[v]|", options: [], metrics: nil, views: ["v": consoleInputViewController.view]))
+        NSLayoutConstraint.activate([
+            consoleInputViewController.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            consoleInputViewController.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            consoleInputViewController.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+        ])
         self.view.bringSubviewToFront(consoleInputViewController.view)
         consoleInputViewController.didMove(toParent: self)
     }
