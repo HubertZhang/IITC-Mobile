@@ -78,22 +78,13 @@ class ConsoleInputViewController: UIViewController, UIGestureRecognizerDelegate 
 
     weak var uiDelegate: ConsoleInputUIDelegate?
 
-    var observers: [Any] = []
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupKeyCommands()
         setupActionButtonView()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
         setupSuggestionTableView()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
         registerKeyboardHeightObserver()
-        self.handleHeightChange()
     }
 
     override func viewDidLayoutSubviews() {
@@ -104,26 +95,22 @@ class ConsoleInputViewController: UIViewController, UIGestureRecognizerDelegate 
         self.suggestionTableViewController.willMove(toParent: nil)
         self.suggestionTableViewController.view.removeFromSuperview()
         self.suggestionTableViewController.removeFromParent()
-//        for observer in self.observers {
-//            NotificationCenter.default.removeObserver(observer)
-//        }
-//        self.observers = []
     }
 
     // MARK: - SafeArea
     @available(iOS 11.0, *)
     override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
-        self.handleHeightChange()
+    }
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        handleHeightChange()
     }
 
     func handleHeightChange() {
         let absolutePosition = self.view.convert(self.view.bounds, to: self.view.window)
         let bottomHeight = absolutePosition.maxY
-
-        UIView.animate(withDuration: 0.25) {
-            self.bottomHeight.constant = max(self.keyboardHeight -  max(self.view.window!.frame.height-bottomHeight, 0), self.bottomSafeAreaInsets)
-        }
+        self.bottomHeight.constant = max(self.keyboardHeight -  max(self.view.window!.frame.height-bottomHeight, 0), self.bottomSafeAreaInsets)
     }
 
     // MARK: - Prompt Completion
@@ -305,12 +292,10 @@ class ConsoleInputViewController: UIViewController, UIGestureRecognizerDelegate 
                 self.keyboardHeight = max(UIScreen.main.bounds.height-endFrame.origin.y, 0)
             }
 
-            self.handleHeightChange()
+            self.view.setNeedsLayout()
         }
 
-            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillChangeFrameNotification, object: nil, queue: .main, using: handler)
-            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main, using: handler)
-            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main, using: handler)
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidChangeFrameNotification, object: nil, queue: .main, using: handler)
     }
 
     func setupKeyCommands() {
