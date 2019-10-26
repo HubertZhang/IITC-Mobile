@@ -64,7 +64,7 @@ class ConsolePurchaseViewController: UIViewController {
         super.viewWillAppear(animated)
         Analytics.logEvent("enter_screen", parameters: [
             "screen_name": "Purchase" as NSObject
-            ])
+        ])
     }
 
     override func didReceiveMemoryWarning() {
@@ -106,7 +106,8 @@ class ConsolePurchaseViewController: UIViewController {
 extension ConsolePurchaseViewController: SKProductsRequestDelegate {
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         if response.products.count != 0 {
-            for product in response.products {
+            let product = response.products.first!
+            DispatchQueue.main.async {
                 print("product: \(product)")
                 self.titleLabel.text = product.localizedTitle
                 let priceFormatter = NumberFormatter()
