@@ -25,9 +25,9 @@ class UserFilesTableViewController: UITableViewController {
         super.viewDidLoad()
         userScriptsPath = ScriptsManager.sharedInstance.userScriptsPath
         NotificationCenter.default.addObserver(forName: ScriptsUpdatedNotification, object: nil, queue: OperationQueue.main) {
-            _ in
-            self.updateContent()
-            self.tableView.reloadData()
+            [weak self] _ in
+            self?.updateContent()
+            self?.tableView.reloadData()
         }
         updateContent()
         // Uncomment the following line to preserve selection between presentations

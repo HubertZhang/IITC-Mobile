@@ -17,9 +17,9 @@ import BaseFramework
         handler.initHandlers(for: &configuration.userContentController)
         super.init(frame: frame, configuration: configuration)
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "WebViewExecuteJS"), object: nil, queue: nil) {
-            (notification) -> Void in
+            [weak self] (notification) -> Void in
             let JS = notification.userInfo?["JS"] as? String ?? ";"
-            self.evaluateJavaScript(JS, completionHandler: nil)
+            self?.evaluateJavaScript(JS, completionHandler: nil)
         }
     }
 
@@ -29,9 +29,9 @@ import BaseFramework
         handler.initHandlers(for: &configuration.userContentController)
         super.init(frame: .zero, configuration: configuration)
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "WebViewExecuteJS"), object: nil, queue: nil) {
-            (notification) -> Void in
+            [weak self] (notification) -> Void in
             let JS = notification.userInfo?["JS"] as? String ?? ";"
-            self.evaluateJavaScript(JS)
+            self?.evaluateJavaScript(JS)
         }
     }
 

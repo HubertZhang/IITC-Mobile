@@ -103,16 +103,16 @@ class MainViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.reloadIITC), name: JSNotificationReloadRequired, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.sharedAction(_:)), name: JSNotificationSharedAction, object: nil)
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "SwitchToPanel"), object: nil, queue: OperationQueue.main) {
-            (notification) in
+            [weak self] (notification) in
             guard let panel = notification.userInfo?["Panel"] as? String else {
                 return
             }
-            self.switchToPanel(panel)
+            self?.switchToPanel(panel)
         }
         NotificationCenter.default.addObserver(forName: JSNotificationPermalinkChanged, object: nil, queue: OperationQueue.main) {
-            (notification) in
+            [weak self] (notification) in
             if let permalink = notification.userInfo?["data"] as? String {
-                self.permalink = permalink
+                self?.permalink = permalink
             }
         }
     }

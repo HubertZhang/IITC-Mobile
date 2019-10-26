@@ -51,9 +51,10 @@ class PluginsTableViewController: UITableViewController {
         searchController.dimsBackgroundDuringPresentation = true // default is YES
         searchController.searchBar.delegate = self    // so we can monitor text changes + others
 
-        NotificationCenter.default.addObserver(forName: ScriptsUpdatedNotification, object: nil, queue: OperationQueue.main) { _ in
-            self.loadScripts()
-            self.tableView.reloadData()
+        NotificationCenter.default.addObserver(forName: ScriptsUpdatedNotification, object: nil, queue: OperationQueue.main) {
+            [weak self] _ in
+            self?.loadScripts()
+            self?.tableView.reloadData()
         }
         loadScripts()
 

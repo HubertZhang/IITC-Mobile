@@ -44,11 +44,12 @@ extension UserDefaults {
 
     let defaults = UserDefaults(suiteName: ContainerIdentifier)
 
+    var consoleObservations: NSKeyValueObservation?
     override init(style: UITableView.Style) {
         super.init(style: style)
         self.settingsStore = IASKSettingsStoreUserDefaults(userDefaults: defaults)
         self.clearsSelectionOnViewWillAppear = true
-        defaults?.observe(\.pref_console, changeHandler: { (_, change) in
+        consoleObservations = defaults?.observe(\.pref_console, options: [.old, .new], changeHandler: { (_, change) in
             let oldKey = change.oldValue ?? false
             let newKey = change.newValue ?? false
             if oldKey != newKey {
@@ -57,6 +58,10 @@ extension UserDefaults {
                 self.present(alert, animated: true, completion: nil)
             }
         })
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        consoleObservations = nil
     }
 
     required init?(coder aDecoder: NSCoder) {

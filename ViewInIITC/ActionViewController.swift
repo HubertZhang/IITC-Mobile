@@ -138,11 +138,11 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
         NotificationCenter.default.addObserver(self, selector: #selector(reloadIITC), name: JSNotificationReloadRequired, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sharedAction(_:)), name: JSNotificationSharedAction, object: nil)
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "SwitchToPanel"), object: nil, queue: OperationQueue.main) {
-            (notification) in
+            [weak self] (notification) in
             guard let panel = notification.userInfo?["Panel"] as? String else {
                 return
             }
-            self.switchToPanel(panel)
+            self?.switchToPanel(panel)
         }
     }
 

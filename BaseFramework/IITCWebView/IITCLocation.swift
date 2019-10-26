@@ -27,6 +27,7 @@ open class IITCLocation: NSObject, CLLocationManagerDelegate {
 
     var userDefaults = UserDefaults(suiteName: ContainerIdentifier)!
 
+    private var defaultObservation: NSKeyValueObservation?
     public override init() {
         super.init()
         locationManager.delegate = self
@@ -39,7 +40,7 @@ open class IITCLocation: NSObject, CLLocationManagerDelegate {
         if currentMode != .notShow {
             self.startUpdate()
         }
-        userDefaults.observe(\.pref_user_location_mode) { (ud, _) in
+        defaultObservation = userDefaults.observe(\.pref_user_location_mode) { (ud, _) in
             self.currentMode = IITCLocationMode(rawValue: ud.pref_user_location_mode)!
             if self.currentMode != .notShow {
                 self.startUpdate()
