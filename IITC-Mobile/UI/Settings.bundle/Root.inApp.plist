@@ -104,16 +104,6 @@
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>IASKButtonSpecifier</string>
-			<key>Title</key>
-			<string>pref_adv_download_test</string>
-			<key>Key</key>
-			<string>pref_adv_download_test</string>
-			<key>IASKTextAlignment</key>
-			<string>IASKUITextAlignmentLeft</string>
-		</dict>
-		<dict>
-			<key>Type</key>
 			<string>PSMultiValueSpecifier</string>
 			<key>Title</key>
 			<string>pref_iitc_version</string>
