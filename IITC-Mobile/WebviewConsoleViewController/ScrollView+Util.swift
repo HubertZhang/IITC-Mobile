@@ -14,11 +14,10 @@ extension UIScrollView {
 //    }
 
     func isBottomVisible() -> Bool {
-
-        return self.contentOffset.y + self.bounds.size.height - self.contentInset.bottom >= self.contentSize.height
-    }
-
-    func scrollToBottom() {
-
+        if #available(iOS 11.0, *) {
+            return self.contentOffset.y + self.bounds.size.height - self.adjustedContentInset.bottom >= self.contentSize.height
+        } else {
+            return self.contentOffset.y + self.bounds.size.height - self.contentInset.bottom >= self.contentSize.height
+        }
     }
 }

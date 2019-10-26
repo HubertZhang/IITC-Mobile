@@ -22,8 +22,8 @@ class ConsoleViewController: UIViewController {
                 [weak self] in
                 let shouldScroll = self?.messageTableView.isBottomVisible() ?? false
                 self?.messageTableView.reloadData()
-                if shouldScroll {
-                    self?.messageTableView.wbt_scrollToBottom(animated: true)
+                if shouldScroll && self!.console.count() > 0 {
+                    self?.messageTableView.scrollToRow(at: IndexPath(row: self!.console.count()-1, section: 0), at: .bottom, animated: true)
                 }
             }
         }
@@ -35,15 +35,11 @@ class ConsoleViewController: UIViewController {
 
         setupNavigationBar()
         messageTableView.register(UINib(nibName: "ConsoleMessageCell", bundle: nil), forCellReuseIdentifier: "consoleMessage")
+        messageTableView.allowsSelection = false
         messageTableView.estimatedRowHeight = 52.0
         messageTableView.rowHeight = UITableView.automaticDimension
 
         constructInputView()
-
-//        registerNotificationsForCurrentConsole()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
     }
 
     deinit {
@@ -51,11 +47,6 @@ class ConsoleViewController: UIViewController {
             console.unregisterListener(self.consoleObserver!)
             self.consoleObserver = nil
         }
-    }
-
-    @available(iOS 11.0, *)
-    override func viewSafeAreaInsetsDidChange() {
-        super.viewSafeAreaInsetsDidChange()
     }
 
     func setupNavigationBar() {
@@ -88,21 +79,6 @@ class ConsoleViewController: UIViewController {
     @objc func clearClicked(_ sender: Any) {
         self.console.clearMessages()
     }
-
-    // MARK: - Console Notifications
-
-//    func registerNotificationsForCurrentConsole() {
-//        NotificationCenter.default.addObserver(forName: NSNotification.Name.WBWebViewConsoleDidAddMessage, object: self.console, queue: .main, using: self.consoleDidAddMessage)
-//        NotificationCenter.default.addObserver(forName: NSNotification.Name.WBWebViewConsoleDidClearMessages, object: self.console, queue: .main, using: self.consoleDidClearMessages)
-//    }
-
-    func consoleDidAddMessage(_ notification: Notification) {
-        self.messageTableView.reloadData()
-    }
-
-    func consoleDidClearMessages(_ notification: Notification) {
-        self.messageTableView.reloadData()
-    }
 }
 
 extension ConsoleViewController: UITableViewDataSource {
@@ -128,7 +104,23 @@ extension ConsoleViewController: UITableViewDataSource {
 }
 
 extension ConsoleViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, shouldShowMenuForRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
 
+    func tableView(_ tableView: UITableView, canPerformAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+        if action == #selector(copy(_:)) {
+            return true
+        }
+        return false
+    }
+
+    func tableView(_ tableView: UITableView, performAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) {
+        if action == #selector(copy(_:)) {
+            let message = self.console.messages(at: indexPath.row)
+            UIPasteboard.general.string = message.getMessage()
+        }
+    }
 }
 
 extension ConsoleViewController: ConsoleInputUIDelegate {
