@@ -11,40 +11,92 @@ import RxSwift
 import Alamofire
 import RxAlamofire
 
+extension UserDefaults {
+    @objc dynamic var pref_iitc_version: String? {
+        return string(forKey: "pref_iitc_version")
+    }
+}
+
 public let ScriptsUpdatedNotification = Notification.Name(rawValue: "ScriptsUpdatedNotification")
 public let ContainerIdentifier: String = "group.com.vuryleo.iitc"
 
 open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
+    public enum Version: String {
+        case originalRelease = "release"
+        case originalTest = "test"
+        case ce = "ce"
+    }
+
+    public var currentVersion: Version
+
     public static let sharedInstance = ScriptsManager()
 
     open var storedPlugins = [Script]()
     var loadedPluginNames: [String]
     open var loadedPlugins: Set<String>
 
-    open var mainScript: Script!
     var hookScript: Script!
+    open var mainScript: Script!
     open var positionScript: Script!
 
-    var libraryScriptsPath: URL
-    var libraryPluginsPath: URL
-    open var userScriptsPath: URL
-    var documentPath: URL
+    var iitcRootPath: URL {
+        return sharedScriptsPath.appendingPathComponent(currentVersion.rawValue, isDirectory: true)
+    }
+    var iitcPluginPath: URL {
+        return iitcRootPath.appendingPathComponent("plugins", isDirectory: true)
+    }
 
     var documentWatcher: DirectoryWatcher?
     var containerWatcher: DirectoryWatcher?
 
     var userDefaults = UserDefaults(suiteName: ContainerIdentifier)!
 
-    override init() {
-        let containerPath = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContainerIdentifier)!
-        libraryScriptsPath = containerPath.appendingPathComponent("scripts", isDirectory: true)
-        libraryPluginsPath = libraryScriptsPath.appendingPathComponent("plugins", isDirectory: true)
-        userScriptsPath = containerPath.appendingPathComponent("userScripts", isDirectory: true)
-        try? FileManager.default.createDirectory(at: userScriptsPath, withIntermediateDirectories: true, attributes: nil)
-        documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last!
+    let documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last!
+    let bundleScriptPath = Bundle(for: ScriptsManager.classForCoder()).resourceURL!.appendingPathComponent("scripts", isDirectory: true)
+    let containerPath = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContainerIdentifier)!
+    let sharedScriptsPath = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContainerIdentifier)!.appendingPathComponent("scripts", isDirectory: true)
+    public var userScriptsPath = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContainerIdentifier)!.appendingPathComponent("userScripts", isDirectory: true)
 
-        let mainScriptPath = libraryScriptsPath.appendingPathComponent("total-conversion-build.user.js")
-        let copied = FileManager.default.fileExists(atPath: mainScriptPath.path)
+    private var observations: [NSKeyValueObservation] = []
+    override init() {
+        try? FileManager.default.createDirectory(at: userScriptsPath, withIntermediateDirectories: true, attributes: nil)
+
+        currentVersion = ScriptsManager.Version(rawValue: userDefaults.pref_iitc_version ?? "release") ?? .originalRelease
+
+        loadedPluginNames = userDefaults.array(forKey: "LoadedPlugins") as? [String] ?? [String]()
+        loadedPlugins = Set<String>(loadedPluginNames)
+
+        super.init()
+
+        checkUpgrade()
+
+        observations.append(userDefaults.observe(\.pref_iitc_version) { (defaults, _) in
+            guard let v = ScriptsManager.Version(rawValue: defaults.pref_iitc_version ?? "release") else {
+                return
+            }
+            self.switchIITCVersion(version: v)
+        })
+
+        syncDocumentAndContainer()
+        documentWatcher = DirectoryWatcher(documentPath, delegate: self)
+        containerWatcher = DirectoryWatcher(userScriptsPath, delegate: self)
+
+        hookScript = try! Script(coreJS: bundleScriptPath.appendingPathComponent("ios-hooks.js"), withName: "hook")
+        hookScript.fileContent = String(format: hookScript.fileContent, VersionTool.default.currentVersion, Int(VersionTool.default.currentBuild) ?? 0)
+
+        reloadScripts()
+    }
+
+    deinit {
+        for v in self.observations {
+            v.invalidate()
+        }
+        self.observations = []
+    }
+
+    func checkUpgrade() {
+        let sharedScriptsPath = containerPath.appendingPathComponent("scripts", isDirectory: true)
+        let copied = FileManager.default.fileExists(atPath: sharedScriptsPath.path)
 
         let oldVersion = userDefaults.string(forKey: "Version") ?? "0.0.0"
         let oldBuild = userDefaults.string(forKey: "BuildVersion") ?? "0"
@@ -54,28 +106,20 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         #endif
         if !copied || upgraded {
             try? FileManager.default.createDirectory(at: containerPath, withIntermediateDirectories: true, attributes: nil)
-            try? FileManager.default.removeItem(at: libraryScriptsPath)
-            try? FileManager.default.copyItem(at: Bundle(for: ScriptsManager.classForCoder()).resourceURL!.appendingPathComponent("scripts", isDirectory: true), to: libraryScriptsPath)
+            try? FileManager.default.removeItem(at: sharedScriptsPath)
+            try? FileManager.default.copyItem(at: bundleScriptPath, to: sharedScriptsPath)
             userDefaults.set(VersionTool.default.currentVersion, forKey: "Version")
             userDefaults.set(VersionTool.default.currentBuild, forKey: "BuildVersion")
         }
-
-        loadedPluginNames = userDefaults.array(forKey: "LoadedPlugins") as? [String] ?? [String]()
-        loadedPlugins = Set<String>(loadedPluginNames)
-
-        super.init()
-
-        syncDocumentAndContainer()
-        documentWatcher = DirectoryWatcher(documentPath, delegate: self)
-        containerWatcher = DirectoryWatcher(userScriptsPath, delegate: self)
-
-        loadMainScripts()
-        loadAllPlugins()
-
     }
 
-    open func loadAllPlugins() {
-        self.storedPlugins = loadPluginInDirectory(libraryPluginsPath)
+    open func reloadScripts() {
+        loadMainScripts()
+        loadAllPlugins()
+    }
+
+    func loadAllPlugins() {
+        self.storedPlugins = loadPluginInDirectory(iitcPluginPath)
         for plugin in loadPluginInDirectory(userScriptsPath) {
             plugin.isUserScript = true
             let index = storedPlugins.firstIndex {
@@ -90,14 +134,11 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         }
     }
 
-    open func loadMainScripts() {
-        let buildNumber = Int(VersionTool.default.currentBuild) ?? 0
+    func loadMainScripts() {
         do {
-            mainScript = try Script(atFilePath: libraryScriptsPath.appendingPathComponent("total-conversion-build.user.js"))
+            mainScript = try Script(atFilePath: iitcRootPath.appendingPathComponent("total-conversion-build.user.js"))
             mainScript.category = "Core"
-            hookScript = try Script(coreJS: libraryScriptsPath.appendingPathComponent("ios-hooks.js"), withName: "hook")
-            hookScript.fileContent = String(format: hookScript.fileContent, VersionTool.default.currentVersion, buildNumber)
-            positionScript = try Script(coreJS: libraryScriptsPath.appendingPathComponent("user-location.user.js"), withName: "position")
+            positionScript = try Script(coreJS: iitcRootPath.appendingPathComponent("user-location.user.js"), withName: "position")
         } catch {
 
         }
@@ -212,24 +253,19 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
             guard let newVersion = attribute["version"]?.first, let oldVersion = script.version else {
                 return Observable<Void>.just(Void())
             }
-            if newVersion.compare(oldVersion, options: .numeric) != .orderedAscending {
+            if newVersion.compare(oldVersion, options: .numeric) != .orderedDescending {
                 return Observable<Void>.just(Void())
             }
             return Alamofire.request(downloadURL).rx.string().map {
                 string in
-                var pathPrefix: URL
+                var path: URL
                 if script.isUserScript {
-                    pathPrefix = self.userScriptsPath
+                    path = self.userScriptsPath.appendingPathComponent(script.fileName)
                 } else {
-                    if script.category == "Core" {
-                        pathPrefix = self.libraryScriptsPath
-                    } else {
-                        pathPrefix = self.libraryPluginsPath
-                    }
+                    path = script.filePath
                 }
 
-                pathPrefix.appendPathComponent(script.fileName)
-                try string.write(to: pathPrefix, atomically: true, encoding: String.Encoding.utf8)
+                try string.write(to: path, atomically: true, encoding: String.Encoding.utf8)
             }
         }
     }
@@ -257,8 +293,8 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         if folderWatcher == documentWatcher {
             syncDocumentAndContainer()
         } else if folderWatcher == containerWatcher {
-            self.loadAllPlugins()
             self.loadMainScripts()
+            self.loadAllPlugins()
             NotificationCenter.default.post(name: ScriptsUpdatedNotification, object: nil)
         }
     }
@@ -268,13 +304,9 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         loadedPlugins = Set<String>(loadedPluginNames)
     }
 
-    public enum Version: String {
-        case original = "scripts"
-        case ce = "ce"
-    }
-
     open func switchIITCVersion(version: Version) {
-        try? FileManager.default.removeItem(at: libraryScriptsPath)
-        try? FileManager.default.copyItem(at: Bundle(for: ScriptsManager.classForCoder()).resourceURL!.appendingPathComponent(version.rawValue, isDirectory: true), to: libraryScriptsPath)
+        self.currentVersion = version
+        loadMainScripts()
+        loadAllPlugins()
     }
 }
