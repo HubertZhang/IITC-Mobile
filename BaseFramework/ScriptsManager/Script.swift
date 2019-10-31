@@ -29,9 +29,20 @@ open class Script: NSObject {
         super.init()
     }
 
+    static func generateGMInfo(_ attributes: [String: [String]]) -> String {
+        var temp: [String: String] = [:]
+        for (key, value) in attributes {
+            temp[key] = value.joined(separator: ",")
+        }
+        let pluginInfo = ["script": temp]
+        return String(data: try! JSONEncoder().encode(pluginInfo), encoding: .utf8)!
+    }
+
     init(atFilePath filePath: URL) throws {
         self.fileContent = try String(contentsOf: filePath)
         let attributes = Script.getJSAttributes(fileContent)
+        let start = "var GM_info = \(Script.generateGMInfo(attributes));\n"
+        self.fileContent = start + self.fileContent
         self.version = attributes["version"]?.first
         self.updateURL = attributes["updateURL"]?.first
         self.downloadURL = attributes["downloadURL"]?.first
