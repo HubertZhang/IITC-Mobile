@@ -7,6 +7,7 @@ abstract_target 'Base' do
     pod 'RxSwift', '~> 5'
     pod 'Alamofire', '~> 4'
     pod 'RxAlamofire', '~> 5'
+    pod 'TPInAppReceipt'
     
     target 'BaseFramework'
     abstract_target 'Application' do

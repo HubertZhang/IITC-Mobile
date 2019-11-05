@@ -10,6 +10,8 @@ import UIKit
 import StoreKit
 import BaseFramework
 
+import TPInAppReceipt
+
 protocol InAppPurchaseUIDelegate: class {
     func purchasing()
     func deferred()
@@ -83,17 +85,15 @@ class InAppPurchaseManager: NSObject {
 
     func verifyReceipt() {
         self.receiptType = getReceiptType()
-        guard let receipt = RMAppReceipt.bundle() else {
+        do {
+            let receipt = try InAppReceipt.localReceipt()
+            try receipt.verify()
+            if receipt.containsPurchase(ofProductIdentifier: "com.hubertzhang.iitcmobile.console") {
+                consolePurchased = true
+            }
+        } catch {
             receiptType = .notExist
             consolePurchased = false
-            return
-        }
-        if !receipt.verifyReceiptHash() {
-            receiptType = .notExist
-            consolePurchased = false
-        }
-        if receipt.contains(inAppPurchaseOfProductIdentifier: "com.hubertzhang.iitcmobile.console") {
-            consolePurchased = true
         }
     }
 }

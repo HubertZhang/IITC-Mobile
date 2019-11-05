@@ -17,7 +17,6 @@
 		B405EED61D0726D700110D9E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B405EED51D0726D700110D9E /* CoreLocation.framework */; };
 		B410BFA31EF9BC3F001B441D /* JSFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B410BFA21EF9BC3F001B441D /* JSFileViewController.swift */; };
 		B41C02491F233B9700AAAEAC /* ConsolePurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41C02481F233B9700AAAEAC /* ConsolePurchaseViewController.swift */; };
-		B423BA911F3F6A9700F262A0 /* AppleIncRootCertificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = B423BA901F3F6A9700F262A0 /* AppleIncRootCertificate.cer */; };
 		B42BE7591D072D1B00A0A0CB /* OpenInMapActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BE7581D072D1B00A0A0CB /* OpenInMapActivity.swift */; };
 		B42BE7611D073C0400A0A0CB /* About.html in Resources */ = {isa = PBXBuildFile; fileRef = B42BE7601D073C0400A0A0CB /* About.html */; };
 		B42BE7631D073C7800A0A0CB /* TextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BE7621D073C7800A0A0CB /* TextViewController.swift */; };
@@ -54,8 +53,6 @@
 		B4B3284C1D117970007AA6D5 /* IITC.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = B4B3284B1D117970007AA6D5 /* IITC.entitlements */; };
 		B4B3284E1D1179C4007AA6D5 /* IITC-Action.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = B4B3284D1D1179C4007AA6D5 /* IITC-Action.entitlements */; };
 		B4B9DEB31EFDB258009BFCC3 /* IITCWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B9DEB21EFDB258009BFCC3 /* IITCWebView.swift */; };
-		B4BA261A1F3DF36E000FDFB6 /* RMAppReceipt.m in Sources */ = {isa = PBXBuildFile; fileRef = B4BA26191F3DF36E000FDFB6 /* RMAppReceipt.m */; };
-		B4BA261D1F3DFD45000FDFB6 /* openssl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4BA261C1F3DFD45000FDFB6 /* openssl.framework */; };
 		B4C682731FB47CDD00B1B175 /* IITCWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C682721FB47CDD00B1B175 /* IITCWebView.swift */; };
 		B4CD6172209C070C00F5BFB8 /* InsetsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CD6171209C070C00F5BFB8 /* InsetsLabel.swift */; };
 		B4E2F0041D05D06C00D2D86B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E2F0031D05D06C00D2D86B /* AppDelegate.swift */; };
@@ -159,7 +156,6 @@
 		B405EED51D0726D700110D9E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		B410BFA21EF9BC3F001B441D /* JSFileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSFileViewController.swift; sourceTree = "<group>"; };
 		B41C02481F233B9700AAAEAC /* ConsolePurchaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsolePurchaseViewController.swift; sourceTree = "<group>"; };
-		B423BA901F3F6A9700F262A0 /* AppleIncRootCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = AppleIncRootCertificate.cer; sourceTree = "<group>"; };
 		B42BE7581D072D1B00A0A0CB /* OpenInMapActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenInMapActivity.swift; sourceTree = "<group>"; };
 		B42BE75A1D07342700A0A0CB /* IITC-Mobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IITC-Mobile-Bridging-Header.h"; sourceTree = "<group>"; };
 		B42BE7601D073C0400A0A0CB /* About.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = About.html; sourceTree = "<group>"; };
@@ -196,9 +192,6 @@
 		B4B3284B1D117970007AA6D5 /* IITC.entitlements */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = IITC.entitlements; sourceTree = "<group>"; };
 		B4B3284D1D1179C4007AA6D5 /* IITC-Action.entitlements */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "IITC-Action.entitlements"; sourceTree = "<group>"; };
 		B4B9DEB21EFDB258009BFCC3 /* IITCWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IITCWebView.swift; sourceTree = "<group>"; };
-		B4BA26181F3DF36E000FDFB6 /* RMAppReceipt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMAppReceipt.h; sourceTree = "<group>"; };
-		B4BA26191F3DF36E000FDFB6 /* RMAppReceipt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMAppReceipt.m; sourceTree = "<group>"; };
-		B4BA261C1F3DFD45000FDFB6 /* openssl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = openssl.framework; path = "OpenSSL-for-iPhone/openssl.framework"; sourceTree = SOURCE_ROOT; };
 		B4C682721FB47CDD00B1B175 /* IITCWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IITCWebView.swift; sourceTree = "<group>"; };
 		B4CD6171209C070C00F5BFB8 /* InsetsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetsLabel.swift; sourceTree = "<group>"; };
 		B4E2F0001D05D06C00D2D86B /* IITC-Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IITC-Mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -239,7 +232,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B4BA261D1F3DFD45000FDFB6 /* openssl.framework in Frameworks */,
 				B405EED61D0726D700110D9E /* CoreLocation.framework in Frameworks */,
 				B4F840371D0AD1AF00C58690 /* BaseFramework.framework in Frameworks */,
 				34FDA912D1D2C7A361FDB4D6 /* Pods_Base_Application_IITC_Mobile.framework in Frameworks */,
@@ -375,17 +367,6 @@
 			path = Activities;
 			sourceTree = "<group>";
 		};
-		B4BA26151F3DB8FE000FDFB6 /* RMStore */ = {
-			isa = PBXGroup;
-			children = (
-				B423BA901F3F6A9700F262A0 /* AppleIncRootCertificate.cer */,
-				B4BA261C1F3DFD45000FDFB6 /* openssl.framework */,
-				B4BA26181F3DF36E000FDFB6 /* RMAppReceipt.h */,
-				B4BA26191F3DF36E000FDFB6 /* RMAppReceipt.m */,
-			);
-			path = RMStore;
-			sourceTree = "<group>";
-		};
 		B4E2EFF71D05D06C00D2D86B = {
 			isa = PBXGroup;
 			children = (
@@ -414,7 +395,6 @@
 			isa = PBXGroup;
 			children = (
 				B4A3C4D22358BF5200AA0B16 /* WebviewConsoleViewController */,
-				B4BA26151F3DB8FE000FDFB6 /* RMStore */,
 				B44417611DA50D4F00960F11 /* icons */,
 				B4F8405C1D0B285800C58690 /* Default-iitc.png */,
 				B4F8405D1D0B285800C58690 /* Default-iitc@2x.png */,
@@ -664,7 +644,6 @@
 				B4A3C4D62358BF7A00AA0B16 /* ConsoleViewController.xib in Resources */,
 				B4999BD52359AA350068B2E9 /* Console.xcassets in Resources */,
 				B4E2F0091D05D06C00D2D86B /* Main.storyboard in Resources */,
-				B423BA911F3F6A9700F262A0 /* AppleIncRootCertificate.cer in Resources */,
 				B42BE7651D07529300A0A0CB /* GoogleService-Info.plist in Resources */,
 				B4A3C4DE2358CF1100AA0B16 /* ConsoleMessageCell.xib in Resources */,
 			);
@@ -708,6 +687,7 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/RxAlamofire/RxAlamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/TPInAppReceipt/TPInAppReceipt.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
@@ -722,6 +702,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAlamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPInAppReceipt.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
@@ -831,7 +812,6 @@
 				B405EECC1D066FC900110D9E /* LayersTableViewController.swift in Sources */,
 				B4320D5022FD1594009097EE /* OpenIn3rdMapActivity.swift in Sources */,
 				B405EED11D06969C00110D9E /* SettingsViewControllerNew.swift in Sources */,
-				B4BA261A1F3DF36E000FDFB6 /* RMAppReceipt.m in Sources */,
 				B47461161F769E1D00BFD2CA /* PluginsSearchTableViewController.swift in Sources */,
 				B4320D5422FD1F34009097EE /* OpenInBaiduMapActivity.swift in Sources */,
 				B4B9DEB31EFDB258009BFCC3 /* IITCWebView.swift in Sources */,

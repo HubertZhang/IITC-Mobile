@@ -75,6 +75,7 @@ PODS:
     - Alamofire (~> 4.8)
     - RxSwift (~> 5.0)
   - RxSwift (5.0.0)
+  - TPInAppReceipt (2.2.3)
   - WBWebViewConsole (1.0.2)
 
 DEPENDENCIES:
@@ -86,6 +87,7 @@ DEPENDENCIES:
   - RSKGrowingTextView
   - RxAlamofire (~> 5)
   - RxSwift (~> 5)
+  - TPInAppReceipt
   - WBWebViewConsole (from `https://github.com/Hubertzhang/WBWebViewConsole.git`, branch `table`)
 
 SPEC REPOS:
@@ -109,6 +111,7 @@ SPEC REPOS:
     - RSKPlaceholderTextView
     - RxAlamofire
     - RxSwift
+    - TPInAppReceipt
 
 EXTERNAL SOURCES:
   WBWebViewConsole:
@@ -140,8 +143,9 @@ SPEC CHECKSUMS:
   RSKPlaceholderTextView: df72ca93edfac185b98f51cb85e445f54ce8a163
   RxAlamofire: e7875a012aff55345672d0f70a2a9cd6aeb0f211
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
+  TPInAppReceipt: b6771314a6bd5b5916d0834cb7548aa7b32925cd
   WBWebViewConsole: 1288737d136b44a281cc654828339127f959e21c
 
-PODFILE CHECKSUM: f67192ec44aa649c7063fb66332d751254966771
+PODFILE CHECKSUM: bd48919fb262d947511d4836c0f0144f98a58d0a
 
 COCOAPODS: 1.8.3
