@@ -109,6 +109,7 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
     open func reloadScripts() {
         loadMainScripts()
         loadAllPlugins()
+        NotificationCenter.default.post(name: ScriptsUpdatedNotification, object: nil)
     }
 
     func loadAllPlugins() {
@@ -286,9 +287,7 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         if folderWatcher == documentWatcher {
             syncDocumentAndContainer()
         } else if folderWatcher == containerWatcher {
-            self.loadMainScripts()
-            self.loadAllPlugins()
-            NotificationCenter.default.post(name: ScriptsUpdatedNotification, object: nil)
+            self.reloadScripts()
         }
     }
 
@@ -299,7 +298,6 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
 
     open func switchIITCVersion(version: Version) {
         self.currentVersion = version
-        loadMainScripts()
-        loadAllPlugins()
+        self.reloadScripts()
     }
 }
