@@ -25,9 +25,7 @@ class TextViewController: UIViewController, UITextViewDelegate {
     var attrStringBuilder: (() -> NSAttributedString?)?
 
     override func viewWillAppear(_ animated: Bool) {
-        Analytics.logEvent("enter_screen", parameters: [
-            "screen_name": self.title ?? "TextView"
-        ])
+        Analytics.setScreenName(self.title ?? "TextView", screenClass: "TextViewController")
         if #available(iOS 11.0, *) {
             textView.textContainerInset.left = self.view.safeAreaInsets.left + 12
             textView.textContainerInset.right = self.view.safeAreaInsets.right + 12

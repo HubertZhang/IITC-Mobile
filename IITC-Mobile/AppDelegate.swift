@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        SKPaymentQueue.default().add(InAppPurchaseManager.default)
 
         FirebaseApp.configure()
 
@@ -30,8 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 hud.hide(animated: true)
             })
         })
-
-        SKPaymentQueue.default().add(InAppPurchaseManager.default)
 
         return true
     }

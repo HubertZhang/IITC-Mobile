@@ -12,7 +12,6 @@ import RxSwift
 import InAppSettingsKit
 import MBProgressHUD
 import Alamofire
-import FirebaseAnalytics
 
 extension UserDefaults {
     @objc dynamic var pref_console: Bool {
@@ -33,13 +32,6 @@ extension UserDefaults {
             self.setHiddenKeys(["pref_console"], animated: false)
         }
 #endif
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        Analytics.logEvent("enter_screen", parameters: [
-            "screen_name": "Settings"
-        ])
     }
 
     let defaults = UserDefaults(suiteName: ContainerIdentifier)

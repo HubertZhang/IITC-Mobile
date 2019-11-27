@@ -60,13 +60,6 @@ class ConsolePurchaseViewController: UIViewController {
         self.purchaseButton.setBackgroundImage(image(from: #colorLiteral(red: 0.006442983169, green: 0.4781559706, blue: 0.9985900521, alpha: 1)), for: .normal)
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        Analytics.logEvent("enter_screen", parameters: [
-            "screen_name": "Purchase" as NSObject
-        ])
-    }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -122,6 +115,9 @@ extension ConsolePurchaseViewController: SKProductsRequestDelegate {
                 self.descriptionLabel.text = product.localizedDescription
 #endif
                 self.products.append(product)
+                Analytics.logEvent(AnalyticsEventPresentOffer, parameters: [
+                    "item_id": product.productIdentifier
+                ])
             }
 
         } else {

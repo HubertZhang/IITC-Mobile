@@ -8,7 +8,6 @@
 
 import UIKit
 import BaseFramework
-import FirebaseAnalytics
 
 class PluginCell: UITableViewCell {
 
@@ -21,12 +20,6 @@ class PluginsTableViewController: UITableViewController {
 
     var searchController: UISearchController!
     var resultsTableController: PluginsSearchTableViewController!
-
-    override func viewWillAppear(_ animated: Bool) {
-        Analytics.logEvent("enter_screen", parameters: [
-            "screen_name": "Plugins"
-        ])
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
