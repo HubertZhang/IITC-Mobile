@@ -269,12 +269,11 @@ class MainViewController: UIViewController {
             if urlString == self.permalink {
                 return
             }
-            if let urlComponent = URLComponents(string: urlString), urlComponent.host == "www.ingress.com" || urlComponent.host == "intel.ingress.com" {
+            if let urlComponent = URLComponents(string: urlString) {
+                if urlComponent.host == "www.ingress.com" || urlComponent.host == "intel.ingress.com" {
+                    self.loadIITCNeeded = true
+                }
                 self.webView.load(URLRequest(url: urlComponent.url!))
-                self.loadIITCNeeded = true
-            }
-            if urlString.hasSuffix("https://ops.irde.net/iitc") {
-                self.webView.load(URLRequest(url: URL(string: urlString)!))
             }
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
