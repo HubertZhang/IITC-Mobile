@@ -18,7 +18,7 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
     var location = IITCLocation()
     var layersController: LayersController = LayersController.sharedInstance
 
-    var url: URL = URL(string: "https://www.ingress.com/intel")!
+    var url: URL = URL(string: "https://intel.ingress.com/intel")!
 
     var userDefaults = UserDefaults(suiteName: ContainerIdentifier)!
 
@@ -165,7 +165,7 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
                 return $0.name == "ll"
             })
             if ll.count > 0 {
-                var newURLComponents = URLComponents(string: "https://www.ingress.com/intel")!
+                var newURLComponents = URLComponents(string: "https://intel.ingress.com/intel")!
                 newURLComponents.queryItems = [ll[0]]
                 if let newURL = newURLComponents.url {
                     OperationQueue.main.addOperation {

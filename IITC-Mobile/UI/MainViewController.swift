@@ -197,9 +197,9 @@ class MainViewController: UIViewController {
             self.webView.customUserAgent = userAgent
         }
         if userDefaults.bool(forKey: "pref_force_desktop") {
-            self.webView.load(URLRequest(url: URL(string: "https://www.ingress.com/intel?vp=f")!))
+            self.webView.load(URLRequest(url: URL(string: "https://intel.ingress.com/intel?vp=f")!))
         } else {
-            self.webView.load(URLRequest(url: URL(string: "https://www.ingress.com/intel")!))
+            self.webView.load(URLRequest(url: URL(string: "https://intel.ingress.com/intel")!))
 
         }
     }

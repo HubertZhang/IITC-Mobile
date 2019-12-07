@@ -34,7 +34,7 @@ class OpenInMapActivity: UIActivity {
     override func canPerform(withActivityItems activityItems: [Any]) -> Bool {
         if activityItems.count == 3 {
             if let url = activityItems[1] as? URL {
-                return url.absoluteString.hasPrefix("https://www.ingress.com")
+                return url.host == "www.ingress.com" || url.host == "intel.ingress.com"
             }
         }
         return false

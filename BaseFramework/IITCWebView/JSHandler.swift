@@ -49,6 +49,7 @@ open class JSHandler: NSObject, WKScriptMessageHandler {
     }
 
     @objc func intentPosLink(_ args: Any) {
+        // [Lat, Lng, Zoom, Title, isPortal]
         guard let args = args as? [AnyObject] else {
             return
         }
@@ -60,9 +61,9 @@ open class JSHandler: NSObject, WKScriptMessageHandler {
         }
         var url: URL
         if isPortal {
-            url = URL(string: "https://www.ingress.com/intel?pll=\(lat),\(lng)&z=\(zoom)")!
+            url = URL(string: "https://intel.ingress.com/intel?pll=\(lat),\(lng)&z=\(zoom)")!
         } else {
-            url = URL(string: "https://www.ingress.com/intel?ll=\(lat),\(lng)&z=\(zoom)")!
+            url = URL(string: "https://intel.ingress.com/intel?ll=\(lat),\(lng)&z=\(zoom)")!
         }
         NotificationCenter.default.post(name: JSNotificationSharedAction, object: self, userInfo: ["data": [args[3], url, ["lat": lat, "lng": lng, "zoom": zoom]]])
     }
