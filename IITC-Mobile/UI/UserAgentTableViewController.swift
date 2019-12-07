@@ -98,11 +98,11 @@ class UserAgentTableViewController: UITableViewController {
 
     var userDefaults = UserDefaults(suiteName: ContainerIdentifier)!
 
-    let predefinedUserAgents: [(String, String)] = [
+    static let predefinedUserAgents: [(String, String)] = [
         ("Safari on iOS 13.2", "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1"),
         ("Chrome 78 on iOS 13.2", "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/78.0.3904.84 Mobile/15E148 Safari/604.1"),
         ("Safari on iOS 12.3.1", "Mozilla/5.0 (iPhone; CPU iPhone OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.1 Mobile/15E148 Safari/604.1"),
-        ("Chrome 75 on iOS 12.3.1", "Mozilla/5.0 (iPhone; CPU iPhone OS 12_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/75.0.3770.70 Mobile/15E148 Safari/605.1"),
+        ("Chrome 75 on iOS 12.3.1", "Mozilla/5.0 (iPhone; CPU iPhone OS 12_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/75.0.3770.70 Mobile/15E148 Safari/605.1")
     ]
 
     override func viewDidLoad() {
@@ -129,7 +129,7 @@ class UserAgentTableViewController: UITableViewController {
         case 0:
             return 1
         case 1:
-            return predefinedUserAgents.count
+            return UserAgentTableViewController.predefinedUserAgents.count
         default:
             return 0
         }
@@ -160,9 +160,9 @@ class UserAgentTableViewController: UITableViewController {
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "PredefinedCell", for: indexPath)
-            cell.textLabel?.text = predefinedUserAgents[indexPath.row].0
+            cell.textLabel?.text = UserAgentTableViewController.predefinedUserAgents[indexPath.row].0
             cell.detailTextLabel?.numberOfLines = 0
-            cell.detailTextLabel?.text = predefinedUserAgents[indexPath.row].1
+            cell.detailTextLabel?.text = UserAgentTableViewController.predefinedUserAgents[indexPath.row].1
 
             return cell
         default:
@@ -177,9 +177,9 @@ class UserAgentTableViewController: UITableViewController {
             guard let cell = tableView.cellForRow(at: [0, 0]) as? MultiLineTextInputTableViewCell else {
                 return
             }
-            cell.textString = predefinedUserAgents[indexPath.row].1
+            cell.textString = UserAgentTableViewController.predefinedUserAgents[indexPath.row].1
 
-            UserDefaults(suiteName: ContainerIdentifier)!.set(predefinedUserAgents[indexPath.row].1, forKey: "pref_useragent")
+            UserDefaults(suiteName: ContainerIdentifier)!.set(UserAgentTableViewController.predefinedUserAgents[indexPath.row].1, forKey: "pref_useragent")
 
         }
     }

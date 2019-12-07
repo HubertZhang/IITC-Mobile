@@ -192,7 +192,7 @@ class MainViewController: UIViewController {
 
     @objc func reloadIITC() {
         self.loadIITCNeeded = true
-        let userAgent = userDefaults.string(forKey: "pref_useragent")
+        let userAgent = userDefaults.string(forKey: "pref_useragent") ?? UserAgentTableViewController.predefinedUserAgents[0].1
         if userAgent != "" {
             self.webView.customUserAgent = userAgent
         }
