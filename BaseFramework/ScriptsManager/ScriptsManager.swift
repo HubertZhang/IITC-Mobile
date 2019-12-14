@@ -47,18 +47,20 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
     }
 
     var documentWatcher: DirectoryWatcher?
-    var containerWatcher: DirectoryWatcher?
 
     var userDefaults = UserDefaults(suiteName: ContainerIdentifier)!
 
     let documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last!
     let bundleScriptPath = Bundle(for: ScriptsManager.classForCoder()).resourceURL!.appendingPathComponent("scripts", isDirectory: true)
     let containerPath = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContainerIdentifier)!
-    let sharedScriptsPath = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContainerIdentifier)!.appendingPathComponent("scripts", isDirectory: true)
-    public var userScriptsPath = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContainerIdentifier)!.appendingPathComponent("userScripts", isDirectory: true)
+
+    public let sharedScriptsPath: URL
+    public let userScriptsPath: URL
 
     private var defaultObservation: NSKeyValueObservation?
     override init() {
+        sharedScriptsPath = documentPath.appendingPathComponent("embedded", isDirectory: true)
+        userScriptsPath = documentPath.appendingPathComponent("userScripts", isDirectory: true)
         try? FileManager.default.createDirectory(at: userScriptsPath, withIntermediateDirectories: true, attributes: nil)
 
         currentVersion = ScriptsManager.Version(rawValue: userDefaults.pref_iitc_version ?? "release") ?? .originalRelease
@@ -77,9 +79,7 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
             self.switchIITCVersion(version: v)
         }
 
-        syncDocumentAndContainer()
         documentWatcher = DirectoryWatcher(documentPath, delegate: self)
-        containerWatcher = DirectoryWatcher(userScriptsPath, delegate: self)
 
         hookScript = try! Script(coreJS: bundleScriptPath.appendingPathComponent("ios-hooks.js"), withName: "hook")
         hookScript.fileContent = String(format: hookScript.fileContent, VersionTool.default.currentVersion, Int(VersionTool.default.currentBuild) ?? 0)
@@ -88,7 +88,6 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
     }
 
     func checkUpgrade() {
-        let sharedScriptsPath = containerPath.appendingPathComponent("scripts", isDirectory: true)
         let copied = FileManager.default.fileExists(atPath: sharedScriptsPath.path)
 
         let oldVersion = userDefaults.string(forKey: "Version") ?? "0.0.0"
@@ -98,7 +97,7 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         upgraded = true
         #endif
         if !copied || upgraded {
-            try? FileManager.default.createDirectory(at: containerPath, withIntermediateDirectories: true, attributes: nil)
+            try? FileManager.default.createDirectory(at: documentPath, withIntermediateDirectories: true, attributes: nil)
             try? FileManager.default.removeItem(at: sharedScriptsPath)
             try? FileManager.default.copyItem(at: bundleScriptPath, to: sharedScriptsPath)
             userDefaults.set(VersionTool.default.currentVersion, forKey: "Version")
@@ -110,6 +109,7 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         loadMainScripts()
         loadAllPlugins()
         NotificationCenter.default.post(name: ScriptsUpdatedNotification, object: nil)
+        synchronizeDocumentToContainer()
     }
 
     func loadAllPlugins() {
@@ -281,29 +281,38 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         }, progress)
     }
 
-    open func syncDocumentAndContainer() {
-        let temp = (try? FileManager.default.contentsOfDirectory(at: documentPath, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)) ?? []
+    open func synchronizeDocumentToContainer() {
+        let mainAppInContainer = containerPath.appendingPathComponent("main", isDirectory: true)
+        try? FileManager.default.removeItem(at: mainAppInContainer)
+        try? FileManager.default.copyItem(at: userScriptsPath, to: mainAppInContainer)
+    }
+
+    open func synchronizeExtensionFolder() {
+        let extensionFolder = containerPath.appendingPathComponent("extension", isDirectory: true)
+        let temp = (try? FileManager.default.contentsOfDirectory(at: extensionFolder, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)) ?? []
         for url in temp {
-            if url.lastPathComponent == "com.google.iid-keypair.plist" {
-                continue
-            }
-            if url.lastPathComponent == "Inbox" {
-                continue
-            }
             let containerFileURL = userScriptsPath.appendingPathComponent(url.lastPathComponent)
             if FileManager.default.fileExists(atPath: containerFileURL.path) {
-                try? FileManager.default.removeItem(at: containerFileURL)
+                do {
+                    let oldAttr = try FileManager.default.attributesOfItem(atPath: self.containerPath.path)
+                    let newAttr = try FileManager.default.attributesOfItem(atPath: url.path)
+                    guard let oldDate = oldAttr[.modificationDate] as? Date, let newDate = newAttr[.modificationDate] as? Date else {
+                        continue
+                    }
+                    if newDate.compare(oldDate) == .orderedDescending {
+                        try FileManager.default.removeItem(at: containerFileURL)
+                        try FileManager.default.copyItem(at: url, to: containerFileURL)
+                    }
+                } catch {
+
+                }
             }
-            try? FileManager.default.copyItem(at: url, to: containerFileURL)
             try? FileManager.default.removeItem(at: url)
         }
-
     }
 
     func directoryDidChange(_ folderWatcher: DirectoryWatcher) {
         if folderWatcher == documentWatcher {
-            syncDocumentAndContainer()
-        } else if folderWatcher == containerWatcher {
             self.reloadScripts()
         }
     }
@@ -316,5 +325,9 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
     open func switchIITCVersion(version: Version) {
         self.currentVersion = version
         self.reloadScripts()
+    }
+
+    open func importScript(content: String) {
+
     }
 }

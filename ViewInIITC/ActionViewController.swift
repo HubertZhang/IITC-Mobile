@@ -68,7 +68,7 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
             } else if url.isFileURL {
                 do {
                     let containerPath = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContainerIdentifier)!
-                    let userScriptsPath = containerPath.appendingPathComponent("userScripts", isDirectory: true)
+                    let userScriptsPath = containerPath.appendingPathComponent("extension", isDirectory: true)
                     let filename = url.lastPathComponent
                     let destURL = userScriptsPath.appendingPathComponent(filename)
                     try? FileManager.default.removeItem(at: destURL)
@@ -85,12 +85,12 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
 
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         let containerPath = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContainerIdentifier)!
-        let userScriptsPath = containerPath.appendingPathComponent("userScripts", isDirectory: true)
+        let extensionFolder = containerPath.appendingPathComponent("extension", isDirectory: true)
         guard let filename = downloadTask.response?.suggestedFilename else {
             return
         }
 //        print(filename)
-        let destURL = userScriptsPath.appendingPathComponent(filename)
+        let destURL = extensionFolder.appendingPathComponent(filename)
         try? FileManager.default.removeItem(at: destURL)
         do {
             try FileManager.default.moveItem(at: location, to: destURL)

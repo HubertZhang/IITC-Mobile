@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let hud = MBProgressHUD.showAdded(to: self.window!.rootViewController!.view, animated: true)
         DispatchQueue.global().async(execute: {
             _ = ScriptsManager.sharedInstance.getLoadedScripts()
+            ScriptsManager.sharedInstance.synchronizeExtensionFolder()
             DispatchQueue.main.async(execute: {
                 hud.hide(animated: true)
             })
@@ -59,20 +60,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        let containerPath = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContainerIdentifier)!
-        let userScriptsPath = containerPath.appendingPathComponent("userScripts", isDirectory: true)
-        let filename = url.lastPathComponent
-        if filename == "" {
-            return true
+        if url.pathExtension  != ".js" {
+            return false
         }
-        //        print(filename)
-        let destURL = userScriptsPath.appendingPathComponent(filename)
+
+        let tempFolder = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).last!.appendingPathComponent("imported", isDirectory: true)
+        try? FileManager.default.createDirectory(at: tempFolder, withIntermediateDirectories: true, attributes: [:])
+
+        let filename = url.lastPathComponent
+        let destURL = tempFolder.appendingPathComponent(filename)
         try? FileManager.default.removeItem(at: destURL)
         do {
             try FileManager.default.copyItem(at: url, to: destURL)
         } catch let e {
             print(e.localizedDescription)
         }
-        return false
+        return true
     }
 }
