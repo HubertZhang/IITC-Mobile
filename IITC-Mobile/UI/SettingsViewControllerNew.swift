@@ -150,15 +150,12 @@ extension UserDefaults {
         let hud = MBProgressHUD.showAdded(to: self.navigationController!.view, animated: true)
         hud.mode = MBProgressHUDMode.annularDeterminate
         hud.label.text = "Updating..."
-        var finished = 0
-        let all = ScriptsManager.sharedInstance.storedPlugins.count + 2
-        ScriptsManager.sharedInstance.updatePlugins()
-            .subscribeOn(SerialDispatchQueueScheduler.init(internalSerialQueueName: "com.cradle.IITC-Mobile.network"))
+        let (o, p) = ScriptsManager.sharedInstance.updatePlugins()
+        hud.progressObject = p
+        o.subscribeOn(SerialDispatchQueueScheduler.init(internalSerialQueueName: "com.vuryleo.iitcmobile.network"))
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: {
                 _ -> Void in
-                finished += 1
-                hud.progress = Float(finished) / Float(all)
             }, onError: {
                 (e) -> Void in
                 print(e)

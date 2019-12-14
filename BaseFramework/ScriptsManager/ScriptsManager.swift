@@ -225,43 +225,60 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         userDefaults.set(loadedPluginNames, forKey: "LoadedPlugins")
     }
 
-    open func updatePlugins() -> Observable<Void> {
-        var scripts = storedPlugins
-        scripts.append(mainScript)
-        scripts.append(positionScript)
-        return Observable.from(scripts).flatMap {
-            script -> Observable<(String, Script)> in
-            guard let url = script.updateURL else {
-                return Observable<(String, Script)>.just(("", script))
+    open func updatePlugin(script: Script) -> (Observable<Void>, Progress) {
+        let progress = Progress.init(totalUnitCount: 20)
+        let observable = Observable.just(1).flatMap { (_) -> Observable<(String?)> in
+            guard let updateURL = script.updateURL else {
+                progress.completedUnitCount = 10
+                return Observable.just(nil)
             }
-            return Alamofire.request(url).rx.string().map {
-                string -> (String, Script) in
-                return (string, script)
+            let request = Alamofire.request(updateURL)
+            progress.addChild(request.progress, withPendingUnitCount: 10)
+            return request.rx.string().map { metaData -> String? in
+                let attribute = Script.getJSAttributes(metaData)
+                guard let downloadURL = attribute["downloadURL"]?.first else {
+                    return nil
+                }
+                guard let newVersion = attribute["version"]?.first, let oldVersion = script.version else {
+                    return nil
+                }
+                if newVersion.compare(oldVersion, options: .numeric) != .orderedDescending {
+                    return nil
+                }
+                return downloadURL
             }
-        }.flatMap {
-            string, script -> Observable<Void> in
-            let attribute = Script.getJSAttributes(string)
-            guard let downloadURL = attribute["downloadURL"]?.first else {
-                return Observable<Void>.just(Void())
+        }.flatMap { (downloadURL) -> Observable<Void> in
+            guard let downloadURL = downloadURL else {
+                progress.completedUnitCount += 10
+                return Observable.just(Void())
             }
-            guard let newVersion = attribute["version"]?.first, let oldVersion = script.version else {
-                return Observable<Void>.just(Void())
-            }
-            if newVersion.compare(oldVersion, options: .numeric) != .orderedDescending {
-                return Observable<Void>.just(Void())
-            }
-            return Alamofire.request(downloadURL).rx.string().map {
-                string in
+            let request = Alamofire.request(downloadURL)
+            progress.addChild(request.progress, withPendingUnitCount: 10)
+            return request.rx.data().map { (data) in
                 var path: URL
                 if script.isUserScript {
                     path = self.userScriptsPath.appendingPathComponent(script.fileName)
                 } else {
                     path = script.filePath
                 }
-
-                try string.write(to: path, atomically: true, encoding: String.Encoding.utf8)
+                try data.write(to: path)
             }
         }
+
+        return (observable, progress)
+    }
+
+    open func updatePlugins() -> (Observable<Void>, Progress) {
+        var scripts = storedPlugins
+        scripts.append(mainScript)
+        scripts.append(positionScript)
+        let progress = Progress(totalUnitCount: Int64(scripts.count * 20))
+        return (Observable.from(scripts).flatMap {
+            script -> Observable<Void> in
+            let (o, p) = self.updatePlugin(script: script)
+            progress.addChild(p, withPendingUnitCount: 20)
+            return o
+        }, progress)
     }
 
     open func syncDocumentAndContainer() {
