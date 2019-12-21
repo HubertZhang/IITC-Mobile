@@ -38,7 +38,7 @@ open class Script: NSObject {
         return String(data: try! JSONEncoder().encode(pluginInfo), encoding: .utf8)!
     }
 
-    init(atFilePath filePath: URL) throws {
+    public init(atFilePath filePath: URL) throws {
         self.fileContent = try String(contentsOf: filePath)
         let attributes = Script.getJSAttributes(fileContent)
         let start = "var GM_info = \(Script.generateGMInfo(attributes));\n"

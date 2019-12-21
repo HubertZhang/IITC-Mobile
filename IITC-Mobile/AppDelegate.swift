@@ -60,20 +60,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        if url.pathExtension  != ".js" {
+        if url.pathExtension != "js" {
             return false
         }
 
-        let tempFolder = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).last!.appendingPathComponent("imported", isDirectory: true)
-        try? FileManager.default.createDirectory(at: tempFolder, withIntermediateDirectories: true, attributes: [:])
-
-        let filename = url.lastPathComponent
-        let destURL = tempFolder.appendingPathComponent(filename)
-        try? FileManager.default.removeItem(at: destURL)
         do {
-            try FileManager.default.copyItem(at: url, to: destURL)
+            let script = try Script.init(atFilePath: url)
+            let alert = UIAlertController(title: "Save JS File to IITC?", message: "A JavaScript file detected. Would you like to save this file to IITC (as a Plugin)?\nName:\(script.name ?? "undefined")\nCategory:\(script.category)\nVersion:\(script.version ?? "unknown")", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {
+                _ in
+                if url.isFileURL {
+                    do {
+                        let userScriptsPath = ScriptsManager.sharedInstance.userScriptsPath
+                        let filename = url.lastPathComponent
+                        let destURL = userScriptsPath.appendingPathComponent(filename)
+                        try? FileManager.default.removeItem(at: destURL)
+                        try FileManager.default.copyItem(at: url, to: destURL)
+                        ScriptsManager.sharedInstance.reloadScripts()
+                    } catch let e {
+                        print(e.localizedDescription)
+                    }
+                }
+
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.window?.rootViewController?.present(alert, animated: true, completion: nil)
         } catch let e {
-            print(e.localizedDescription)
+            let alert = UIAlertController(title: "Failed to parse JS File", message: "When parsing file at \(url), an error occured: \(e.localizedDescription)", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            self.window?.rootViewController?.present(alert, animated: true, completion: nil)
         }
         return true
     }

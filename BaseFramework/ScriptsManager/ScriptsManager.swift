@@ -18,16 +18,15 @@ extension UserDefaults {
 }
 
 public let ScriptsUpdatedNotification = Notification.Name(rawValue: "ScriptsUpdatedNotification")
-public let ContainerIdentifier: String = "group.com.vuryleo.iitc"
+
+public enum IITCVersion: String {
+    case originalRelease = "release"
+    case originalTest = "test"
+    case ce = "ce"
+}
 
 open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
-    public enum Version: String {
-        case originalRelease = "release"
-        case originalTest = "test"
-        case ce = "ce"
-    }
-
-    public var currentVersion: Version
+    public var currentVersion: IITCVersion
 
     public static let sharedInstance = ScriptsManager()
 
@@ -63,7 +62,7 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         userScriptsPath = documentPath.appendingPathComponent("userScripts", isDirectory: true)
         try? FileManager.default.createDirectory(at: userScriptsPath, withIntermediateDirectories: true, attributes: nil)
 
-        currentVersion = ScriptsManager.Version(rawValue: userDefaults.pref_iitc_version ?? "release") ?? .originalRelease
+        currentVersion = IITCVersion(rawValue: userDefaults.pref_iitc_version ?? "release") ?? .originalRelease
 
         loadedPluginNames = userDefaults.array(forKey: "LoadedPlugins") as? [String] ?? [String]()
         loadedPlugins = Set<String>(loadedPluginNames)
@@ -73,7 +72,7 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         checkUpgrade()
 
         defaultObservation = userDefaults.observe(\.pref_iitc_version) { (defaults, _) in
-            guard let v = ScriptsManager.Version(rawValue: defaults.pref_iitc_version ?? "release") else {
+            guard let v = IITCVersion(rawValue: defaults.pref_iitc_version ?? "release") else {
                 return
             }
             self.switchIITCVersion(version: v)
@@ -322,12 +321,8 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         loadedPlugins = Set<String>(loadedPluginNames)
     }
 
-    open func switchIITCVersion(version: Version) {
+    open func switchIITCVersion(version: IITCVersion) {
         self.currentVersion = version
         self.reloadScripts()
-    }
-
-    open func importScript(content: String) {
-
     }
 }
