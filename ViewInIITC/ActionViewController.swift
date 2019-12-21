@@ -12,21 +12,16 @@ import WebKit
 import BaseFramework
 
 class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDownloadDelegate {
-    private var observationProgress: NSKeyValueObservation?
 
-    var webView: IITCWebView!
-    var location = IITCLocation()
+    var webView: IITCWebViewController!
+
     var layersController: LayersController = LayersController.sharedInstance
 
-    var url: URL = URL(string: "https://intel.ingress.com/intel")!
+    var location = IITCLocation()
 
     var userDefaults = UserDefaults(suiteName: ContainerIdentifier)!
 
     @IBOutlet weak var backButton: UIBarButtonItem!
-
-    @IBOutlet weak var webProgressView: UIProgressView!
-
-    var loadIITCNeeded = true
 
     lazy var session: URLSession = {
         let config = URLSessionConfiguration.background(withIdentifier: "com.vuryleo.iitcmobile.background")
@@ -99,53 +94,11 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
         }
     }
 
-    func configureWebView() {
-        syncCookie()
-        self.webView = IITCWebView(frame: CGRect.zero)
-        if #available(iOS 11.0, *) {
-            self.webView.scrollView.contentInsetAdjustmentBehavior = .never
-        } else {
-            // Fallback on earlier versions
-        }
-        self.webView.translatesAutoresizingMaskIntoConstraints = false
-        self.webView.navigationDelegate = self
-        self.webView.uiDelegate = self
-        self.view.addSubview(self.webView)
-
-        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:[top][v]|", options: [], metrics: nil, views: ["v": self.webView!, "top": self.topLayoutGuide]))
-        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "|[v]|", options: [], metrics: nil, views: ["v": self.webView!]))
-
-        self.observationProgress = self.webView.observe(\IITCWebView.estimatedProgress, changeHandler: { (webview, _) in
-            let progress = webview.estimatedProgress
-            self.webProgressView.setProgress(Float(progress), animated: true)
-            if progress == 1.0 {
-                UIView.animate(withDuration: 1, animations: {
-                    () -> Void in
-                    self.webProgressView.alpha = 0
-                }, completion: { _ in
-                    self.webProgressView.progress = 0
-                })
-            } else {
-                self.webProgressView.alpha = 1
-            }
-        })
-        self.view.bringSubviewToFront(webProgressView)
-    }
-
     func configureNotification() {
-        NotificationCenter.default.addObserver(self, selector: #selector(bootFinished), name: JSNotificationBootFinished, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(setCurrentPanel(_:)), name: JSNotificationPaneChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadIITC), name: JSNotificationReloadRequired, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(sharedAction(_:)), name: JSNotificationSharedAction, object: nil)
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "SwitchToPanel"), object: nil, queue: OperationQueue.main) {
-            [weak self] (notification) in
-            guard let panel = notification.userInfo?["Panel"] as? String else {
-                return
-            }
-            self?.switchToPanel(panel)
-        }
+
     }
 
+    var url: URL?
     func extensionURLItemHandler(item: NSSecureCoding?, error: Error!) {
         guard let wrappedURL = item as? URL else {
             return
@@ -154,7 +107,7 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
         if wrappedURL.host?.contains("ingress.com") ?? false {
             self.url = wrappedURL
             OperationQueue.main.addOperation {
-                self.webView.load(URLRequest(url: wrappedURL))
+                self.webView.load(url: wrappedURL)
             }
         } else if wrappedURL.host == "maps.apple.com" {
             var components = URLComponents(url: wrappedURL, resolvingAgainstBaseURL: false)!
@@ -169,19 +122,18 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
                 newURLComponents.queryItems = [ll[0]]
                 if let newURL = newURLComponents.url {
                     OperationQueue.main.addOperation {
-                        self.webView.load(URLRequest(url: newURL))
+                        self.webView.load(url: newURL)
                     }
                 }
             }
         } else if wrappedURL.pathExtension == "js" {
             OperationQueue.main.addOperation {
-                self.webView.loadHTMLString("JSFile", baseURL: nil)
+                self.webView.load(urlString: "JSFile")
                 self.handleJSFileURL(wrappedURL)
             }
         } else {
             OperationQueue.main.addOperation {
-                self.webProgressView.isHidden = true
-                self.webView.loadHTMLString("Link not supported:\(wrappedURL.absoluteString)", baseURL: nil)
+                self.webView.load(urlString: "Link not supported:\(wrappedURL.absoluteString)")
             }
         }
 
@@ -189,10 +141,11 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        configureWebView()
         configureNotification()
-        self.loadIITCNeeded = true
+        syncCookie()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
         var founded = false
         for item in self.extensionContext?.inputItems ?? [] where item is NSExtensionItem {
             guard let inputItem = item as? NSExtensionItem else {
@@ -206,19 +159,17 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
             }
         }
         if !founded {
-            self.webProgressView.isHidden = true
-            self.webView.loadHTMLString("Link not supported", baseURL: nil)
+            self.webView.load(urlString: "Link not supported")
         }
     }
 
     @IBAction func done() {
         // Return any edited content to the host app.
         // This template doesn't do anything, so we just echo the passed in items.
-        self.extensionContext!.completeRequest(returningItems: self.extensionContext!.inputItems, completionHandler: nil)
+        self.extensionContext!.completeRequest(returningItems: nil, completionHandler: nil)
     }
 
     deinit {
-        self.observationProgress = nil
         NotificationCenter.default.removeObserver(self)
     }
 
@@ -227,102 +178,23 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
         // Dispose of any resources that can be recreated.
     }
 
+    // MARK: Toolbar Buttons
     @IBAction func backButtonPressed(_ sender: AnyObject) {
-        if !self.backPanel.isEmpty {
-            let panel = self.backPanel.removeLast()
-
-            self.switchToPanel(panel)
-            self.backButtonPressed = true
-        }
-        if self.backPanel.isEmpty {
-            self.backButton.isEnabled = false
-        }
+        self.webView.goBackPanel()
     }
 
     @IBAction func reloadButtonPressed(_ aa: AnyObject) {
-        reloadIITC()
+        NotificationCenter.default.post(name: JSNotificationReloadRequired, object: nil)
     }
 
-    @objc func bootFinished() {
-        getLayers()
-        self.webView.evaluateJavaScript("if(urlPortalLL[0] != undefined) window.selectPortalByLatLng(urlPortalLL[0],urlPortalLL[1]);")
-    }
-
-    var currentPanelID = "map"
-    var backPanel = [String]()
-    var backButtonPressed = false
-
-    @objc func setCurrentPanel(_ notification: Notification) {
-        guard let panel = (notification as NSNotification).userInfo?["paneID"] as? String else {
-            return
+    // MARK: Segue Handler
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "layerChooser" {
+            self.webView.needUpdateLayer()
+        } else if segue.identifier == "embedIITC" {
+            self.webView = segue.destination as! IITCWebViewController
+            self.webView.webViewUIDelegate = self
         }
-
-        if (panel == self.currentPanelID) {
-            return
-        }
-
-        // map pane is top-lvl. clear stack.
-        if (panel == "map") {
-            self.backPanel.removeAll()
-        }
-        // don't push current pane to backstack if this method was called via back button
-        else if (!self.backButtonPressed) {
-            self.backPanel.append(self.currentPanelID)
-            self.backButton.isEnabled = true
-        }
-
-        self.backButtonPressed = false
-        self.currentPanelID = panel
-    }
-
-    func switchToPanel(_ pane: String) {
-        self.webView.evaluateJavaScript(String(format: "window.show('%@')", pane))
-    }
-
-    @objc func reloadIITC() {
-        self.loadIITCNeeded = true
-        let userAgent = userDefaults.string(forKey: "pref_useragent")
-        if userAgent != "" {
-            self.webView.customUserAgent = userAgent
-        }
-        self.webView.load(URLRequest(url: url))
-    }
-
-    func getLayers() {
-        self.webView.evaluateJavaScript("window.layerChooser.getLayers()")
-    }
-
-    @objc func sharedAction(_ notification: Notification) {
-        self.webView.evaluateJavaScript("window.dialog({text:\"Not supported in Action\"})")
-    }
-}
-
-extension ActionViewController: WKNavigationDelegate {
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        //        print(#function)
-        //        print(navigationAction.request.mainDocumentURL)
-        if let urlString = navigationAction.request.mainDocumentURL?.absoluteString {
-            if urlString.contains("google.com") {
-                //                print("Allowed1")
-                self.webView.configuration.userContentController.removeAllUserScripts()
-                self.backPanel.removeAll()
-                self.backButton.isEnabled = false
-                self.loadIITCNeeded = true
-            } else if urlString.contains("ingress.com/intel") && self.loadIITCNeeded {
-                self.webView.configuration.userContentController.removeAllUserScripts()
-                ScriptsManager.sharedInstance.reloadSettings()
-                var scripts = ScriptsManager.sharedInstance.getLoadedScripts()
-                let currentMode = IITCLocationMode(rawValue: userDefaults.integer(forKey: "pref_user_location_mode"))!
-                if currentMode != .notShow {
-                    scripts.append(ScriptsManager.sharedInstance.positionScript)
-                }
-                for script in scripts {
-                    self.webView.configuration.userContentController.addUserScript(WKUserScript.init(source: script.fileContent, injectionTime: .atDocumentEnd, forMainFrameOnly: true))
-                }
-                self.loadIITCNeeded = false
-            }
-        }
-        decisionHandler(.allow)
     }
 }
 

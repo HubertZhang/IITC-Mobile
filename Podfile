@@ -5,9 +5,11 @@ use_frameworks!
 
 abstract_target 'Base' do
     pod 'RxSwift', '~> 5'
+    pod 'RxCocoa', '~> 5'
     pod 'Alamofire', '~> 4'
     pod 'RxAlamofire', '~> 5'
     pod 'TPInAppReceipt'
+    pod 'WebViewConsole', :git => 'https://github.com/Hubertzhang/WebViewConsole.git'
     
     target 'BaseFramework'
     abstract_target 'Application' do
@@ -18,7 +20,6 @@ abstract_target 'Base' do
             pod 'InAppSettingsKit'
             pod 'Highlightr'
             pod 'RSKGrowingTextView'
-            pod 'WBWebViewConsole', :git => 'https://github.com/Hubertzhang/WBWebViewConsole.git', :branch => 'table'
         end
         
         target 'ViewInIITC'

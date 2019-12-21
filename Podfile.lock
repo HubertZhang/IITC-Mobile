@@ -74,9 +74,19 @@ PODS:
   - RxAlamofire/Core (5.1.0):
     - Alamofire (~> 4.8)
     - RxSwift (~> 5.0)
+  - RxCocoa (5.0.1):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxRelay (5.0.1):
+    - RxSwift (~> 5)
   - RxSwift (5.0.1)
   - TPInAppReceipt (2.2.3)
-  - WBWebViewConsole (1.0.2)
+  - WebViewConsole (0.1.0):
+    - WebViewConsole/Console (= 0.1.0)
+    - WebViewConsole/ConsoleView (= 0.1.0)
+  - WebViewConsole/Console (0.1.0)
+  - WebViewConsole/ConsoleView (0.1.0):
+    - RSKGrowingTextView
 
 DEPENDENCIES:
   - Alamofire (~> 4)
@@ -86,9 +96,10 @@ DEPENDENCIES:
   - MBProgressHUD
   - RSKGrowingTextView
   - RxAlamofire (~> 5)
+  - RxCocoa (~> 5)
   - RxSwift (~> 5)
   - TPInAppReceipt
-  - WBWebViewConsole (from `https://github.com/Hubertzhang/WBWebViewConsole.git`, branch `table`)
+  - WebViewConsole (from `https://github.com/Hubertzhang/WebViewConsole.git`)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -110,18 +121,19 @@ SPEC REPOS:
     - RSKGrowingTextView
     - RSKPlaceholderTextView
     - RxAlamofire
+    - RxCocoa
+    - RxRelay
     - RxSwift
     - TPInAppReceipt
 
 EXTERNAL SOURCES:
-  WBWebViewConsole:
-    :branch: table
-    :git: https://github.com/Hubertzhang/WBWebViewConsole.git
+  WebViewConsole:
+    :git: https://github.com/Hubertzhang/WebViewConsole.git
 
 CHECKOUT OPTIONS:
-  WBWebViewConsole:
-    :commit: 3b06980f12130b30ff2f440a826d9a58a1edcf90
-    :git: https://github.com/Hubertzhang/WBWebViewConsole.git
+  WebViewConsole:
+    :commit: f4bac27195f9ec1cab5a75a8eea5335961c91fbd
+    :git: https://github.com/Hubertzhang/WebViewConsole.git
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
@@ -142,10 +154,12 @@ SPEC CHECKSUMS:
   RSKGrowingTextView: 9fdc68c8dabaacd54e23c316ff14b73aef034594
   RSKPlaceholderTextView: df72ca93edfac185b98f51cb85e445f54ce8a163
   RxAlamofire: a2d7621de4c23a0c6e7b476b504acc32838ee341
+  RxCocoa: e741b9749968e8a143e2b787f1dfbff2b63d0a5c
+  RxRelay: 89d54507f4fd4d969e6ec1d4bd7f3673640b4640
   RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
   TPInAppReceipt: b6771314a6bd5b5916d0834cb7548aa7b32925cd
-  WBWebViewConsole: 1288737d136b44a281cc654828339127f959e21c
+  WebViewConsole: 063d3d3b0da5ad82544de6efadc75ba07aec98f7
 
-PODFILE CHECKSUM: bd48919fb262d947511d4836c0f0144f98a58d0a
+PODFILE CHECKSUM: 064d0e0542c289f40acc6ff5e591e6f46fb43dbc
 
 COCOAPODS: 1.8.3

@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="uZQ-1d-fYg">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="uZQ-1d-fYg">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
-        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,15 +19,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="528"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="tAK-Ve-lB6">
-                                <rect key="frame" x="0.0" y="64" width="320" height="2"/>
-                            </progressView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9fv-mr-tqp">
+                                <rect key="frame" x="0.0" y="44" width="320" height="484"/>
+                                <connections>
+                                    <segue destination="pxl-sP-nJm" kind="embed" identifier="embedIITC" id="KaQ-3A-2b5"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="tAK-Ve-lB6" firstAttribute="top" secondItem="qkL-Od-lgU" secondAttribute="bottom" id="WF6-qb-Wv5"/>
-                            <constraint firstAttribute="trailing" secondItem="tAK-Ve-lB6" secondAttribute="trailing" id="fwf-DK-PvW"/>
-                            <constraint firstItem="tAK-Ve-lB6" firstAttribute="leading" secondItem="zMn-AG-sqS" secondAttribute="leading" id="hr5-gA-fCJ"/>
+                            <constraint firstAttribute="bottom" secondItem="9fv-mr-tqp" secondAttribute="bottom" id="4tG-PA-53z"/>
+                            <constraint firstItem="9fv-mr-tqp" firstAttribute="leading" secondItem="zMn-AG-sqS" secondAttribute="leading" id="Uxf-DA-LIa"/>
+                            <constraint firstAttribute="trailing" secondItem="9fv-mr-tqp" secondAttribute="trailing" id="Vhc-Ir-Ggh"/>
+                            <constraint firstItem="9fv-mr-tqp" firstAttribute="top" secondItem="qkL-Od-lgU" secondAttribute="bottom" id="WgL-Hm-t6c"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="odJ-Ht-7g8">
@@ -52,7 +53,7 @@
                             </barButtonItem>
                             <barButtonItem title="Layer" id="JtD-Ux-scL">
                                 <connections>
-                                    <segue destination="NST-j8-ogO" kind="modal" id="mjA-CP-cgv"/>
+                                    <segue destination="NST-j8-ogO" kind="modal" identifier="layerChooser" id="mjA-CP-cgv"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -62,12 +63,11 @@
                     <connections>
                         <outlet property="backButton" destination="2O6-tV-YgJ" id="UTA-cv-Mll"/>
                         <outlet property="view" destination="zMn-AG-sqS" id="Qma-de-2ek"/>
-                        <outlet property="webProgressView" destination="tAK-Ve-lB6" id="s9z-nE-NJv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X47-rx-isc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="464" y="-124"/>
+            <point key="canvasLocation" x="672.46376811594212" y="-83.035714285714278"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="knu-Xr-MA9">
@@ -75,7 +75,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="NST-j8-ogO" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="vXw-CM-teo">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -85,7 +85,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tzd-SI-x0D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="867.5" y="-104.5"/>
+            <point key="canvasLocation" x="1385" y="-71"/>
         </scene>
         <!--Layers-->
         <scene sceneID="4WF-8z-PGQ">
@@ -96,11 +96,11 @@
                         <viewControllerLayoutGuide type="bottom" id="Bii-aF-KA4"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="uai-T2-EhV">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IFi-T9-jOg">
-                                <rect key="frame" x="187.5" y="108" width="0.0" height="0.0"/>
+                                <rect key="frame" x="187.5" y="100" width="0.0" height="0.0"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" id="GJz-oU-meF"/>
@@ -108,7 +108,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bFg-6M-vJC">
-                                <rect key="frame" x="0.0" y="108" width="375" height="559"/>
+                                <rect key="frame" x="0.0" y="100" width="375" height="547"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="OFT-bQ-9x4" id="jRX-7l-3DV"/>
@@ -116,7 +116,7 @@
                                 </connections>
                             </tableView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="XjP-h6-qr4">
-                                <rect key="frame" x="0.0" y="108" width="375" height="559"/>
+                                <rect key="frame" x="0.0" y="100" width="375" height="547"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="OFT-bQ-9x4" id="FHT-Vt-sWe"/>
@@ -124,7 +124,7 @@
                                 </connections>
                             </tableView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IrH-MI-IWy">
-                                <rect key="frame" x="0.0" y="108" width="375" height="559"/>
+                                <rect key="frame" x="0.0" y="100" width="375" height="547"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="OFT-bQ-9x4" id="mmm-yu-9pW"/>
@@ -132,12 +132,12 @@
                                 </connections>
                             </tableView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qAd-9e-jWv">
-                                <rect key="frame" x="0.0" y="64" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="56" width="375" height="44"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="a7P-o2-BbY"/>
                                     <barButtonItem style="plain" id="LbY-WY-qsD">
                                         <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="SW9-Q7-wQz">
-                                            <rect key="frame" x="30.5" y="7.5" width="314" height="29"/>
+                                            <rect key="frame" x="21.5" y="6" width="332" height="32"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <segments>
                                                 <segment title="Panel"/>
@@ -192,7 +192,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QfT-7A-356" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1318.5" y="-104.5"/>
+            <point key="canvasLocation" x="2145" y="-71"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="kKy-Jj-spo">
@@ -200,7 +200,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="uZQ-1d-fYg" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="I7A-xB-1EV">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -210,7 +210,38 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dgt-Y4-eSX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4" y="-124"/>
+            <point key="canvasLocation" x="-5.7971014492753632" y="-83.035714285714278"/>
+        </scene>
+        <!--Web View Controller-->
+        <scene sceneID="ilJ-9k-efI">
+            <objects>
+                <viewController id="pxl-sP-nJm" customClass="IITCWebViewController" customModule="BaseFramework" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="WFJ-dD-as4"/>
+                        <viewControllerLayoutGuide type="bottom" id="Yyl-gt-fw4"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lEE-a4-NKC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="484"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <progressView opaque="NO" alpha="0.0" contentMode="scaleToFill" verticalHuggingPriority="750" insetsLayoutMarginsFromSafeArea="NO" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="qiM-V4-JhR">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="2"/>
+                            </progressView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="qiM-V4-JhR" firstAttribute="leading" secondItem="lEE-a4-NKC" secondAttribute="leading" id="aBi-Y2-iOD"/>
+                            <constraint firstAttribute="trailing" secondItem="qiM-V4-JhR" secondAttribute="trailing" id="lD3-hn-6cs"/>
+                            <constraint firstItem="qiM-V4-JhR" firstAttribute="top" secondItem="lEE-a4-NKC" secondAttribute="top" id="wsc-LP-xQx"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webProgressView" destination="qiM-V4-JhR" id="tRC-1I-OIn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nfB-tf-rLL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="672" y="471"/>
         </scene>
     </scenes>
 </document>
