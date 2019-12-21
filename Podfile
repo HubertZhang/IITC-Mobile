@@ -32,4 +32,7 @@ post_install do |installer|
       config.build_settings['LD_NO_PIE'] = 'NO'
     end
   end
+  
+  require 'fileutils'
+  FileUtils.cp_r('Pods/Target Support Files/Pods-Base-Application-IITC-Mobile/Pods-Base-Application-IITC-Mobile-acknowledgements.plist', 'IITC-Mobile/UI/Settings.bundle/Acknowledgements.plist', :remove_destination => true)
 end
