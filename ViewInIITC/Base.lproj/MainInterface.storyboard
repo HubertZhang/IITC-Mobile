@@ -26,7 +26,7 @@
                                 </connections>
                             </containerView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="9fv-mr-tqp" secondAttribute="bottom" id="4tG-PA-53z"/>
                             <constraint firstItem="9fv-mr-tqp" firstAttribute="leading" secondItem="zMn-AG-sqS" secondAttribute="leading" id="Uxf-DA-LIa"/>
@@ -101,7 +101,6 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IFi-T9-jOg">
                                 <rect key="frame" x="187.5" y="100" width="0.0" height="0.0"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" id="GJz-oU-meF"/>
                                     <constraint firstAttribute="width" id="Nlx-q8-8IH"/>
@@ -109,7 +108,7 @@
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bFg-6M-vJC">
                                 <rect key="frame" x="0.0" y="100" width="375" height="547"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="OFT-bQ-9x4" id="jRX-7l-3DV"/>
                                     <outlet property="delegate" destination="OFT-bQ-9x4" id="xZ5-S4-d9m"/>
@@ -117,7 +116,7 @@
                             </tableView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="XjP-h6-qr4">
                                 <rect key="frame" x="0.0" y="100" width="375" height="547"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="OFT-bQ-9x4" id="FHT-Vt-sWe"/>
                                     <outlet property="delegate" destination="OFT-bQ-9x4" id="6Z9-sB-UJf"/>
@@ -125,7 +124,7 @@
                             </tableView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IrH-MI-IWy">
                                 <rect key="frame" x="0.0" y="100" width="375" height="547"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="OFT-bQ-9x4" id="mmm-yu-9pW"/>
                                     <outlet property="delegate" destination="OFT-bQ-9x4" id="5Ot-f7-b0R"/>
