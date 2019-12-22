@@ -102,6 +102,24 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
             userDefaults.set(VersionTool.default.currentVersion, forKey: "Version")
             userDefaults.set(VersionTool.default.currentBuild, forKey: "BuildVersion")
         }
+        migrateFromContainer()
+    }
+
+    func migrateFromContainer() {
+        let oldPath = containerPath.appendingPathComponent("userScripts", isDirectory: true)
+        if FileManager.default.fileExists(atPath: oldPath.path) {
+            guard let directoryContents = try? FileManager.default.contentsOfDirectory(at: oldPath, includingPropertiesForKeys: nil, options: .skipsHiddenFiles) else {
+                return
+            }
+            for pluginPath in directoryContents {
+                do {
+                    try FileManager.default.copyItem(at: pluginPath, to: userScriptsPath.appendingPathComponent(pluginPath.lastPathComponent))
+                } catch {
+                    continue
+                }
+            }
+            try? FileManager.default.removeItem(at: oldPath)
+        }
     }
 
     open func reloadScripts() {
