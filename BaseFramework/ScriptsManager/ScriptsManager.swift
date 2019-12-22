@@ -78,7 +78,7 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
             self.switchIITCVersion(version: v)
         }
 
-        documentWatcher = DirectoryWatcher(documentPath, delegate: self)
+        documentWatcher = DirectoryWatcher(userScriptsPath, delegate: self)
 
         hookScript = try! Script(coreJS: bundleScriptPath.appendingPathComponent("ios-hooks.js"), withName: "hook")
         hookScript.fileContent = String(format: hookScript.fileContent, VersionTool.default.currentVersion, Int(VersionTool.default.currentBuild) ?? 0)
