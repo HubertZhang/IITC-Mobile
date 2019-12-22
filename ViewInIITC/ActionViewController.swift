@@ -81,6 +81,7 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         let containerPath = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContainerIdentifier)!
         let extensionFolder = containerPath.appendingPathComponent("extension", isDirectory: true)
+        try? FileManager.default.createDirectory(at: extensionFolder, withIntermediateDirectories: true, attributes: nil)
         guard let filename = downloadTask.response?.suggestedFilename else {
             return
         }

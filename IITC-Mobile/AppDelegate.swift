@@ -27,7 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let hud = MBProgressHUD.showAdded(to: self.window!.rootViewController!.view, animated: true)
         DispatchQueue.global().async(execute: {
             _ = ScriptsManager.sharedInstance.getLoadedScripts()
-            ScriptsManager.sharedInstance.synchronizeExtensionFolder()
             DispatchQueue.main.async(execute: {
                 hud.hide(animated: true)
             })
@@ -52,6 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        ScriptsManager.sharedInstance.synchronizeExtensionFolder()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -64,18 +64,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return false
         }
 
+        var fileUrl = url
+
+        if let canOpen = options[.openInPlace] as? Bool, !canOpen {
+            do {
+                let tempPath = try FileManager.default.url(for: .itemReplacementDirectory, in: .userDomainMask, appropriateFor: url, create: true)
+                try FileManager.default.copyItem(at: url, to: tempPath.appendingPathComponent(url.lastPathComponent))
+                fileUrl = tempPath.appendingPathComponent(url.lastPathComponent)
+            } catch let e {
+                let alert = UIAlertController(title: "Failed to import JS File", message: "When importing file at \(url), an error occured: \(e.localizedDescription)", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                self.window?.rootViewController?.present(alert, animated: true, completion: nil)
+            }
+        }
+
         do {
-            let script = try Script.init(atFilePath: url)
+            let script = try Script.init(atFilePath: fileUrl)
             let alert = UIAlertController(title: "Save JS File to IITC?", message: "A JavaScript file detected. Would you like to save this file to IITC (as a Plugin)?\nName:\(script.name ?? "undefined")\nCategory:\(script.category)\nVersion:\(script.version ?? "unknown")", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {
                 _ in
-                if url.isFileURL {
+                if fileUrl.isFileURL {
                     do {
                         let userScriptsPath = ScriptsManager.sharedInstance.userScriptsPath
-                        let filename = url.lastPathComponent
+                        let filename = fileUrl.lastPathComponent
                         let destURL = userScriptsPath.appendingPathComponent(filename)
                         try? FileManager.default.removeItem(at: destURL)
-                        try FileManager.default.copyItem(at: url, to: destURL)
+                        try FileManager.default.copyItem(at: fileUrl, to: destURL)
                         ScriptsManager.sharedInstance.reloadScripts()
                     } catch let e {
                         print(e.localizedDescription)
