@@ -186,6 +186,10 @@ extension IITCWebViewController {
         self.webView.load(URLRequest(url: URL(string: urlString)!))
     }
 
+    public func load(htmlString: String) {
+        self.webView.loadHTMLString(htmlString, baseURL: nil)
+    }
+
     public func needUpdateLayer() {
         self.webView.evaluateJavaScript("window.layerChooser.getLayers()")
     }

@@ -128,12 +128,12 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
             }
         } else if wrappedURL.pathExtension == "js" {
             OperationQueue.main.addOperation {
-                self.webView.load(urlString: "JSFile")
+                self.webView.load(htmlString: "JSFile")
                 self.handleJSFileURL(wrappedURL)
             }
         } else {
             OperationQueue.main.addOperation {
-                self.webView.load(urlString: "Link not supported:\(wrappedURL.absoluteString)")
+                self.webView.load(htmlString: "Link not supported:\(wrappedURL.absoluteString)")
             }
         }
 
@@ -159,7 +159,7 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
             }
         }
         if !founded {
-            self.webView.load(urlString: "Link not supported")
+            self.webView.load(htmlString: "Link not supported")
         }
     }
 
