@@ -99,7 +99,7 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
             }
         case baseLayerTable:
             let layer = layersController.baseLayers[(indexPath as NSIndexPath).row]
-            cell.textLabel!.text = layer.layerName
+            cell.textLabel?.text = layer.layerName
             if layer.active {
                 cell.accessoryType = .checkmark
             } else {
@@ -107,7 +107,7 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
             }
         case overlayLayerTable:
             let layer = layersController.overlayLayers[(indexPath as NSIndexPath).row]
-            cell.textLabel!.text = layer.layerName
+            cell.textLabel?.text = layer.layerName
             if layer.active {
                 cell.accessoryType = .checkmark
             } else {
@@ -144,11 +144,11 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
             let layer = layersController.overlayLayers[(indexPath as NSIndexPath).row]
             if layer.active {
                 layer.active = false
-                tableView.cellForRow(at: indexPath)!.accessoryType = .none
+                tableView.cellForRow(at: indexPath)?.accessoryType = .none
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "WebViewExecuteJS"), object: nil, userInfo: ["JS": "window.layerChooser.showLayer(\(layer.layerID), false)"])
             } else {
                 layer.active = true
-                tableView.cellForRow(at: indexPath)!.accessoryType = .checkmark
+                tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "WebViewExecuteJS"), object: nil, userInfo: ["JS": "window.layerChooser.showLayer(\(layer.layerID), true)"])
             }
             tableView.deselectRow(at: indexPath, animated: true)
