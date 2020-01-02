@@ -712,7 +712,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "version=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"$PROJECT_DIR/$INFOPLIST_FILE\")\n/usr/libexec/PlistBuddy -c \"Set PreferenceSpecifiers:1:DefaultValue $version\" \"$CODESIGNING_FOLDER_PATH/Settings.bundle/Root.plist\"\n";
+			shellScript = "version=\"$MARKETING_VERSION ($CURRENT_PROJECT_VERSION)\"\n/usr/libexec/PlistBuddy -c \"Set PreferenceSpecifiers:1:DefaultValue $version\" \"$CODESIGNING_FOLDER_PATH/Settings.bundle/Root.plist\"\n";
 		};
 		B7FDA0BD49D78636739F1B48 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
