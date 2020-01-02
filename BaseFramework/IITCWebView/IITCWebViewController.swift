@@ -201,15 +201,8 @@ extension IITCWebViewController: WKNavigationDelegate {
             decisionHandler(.allow)
             return
         }
-        if let urlString = navigationAction.request.mainDocumentURL?.absoluteString {
-            if urlString.contains("google.com") {
-                if self.webView.consoleEnabled {
-                    self.webView.console.clearMessages()
-                }
-                self.webView.removeAllUserScripts()
-                self.backPanel.removeAll()
-                self.loadIITCNeeded = true
-            } else if (urlString.contains("ingress.com/intel")||urlString.contains("intel.ingress.com")) && self.loadIITCNeeded {
+        if let urlString = navigationAction.request.mainDocumentURL?.absoluteString, let host = URLComponents(string: urlString)?.host {
+            if (host.contains("ingress.com/intel") || host.contains("intel.ingress.com")) && self.loadIITCNeeded {
                 if self.webView.consoleEnabled {
                     self.webView.console.clearMessages()
                 }
@@ -223,7 +216,13 @@ extension IITCWebViewController: WKNavigationDelegate {
                     self.webView.configuration.userContentController.addUserScript(WKUserScript.init(source: script.fileContent, injectionTime: .atDocumentEnd, forMainFrameOnly: true))
                 }
                 self.loadIITCNeeded = false
-//                syncCookie()
+            } else {
+                if self.webView.consoleEnabled {
+                    self.webView.console.clearMessages()
+                }
+                self.webView.removeAllUserScripts()
+                self.backPanel.removeAll()
+                self.loadIITCNeeded = true
             }
         }
         decisionHandler(.allow)
