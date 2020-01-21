@@ -193,7 +193,7 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
         if segue.identifier == "layerChooser" {
             self.webView.needUpdateLayer()
         } else if segue.identifier == "embedIITC" {
-            self.webView = segue.destination as! IITCWebViewController
+            self.webView = (segue.destination as! IITCWebViewController)
             self.webView.webViewUIDelegate = self
         }
     }

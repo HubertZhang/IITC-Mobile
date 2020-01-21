@@ -82,6 +82,12 @@ class ConsolePurchaseViewController: UIViewController {
 
     @IBAction func restoreButtonClicked(_ sender: Any) {
         SKPaymentQueue.default().restoreCompletedTransactions()
+        if hud == nil {
+            hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud?.removeFromSuperViewOnHide = false
+            hud?.label.text = "Restoring"
+            hud?.show(animated: true)
+        }
     }
 
     /*
@@ -144,6 +150,7 @@ extension ConsolePurchaseViewController: InAppPurchaseUIDelegate {
         } else {
             hud?.label.text = "Deferred"
             hud?.hide(animated: true, afterDelay: 5)
+            hud = nil
         }
     }
 
@@ -152,6 +159,7 @@ extension ConsolePurchaseViewController: InAppPurchaseUIDelegate {
 
         } else {
             hud?.hide(animated: true)
+            hud = nil
         }
         let alert = UIAlertController(title: "Purchase Failed", message: error?.localizedDescription ?? "Unknown Error", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
@@ -163,6 +171,7 @@ extension ConsolePurchaseViewController: InAppPurchaseUIDelegate {
 
         } else {
             hud?.hide(animated: true)
+            hud = nil
             let alert = UIAlertController(title: "Console Purchased!", message: "Please restart IITC-iOS to enable Debug Console! Debug Console can be turned off in Settings.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
@@ -174,6 +183,7 @@ extension ConsolePurchaseViewController: InAppPurchaseUIDelegate {
 
         } else {
             hud?.hide(animated: true)
+            hud = nil
             let alert = UIAlertController(title: "Purchase Restored", message: "Please restart IITC-iOS to enable Debug Console! Debug Console can be turned off in Settings.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
