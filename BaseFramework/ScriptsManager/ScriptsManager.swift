@@ -23,6 +23,7 @@ public enum IITCVersion: String {
     case originalRelease = "release"
     case originalTest = "test"
     case ce = "ce"
+    case ceTest = "ce-test"
 }
 
 open class ScriptsManager: NSObject, DirectoryWatcherDelegate {

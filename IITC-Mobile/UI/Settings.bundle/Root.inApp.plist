@@ -116,12 +116,14 @@
 				<string>release</string>
 				<string>test</string>
 				<string>ce</string>
+				<string>ce-test</string>
 			</array>
 			<key>Titles</key>
 			<array>
 				<string>IITC.me release build </string>
 				<string>IITC.me test build</string>
 				<string>IITC-CE release build</string>
+				<string>IITC-CE test build</string>
 			</array>
 		</dict>
 		<dict>
