@@ -12,6 +12,8 @@ import Firebase
 import BaseFramework
 import StoreKit
 
+import QuickLook
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -31,6 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 hud.hide(animated: true)
             })
         })
+
+        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.saveFile(_:)), name: JSNotificationSaveFile, object: nil)
 
         return true
     }
@@ -105,5 +109,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController?.present(alert, animated: true, completion: nil)
         }
         return true
+    }
+
+    var fileURL: NSURL?
+    var fileType: String = ""
+    @objc func saveFile(_ notification: Notification) {
+        guard let fileName = notification.userInfo?["fileName"] as? String else {
+            return
+        }
+        let fileType = notification.userInfo?["fileType"] as? String ?? ""
+        guard let fileContent = notification.userInfo?["fileContent"] as? String else {
+            return
+        }
+        var tempURL = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        tempURL.appendPathComponent("download", isDirectory: true)
+        tempURL.appendPathComponent(fileName)
+        try? fileContent.data(using: .utf8)?.write(to: tempURL)
+
+        fileURL = tempURL as NSURL
+        let vc = QLPreviewController()
+        vc.dataSource = self
+        vc.title = "Downloaded File"
+        self.window?.rootViewController?.present(vc, animated: true, completion: {
+            try? FileManager.default.removeItem(at: tempURL)
+            self.fileURL = nil
+        })
+    }
+}
+
+extension AppDelegate: QLPreviewControllerDataSource {
+    func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
+        if self.fileURL == nil {
+            return 0
+        } else {
+            return 1
+        }
+    }
+
+    func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
+        return self.fileURL!
     }
 }
