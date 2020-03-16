@@ -21,7 +21,7 @@ public let JSNotificationSaveFile = Notification.Name(rawValue: "JSNotificationS
 
 open class JSHandler: NSObject, WKScriptMessageHandler {
 
-    static let interfaces = ["addPane", "addPortalHighlighter", "bootFinished", "copy", "dialogFocused", "dialogOpened", "getFileRequestUrlPrefix", "getVersionCode", "getVersionName", "intentPosLink", "reloadIITC", "saveFile", "setActiveHighlighter", "setFollowMode", "setLayers", "setPermalink", "setProgress", "shareString", "showZoom", "spinnerEnabled", "switchToPane", "updateIitc"]
+    static let interfaces = ["addPane", "addPortalHighlighter", "bootFinished", "ioscopy", "dialogFocused", "dialogOpened", "getFileRequestUrlPrefix", "getVersionCode", "getVersionName", "intentPosLink", "reloadIITC", "saveFile", "setActiveHighlighter", "setFollowMode", "setLayers", "setPermalink", "setProgress", "shareString", "showZoom", "spinnerEnabled", "switchToPane", "updateIitc"]
 
     open func initHandlers(`for` userContentController: inout WKUserContentController) {
         for interface in JSHandler.interfaces {
