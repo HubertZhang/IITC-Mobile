@@ -166,9 +166,7 @@ class MainViewController: UIViewController {
 
     @IBAction func debugButtonPressed(_ sender: Any) {
         if self.debugConsoleEnabled {
-//            let vc = WBWebDebugConsoleViewController(console: self.webView.console!)!
-            let vc = ConsoleViewController()
-            vc.console = self.webView.console
+            let vc = ConsoleViewController.init(with: self.webView.console, notificationName: WebViewConsoleMessageUpdated)
             let vc1 = UINavigationController.init(rootViewController: vc)
             vc.navigationItem.leftBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: .done, target: vc, action: #selector(ConsoleViewController.dismissSelf))
             vc1.modalPresentationStyle = UIModalPresentationStyle.popover
@@ -230,7 +228,7 @@ class MainViewController: UIViewController {
         if segue.identifier == "layerChooser" {
             self.webView.needUpdateLayer()
         } else if segue.identifier == "embedIITC" {
-            self.webView = segue.destination as! IITCWebViewController
+            self.webView = (segue.destination as! IITCWebViewController)
             self.webView.webViewUIDelegate = self
         }
     }
