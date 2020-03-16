@@ -17,6 +17,7 @@ public let JSNotificationSharedAction = Notification.Name(rawValue: "JSNotificat
 public let JSNotificationProgressChanged = Notification.Name(rawValue: "JSNotificationProgressChanged")
 public let JSNotificationPermalinkChanged = Notification.Name(rawValue: "JSNotificationPermalinkChanged")
 public let JSNotificationAddPane = Notification.Name(rawValue: "JSNotificationAddPane")
+public let JSNotificationSaveFile = Notification.Name(rawValue: "JSNotificationSaveFile")
 
 open class JSHandler: NSObject, WKScriptMessageHandler {
 
@@ -153,6 +154,24 @@ open class JSHandler: NSObject, WKScriptMessageHandler {
     //    });
     //}
 
+    @objc func saveFile(_ args: Any) {
+        guard let args = args as? [AnyObject] else {
+            return
+        }
+        if args.count != 3 {
+            return
+        }
+        guard let fileName = args[0] as? String else {
+            return
+        }
+        guard let fileType = args[1] as? String else {
+            return
+        }
+        guard let fileContent = args[2] as? String else {
+            return
+        }
+        NotificationCenter.default.post(name: JSNotificationSaveFile, object: self, userInfo: ["fileName": fileName, "fileType": fileType, "fileContent": fileContent])
+    }
 
     @objc func addPane(_ pane: Any) {
         guard let pane = pane as? [AnyObject] else {

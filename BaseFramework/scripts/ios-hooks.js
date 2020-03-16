@@ -88,6 +88,11 @@ function Android() {
     function shareString(string) {
         window.webkit.messageHandlers.shareString.postMessage(string);
     }
+    
+    this.saveFile=saveFile;
+    function saveFile(filename, fileType, data) {
+        window.webkit.messageHandlers.saveFile.postMessage([filename, fileType, data]);
+    }
 }
 var android=new Android();
 
