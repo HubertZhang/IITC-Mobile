@@ -211,8 +211,8 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
 
     open func getLoadedScripts() -> [Script] {
         var result = [Script]()
-        result.append(mainScript)
         result.append(hookScript)
+        result.append(mainScript)
         for name in loadedPluginNames {
             let index = storedPlugins.firstIndex {
                 plugin -> Bool in
