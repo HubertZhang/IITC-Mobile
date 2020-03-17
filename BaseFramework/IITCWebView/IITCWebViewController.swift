@@ -94,7 +94,7 @@ public class IITCWebViewController: UIViewController {
 
     public func setConsole(enabled: Bool) {
         if enabled {
-             self.webView.enableConsole()
+            self.webView.enableConsole()
         } else {
             self.webView.disableConsole()
         }
