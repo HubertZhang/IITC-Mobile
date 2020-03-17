@@ -90,13 +90,11 @@ extension MultiLineTextInputTableViewCell: UITextViewDelegate {
     }
 
     func textViewDidEndEditing(_ textView: UITextView) {
-        UserDefaults(suiteName: ContainerIdentifier)!.set(textView.text, forKey: "pref_useragent")
+        sharedUserDefaults.set(textView.text, forKey: "pref_useragent")
     }
 }
 
 class UserAgentTableViewController: UITableViewController {
-
-    var userDefaults = UserDefaults(suiteName: ContainerIdentifier)!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -145,7 +143,7 @@ class UserAgentTableViewController: UITableViewController {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "InputCell", for: indexPath) as? MultiLineTextInputTableViewCell else {
                 return UITableViewCell()
             }
-            let userAgent = userDefaults.string(forKey: "pref_useragent") ?? ""
+            let userAgent = sharedUserDefaults.string(forKey: "pref_useragent") ?? ""
             if userAgent != "" {
                 cell.textString = userAgent
             }
@@ -172,7 +170,7 @@ class UserAgentTableViewController: UITableViewController {
             }
             cell.textString = PredefinedUserAgents[indexPath.row].1
 
-            UserDefaults(suiteName: ContainerIdentifier)!.set(PredefinedUserAgents[indexPath.row].1, forKey: "pref_useragent")
+            sharedUserDefaults.set(PredefinedUserAgents[indexPath.row].1, forKey: "pref_useragent")
 
         }
     }

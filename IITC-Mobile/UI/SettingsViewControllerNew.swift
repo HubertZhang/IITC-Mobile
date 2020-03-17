@@ -13,12 +13,6 @@ import InAppSettingsKit
 import MBProgressHUD
 import Alamofire
 
-extension UserDefaults {
-    @objc dynamic var pref_console: Bool {
-        return bool(forKey: "pref_console")
-    }
-}
-
 @objc class SettingsViewController: IASKAppSettingsViewController, IASKSettingsDelegate {
     let disposeBag = DisposeBag()
 
@@ -32,28 +26,24 @@ extension UserDefaults {
             self.setHiddenKeys(["pref_console"], animated: false)
         }
 #endif
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: kIASKAppSettingChanged), object: nil, queue: .main) { [weak self] (_) in
+            self?.dirty = true
+        }
     }
 
-    let defaults = UserDefaults(suiteName: ContainerIdentifier)
+    let defaults = sharedUserDefaults
 
-    var consoleObservations: NSKeyValueObservation?
+    var dirty: Bool = false
     override init(style: UITableView.Style) {
         super.init(style: style)
         self.settingsStore = IASKSettingsStoreUserDefaults(userDefaults: defaults)
         self.clearsSelectionOnViewWillAppear = true
-        consoleObservations = defaults?.observe(\.pref_console, options: [.old, .new], changeHandler: { (_, change) in
-            let oldKey = change.oldValue ?? false
-            let newKey = change.newValue ?? false
-            if oldKey != newKey {
-                let alert = UIAlertController(title: "Change not applied yet", message: "Please restart IITC-iOS to enable or disable Debug Console", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            }
-        })
     }
 
     override func viewDidDisappear(_ animated: Bool) {
-        consoleObservations = nil
+        if self.dirty {
+            NotificationCenter.default.post(name: JSNotificationReloadRequired, object: nil)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {

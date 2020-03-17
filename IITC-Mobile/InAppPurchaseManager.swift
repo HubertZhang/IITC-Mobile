@@ -45,7 +45,7 @@ class InAppPurchaseManager: NSObject {
     var receiptRequestTime = 0
     weak var uiDelegate: InAppPurchaseUIDelegate?
     let iCloudStorage = NSUbiquitousKeyValueStore.default
-    let defaults = UserDefaults(suiteName: ContainerIdentifier)
+    let defaults = sharedUserDefaults
 
     var consolePurchased: Bool = false
     var receiptType: ReceiptType = .notExist
@@ -53,10 +53,10 @@ class InAppPurchaseManager: NSObject {
     override init() {
         super.init()
         verifyReceipt()
-        if defaults?.bool(forKey: "pref_console") ?? false {
+        if defaults.bool(forKey: "pref_console") {
             if !self.consolePurchased {
-                defaults?.set(false, forKey: "pref_console")
-                defaults?.synchronize()
+                defaults.set(false, forKey: "pref_console")
+                defaults.synchronize()
             }
         }
     }

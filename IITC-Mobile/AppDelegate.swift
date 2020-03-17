@@ -14,6 +14,8 @@ import StoreKit
 
 import QuickLook
 
+var sharedUserDefaults = UserDefaults(suiteName: ContainerIdentifier)!
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

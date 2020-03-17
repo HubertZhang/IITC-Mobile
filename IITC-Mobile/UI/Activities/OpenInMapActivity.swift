@@ -51,8 +51,7 @@ class OpenInMapActivity: UIActivity {
             guard var lat = pos["lat"] as? Double, var lng = pos["lng"] as? Double else {
                 return
             }
-            let userDefaults = UserDefaults(suiteName: ContainerIdentifier)!
-            if userDefaults.bool(forKey: "pref_china_offset") {
+            if sharedUserDefaults.bool(forKey: "pref_china_offset") {
                 if !LocationTransform.isOutOfChina(lat: lat, lng: lng) {
                     (lat, lng) = LocationTransform.wgs2gcj(wgsLat: lat, wgsLng: lng)
                 }

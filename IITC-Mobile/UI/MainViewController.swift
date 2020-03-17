@@ -25,9 +25,15 @@ class MainViewController: UIViewController {
 
     var location = IITCLocation()
 
-    var userDefaults = UserDefaults(suiteName: ContainerIdentifier)!
+    var userDefaults = sharedUserDefaults
 
-    var debugConsoleEnabled: Bool = false
+    var debugConsoleEnabled: Bool {
+        #if arch(i386) || arch(x86_64)
+        return true
+        #else
+        return InAppPurchaseManager.default.consolePurchased && userDefaults.bool(forKey: "pref_console")
+        #endif
+    }
     var debugButton: UIBarButtonItem!
     @IBOutlet weak var backButton: UIBarButtonItem!
 
@@ -103,17 +109,7 @@ class MainViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        #if arch(i386) || arch(x86_64)
-        self.debugConsoleEnabled = true
         self.webView.setConsole(enabled: self.debugConsoleEnabled)
-        #else
-        if InAppPurchaseManager.default.consolePurchased {
-            if userDefaults.bool(forKey: "pref_console") {
-                self.debugConsoleEnabled = true
-                self.webView.setConsole(enabled: self.debugConsoleEnabled)
-            }
-        }
-        #endif
 
         if self.debugConsoleEnabled {
             guard var buttons = self.navigationItem.rightBarButtonItems else {
