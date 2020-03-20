@@ -9,7 +9,9 @@
 import UIKit
 import StoreKit
 import MBProgressHUD
+#if !targetEnvironment(macCatalyst)
 import FirebaseAnalytics
+#endif
 
 func image(from color: UIColor) -> UIImage {
     let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
@@ -121,9 +123,11 @@ extension ConsolePurchaseViewController: SKProductsRequestDelegate {
                 self.descriptionLabel.text = product.localizedDescription
 #endif
                 self.products.append(product)
+#if !targetEnvironment(macCatalyst)
                 Analytics.logEvent(AnalyticsEventPresentOffer, parameters: [
                     "item_id": product.productIdentifier
                 ])
+#endif
             }
 
         } else {

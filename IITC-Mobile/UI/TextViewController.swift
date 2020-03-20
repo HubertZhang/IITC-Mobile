@@ -7,7 +7,9 @@
 //
 
 import UIKit
+#if !targetEnvironment(macCatalyst)
 import FirebaseAnalytics
+#endif
 
 func loadHtmlFileToAttributeString(_ path: URL) -> NSAttributedString? {
     let htmlData = try? Data(contentsOf: path)
@@ -25,7 +27,9 @@ class TextViewController: UIViewController, UITextViewDelegate {
     var attrStringBuilder: (() -> NSAttributedString?)?
 
     override func viewWillAppear(_ animated: Bool) {
+#if !targetEnvironment(macCatalyst)
         Analytics.setScreenName(self.title ?? "TextView", screenClass: "TextViewController")
+#endif
         if #available(iOS 11.0, *) {
             textView.textContainerInset.left = self.view.safeAreaInsets.left + 12
             textView.textContainerInset.right = self.view.safeAreaInsets.right + 12
