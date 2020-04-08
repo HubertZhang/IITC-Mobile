@@ -14,7 +14,7 @@ abstract_target 'Base' do
     target 'BaseFramework'
     abstract_target 'Application' do
         pod 'MBProgressHUD'
-        pod 'Firebase/Core'
+        pod 'Firebase/Analytics'
 
         target 'IITC-Mobile' do
             pod 'InAppSettingsKit'
