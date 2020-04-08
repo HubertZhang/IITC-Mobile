@@ -35,7 +35,8 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
     var loadedPluginNames: [String]
     open var loadedPlugins: Set<String>
 
-    var hookScript: Script!
+    var preScript: Script!
+    var postScript: Script!
     open var mainScript: Script!
     open var positionScript: Script!
 
@@ -81,9 +82,9 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
 
         documentWatcher = DirectoryWatcher(userScriptsPath, delegate: self)
 
-        hookScript = try! Script(coreJS: bundleScriptPath.appendingPathComponent("ios-hooks.js"), withName: "hook")
-        hookScript.fileContent = String(format: hookScript.fileContent, VersionTool.default.currentVersion, Int(VersionTool.default.currentBuild) ?? 0)
-
+        preScript = try! Script(coreJS: bundleScriptPath.appendingPathComponent("ios-hooks.js"), withName: "hook")
+        preScript.fileContent = String(format: preScript.fileContent, VersionTool.default.currentVersion, Int(VersionTool.default.currentBuild) ?? 0)
+        postScript = try! Script(coreJS: bundleScriptPath.appendingPathComponent("ios-hooks-post.js"), withName: "post")
         reloadScripts()
     }
 
@@ -211,8 +212,9 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
 
     open func getLoadedScripts() -> [Script] {
         var result = [Script]()
-        result.append(hookScript)
+        result.append(preScript)
         result.append(mainScript)
+        result.append(postScript)
         for name in loadedPluginNames {
             let index = storedPlugins.firstIndex {
                 plugin -> Bool in
