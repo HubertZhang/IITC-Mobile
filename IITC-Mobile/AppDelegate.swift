@@ -132,10 +132,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let vc = QLPreviewController()
         vc.dataSource = self
         vc.title = "Downloaded File"
-        self.window?.rootViewController?.present(vc, animated: true, completion: {
+        self.topViewController()?.present(vc, animated: true, completion: {
             try? FileManager.default.removeItem(at: tempURL)
             self.fileURL = nil
         })
+    }
+
+    func topViewController() -> UIViewController? {
+        var v = self.window?.rootViewController
+        while v?.presentedViewController != nil {
+            v = v?.presentedViewController
+        }
+        return v
     }
 }
 
