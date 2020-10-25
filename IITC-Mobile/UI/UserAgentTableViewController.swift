@@ -101,7 +101,7 @@ class UserAgentTableViewController: UITableViewController {
 
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 60
-//        self.tableView.cellLayoutMarginsFollowReadableWidth = true
+        self.tableView.cellLayoutMarginsFollowReadableWidth = true
     }
 
     override func didReceiveMemoryWarning() {
