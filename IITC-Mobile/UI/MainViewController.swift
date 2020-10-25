@@ -131,7 +131,7 @@ class MainViewController: UIViewController {
     }
 
     deinit {
-        NotificationCenter.default.removeObserver(self)
+
     }
 
     override func didReceiveMemoryWarning() {

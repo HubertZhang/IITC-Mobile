@@ -25,7 +25,6 @@ class TextViewController: UIViewController, UITextViewDelegate {
     var attrStringBuilder: (() -> NSAttributedString?)?
 
     override func viewWillAppear(_ animated: Bool) {
-        Analytics.setScreenName(self.title ?? "TextView", screenClass: "TextViewController")
         if #available(iOS 11.0, *) {
             textView.textContainerInset.left = self.view.safeAreaInsets.left + 12
             textView.textContainerInset.right = self.view.safeAreaInsets.right + 12
@@ -33,6 +32,12 @@ class TextViewController: UIViewController, UITextViewDelegate {
             textView.textContainerInset.left = 12
             textView.textContainerInset.right = 12
         }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        Analytics.logEvent(AnalyticsEventScreenView, parameters: [
+                            AnalyticsParameterScreenName: self.title ?? "TextView",
+             AnalyticsParameterScreenClass: "TextViewController"])
     }
 
     override func viewDidLoad() {

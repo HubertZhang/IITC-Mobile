@@ -49,7 +49,7 @@ class LayersController: NSObject {
     }
 
     deinit {
-        NotificationCenter.default.removeObserver(self)
+
     }
 
     @objc func setLayers(_ notification: Notification) {

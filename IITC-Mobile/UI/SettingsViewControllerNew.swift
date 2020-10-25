@@ -26,7 +26,7 @@ import Alamofire
             self.setHiddenKeys(["pref_console"], animated: false)
         }
 #endif
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: kIASKAppSettingChanged), object: nil, queue: .main) { [weak self] (_) in
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.IASKSettingChanged, object: nil, queue: .main) { [weak self] (_) in
             self?.dirty = true
         }
     }
@@ -62,8 +62,8 @@ import Alamofire
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
-    func settingsViewController(_ sender: IASKAppSettingsViewController!, buttonTappedFor specifier: IASKSpecifier!) {
-        switch specifier.key() {
+    func settingsViewController(_ sender: IASKAppSettingsViewController, buttonTappedFor specifier: IASKSpecifier) {
+        switch specifier.key {
         case "pref_plugins":
             self.pushViewController(withIdentifier: "pluginsViewController")
         case "pref_about":
@@ -163,7 +163,7 @@ import Alamofire
             }).disposed(by: self.disposeBag)
     }
 
-    func settingsViewControllerDidEnd(_ sender: IASKAppSettingsViewController!) {
+    func settingsViewControllerDidEnd(_ sender: IASKAppSettingsViewController) {
 
     }
 }

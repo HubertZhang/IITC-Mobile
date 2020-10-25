@@ -111,7 +111,7 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
                 self.webView.load(url: wrappedURL)
             }
         } else if wrappedURL.host == "maps.apple.com" {
-            var components = URLComponents(url: wrappedURL, resolvingAgainstBaseURL: false)!
+            let components = URLComponents(url: wrappedURL, resolvingAgainstBaseURL: false)!
             guard let queryItems = components.queryItems else {
                 return
             }
@@ -171,7 +171,7 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
     }
 
     deinit {
-        NotificationCenter.default.removeObserver(self)
+
     }
 
     override func didReceiveMemoryWarning() {
