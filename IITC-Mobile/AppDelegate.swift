@@ -66,6 +66,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+        if url.scheme == "iitc" {
+            guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
+                return false
+            }
+            setInitialQueryItems(components.queryItems)
+            NotificationCenter.default.post(name: JSNotificationReloadRequired, object: nil)
+            return true
+        }
         if url.pathExtension != "js" {
             return false
         }

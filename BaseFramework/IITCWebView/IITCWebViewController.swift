@@ -11,6 +11,12 @@ import WebKit
 import RxCocoa
 import WebViewConsole
 
+var initialQueryItems: [URLQueryItem]?
+
+public func setInitialQueryItems(_ items: [URLQueryItem]?) {
+    initialQueryItems = items
+}
+
 public class IITCWebViewController: UIViewController {
     @IBOutlet weak var webProgressView: UIProgressView!
     var webView: IITCWebView!
@@ -89,7 +95,6 @@ public class IITCWebViewController: UIViewController {
 
     deinit {
         self.observationProgress = nil
-        NotificationCenter.default.removeObserver(self)
     }
 
     public func setConsole(enabled: Bool) {
@@ -130,12 +135,18 @@ public class IITCWebViewController: UIViewController {
         if userAgent != "" {
             self.webView.customUserAgent = userAgent
         }
+        var intelURL = URLComponents(string: "https://intel.ingress.com/intel")!
+        intelURL.queryItems = []
         if userDefaults.bool(forKey: "pref_force_desktop") {
-            self.webView.load(URLRequest(url: URL(string: "https://intel.ingress.com/intel?vp=f")!))
-        } else {
-            self.webView.load(URLRequest(url: URL(string: "https://intel.ingress.com/intel")!))
-
+            intelURL.queryItems!.append(URLQueryItem(name: "vp", value: "f"))
         }
+
+        if initialQueryItems != nil {
+            intelURL.queryItems!.append(contentsOf: initialQueryItems!)
+            initialQueryItems = nil
+        }
+
+        self.webView.load(URLRequest(url: intelURL.url!))
     }
 
     @objc public func bootFinished() {
