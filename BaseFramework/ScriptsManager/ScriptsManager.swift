@@ -24,6 +24,7 @@ public enum IITCVersion: String {
     case originalTest = "test"
     case ce = "ce"
     case ceTest = "ce-test"
+    case ceBeta = "ce-beta"
 }
 
 open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
@@ -64,7 +65,7 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         userScriptsPath = documentPath.appendingPathComponent("userScripts", isDirectory: true)
         try? FileManager.default.createDirectory(at: userScriptsPath, withIntermediateDirectories: true, attributes: nil)
 
-        currentVersion = IITCVersion(rawValue: userDefaults.pref_iitc_version ?? "release") ?? .originalRelease
+        currentVersion = IITCVersion(rawValue: userDefaults.pref_iitc_version ?? "ce") ?? .ce
 
         loadedPluginNames = userDefaults.array(forKey: "LoadedPlugins") as? [String] ?? [String]()
         loadedPlugins = Set<String>(loadedPluginNames)
@@ -74,7 +75,7 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         checkUpgrade()
 
         defaultObservation = userDefaults.observe(\.pref_iitc_version) { (defaults, _) in
-            guard let v = IITCVersion(rawValue: defaults.pref_iitc_version ?? "release") else {
+            guard let v = IITCVersion(rawValue: defaults.pref_iitc_version ?? "ce") else {
                 return
             }
             self.switchIITCVersion(version: v)
