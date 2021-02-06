@@ -32,21 +32,6 @@ class PluginsSearchTableViewController: UITableViewController {
         return resultScripts.count
     }
 
-    func configureCell(_ originCell: UITableViewCell, indexPath: IndexPath) {
-        let script = resultScripts[indexPath.row]
-        guard let cell = originCell as? PluginCell else {
-            return
-        }
-        cell.titleText!.text = script.name
-        cell.detailText!.text = script.scriptDescription
-        let loaded = ScriptsManager.sharedInstance.loadedPlugins.contains(script.fileName)
-        if loaded {
-            cell.accessoryType = .checkmark
-        } else {
-            cell.accessoryType = .none
-        }
-    }
-
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let script = resultScripts[indexPath.row]
         let loaded = ScriptsManager.sharedInstance.loadedPlugins.contains(script.fileName)
@@ -64,9 +49,12 @@ class PluginsSearchTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PluginCell", for: indexPath)
-
-        self.configureCell(cell, indexPath: indexPath)
+        let originalCell = tableView.dequeueReusableCell(withIdentifier: "PluginCell", for: indexPath)
+        guard let cell = originalCell as? PluginCell else {
+            return originalCell
+        }
+        let script = resultScripts[indexPath.row]
+        configure(cell: cell, by: script)
 
         return cell
     }

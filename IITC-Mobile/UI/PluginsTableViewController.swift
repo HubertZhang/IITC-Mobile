@@ -16,6 +16,26 @@ class PluginCell: UITableViewCell {
     @IBOutlet weak var markLabel: InsetsLabel!
 }
 
+func configure(cell: PluginCell, by script: Script) {
+    cell.titleText!.text = script.name
+    cell.detailText!.text = script.scriptDescription
+    if script.isUserScript {
+        cell.markLabel.text = "AddedByUser"
+        cell.markLabel.leftInset = 5
+        cell.markLabel.rightInset = 5
+        cell.markLabel.layer.cornerRadius = 5
+    } else {
+        cell.markLabel.text = ""
+        cell.markLabel.textInsets = .zero
+    }
+    let loaded = ScriptsManager.sharedInstance.loadedPlugins.contains(script.fileName)
+    if loaded {
+        cell.accessoryType = .checkmark
+    } else {
+        cell.accessoryType = .none
+    }
+}
+
 class PluginsTableViewController: UITableViewController {
 
     var searchController: UISearchController!
@@ -104,32 +124,6 @@ class PluginsTableViewController: UITableViewController {
         return scripts[keys[section]]?.count ?? 0
     }
 
-    func configureCell(_ originCell: UITableViewCell, indexPath: IndexPath) {
-        let script = scripts[keys[indexPath.section]]![indexPath.row]
-        guard let cell = originCell as? PluginCell else {
-            return
-        }
-        cell.titleText!.text = script.name
-        cell.detailText!.text = script.scriptDescription
-        if script.isUserScript {
-            cell.markLabel.text = "AddedByUser"
-            cell.markLabel.leftInset = 5
-            cell.markLabel.rightInset = 5
-            cell.markLabel.layer.cornerRadius = 5
-        } else {
-            cell.markLabel.text = ""
-            cell.markLabel.textInsets = .zero
-        }
-        let loaded = ScriptsManager.sharedInstance.loadedPlugins.contains(script.fileName)
-        if loaded {
-            cell.accessoryType = .checkmark
-        } else {
-            cell.accessoryType = .none
-        }
-
-        // Populate cell from the NSManagedObject instance
-    }
-
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let script = scripts[keys[indexPath.section]]![indexPath.row]
         let loaded = ScriptsManager.sharedInstance.loadedPlugins.contains(script.fileName)
@@ -149,10 +143,12 @@ class PluginsTableViewController: UITableViewController {
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PluginCell", for: indexPath)
-
-        self.configureCell(cell, indexPath: indexPath)
-
+        let originalCell = tableView.dequeueReusableCell(withIdentifier: "PluginCell", for: indexPath)
+        guard let cell = originalCell as? PluginCell else {
+            return originalCell
+        }
+        let script = scripts[keys[indexPath.section]]![indexPath.row]
+        configure(cell: cell, by: script)
         return cell
     }
 
@@ -171,15 +167,15 @@ extension PluginsTableViewController: UISearchBarDelegate, UISearchControllerDel
     // MARK: - UISearchControllerDelegate
 
     func presentSearchController(_ searchController: UISearchController) {
-        //debugPrint("UISearchControllerDelegate invoked method: \(__FUNCTION__).")
+        // debugPrint("UISearchControllerDelegate invoked method: \(__FUNCTION__).")
     }
 
     func willPresentSearchController(_ searchController: UISearchController) {
-        //debugPrint("UISearchControllerDelegate invoked method: \(__FUNCTION__).")
+        // debugPrint("UISearchControllerDelegate invoked method: \(__FUNCTION__).")
     }
 
     func didPresentSearchController(_ searchController: UISearchController) {
-        //debugPrint("UISearchControllerDelegate invoked method: \(__FUNCTION__).")
+        // debugPrint("UISearchControllerDelegate invoked method: \(__FUNCTION__).")
     }
 
     func willDismissSearchController(_ searchController: UISearchController) {
@@ -187,7 +183,7 @@ extension PluginsTableViewController: UISearchBarDelegate, UISearchControllerDel
     }
 
     func didDismissSearchController(_ searchController: UISearchController) {
-        //debugPrint("UISearchControllerDelegate invoked method: \(__FUNCTION__).")
+        // debugPrint("UISearchControllerDelegate invoked method: \(__FUNCTION__).")
     }
 
     // MARK: - UISearchResultsUpdating
