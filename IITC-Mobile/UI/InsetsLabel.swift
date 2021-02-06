@@ -41,6 +41,10 @@ class InsetsLabel: UILabel {
         self.textInsets = aDecoder.decodeUIEdgeInsets(forKey: "textInsets")
     }
 
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+
     override open func layoutSubviews() {
         super.layoutSubviews()
         preferredMaxLayoutWidth = frame.width - (leftInset + rightInset)
