@@ -131,10 +131,11 @@ public class IITCWebViewController: UIViewController {
     public var permalink: String = ""
     @objc public func reloadIITC() {
         self.loadIITCNeeded = true
-        let userAgent = userDefaults.string(forKey: "pref_useragent") ?? PredefinedUserAgents[0].1
-        if userAgent != "" {
-            self.webView.customUserAgent = userAgent
+        var userAgent = userDefaults.string(forKey: "pref_useragent") ?? PredefinedUserAgents[0].1
+        if userAgent == "" {
+            userAgent = PredefinedUserAgents[0].1
         }
+        self.webView.customUserAgent = userAgent
         var intelURL = URLComponents(string: "https://intel.ingress.com/intel")!
         intelURL.queryItems = []
         if userDefaults.bool(forKey: "pref_force_desktop") {
