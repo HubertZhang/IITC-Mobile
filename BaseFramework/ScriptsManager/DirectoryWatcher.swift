@@ -28,7 +28,7 @@ class DirectoryWatcher: NSObject {
         let observerQueue = DispatchQueue(label: "com.vuryleo.iitcmobile.directorywatch", attributes: DispatchQueue.Attributes.concurrent)
         let fileDescr = open((path as NSURL).fileSystemRepresentation, O_EVTONLY)
         // observe file system events for particular path - you can pass here Documents directory path
-        //observer queue is my private dispatch_queue_t object
+        // observer queue is my private dispatch_queue_t object
         if fileDescr < 0 {
             return
         }

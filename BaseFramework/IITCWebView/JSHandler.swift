@@ -81,9 +81,9 @@ open class JSHandler: NSObject, WKScriptMessageHandler {
     // disable javascript injection while spinner is enabled
     // prevent the spinner from closing automatically
 
-    //- (void) spinnerEnabled:(BOOL) en {
+    // - (void) spinnerEnabled:(BOOL) en {
     ////    mIitc.getWebView().disableJS(en);
-    //}
+    // }
 
     // copy link to specific portal to android clipboard
 
@@ -101,14 +101,14 @@ open class JSHandler: NSObject, WKScriptMessageHandler {
         NotificationCenter.default.post(name: JSNotificationPaneChanged, object: self, userInfo: ["paneID": paneID])
     }
 
-    //- (void) dialogFocused:(NSString *) dialogID {
+    // - (void) dialogFocused:(NSString *) dialogID {
     ////    mIitc.setFocusedDialog(id);
-    //}
+    // }
 
 
-    //- (void) dialogOpened:(NSString *) dialogID withResult:(BOOL) open {
+    // - (void) dialogOpened:(NSString *) dialogID withResult:(BOOL) open {
     ////    mIitc.dialogOpened(id, open);
-    //}
+    // }
 
 
     @objc func bootFinished() {
@@ -125,34 +125,34 @@ open class JSHandler: NSObject, WKScriptMessageHandler {
     }
 
     //
-    //- (void) addPortalHighlighter:( NSString * )name {
+    // - (void) addPortalHighlighter:( NSString * )name {
     ////    mIitc.runOnUiThread(new Runnable() {
     ////        @Override
     ////        - (void) run() {
     ////            mIitc.getMapSettings().addPortalHighlighter(name);
     ////        }
     ////    });
-    //}
+    // }
     //
     //
-    //- (void) setActiveHighlighter: (NSString *) name {
+    // - (void) setActiveHighlighter: (NSString *) name {
     ////    mIitc.runOnUiThread(new Runnable() {
     ////        @Override
     ////        - (void) run() {
     ////            mIitc.getMapSettings().setActiveHighlighter(name);
     ////        }
     ////    });
-    //}
+    // }
 
 
-    //- (void) updateIitc: (NSString *) fileUrl {
+    // - (void) updateIitc: (NSString *) fileUrl {
     //    mIitc.runOnUiThread(new Runnable() {
     //        @Override
     //        - (void) run() {
     //            mIitc.updateIitc(fileUrl);
     //        }
     //    });
-    //}
+    // }
 
     @objc func saveFile(_ args: Any) {
         guard let args = args as? [AnyObject] else {
@@ -194,23 +194,23 @@ open class JSHandler: NSObject, WKScriptMessageHandler {
 
     }
 
-    //- (BOOL) showZoom {
+    // - (BOOL) showZoom {
     ////     PackageManager pm = mIitc.getPackageManager();
     ////     boolean hasMultitouch = pm.hasSystemFeature(PackageManager.FEATURE_TOUCHSCREEN_MULTITOUCH);
     ////     boolean forcedZoom = mIitc.getPrefs().getBoolean("pref_user_zoom", false);
     ////    return forcedZoom || !hasMultitouch;
     //    return YES;
-    //}
+    // }
 
 
-    //- (void) setFollowMode:(BOOL) follow {
+    // - (void) setFollowMode:(BOOL) follow {
     ////    mIitc.runOnUiThread(new Runnable() {
     ////        @Override
     ////        - (void) run() {
     ////            mIitc.getUserLocation().setFollowMode(follow);
     ////        }
     ////    });
-    //}
+    // }
 
 
     @objc func setProgress(_ progress: Any) {

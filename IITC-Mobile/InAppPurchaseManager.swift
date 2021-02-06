@@ -22,15 +22,15 @@ protocol InAppPurchaseUIDelegate: class {
 
 let ConsoleStateKey = "iap_console_enabled"
 
-//enum ConsoleState: Int64 {
+// enum ConsoleState: Int64 {
 //    case disabled = 0
 //    case enabled = 2
-//}
+// }
 //
-//enum PurchaseState: Int64 {
+// enum PurchaseState: Int64 {
 //    case notPurchased
 //    case purchased
-//}
+// }
 
 enum ReceiptType: Int64 {
     case notExist = 0

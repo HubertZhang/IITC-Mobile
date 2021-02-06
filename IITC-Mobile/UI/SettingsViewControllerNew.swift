@@ -19,13 +19,13 @@ import Alamofire
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
-#if !DEBUG
+        #if !DEBUG
         if InAppPurchaseManager.default.consolePurchased {
             self.setHiddenKeys(["pref_console_not_purchased"], animated: false)
         } else {
             self.setHiddenKeys(["pref_console"], animated: false)
         }
-#endif
+        #endif
         NotificationCenter.default.addObserver(forName: NSNotification.Name.IASKSettingChanged, object: nil, queue: .main) { [weak self] (_) in
             self?.dirty = true
         }

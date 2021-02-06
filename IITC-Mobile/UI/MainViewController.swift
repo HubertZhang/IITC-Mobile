@@ -28,7 +28,7 @@ class MainViewController: UIViewController {
     var userDefaults = sharedUserDefaults
 
     var debugConsoleEnabled: Bool {
-        #if arch(i386) || arch(x86_64)
+        #if targetEnvironment(simulator)
         return true
         #else
         return InAppPurchaseManager.default.consolePurchased && userDefaults.bool(forKey: "pref_console")
