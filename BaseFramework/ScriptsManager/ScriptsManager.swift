@@ -320,13 +320,15 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
                     guard let oldDate = oldAttr[.modificationDate] as? Date, let newDate = newAttr[.modificationDate] as? Date else {
                         continue
                     }
-                    if newDate.compare(oldDate) == .orderedDescending {
+                    if newDate.compare(oldDate) != .orderedAscending {
                         try FileManager.default.removeItem(at: containerFileURL)
                         try FileManager.default.copyItem(at: url, to: containerFileURL)
                     }
                 } catch {
 
                 }
+            } else {
+                try? FileManager.default.copyItem(at: url, to: containerFileURL)
             }
             try? FileManager.default.removeItem(at: url)
         }
