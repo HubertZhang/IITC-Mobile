@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="3SY-rW-zEI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="3SY-rW-zEI">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -108,7 +108,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PluginCell" rowHeight="65" id="Xzh-O5-Kvx" customClass="PluginCell" customModule="IITC_Mobile" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="65"/>
+                                <rect key="frame" x="0.0" y="24.333333969116211" width="414" height="65"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="Xzh-O5-Kvx" id="BC9-yC-eZa">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="65"/>
@@ -183,7 +183,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Rs-k7-IXn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="932" y="354"/>
+            <point key="canvasLocation" x="931.88405797101461" y="353.57142857142856"/>
         </scene>
         <!--Plugins-->
         <scene sceneID="Bmb-aL-sSy">
@@ -195,14 +195,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PluginCell" rowHeight="57" id="I1R-4r-u80" customClass="PluginCell" customModule="IITC_Mobile" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="57"/>
+                                <rect key="frame" x="0.0" y="24.333333969116211" width="414" height="57"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="I1R-4r-u80" id="zLI-85-CaV">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="57"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xWI-qG-HKp">
-                                            <rect key="frame" x="20" y="11.000000000000002" width="374" height="20.666666666666671"/>
+                                            <rect key="frame" x="20.000000000000004" y="11.000000000000002" width="41.333333333333343" height="20.666666666666671"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -212,19 +212,44 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" clipsSubviews="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UserScript" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ps8-dl-gFu" customClass="InsetsLabel" customModule="IITC_Mobile" customModuleProvider="target">
+                                            <rect key="frame" x="69.333333333333314" y="11.000000000000002" width="79.666666666666686" height="18.666666666666671"/>
+                                            <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="leftInset">
+                                                    <real key="value" value="5"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="rightInset">
+                                                    <real key="value" value="5"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="bottomInset">
+                                                    <real key="value" value="0.0"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="topInset">
+                                                    <real key="value" value="0.0"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailingMargin" secondItem="oME-a4-b2w" secondAttribute="trailing" id="0Dj-rE-2nK"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Ps8-dl-gFu" secondAttribute="trailing" id="3jm-ux-eug"/>
                                         <constraint firstItem="xWI-qG-HKp" firstAttribute="leading" secondItem="zLI-85-CaV" secondAttribute="leadingMargin" id="AV2-kt-oH4"/>
                                         <constraint firstItem="oME-a4-b2w" firstAttribute="top" secondItem="xWI-qG-HKp" secondAttribute="bottom" id="KwE-r4-WUM"/>
                                         <constraint firstItem="xWI-qG-HKp" firstAttribute="top" secondItem="zLI-85-CaV" secondAttribute="topMargin" id="MSn-GG-VqT"/>
                                         <constraint firstItem="oME-a4-b2w" firstAttribute="leading" secondItem="zLI-85-CaV" secondAttribute="leadingMargin" id="SA2-5X-6AH"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="oME-a4-b2w" secondAttribute="bottom" id="ULV-Gb-fkn"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="xWI-qG-HKp" secondAttribute="trailing" id="r9v-cg-93l"/>
+                                        <constraint firstItem="Ps8-dl-gFu" firstAttribute="leading" secondItem="xWI-qG-HKp" secondAttribute="trailing" constant="8" id="WVo-3o-tz3"/>
+                                        <constraint firstItem="Ps8-dl-gFu" firstAttribute="top" secondItem="xWI-qG-HKp" secondAttribute="top" id="daw-4e-92S"/>
+                                        <constraint firstItem="Ps8-dl-gFu" firstAttribute="height" secondItem="xWI-qG-HKp" secondAttribute="height" multiplier="0.903226" id="xcF-5C-9qx"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="detailText" destination="oME-a4-b2w" id="RbN-m3-f1H"/>
+                                    <outlet property="markLabel" destination="Ps8-dl-gFu" id="u2I-G8-e3d"/>
                                     <outlet property="titleText" destination="xWI-qG-HKp" id="366-Qq-M8B"/>
                                 </connections>
                             </tableViewCell>
@@ -347,10 +372,10 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="FileCell" textLabel="g1L-5x-qPl" detailTextLabel="e5w-TX-V7L" style="IBUITableViewCellStyleValue1" id="1ON-gm-aVW" customClass="FileCell" customModule="IITC_Mobile" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="24.333333969116211" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1ON-gm-aVW" id="RGm-Y5-wNX">
-                                    <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="384.33333333333331" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="g1L-5x-qPl">
@@ -361,7 +386,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="e5w-TX-V7L">
-                                            <rect key="frame" x="331" y="11.999999999999998" width="43.666666666666664" height="20.333333333333332"/>
+                                            <rect key="frame" x="332.66666666666663" y="11.999999999999998" width="43.666666666666664" height="20.333333333333332"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -579,7 +604,7 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IITC Debug Console" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="3vU-On-7sP">
-                                                        <rect key="frame" x="172" y="11.999999999999998" width="189.66666666666663" height="26.333333333333329"/>
+                                                        <rect key="frame" x="172" y="12" width="168" height="23"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -617,13 +642,13 @@
                                                 <rect key="frame" x="0.0" y="169" width="414" height="90"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="An In-App debug console for the webview." textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eoK-5X-kaw">
-                                                        <rect key="frame" x="24" y="34.333333333333314" width="366" height="55.666666666666657"/>
+                                                        <rect key="frame" x="24" y="31" width="366" height="59"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e6K-DI-BUu">
-                                                        <rect key="frame" x="24" y="0.0" width="366" height="26.333333333333332"/>
+                                                        <rect key="frame" x="24" y="0.0" width="366" height="23"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -739,7 +764,7 @@
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="InputCell" rowHeight="69" id="W1b-eR-tld" customClass="MultiLineTextInputTableViewCell" customModule="IITC_Mobile" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.333332061767578" width="414" height="69"/>
+                                <rect key="frame" x="0.0" y="49" width="414" height="69"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="W1b-eR-tld" id="HWT-EE-PuC">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="69"/>
@@ -779,7 +804,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PredefinedCell" textLabel="2nn-NA-n71" detailTextLabel="des-IC-3bt" rowHeight="86" style="IBUITableViewCellStyleSubtitle" id="eUb-GB-bu6">
-                                <rect key="frame" x="0.0" y="124.33333206176758" width="414" height="86"/>
+                                <rect key="frame" x="0.0" y="118" width="414" height="86"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" tableViewCell="eUb-GB-bu6" id="Xwr-Hm-FLo">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="86"/>
@@ -847,6 +872,9 @@
         </scene>
     </scenes>
     <designables>
+        <designable name="Ps8-dl-gFu">
+            <size key="intrinsicContentSize" width="79.666666666666671" height="15.666666666666666"/>
+        </designable>
         <designable name="xxT-pL-Cpj">
             <size key="intrinsicContentSize" width="79.666666666666671" height="15.666666666666666"/>
         </designable>
