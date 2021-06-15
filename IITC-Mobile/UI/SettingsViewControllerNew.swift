@@ -114,10 +114,10 @@ import Alamofire
         hud.mode = MBProgressHUDMode.annularDeterminate
         hud.label.text = "Downloading IITC script..."
 
-        Alamofire.download("https://iitc.me/build/test/total-conversion-build.user.js", to: {
-            _, _ -> (destinationURL: URL, options: DownloadRequest.DownloadOptions) in
+        AF.download("https://iitc.me/build/test/total-conversion-build.user.js", to: {
+            _, _ -> (destinationURL: URL, options: DownloadRequest.Options) in
             let downloadPath = ScriptsManager.sharedInstance.userScriptsPath.appendingPathComponent("total-conversion-build.user.js")
-            return (downloadPath, DownloadRequest.DownloadOptions.removePreviousFile)
+            return (downloadPath, .removePreviousFile)
         }).downloadProgress(queue: DispatchQueue.main, closure: {
             progress in
 
@@ -142,8 +142,8 @@ import Alamofire
         hud.label.text = "Updating..."
         let (o, p) = ScriptsManager.sharedInstance.updatePlugins()
         hud.progressObject = p
-        o.subscribeOn(SerialDispatchQueueScheduler.init(internalSerialQueueName: "com.vuryleo.iitcmobile.network"))
-            .observeOn(MainScheduler.instance)
+        o.subscribe(on: SerialDispatchQueueScheduler.init(internalSerialQueueName: "com.vuryleo.iitcmobile.network"))
+            .observe(on: MainScheduler.instance)
             .subscribe(onNext: {
                 _ -> Void in
             }, onError: {

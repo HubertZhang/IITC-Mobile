@@ -125,11 +125,11 @@ class UserFilesTableViewController: UITableViewController {
                 hud.mode = MBProgressHUDMode.annularDeterminate
                 hud.label.text = "Downloading..."
 
-                Alamofire.download(url, to: {
-                    (_, response) -> (URL, DownloadRequest.DownloadOptions) in
+                AF.download(url, to: {
+                    (_, response) -> (URL, DownloadRequest.Options) in
                     let pathComponent = response.suggestedFilename
                     downloadPath = downloadPath.appendingPathComponent(pathComponent!)
-                    return (downloadPath, DownloadRequest.DownloadOptions.removePreviousFile)
+                    return (downloadPath, .removePreviousFile)
                 }).downloadProgress {
                     progress in
                     hud.progressObject = progress

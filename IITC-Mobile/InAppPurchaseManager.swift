@@ -12,7 +12,7 @@ import BaseFramework
 
 import TPInAppReceipt
 
-protocol InAppPurchaseUIDelegate: class {
+protocol InAppPurchaseUIDelegate: AnyObject {
     func purchasing()
     func deferred()
     func failed(with error: Error?)

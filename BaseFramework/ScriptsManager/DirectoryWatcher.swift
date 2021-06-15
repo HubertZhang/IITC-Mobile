@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol DirectoryWatcherDelegate: class {
+protocol DirectoryWatcherDelegate: AnyObject {
     func directoryDidChange(_ folderWatcher: DirectoryWatcher)
 }
 

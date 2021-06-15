@@ -1,13 +1,13 @@
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '9.0'
+platform :ios, '10.0'
 
 use_frameworks!
 
 abstract_target 'Base' do
-    pod 'RxSwift', '~> 5'
-    pod 'RxCocoa', '~> 5'
-    pod 'Alamofire', '~> 4'
-    pod 'RxAlamofire', '~> 5'
+    pod 'RxSwift', '~> 6'
+    pod 'RxCocoa', '~> 6'
+    pod 'Alamofire', '~> 5'
+    pod 'RxAlamofire', '~> 6'
     pod 'TPInAppReceipt'
     pod 'WebViewConsole', :git => 'https://github.com/Hubertzhang/WebViewConsole.git'
     

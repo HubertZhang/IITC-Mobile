@@ -253,8 +253,8 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
                 progress.completedUnitCount = 10
                 return Observable.just(nil)
             }
-            let request = Alamofire.request(updateURL)
-            progress.addChild(request.progress, withPendingUnitCount: 10)
+            let request = AF.request(updateURL)
+            progress.addChild(request.downloadProgress, withPendingUnitCount: 10)
             return request.rx.string().map { metaData -> String? in
                 let attribute = Script.getJSAttributes(metaData)
                 guard let downloadURL = attribute["downloadURL"]?.first else {
@@ -273,8 +273,8 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
                 progress.completedUnitCount += 10
                 return Observable.just(Void())
             }
-            let request = Alamofire.request(downloadURL)
-            progress.addChild(request.progress, withPendingUnitCount: 10)
+            let request = AF.request(downloadURL)
+            progress.addChild(request.downloadProgress, withPendingUnitCount: 10)
             return request.rx.data().map { (data) in
                 var path: URL
                 if script.isUserScript {
