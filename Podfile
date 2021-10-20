@@ -1,5 +1,5 @@
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '10.0'
+platform :ios, '12.0'
 
 use_frameworks!
 
@@ -29,10 +29,10 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
-      config.build_settings['LD_NO_PIE'] = 'NO'
-      if config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] == '8.0'
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.0'
-                 end
+#      config.build_settings['LD_NO_PIE'] = 'NO'
+      if config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] =~ /\d\.0|10\.0|11\.0/
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
+      end
     end
   end
   
