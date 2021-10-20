@@ -87,7 +87,7 @@ class InAppPurchaseManager: NSObject {
         self.receiptType = getReceiptType()
         do {
             let receipt = try InAppReceipt.localReceipt()
-            try receipt.verify()
+            try receipt.validate()
             if receipt.containsPurchase(ofProductIdentifier: "com.hubertzhang.iitcmobile.console") {
                 consolePurchased = true
             }
