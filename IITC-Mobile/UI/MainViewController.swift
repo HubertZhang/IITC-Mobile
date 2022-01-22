@@ -10,6 +10,7 @@ import UIKit
 import WebKit
 import BaseFramework
 import WebViewConsole
+import WebViewConsoleView
 import RxSwift
 
 class MainViewController: UIViewController {
