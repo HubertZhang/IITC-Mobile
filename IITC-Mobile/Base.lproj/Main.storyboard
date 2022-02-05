@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="3SY-rW-zEI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="3SY-rW-zEI">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -44,7 +43,7 @@
                             </barButtonItem>
                             <barButtonItem title="Menu" id="OnH-TD-O14">
                                 <connections>
-                                    <segue destination="GWj-60-Xf9" kind="popoverPresentation" identifier="layerChooser" popoverAnchorBarButtonItem="OnH-TD-O14" id="NEg-0q-d2y">
+                                    <segue destination="ikz-AY-y0p" kind="popoverPresentation" identifier="layerChooser" popoverAnchorBarButtonItem="OnH-TD-O14" id="pJT-rh-Sov">
                                         <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                     </segue>
                                 </connections>
@@ -108,7 +107,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PluginCell" rowHeight="65" id="Xzh-O5-Kvx" customClass="PluginCell" customModule="IITC_Mobile" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="24.333333969116211" width="414" height="65"/>
+                                <rect key="frame" x="0.0" y="44.666666030883789" width="414" height="65"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="Xzh-O5-Kvx" id="BC9-yC-eZa">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="65"/>
@@ -126,7 +125,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UserScript" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xxT-pL-Cpj" customClass="InsetsLabel" customModule="IITC_Mobile" customModuleProvider="target">
-                                            <rect key="frame" x="69.333333333333314" y="16" width="79.666666666666686" height="18.666666666666671"/>
+                                            <rect key="frame" x="69.333333333333314" y="16" width="69.666666666666686" height="18.666666666666671"/>
                                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -195,7 +194,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PluginCell" rowHeight="57" id="I1R-4r-u80" customClass="PluginCell" customModule="IITC_Mobile" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="24.333333969116211" width="414" height="57"/>
+                                <rect key="frame" x="0.0" y="44.666666030883789" width="414" height="57"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="I1R-4r-u80" id="zLI-85-CaV">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="57"/>
@@ -213,7 +212,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UserScript" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ps8-dl-gFu" customClass="InsetsLabel" customModule="IITC_Mobile" customModuleProvider="target">
-                                            <rect key="frame" x="69.333333333333314" y="11.000000000000002" width="79.666666666666686" height="18.666666666666671"/>
+                                            <rect key="frame" x="69.333333333333314" y="11.000000000000002" width="69.666666666666686" height="18.666666666666671"/>
                                             <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -269,7 +268,7 @@
         <!--Layers-->
         <scene sceneID="iZi-Hd-0cN">
             <objects>
-                <viewController id="ikz-AY-y0p" customClass="LayersTableViewController" customModule="IITC_Mobile" sceneMemberID="viewController">
+                <viewController title="Layers" id="ikz-AY-y0p" customClass="LayersTableViewController" customModule="IITC_Mobile" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4q1-Gm-8Bl"/>
                         <viewControllerLayoutGuide type="bottom" id="ndK-DA-CnD"/>
@@ -302,6 +301,18 @@
                                     <outlet property="delegate" destination="ikz-AY-y0p" id="lVV-sf-qFY"/>
                                 </connections>
                             </tableView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cn3-lP-VH2">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                                <items>
+                                    <navigationItem title="Layers" id="LYX-gX-VOI">
+                                        <barButtonItem key="leftBarButtonItem" style="done" systemItem="done" id="wdf-Ug-gdc">
+                                            <connections>
+                                                <action selector="dismiss:" destination="72O-AZ-iQ6" id="Vmi-Pj-zVD"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IaC-C8-ac8">
                                 <rect key="frame" x="0.0" y="56" width="414" height="44"/>
                                 <items>
@@ -329,11 +340,14 @@
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="q9j-Ag-Ena" secondAttribute="bottom" id="0Eh-wt-fMv"/>
+                            <constraint firstAttribute="trailing" secondItem="Cn3-lP-VH2" secondAttribute="trailing" id="1nk-zA-T8r"/>
                             <constraint firstItem="Erg-wX-VPt" firstAttribute="top" secondItem="IaC-C8-ac8" secondAttribute="bottom" id="2Mw-bc-D7A"/>
                             <constraint firstItem="Erg-wX-VPt" firstAttribute="leading" secondItem="Vzi-h4-bVE" secondAttribute="leading" id="BF4-gx-FIw"/>
                             <constraint firstAttribute="trailing" secondItem="IaC-C8-ac8" secondAttribute="trailing" id="SIf-wX-Ko4"/>
+                            <constraint firstItem="Cn3-lP-VH2" firstAttribute="leading" secondItem="Vzi-h4-bVE" secondAttribute="leading" id="SZX-eV-NgR"/>
                             <constraint firstAttribute="trailing" secondItem="Mlv-MV-zhv" secondAttribute="trailing" id="ZSg-Rb-tKL"/>
-                            <constraint firstItem="IaC-C8-ac8" firstAttribute="top" secondItem="4q1-Gm-8Bl" secondAttribute="bottom" id="cfU-7u-ieT"/>
+                            <constraint firstItem="Cn3-lP-VH2" firstAttribute="top" secondItem="4q1-Gm-8Bl" secondAttribute="bottom" id="azg-sU-EPh"/>
+                            <constraint firstItem="IaC-C8-ac8" firstAttribute="top" secondItem="Cn3-lP-VH2" secondAttribute="bottom" id="cfU-7u-ieT"/>
                             <constraint firstItem="IaC-C8-ac8" firstAttribute="leading" secondItem="Vzi-h4-bVE" secondAttribute="leading" id="ctn-bU-G7W"/>
                             <constraint firstAttribute="trailing" secondItem="q9j-Ag-Ena" secondAttribute="trailing" id="kvb-9r-N31"/>
                             <constraint firstAttribute="bottom" secondItem="Erg-wX-VPt" secondAttribute="bottom" id="mp9-ld-u6d"/>
@@ -345,22 +359,16 @@
                             <constraint firstItem="Mlv-MV-zhv" firstAttribute="leading" secondItem="Vzi-h4-bVE" secondAttribute="leading" id="xIy-DD-Zt0"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Layers" id="o9x-qM-gys">
-                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="APl-1C-2zM">
-                            <connections>
-                                <action selector="dismiss:" destination="ikz-AY-y0p" id="cty-bx-5ML"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <connections>
                         <outlet property="baseLayerTable" destination="Mlv-MV-zhv" id="FT1-cb-G3u"/>
+                        <outlet property="navigationBar" destination="Cn3-lP-VH2" id="hHX-Wn-A3n"/>
                         <outlet property="overlayLayerTable" destination="q9j-Ag-Ena" id="EBB-N5-acl"/>
                         <outlet property="panelTable" destination="Erg-wX-VPt" id="60G-sr-H65"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="72O-AZ-iQ6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3125" y="-1002"/>
+            <point key="canvasLocation" x="2310" y="-1026"/>
         </scene>
         <!--User Files-->
         <scene sceneID="mXE-9h-usH">
@@ -372,10 +380,10 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="FileCell" textLabel="g1L-5x-qPl" detailTextLabel="e5w-TX-V7L" style="IBUITableViewCellStyleValue1" id="1ON-gm-aVW" customClass="FileCell" customModule="IITC_Mobile" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="24.333333969116211" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="44.666666030883789" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1ON-gm-aVW" id="RGm-Y5-wNX">
-                                    <rect key="frame" x="0.0" y="0.0" width="384.33333333333331" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="385.33333333333331" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="g1L-5x-qPl">
@@ -386,7 +394,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="e5w-TX-V7L">
-                                            <rect key="frame" x="332.66666666666663" y="11.999999999999998" width="43.666666666666664" height="20.333333333333332"/>
+                                            <rect key="frame" x="333.66666666666663" y="11.999999999999998" width="43.666666666666664" height="20.333333333333332"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -470,24 +478,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rzL-5P-tDE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="932" y="-321"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="KHy-7m-2zo">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GWj-60-Xf9" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Xve-Wd-P0y">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="ikz-AY-y0p" kind="relationship" relationship="rootViewController" id="28B-jY-xsf"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="EM2-mb-6Ih" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2307" y="-1002"/>
         </scene>
         <!--WebView-->
         <scene sceneID="i25-Yd-hye">
@@ -873,10 +863,10 @@
     </scenes>
     <designables>
         <designable name="Ps8-dl-gFu">
-            <size key="intrinsicContentSize" width="79.666666666666671" height="15.666666666666666"/>
+            <size key="intrinsicContentSize" width="69.666666666666671" height="15.666666666666666"/>
         </designable>
         <designable name="xxT-pL-Cpj">
-            <size key="intrinsicContentSize" width="79.666666666666671" height="15.666666666666666"/>
+            <size key="intrinsicContentSize" width="69.666666666666671" height="15.666666666666666"/>
         </designable>
     </designables>
     <resources>

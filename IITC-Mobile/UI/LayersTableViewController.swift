@@ -11,29 +11,23 @@ import BaseFramework
 
 class LayersTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIToolbarDelegate {
 
-    let layersController = LayersController.sharedInstance
+    var layersController: LayersController!
     var currentActiveIndex = -1
 
     @IBOutlet weak var panelTable: UITableView!
     @IBOutlet weak var baseLayerTable: UITableView!
     @IBOutlet weak var overlayLayerTable: UITableView!
-
-    var hairLine: UIView = UIView()
+    @IBOutlet weak var navigationBar: UINavigationBar!
 
     func configureHairline() {
-        for parent in self.navigationController!.navigationBar.subviews {
-            for childView in parent.subviews {
-                if childView is UIImageView && childView.bounds.size.width == self.navigationController!.navigationBar.frame.size.width {
-                    hairLine = childView
-                }
-            }
-        }
+        let app = UINavigationBarAppearance()
+        app.shadowColor = .clear
+        self.navigationBar.scrollEdgeAppearance = app
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureHairline()
-        hairLine.isHidden = true
         NotificationCenter.default.addObserver(self, selector: #selector(LayersTableViewController.updateLayers), name: JSNotificationLayersGot, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(LayersTableViewController.updateLayers), name: JSNotificationAddPane, object: nil)
 
@@ -47,14 +41,6 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-
-//    override func viewWillAppear(animated: Bool) {
-//        hairLine.hidden = true
-//    }
-//    
-//    override func viewDidDisappear(animated: Bool) {
-//        hairLine.hidden = false
-//    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

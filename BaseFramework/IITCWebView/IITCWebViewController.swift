@@ -25,6 +25,8 @@ public class IITCWebViewController: UIViewController {
     public var console: WebViewConsole {
         return webView.console
     }
+    
+    public var layerController: LayersController!
 
     public weak var webViewUIDelegate: WKUIDelegate?
 
@@ -82,6 +84,10 @@ public class IITCWebViewController: UIViewController {
             }
         }
     }
+    
+    func configureLayerController() {
+        self.layerController = LayersController()
+    }
 
 
     override public func viewDidLoad() {
@@ -89,6 +95,7 @@ public class IITCWebViewController: UIViewController {
 
         configureWebView()
         configureNotifications()
+        configureLayerController()
 
         reloadIITC()
     }
@@ -218,6 +225,7 @@ extension IITCWebViewController: WKNavigationDelegate {
                 if self.webView.consoleEnabled {
                     self.webView.console.clearMessages()
                 }
+                self.layerController.reset()
                 self.webView.removeAllUserScripts()
                 var scripts = ScriptsManager.sharedInstance.getLoadedScripts()
                 let currentMode = IITCLocationMode(rawValue: userDefaults.integer(forKey: "pref_user_location_mode"))!

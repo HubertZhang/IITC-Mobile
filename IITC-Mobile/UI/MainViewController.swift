@@ -22,8 +22,6 @@ class MainViewController: UIViewController {
 
     var webView: IITCWebViewController!
 
-    var layersController: LayersController = LayersController.sharedInstance
-
     var location = IITCLocation()
 
     var userDefaults = sharedUserDefaults
@@ -224,6 +222,7 @@ class MainViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "layerChooser" {
             self.webView.needUpdateLayer()
+            (segue.destination as! LayersTableViewController).layersController = self.webView.layerController
         } else if segue.identifier == "embedIITC" {
             self.webView = (segue.destination as! IITCWebViewController)
             self.webView.webViewUIDelegate = self

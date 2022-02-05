@@ -7,12 +7,11 @@
 //
 
 import UIKit
-import BaseFramework
 
-class Layer: Codable {
-    var layerID: Int = -1
-    var layerName: String = ""
-    var active: Bool = false
+open class Layer: Codable {
+    open var layerID: Int = -1
+    open var layerName: String = ""
+    open var active: Bool = false
 
     enum CodingKeys: String, CodingKey {
         case layerID = "layerId"
@@ -20,7 +19,7 @@ class Layer: Codable {
         case active = "active"
     }
 
-    required init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         if let id = try? container.decode(Int.self, forKey: .layerID) {
             layerID = id
@@ -32,19 +31,18 @@ class Layer: Codable {
     }
 }
 
-class LayersController: NSObject {
+public class LayersController: NSObject {
     static let sharedInstance = LayersController()
 
-    var baseLayers = [Layer]()
-    var overlayLayers = [Layer]()
-    var panelNames = ["info", "all", "faction", "alerts"]
-    var panelLabels = ["Info", "All", "Faction", "Alerts"]
-    var panelIcons = ["ic_action_about", "ic_action_view_as_list", "ic_action_cc_bcc", "ic_action_warning"]
+    public var baseLayers = [Layer]()
+    public var overlayLayers = [Layer]()
+    public var panelNames = ["info", "all", "faction", "alerts"]
+    public var panelLabels = ["Info", "All", "Faction", "Alerts"]
+    public var panelIcons = ["ic_action_about", "ic_action_view_as_list", "ic_action_cc_bcc", "ic_action_warning"]
 
     override init() {
         super.init()
         NotificationCenter.default.addObserver(self, selector: #selector(LayersController.setLayers(_:)), name: JSNotificationLayersGot, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(LayersController.reload(_:)), name: JSNotificationReloadRequired, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(LayersController.addPane(_:)), name: JSNotificationAddPane, object: nil)
     }
 
@@ -93,6 +91,10 @@ class LayersController: NSObject {
     }
 
     @objc func reload(_ notification: Notification) {
+        reset()
+    }
+    
+    func reset() {
         panelNames = ["info", "all", "faction", "alert"]
         panelLabels = ["Info", "All", "Faction", "Alert"]
         panelIcons = ["ic_action_about", "ic_action_view_as_list", "ic_action_cc_bcc", "ic_action_warning"]
