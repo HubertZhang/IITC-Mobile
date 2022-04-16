@@ -26,7 +26,7 @@ public class IITCWebViewController: UIViewController {
         return webView.console
     }
 
-    public var layerController: LayersController!
+    public var layerController = LayersController.sharedInstance
 
     public weak var webViewUIDelegate: WKUIDelegate?
 
@@ -90,17 +90,12 @@ public class IITCWebViewController: UIViewController {
         }
     }
 
-    func configureLayerController() {
-        self.layerController = LayersController()
-    }
-
 
     override public func viewDidLoad() {
         super.viewDidLoad()
 
         configureWebView()
         configureNotifications()
-        configureLayerController()
 
         reloadIITC()
     }
