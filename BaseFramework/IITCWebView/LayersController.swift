@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Combine
 
 open class Layer: Codable {
     open var layerID: Int = -1
@@ -31,14 +32,27 @@ open class Layer: Codable {
     }
 }
 
-public class LayersController: NSObject {
-    static let sharedInstance = LayersController()
+public struct Panel: Identifiable, Hashable {
+    public var id: String
+    public var label: String
+    public var icon: String
 
-    public var baseLayers = [Layer]()
-    public var overlayLayers = [Layer]()
-    public var panelNames = ["info", "all", "faction", "alerts"]
-    public var panelLabels = ["Info", "All", "Faction", "Alerts"]
-    public var panelIcons = ["ic_action_about", "ic_action_view_as_list", "ic_action_cc_bcc", "ic_action_warning"]
+    public static var info = Panel(id: "info", label: "Info", icon: "ic_action_about")
+    public static var all = Panel(id: "all", label: "All", icon: "ic_action_view_as_list")
+    public static var faction = Panel(id: "faction", label: "Faction", icon: "ic_action_cc_bcc")
+    public static var alerts = Panel(id: "alerts", label: "Alerts", icon: "ic_action_warning")
+
+    public static func initialPanels() -> [Panel] {
+        return [.info, .all, .faction, .alerts]
+    }
+}
+
+public class LayersController: NSObject {
+    public static let sharedInstance = LayersController()
+
+    @Published public private(set) var baseLayers = [Layer]()
+    @Published public private(set) var overlayLayers = [Layer]()
+    @Published public private(set) var panels: [Panel] = Panel.initialPanels()
 
     override init() {
         super.init()
@@ -84,20 +98,46 @@ public class LayersController: NSObject {
             return
         }
         if let name = info["name"], let label = info["label"] {
-            self.panelNames.append(name)
-            self.panelLabels.append(label)
-            self.panelIcons.append(info["icon"] ?? "ic_action_new_event")
+            self.panels.append(Panel(id: name, label: label, icon: info["icon"] ?? "ic_action_new_event"))
         }
     }
 
     @objc func reload(_ notification: Notification) {
         reset()
     }
-    
+
     func reset() {
-        panelNames = ["info", "all", "faction", "alert"]
-        panelLabels = ["Info", "All", "Faction", "Alert"]
-        panelIcons = ["ic_action_about", "ic_action_view_as_list", "ic_action_cc_bcc", "ic_action_warning"]
+        panels = Panel.initialPanels()
     }
 
+    public func openPanel(_ id: String) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "SwitchToPanel"), object: nil, userInfo: ["Panel": id])
+    }
+
+    public func show(map mapId: Int) {
+        guard let layer = self.baseLayers.first(where: { $0.layerID == mapId }) else {
+            return
+        }
+        if layer.active {
+            return
+        }
+        _ = self.baseLayers.first { l in
+            if l.active {
+                l.active = false
+                layer.active = true
+                return true
+            }
+            return false
+        }
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "WebViewExecuteJS"), object: nil, userInfo: ["JS": "window.layerChooser.showLayer(\(layer.layerID))"])
+    }
+
+    public func show(overlay overlayId: Int) {
+        guard let layer = self.overlayLayers.first(where: { $0.layerID == overlayId }) else {
+            return
+        }
+        layer.active = !layer.active
+        let s = layer.active ? "true" : "false"
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "WebViewExecuteJS"), object: nil, userInfo: ["JS": "window.layerChooser.showLayer(\(layer.layerID), \(s)"])
+    }
 }

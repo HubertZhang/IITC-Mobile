@@ -60,9 +60,9 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch (tableView) {
+        switch tableView {
         case panelTable:
-            return layersController.panelNames.count
+            return layersController.panels.count
         case baseLayerTable:
             return layersController.baseLayers.count
         case overlayLayerTable:
@@ -75,10 +75,11 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
-        switch (tableView) {
+        switch tableView {
         case panelTable:
-            cell.textLabel?.text = layersController.panelLabels[(indexPath as NSIndexPath).row]
-            let image = UIImage(named: layersController.panelIcons[(indexPath as NSIndexPath).row]) ?? UIImage(named: "ic_action_new_event")
+            let panel = layersController.panels[indexPath.row]
+            cell.textLabel?.text = panel.label
+            let image = UIImage(named: panel.icon) ?? UIImage(named: "ic_action_new_event")
             cell.imageView?.image = image?.withRenderingMode(.alwaysTemplate)
             if #available(iOS 13.0, *) {
                 cell.imageView?.tintColor = UIColor.label
@@ -106,38 +107,20 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch (tableView) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        switch tableView {
         case panelTable:
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "SwitchToPanel"), object: nil, userInfo: ["Panel": layersController.panelNames[(indexPath as NSIndexPath).row]])
-            tableView.deselectRow(at: indexPath, animated: true)
+            let panel = layersController.panels[indexPath.row]
+            layersController.openPanel(panel.id)
             self.dismiss(nil)
         case baseLayerTable:
-            tableView.deselectRow(at: indexPath, animated: true)
             let layer = layersController.baseLayers[(indexPath as NSIndexPath).row]
-            if layer.active {
-                return
-            } else {
-                layer.active = true
-                layersController.baseLayers[currentActiveIndex].active = false
-                tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-                let newIndexPath = IndexPath(row: currentActiveIndex, section: (indexPath as NSIndexPath).section)
-                tableView.cellForRow(at: newIndexPath)?.accessoryType = .none
-                currentActiveIndex = (indexPath as NSIndexPath).row
-                NotificationCenter.default.post(name: Notification.Name(rawValue: "WebViewExecuteJS"), object: nil, userInfo: ["JS": "window.layerChooser.showLayer(\(layer.layerID))"])
-
-            }
+            layersController.show(map: layer.layerID)
+            baseLayerTable.reloadData()
         case overlayLayerTable:
             let layer = layersController.overlayLayers[(indexPath as NSIndexPath).row]
-            if layer.active {
-                layer.active = false
-                tableView.cellForRow(at: indexPath)?.accessoryType = .none
-                NotificationCenter.default.post(name: Notification.Name(rawValue: "WebViewExecuteJS"), object: nil, userInfo: ["JS": "window.layerChooser.showLayer(\(layer.layerID), false)"])
-            } else {
-                layer.active = true
-                tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-                NotificationCenter.default.post(name: Notification.Name(rawValue: "WebViewExecuteJS"), object: nil, userInfo: ["JS": "window.layerChooser.showLayer(\(layer.layerID), true)"])
-            }
-            tableView.deselectRow(at: indexPath, animated: true)
+            layersController.show(overlay: layer.layerID)
+            overlayLayerTable.reloadData()
         default:
             break
         }
@@ -213,6 +196,5 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
     func position(for bar: UIBarPositioning) -> UIBarPosition {
         return .topAttached
     }
-
 
 }
