@@ -18,7 +18,6 @@ func loadHtmlFileToAttributeString(_ path: URL) -> NSAttributedString? {
     return try? NSAttributedString(data: htmlData!, options: options, documentAttributes: nil)
 }
 
-
 class TextViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet weak var textView: UITextView!
@@ -69,7 +68,6 @@ class TextViewController: UIViewController, UITextViewDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
 
     /*
     // MARK: - Navigation

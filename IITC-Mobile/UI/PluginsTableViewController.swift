@@ -108,7 +108,7 @@ class PluginsTableViewController: UITableViewController {
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        if (self.changed) {
+        if self.changed {
             NotificationCenter.default.post(name: JSNotificationReloadRequired, object: nil)
             self.changed = false
         }
@@ -140,7 +140,6 @@ class PluginsTableViewController: UITableViewController {
         self.changed = true
         tableView.deselectRow(at: indexPath, animated: true)
     }
-
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let originalCell = tableView.dequeueReusableCell(withIdentifier: "PluginCell", for: indexPath)

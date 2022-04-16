@@ -118,7 +118,6 @@ class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         self.dismiss(animated: true, completion: nil)
     }
 
-
     /*
     // MARK: - Navigation
 

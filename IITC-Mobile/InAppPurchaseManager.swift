@@ -102,7 +102,7 @@ extension InAppPurchaseManager: SKPaymentTransactionObserver {
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         var needVerifyReceipt: Bool = false
         for transaction in transactions {
-            switch (transaction.transactionState) {
+            switch transaction.transactionState {
             case .purchasing:
                 self.uiDelegate?.purchasing()
             case .deferred:

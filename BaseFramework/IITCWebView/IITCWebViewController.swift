@@ -25,7 +25,7 @@ public class IITCWebViewController: UIViewController {
     public var console: WebViewConsole {
         return webView.console
     }
-    
+
     public var layerController: LayersController!
 
     public weak var webViewUIDelegate: WKUIDelegate?
@@ -84,7 +84,7 @@ public class IITCWebViewController: UIViewController {
             }
         }
     }
-    
+
     func configureLayerController() {
         self.layerController = LayersController()
     }
