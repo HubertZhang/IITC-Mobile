@@ -29,7 +29,10 @@ class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         self.webView.uiDelegate = self
         self.view.addSubview(self.webView)
 
-        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:[top][v]|", options: [], metrics: nil, views: ["v": self.webView!, "top": self.topLayoutGuide]))
+        NSLayoutConstraint.activate([
+            self.view.safeAreaLayoutGuide.topAnchor.constraint(equalTo: self.webView.topAnchor),
+            self.webView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+        ])
         NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "|[v]|", options: [], metrics: nil, views: ["v": self.webView!]))
 
         self.observationProgress = self.webView.observe(\WKWebView.estimatedProgress, changeHandler: { (webview, _) in

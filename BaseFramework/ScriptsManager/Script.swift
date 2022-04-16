@@ -66,26 +66,25 @@ open class Script: NSObject {
 
         let header = fileContent[range1.upperBound..<range2.lowerBound]
         for line in header.components(separatedBy: "\n") {
-            var keyNS: NSString?, valueNS: NSString?
             let scanner = Scanner(string: line)
 
             // Skip to "@"
-            scanner.scanUpToCharacters(from: CharacterSet(charactersIn: "@"), into: nil)
+            _ = scanner.scanUpToCharacters(from: CharacterSet(charactersIn: "@"))
 
             // Read key until whitespace
             if scanner.isAtEnd {
                 continue
             }
-            scanner.scanString("@", into: nil)
-            scanner.scanUpToCharacters(from: .whitespaces, into: &keyNS)
+            _ = scanner.scanString("@")
+            let key = scanner.scanUpToCharacters(from: .whitespaces)
 
             // Read value until "\r" or "\n"
             if scanner.isAtEnd {
                 continue
             }
-            scanner.scanUpToCharacters(from: .newlines, into: &valueNS)
+            let value = scanner.scanUpToCharacters(from: .newlines)
 
-            guard let key = keyNS as String?, let value = valueNS as String? else {
+            guard let key = key, let value = value else {
                 continue
             }
             if attributes[key] == nil {

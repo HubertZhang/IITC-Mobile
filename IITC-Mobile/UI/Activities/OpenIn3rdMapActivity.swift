@@ -75,7 +75,7 @@ class OpenIn3rdMapActivityClass: UIActivity {
         }
         if UIApplication.shared.canOpenURL(URL(string: p.MapScheme)!) {
             let url = p.constructURL()
-            UIApplication.shared.openURL(url)
+            UIApplication.shared.open(url)
         }
         self.activityDidFinish(true)
     }

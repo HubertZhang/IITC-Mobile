@@ -212,13 +212,13 @@ class MainViewController: UIViewController {
     // MARK: IITC Callbacks
 
     @objc func setIITCProgress(_ notification: Notification) {
-        if let progress = notification.userInfo?["data"] as? NSNumber {
-            if progress.doubleValue == 1 {
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            } else {
-                UIApplication.shared.isNetworkActivityIndicatorVisible = true
-            }
-        }
+//        if let progress = notification.userInfo?["data"] as? NSNumber {
+//            if progress.doubleValue == 1 {
+//                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+//            } else {
+//                UIApplication.shared.isNetworkActivityIndicatorVisible = true
+//            }
+//        }
     }
 
     @objc func sharedAction(_ notification: Notification) {
