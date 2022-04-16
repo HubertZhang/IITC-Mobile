@@ -33,8 +33,9 @@ class MainViewController: UIViewController {
         return InAppPurchaseManager.default.consolePurchased && userDefaults.bool(forKey: "pref_console")
         #endif
     }
-    var debugButton: UIBarButtonItem!
-    @IBOutlet weak var backButton: UIBarButtonItem!
+    lazy var debugButton: UIBarButtonItem = UIBarButtonItem(title: ">_", style: .plain, target: self, action: #selector(debugButtonPressed(_:)))
+    lazy var backButton: UIBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backButtonPressed(_:)))
+    lazy var layersButton: UIBarButtonItem = UIBarButtonItem(title: "Layers", style: .plain, target: self, action: #selector(self.layersButtonPressed(_:)))
 
     let disposeBag = DisposeBag()
 
@@ -66,6 +67,14 @@ class MainViewController: UIViewController {
         }
     }
 
+    func configureLeftButtons() {
+        var buttons = [self.backButton]
+        if self.splitViewController?.traitCollection.horizontalSizeClass == .compact {
+            buttons.append(self.layersButton)
+        }
+        self.navigationItem.setLeftBarButtonItems(buttons, animated: true)
+    }
+
     func configureRightButtons() {
         var buttons = [UIBarButtonItem]()
         let settingsButton = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 24))
@@ -91,19 +100,14 @@ class MainViewController: UIViewController {
         self.navigationItem.setRightBarButtonItems(buttons, animated: true)
     }
 
-    func configureDebugButton() {
-        debugButton = UIBarButtonItem(title: ">_", style: .plain, target: self, action: #selector(debugButtonPressed(_:)))
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        self.webView.canGoBack.bind(to: self.backButton.rx.isEnabled).disposed(by: disposeBag)
 
-        configureDebugButton()
+        configureLeftButtons()
         configureRightButtons()
         configureNotification()
-
-        self.webView.canGoBack.bind(to: self.backButton.rx.isEnabled).disposed(by: disposeBag)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -138,16 +142,25 @@ class MainViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        self.configureLeftButtons()
+    }
+
     // MARK: Toolbar Buttons
-    @IBAction func backButtonPressed(_ sender: AnyObject) {
+    @objc func backButtonPressed(_ sender: AnyObject) {
         self.webView.goBackPanel()
     }
 
-    @IBAction func locationButtonPressed(_ aa: AnyObject) {
+    @objc func layersButtonPressed(_ sender: AnyObject) {
+        self.webView.needUpdateLayer()
+        self.splitViewController?.show(.primary)
+    }
+
+    @objc func locationButtonPressed(_ aa: AnyObject) {
         self.webView.locate()
     }
 
-    @IBAction func settingsButtonPressed(_ sender: AnyObject) {
+    @objc func settingsButtonPressed(_ sender: AnyObject) {
         let vc = SettingsViewController(style: .grouped)
         vc.showDoneButton = false
         vc.title = "Settings"
@@ -155,11 +168,11 @@ class MainViewController: UIViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
-    @IBAction func reloadButtonPressed(_ aa: AnyObject) {
+    @objc func reloadButtonPressed(_ aa: AnyObject) {
         NotificationCenter.default.post(name: JSNotificationReloadRequired, object: nil)
     }
 
-    @IBAction func debugButtonPressed(_ sender: Any) {
+    @objc func debugButtonPressed(_ sender: Any) {
         if self.debugConsoleEnabled {
             let vc = ConsoleViewController.init(with: self.webView.console, notificationName: WebViewConsoleMessageUpdated)
             let vc1 = UINavigationController.init(rootViewController: vc)
@@ -170,7 +183,7 @@ class MainViewController: UIViewController {
         }
     }
 
-    @IBAction func linkButtonPressed(_ sender: AnyObject) {
+    @objc func linkButtonPressed(_ sender: AnyObject) {
         let alert = UIAlertController(title: "Input intel URL", message: nil, preferredStyle: .alert)
         alert.addTextField {
             textField in
@@ -220,10 +233,7 @@ class MainViewController: UIViewController {
 
     // MARK: Segue Handler
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "layerChooser" {
-            self.webView.needUpdateLayer()
-            (segue.destination as! LayersTableViewController).layersController = self.webView.layerController
-        } else if segue.identifier == "embedIITC" {
+        if segue.identifier == "embedIITC" {
             self.webView = (segue.destination as! IITCWebViewController)
             self.webView.webViewUIDelegate = self
         }

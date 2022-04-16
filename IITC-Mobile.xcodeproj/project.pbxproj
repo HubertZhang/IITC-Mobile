@@ -50,6 +50,7 @@
 		B4C1C3C7279C99B70056AFDC /* TPInAppReceipt in Frameworks */ = {isa = PBXBuildFile; productRef = B4C1C3C6279C99B70056AFDC /* TPInAppReceipt */; };
 		B4C1C3CF279C9A7D0056AFDC /* Highlightr in Frameworks */ = {isa = PBXBuildFile; productRef = B4C1C3CE279C9A7D0056AFDC /* Highlightr */; };
 		B4CD6172209C070C00F5BFB8 /* InsetsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CD6171209C070C00F5BFB8 /* InsetsLabel.swift */; };
+		B4D5F15027C3EBD300CEC627 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D5F14F27C3EBD300CEC627 /* SidebarViewController.swift */; };
 		B4DC209223AE9D7900AC156D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DC209123AE9D7900AC156D /* Constants.swift */; };
 		B4E2F0041D05D06C00D2D86B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E2F0031D05D06C00D2D86B /* AppDelegate.swift */; };
 		B4E2F0061D05D06C00D2D86B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E2F0051D05D06C00D2D86B /* MainViewController.swift */; };
@@ -168,6 +169,7 @@
 		B4B3284B1D117970007AA6D5 /* IITC.entitlements */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = IITC.entitlements; sourceTree = "<group>"; };
 		B4B3284D1D1179C4007AA6D5 /* IITC-Action.entitlements */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = "IITC-Action.entitlements"; sourceTree = "<group>"; };
 		B4CD6171209C070C00F5BFB8 /* InsetsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetsLabel.swift; sourceTree = "<group>"; };
+		B4D5F14F27C3EBD300CEC627 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
 		B4DC209123AE9D7900AC156D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B4E2F0001D05D06C00D2D86B /* IITC-Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IITC-Mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4E2F0031D05D06C00D2D86B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 				B41C02481F233B9700AAAEAC /* ConsolePurchaseViewController.swift */,
 				B4A270D71F553B6D00A2770F /* UserAgentTableViewController.swift */,
 				B4CD6171209C070C00F5BFB8 /* InsetsLabel.swift */,
+				B4D5F14F27C3EBD300CEC627 /* SidebarViewController.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -685,6 +688,7 @@
 				B4B3284A1D10F3AF007AA6D5 /* UserFilesTableViewController.swift in Sources */,
 				B4CD6172209C070C00F5BFB8 /* InsetsLabel.swift in Sources */,
 				B4E2F0061D05D06C00D2D86B /* MainViewController.swift in Sources */,
+				B4D5F15027C3EBD300CEC627 /* SidebarViewController.swift in Sources */,
 				B42BE7631D073C7800A0A0CB /* TextViewController.swift in Sources */,
 				B405EE081D05FD1400110D9E /* PluginsTableViewController.swift in Sources */,
 				B4779A31200BAD3F00EB34BD /* CopyPortalLinkActivity.swift in Sources */,
