@@ -90,7 +90,6 @@ public class IITCWebViewController: UIViewController {
         }
     }
 
-
     override public func viewDidLoad() {
         super.viewDidLoad()
 
@@ -167,17 +166,17 @@ public class IITCWebViewController: UIViewController {
             return
         }
 
-        if (panel == self.currentPanelID) {
+        if panel == self.currentPanelID {
             return
         }
 
         // map pane is top-lvl. clear stack.
-        if (panel == "map") {
+        if panel == "map" {
             self.backPanel.removeAll()
             canGoBack.accept(false)
         }
         // don't push current pane to backstack if this method was called via back button
-        else if (!self.backButtonPressed) {
+        else if !self.backButtonPressed {
             self.backPanel.append(self.currentPanelID)
             canGoBack.accept(true)
         }

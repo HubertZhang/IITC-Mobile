@@ -105,11 +105,9 @@ open class JSHandler: NSObject, WKScriptMessageHandler {
     ////    mIitc.setFocusedDialog(id);
     // }
 
-
     // - (void) dialogOpened:(NSString *) dialogID withResult:(BOOL) open {
     ////    mIitc.dialogOpened(id, open);
     // }
-
 
     @objc func bootFinished() {
         NotificationCenter.default.post(name: JSNotificationBootFinished, object: self)
@@ -143,7 +141,6 @@ open class JSHandler: NSObject, WKScriptMessageHandler {
     ////        }
     ////    });
     // }
-
 
     // - (void) updateIitc: (NSString *) fileUrl {
     //    mIitc.runOnUiThread(new Runnable() {
@@ -202,7 +199,6 @@ open class JSHandler: NSObject, WKScriptMessageHandler {
     //    return YES;
     // }
 
-
     // - (void) setFollowMode:(BOOL) follow {
     ////    mIitc.runOnUiThread(new Runnable() {
     ////        @Override
@@ -211,7 +207,6 @@ open class JSHandler: NSObject, WKScriptMessageHandler {
     ////        }
     ////    });
     // }
-
 
     @objc func setProgress(_ progress: Any) {
         guard let progress = progress as? NSNumber else {
