@@ -13,6 +13,8 @@ import InAppSettingsKit
 import MBProgressHUD
 import Alamofire
 
+var MainStoryBoard = UIStoryboard(name: "Main", bundle: nil)
+
 @objc class SettingsViewController: IASKAppSettingsViewController, IASKSettingsDelegate {
     let disposeBag = DisposeBag()
 
@@ -43,6 +45,7 @@ import Alamofire
     override func viewDidDisappear(_ animated: Bool) {
         if self.dirty {
             NotificationCenter.default.post(name: JSNotificationReloadRequired, object: nil)
+            self.dirty = false
         }
     }
 
@@ -55,9 +58,7 @@ import Alamofire
     }
 
     func pushViewController(withIdentifier identifier: String, config: (UIViewController) -> Void = {_ in return}) {
-        guard let vc = self.navigationController?.storyboard?.instantiateViewController(withIdentifier: identifier) else {
-            return
-        }
+        let vc = MainStoryBoard.instantiateViewController(withIdentifier: identifier)
         config(vc)
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -91,9 +92,7 @@ import Alamofire
         case "pref_useragent_button":
             self.pushViewController(withIdentifier: "userAgentViewController")
         case "pref_console_not_purchased":
-            guard let vc = self.navigationController?.storyboard?.instantiateViewController(withIdentifier: "purchase") else {
-                return
-            }
+            let vc = MainStoryBoard.instantiateViewController(withIdentifier: "purchase")
             vc.modalPresentationStyle = UIModalPresentationStyle.formSheet
             self.present(vc, animated: true, completion: nil)
         case "pref_update":
