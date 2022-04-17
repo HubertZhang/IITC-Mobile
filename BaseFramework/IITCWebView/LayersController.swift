@@ -138,6 +138,6 @@ public class LayersController: NSObject {
         }
         layer.active = !layer.active
         let s = layer.active ? "true" : "false"
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "WebViewExecuteJS"), object: nil, userInfo: ["JS": "window.layerChooser.showLayer(\(layer.layerID), \(s)"])
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "WebViewExecuteJS"), object: nil, userInfo: ["JS": "window.layerChooser.showLayer(\(layer.layerID), \(s))"])
     }
 }
