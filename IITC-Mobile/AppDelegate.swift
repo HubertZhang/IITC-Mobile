@@ -126,7 +126,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let fileName = notification.userInfo?["fileName"] as? String else {
             return
         }
-        let fileType = notification.userInfo?["fileType"] as? String ?? ""
+//        let fileType = notification.userInfo?["fileType"] as? String ?? ""
         guard let fileContent = notification.userInfo?["fileContent"] as? String else {
             return
         }
