@@ -86,6 +86,13 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         preScript = try! Script(coreJS: bundleScriptPath.appendingPathComponent("ios-hooks.js.tpl"), withName: "hook")
         preScript.fileContent = String(format: preScript.fileContent, VersionTool.default.currentVersion, Int(VersionTool.default.currentBuild) ?? 0)
         postScript = try! Script(coreJS: bundleScriptPath.appendingPathComponent("ios-hooks-post.js"), withName: "post")
+        let os = ProcessInfo().operatingSystemVersion
+        switch (os.majorVersion, os.minorVersion, os.patchVersion) {
+        case (15, 4...5, _):
+            postScript.fileContent += "\n\n"
+            postScript.fileContent += (try? String(contentsOf: bundleScriptPath.appendingPathComponent("ios-15-bugfix.js"))) ?? ""
+        default: break
+        }
         reloadScripts()
     }
 
