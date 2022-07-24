@@ -84,7 +84,11 @@ open class ScriptsManager: NSObject, DirectoryWatcherDelegate {
         documentWatcher = DirectoryWatcher(userScriptsPath, delegate: self)
 
         preScript = try! Script(coreJS: bundleScriptPath.appendingPathComponent("ios-hooks.js.tpl"), withName: "hook")
-        preScript.fileContent = String(format: preScript.fileContent, VersionTool.default.currentVersion, Int(VersionTool.default.currentBuild) ?? 0)
+        var padding: Double = 0.5
+        if UIScreen.main.nativeBounds.width*UIScreen.main.nativeBounds.height > 2048*2048 {
+            padding = 0.1
+        }
+        preScript.fileContent = String(format: preScript.fileContent, VersionTool.default.currentVersion, Int(VersionTool.default.currentBuild) ?? 0, padding)
         postScript = try! Script(coreJS: bundleScriptPath.appendingPathComponent("ios-hooks-post.js"), withName: "post")
         let os = ProcessInfo().operatingSystemVersion
         switch (os.majorVersion, os.minorVersion, os.patchVersion) {

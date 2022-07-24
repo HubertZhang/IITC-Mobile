@@ -90,6 +90,6 @@ function Android() {
     }
 }
 window.android=new Android();
-window.RENDERER_PADDING=0
+window.RENDERER_PADDING=%f
 
 if(!window.bootPlugins) window.bootPlugins = [];
