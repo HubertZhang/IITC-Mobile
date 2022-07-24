@@ -23,7 +23,6 @@
 		B4320D5422FD1F34009097EE /* OpenInBaiduMapActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4320D5322FD1F34009097EE /* OpenInBaiduMapActivity.swift */; };
 		B432CE46279C9CF10078FE2C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B432CE45279C9CF10078FE2C /* CoreLocation.framework */; };
 		B432CE48279C9D1D0078FE2C /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B432CE47279C9D1D0078FE2C /* WebKit.framework */; };
-		B432CE62279CA8D50078FE2C /* WebViewConsoleView in Frameworks */ = {isa = PBXBuildFile; productRef = B432CE61279CA8D50078FE2C /* WebViewConsoleView */; };
 		B432CE66279CA9DA0078FE2C /* RxAlamofire in Frameworks */ = {isa = PBXBuildFile; productRef = B432CE65279CA9DA0078FE2C /* RxAlamofire */; };
 		B432CE68279CA9E20078FE2C /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = B432CE67279CA9E20078FE2C /* RxCocoa */; };
 		B432CE6A279CA9F70078FE2C /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B432CE69279CA9F70078FE2C /* RxSwift */; };
@@ -36,6 +35,8 @@
 		B45CEE3727AF35480011CCD5 /* LayersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45CEE3627AF35470011CCD5 /* LayersController.swift */; };
 		B45CEE3827AF361C0011CCD5 /* LayersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B405EECB1D066FC900110D9E /* LayersTableViewController.swift */; };
 		B45CEE3A27AF38740011CCD5 /* RSKGrowingTextView in Frameworks */ = {isa = PBXBuildFile; productRef = B45CEE3927AF38740011CCD5 /* RSKGrowingTextView */; };
+		B45F34DF288D803500E86497 /* WebViewConsole in Frameworks */ = {isa = PBXBuildFile; productRef = B45F34DE288D803500E86497 /* WebViewConsole */; };
+		B45F34E1288D804000E86497 /* WebViewConsoleView in Frameworks */ = {isa = PBXBuildFile; productRef = B45F34E0288D804000E86497 /* WebViewConsoleView */; };
 		B47461161F769E1D00BFD2CA /* PluginsSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47461151F769E1D00BFD2CA /* PluginsSearchTableViewController.swift */; };
 		B4779A31200BAD3F00EB34BD /* CopyPortalLinkActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4779A30200BAD3F00EB34BD /* CopyPortalLinkActivity.swift */; };
 		B4779A33200BB71100EB34BD /* OpenInGMapActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4779A32200BB71100EB34BD /* OpenInGMapActivity.swift */; };
@@ -151,7 +152,6 @@
 		B4320D5322FD1F34009097EE /* OpenInBaiduMapActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenInBaiduMapActivity.swift; sourceTree = "<group>"; };
 		B432CE45279C9CF10078FE2C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/System/Library/Frameworks/CoreLocation.framework; sourceTree = DEVELOPER_DIR; };
 		B432CE47279C9D1D0078FE2C /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/System/iOSSupport/System/Library/Frameworks/WebKit.framework; sourceTree = DEVELOPER_DIR; };
-		B432CE56279CA3120078FE2C /* WebViewConsole */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = WebViewConsole; path = ../CocoaPods/Specs/WebViewConsole; sourceTree = "<group>"; };
 		B44417621DA50D8900960F11 /* JSFile_22x29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JSFile_22x29.png; sourceTree = "<group>"; };
 		B44417631DA50D8900960F11 /* JSFile_44x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JSFile_44x58.png; sourceTree = "<group>"; };
 		B44417641DA50D8900960F11 /* JSFile_64x64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JSFile_64x64.png; sourceTree = "<group>"; };
@@ -204,6 +204,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B405EED61D0726D700110D9E /* CoreLocation.framework in Frameworks */,
+				B45F34E1288D804000E86497 /* WebViewConsoleView in Frameworks */,
 				B4FCB394279C882600DBA72F /* InAppSettingsKit in Frameworks */,
 				B4C1C3C7279C99B70056AFDC /* TPInAppReceipt in Frameworks */,
 				B4C1C3BC279C93EC0056AFDC /* MBProgressHUD in Frameworks */,
@@ -227,10 +228,10 @@
 			files = (
 				B432CE6A279CA9F70078FE2C /* RxSwift in Frameworks */,
 				B432CE6D279CAA4F0078FE2C /* Alamofire in Frameworks */,
+				B45F34DF288D803500E86497 /* WebViewConsole in Frameworks */,
 				B432CE46279C9CF10078FE2C /* CoreLocation.framework in Frameworks */,
 				B432CE66279CA9DA0078FE2C /* RxAlamofire in Frameworks */,
 				B432CE68279CA9E20078FE2C /* RxCocoa in Frameworks */,
-				B432CE62279CA8D50078FE2C /* WebViewConsoleView in Frameworks */,
 				B432CE48279C9D1D0078FE2C /* WebKit.framework in Frameworks */,
 				B45CEE3A27AF38740011CCD5 /* RSKGrowingTextView in Frameworks */,
 			);
@@ -285,7 +286,6 @@
 		B432CE55279CA3120078FE2C /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				B432CE56279CA3120078FE2C /* WebViewConsole */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -454,6 +454,7 @@
 				B4C1C3BB279C93EC0056AFDC /* MBProgressHUD */,
 				B4C1C3C6279C99B70056AFDC /* TPInAppReceipt */,
 				B4C1C3CE279C9A7D0056AFDC /* Highlightr */,
+				B45F34E0288D804000E86497 /* WebViewConsoleView */,
 			);
 			productName = "IITC-Mobile";
 			productReference = B4E2F0001D05D06C00D2D86B /* IITC-Mobile.app */;
@@ -492,12 +493,12 @@
 			);
 			name = BaseFramework;
 			packageProductDependencies = (
-				B432CE61279CA8D50078FE2C /* WebViewConsoleView */,
 				B432CE65279CA9DA0078FE2C /* RxAlamofire */,
 				B432CE67279CA9E20078FE2C /* RxCocoa */,
 				B432CE69279CA9F70078FE2C /* RxSwift */,
 				B432CE6C279CAA4F0078FE2C /* Alamofire */,
 				B45CEE3927AF38740011CCD5 /* RSKGrowingTextView */,
+				B45F34DE288D803500E86497 /* WebViewConsole */,
 			);
 			productName = BaseFramework;
 			productReference = B4F840301D0AD1AF00C58690 /* BaseFramework.framework */;
@@ -579,6 +580,7 @@
 				B4C1C3C5279C99B70056AFDC /* XCRemoteSwiftPackageReference "TPInAppReceipt" */,
 				B4C1C3CD279C9A7D0056AFDC /* XCRemoteSwiftPackageReference "Highlightr" */,
 				B432CE6B279CAA4F0078FE2C /* XCRemoteSwiftPackageReference "Alamofire" */,
+				B45F34D9288D7FE700E86497 /* XCRemoteSwiftPackageReference "WebViewConsole" */,
 			);
 			productRefGroup = B4E2F0011D05D06C00D2D86B /* Products */;
 			projectDirPath = "";
@@ -1180,6 +1182,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		B45F34D9288D7FE700E86497 /* XCRemoteSwiftPackageReference "WebViewConsole" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Hubertzhang/WebViewConsole.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.3.1;
+			};
+		};
 		B4C1C3B7279C92F50056AFDC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -1239,10 +1249,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B432CE61279CA8D50078FE2C /* WebViewConsoleView */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = WebViewConsoleView;
-		};
 		B432CE65279CA9DA0078FE2C /* RxAlamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B4C1C3BD279C94FE0056AFDC /* XCRemoteSwiftPackageReference "RxAlamofire" */;
@@ -1267,6 +1273,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B42C17D4279C7E5B00446B8F /* XCRemoteSwiftPackageReference "RSKGrowingTextView" */;
 			productName = RSKGrowingTextView;
+		};
+		B45F34DE288D803500E86497 /* WebViewConsole */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B45F34D9288D7FE700E86497 /* XCRemoteSwiftPackageReference "WebViewConsole" */;
+			productName = WebViewConsole;
+		};
+		B45F34E0288D804000E86497 /* WebViewConsoleView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B45F34D9288D7FE700E86497 /* XCRemoteSwiftPackageReference "WebViewConsole" */;
+			productName = WebViewConsoleView;
 		};
 		B4C1C3B8279C92F50056AFDC /* FirebaseAnalyticsWithoutAdIdSupport */ = {
 			isa = XCSwiftPackageProductDependency;
