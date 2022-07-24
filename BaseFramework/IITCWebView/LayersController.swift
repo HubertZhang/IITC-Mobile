@@ -98,7 +98,11 @@ public class LayersController: NSObject {
             return
         }
         if let name = info["name"], let label = info["label"] {
-            self.panels.append(Panel(id: name, label: label, icon: info["icon"] ?? "ic_action_new_event"))
+            if let id = self.panels.firstIndex(where: {$0.id == name}) {
+                self.panels[id] = Panel(id: name, label: label, icon: info["icon"] ?? "ic_action_new_event")
+            } else {
+                self.panels.append(Panel(id: name, label: label, icon: info["icon"] ?? "ic_action_new_event"))
+            }
         }
     }
 
