@@ -91,7 +91,9 @@ class SidebarViewController: UICollectionViewController {
         }
 
         snapshot.append([header])
-        snapshot.expand([header])
+        if self.dataSource.snapshot(for: .panel).isExpanded(header) {
+            snapshot.expand([header])
+        }
         snapshot.append(items, to: header)
         return snapshot
     }
@@ -106,7 +108,9 @@ class SidebarViewController: UICollectionViewController {
         }
 
         snapshot.append([header])
-        snapshot.expand([header])
+        if self.dataSource.snapshot(for: .map).isExpanded(header) {
+            snapshot.expand([header])
+        }
         snapshot.append(items, to: header)
         return snapshot
     }
@@ -121,7 +125,9 @@ class SidebarViewController: UICollectionViewController {
         }
 
         snapshot.append([header])
-        snapshot.expand([header])
+        if self.dataSource.snapshot(for: .overlay).isExpanded(header) {
+            snapshot.expand([header])
+        }
         snapshot.append(items, to: header)
         return snapshot
     }
@@ -132,21 +138,33 @@ class SidebarViewController: UICollectionViewController {
 
             var contentConfiguration = UIListContentConfiguration.sidebarHeader()
             contentConfiguration.text = item.title
-            contentConfiguration.textProperties.font = .preferredFont(forTextStyle: .subheadline)
+            contentConfiguration.textProperties.font = .preferredFont(forTextStyle: .headline)
             contentConfiguration.textProperties.color = .secondaryLabel
 
             cell.contentConfiguration = contentConfiguration
-            cell.accessories = [.outlineDisclosure()]
+            cell.accessories = [.outlineDisclosure(options: .init(style: .header))]
         }
 
         let rowRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, SidebarItem> {
             (cell, _, item) in
 
-            var contentConfiguration = UIListContentConfiguration.sidebarSubtitleCell()
+            var contentConfiguration = UIListContentConfiguration.sidebarCell()
             contentConfiguration.text = item.title
             contentConfiguration.image = item.image?.withRenderingMode(.alwaysTemplate)
-
             cell.contentConfiguration = contentConfiguration
+
+            cell.backgroundView = {
+                let view = UIView()
+                view.backgroundColor = .clear
+                return view
+            }()
+            cell.selectedBackgroundView = {
+                let bgview = UIView(frame: CGRect(x: 0, y: 0, width: cell.frame.size.width, height: cell.frame.size.height))
+                bgview.layer.cornerRadius = 5
+                bgview.backgroundColor = UIColor.opaqueSeparator
+                return bgview
+            }()
+
             if item.active {
                 cell.accessories = [.checkmark()]
             } else {
@@ -164,6 +182,13 @@ class SidebarViewController: UICollectionViewController {
                 return collectionView.dequeueConfiguredReusableCell(using: rowRegistration, for: indexPath, item: item)
             }
         }
+        for section: SidebarSection in [.panel, .map, .overlay] {
+            let header = SidebarItem.header(for: section)
+            var snapshot = NSDiffableDataSourceSectionSnapshot<SidebarItem>()
+            snapshot.append([header])
+            snapshot.expand([header])
+            dataSource.apply(snapshot, to: section)
+        }
         self.collectionView.dataSource = dataSource
     }
 
@@ -172,7 +197,6 @@ class SidebarViewController: UICollectionViewController {
             var configuration = UICollectionLayoutListConfiguration(appearance: .sidebar)
             configuration.showsSeparators = false
             configuration.headerMode = .firstItemInSection
-            configuration.backgroundColor = .clear
             let section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: layoutEnvironment)
             return section
         }
