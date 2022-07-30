@@ -215,7 +215,7 @@ extension IITCWebViewController {
 
 extension IITCWebViewController: WKNavigationDelegate {
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if webView != self.webView {
+        if webView != self.webView || !(navigationAction.targetFrame?.isMainFrame ?? false) {
             decisionHandler(.allow)
             return
         }
