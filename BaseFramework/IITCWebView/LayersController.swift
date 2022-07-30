@@ -111,6 +111,7 @@ public class LayersController: NSObject {
     }
 
     func reset() {
+        print("panel reset")
         panels = Panel.initialPanels()
     }
 
@@ -119,28 +120,38 @@ public class LayersController: NSObject {
     }
 
     public func show(map mapId: Int) {
-        guard let layer = self.baseLayers.first(where: { $0.layerID == mapId }) else {
+        guard let layerIndex = self.baseLayers.firstIndex(where: { $0.layerID == mapId }) else {
             return
         }
+        let layer = self.baseLayers[layerIndex]
         if layer.active {
             return
         }
-        _ = self.baseLayers.first { l in
+        layer.active = true
+        self.baseLayers[layerIndex] = layer
+
+        let activedIndex = self.baseLayers.firstIndex { l in
             if l.active {
-                l.active = false
-                layer.active = true
                 return true
             }
             return false
+        }
+        if activedIndex != nil {
+            let l = self.baseLayers[activedIndex!]
+            l.active = false
+            self.baseLayers[activedIndex!] = l
+            print("change posted")
         }
         NotificationCenter.default.post(name: Notification.Name(rawValue: "WebViewExecuteJS"), object: nil, userInfo: ["JS": "window.layerChooser.showLayer(\(layer.layerID))"])
     }
 
     public func show(overlay overlayId: Int) {
-        guard let layer = self.overlayLayers.first(where: { $0.layerID == overlayId }) else {
+        guard let layerIndex = self.overlayLayers.firstIndex(where: { $0.layerID == overlayId }) else {
             return
         }
+        let layer = self.overlayLayers[layerIndex]
         layer.active = !layer.active
+        self.overlayLayers[layerIndex]=layer
         let s = layer.active ? "true" : "false"
         NotificationCenter.default.post(name: Notification.Name(rawValue: "WebViewExecuteJS"), object: nil, userInfo: ["JS": "window.layerChooser.showLayer(\(layer.layerID), \(s))"])
     }
