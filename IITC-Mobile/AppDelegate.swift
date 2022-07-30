@@ -37,6 +37,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.saveFile(_:)), name: JSNotificationSaveFile, object: nil)
 
+        #if targetEnvironment(macCatalyst)
+        if let titlebar = window!.windowScene?.titlebar {
+          titlebar.titleVisibility = .hidden
+          titlebar.toolbar = nil
+        }
+        #endif
+
         return true
     }
 
