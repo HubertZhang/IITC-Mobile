@@ -111,7 +111,6 @@ public class LayersController: NSObject {
     }
 
     func reset() {
-        print("panel reset")
         panels = Panel.initialPanels()
     }
 
@@ -140,7 +139,6 @@ public class LayersController: NSObject {
             let l = self.baseLayers[activedIndex!]
             l.active = false
             self.baseLayers[activedIndex!] = l
-            print("change posted")
         }
         NotificationCenter.default.post(name: Notification.Name(rawValue: "WebViewExecuteJS"), object: nil, userInfo: ["JS": "window.layerChooser.showLayer(\(layer.layerID))"])
     }
