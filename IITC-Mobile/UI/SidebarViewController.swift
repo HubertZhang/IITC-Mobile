@@ -13,6 +13,20 @@ import BaseFramework
 
 @available(iOS 14.0, *)
 class SidebarViewController: UICollectionViewController {
+    static var iconMap = [
+        "ic_action_about": UIImage(systemName: "info.circle.fill", withConfiguration: UIImage.SymbolConfiguration(weight: .bold)),
+        "ic_action_view_as_list": UIImage(systemName: "doc.plaintext", withConfiguration: UIImage.SymbolConfiguration(weight: .bold)),
+        "ic_action_cc_bcc": UIImage(systemName: "person.2.fill", withConfiguration: UIImage.SymbolConfiguration(weight: .bold)),
+        "ic_action_warning": UIImage(systemName: "exclamationmark.triangle.fill", withConfiguration: UIImage.SymbolConfiguration(weight: .bold)),
+
+        "ic_action_star": UIImage(systemName: "star.fill", withConfiguration: UIImage.SymbolConfiguration(weight: .bold)),
+        "ic_missions": UIImage(systemName: "map.fill", withConfiguration: UIImage.SymbolConfiguration(weight: .bold)),
+        "ic_action_data_usage": UIImage(systemName: "", withConfiguration: UIImage.SymbolConfiguration(weight: .bold)),
+        "ic_action_paste": UIImage(systemName: "square.text.square", withConfiguration: UIImage.SymbolConfiguration(weight: .bold)),
+        "ic_action_view_as_list_compact": UIImage(systemName: "doc.plaintext", withConfiguration: UIImage.SymbolConfiguration(weight: .bold)),
+
+        "ic_action_new_event": UIImage(systemName: "note.text.badge.plus", withConfiguration: UIImage.SymbolConfiguration(weight: .bold))
+    ]
 
     private enum SidebarItemType: Int {
         case header, row
@@ -46,7 +60,10 @@ class SidebarViewController: UICollectionViewController {
         }
 
         static func rowFrom(panel: Panel) -> Self {
-            return SidebarItem(id: "\(panel.id)", type: .row, layerId: 0, title: panel.label, image: UIImage(named: panel.icon) ?? UIImage(named: "ic_action_new_event"), active: false)
+            if let image = iconMap[panel.icon] {
+                return SidebarItem(id: "\(panel.id)", type: .row, layerId: 0, title: panel.label, image: image, active: false)
+            }
+            return SidebarItem(id: "\(panel.id)", type: .row, layerId: 0, title: panel.label, image: iconMap["ic_action_new_event"]!, active: false)
         }
 
         static func rowFrom(layer: Layer) -> Self {
@@ -198,6 +215,9 @@ class SidebarViewController: UICollectionViewController {
             configuration.showsSeparators = false
             configuration.headerMode = .firstItemInSection
             let section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: layoutEnvironment)
+            #if targetEnvironment(macCatalyst)
+            section.interGroupSpacing = 4
+            #endif
             return section
         }
         return layout
