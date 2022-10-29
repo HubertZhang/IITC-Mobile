@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -34,7 +34,6 @@
 		B44856F91D1AB17A0082B1E7 /* WhatsNew.html in Resources */ = {isa = PBXBuildFile; fileRef = B44856F81D1AB17A0082B1E7 /* WhatsNew.html */; };
 		B45CEE3727AF35480011CCD5 /* LayersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45CEE3627AF35470011CCD5 /* LayersController.swift */; };
 		B45CEE3827AF361C0011CCD5 /* LayersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B405EECB1D066FC900110D9E /* LayersTableViewController.swift */; };
-		B45CEE3A27AF38740011CCD5 /* RSKGrowingTextView in Frameworks */ = {isa = PBXBuildFile; productRef = B45CEE3927AF38740011CCD5 /* RSKGrowingTextView */; };
 		B45F34DF288D803500E86497 /* WebViewConsole in Frameworks */ = {isa = PBXBuildFile; productRef = B45F34DE288D803500E86497 /* WebViewConsole */; };
 		B45F34E1288D804000E86497 /* WebViewConsoleView in Frameworks */ = {isa = PBXBuildFile; productRef = B45F34E0288D804000E86497 /* WebViewConsoleView */; };
 		B47461161F769E1D00BFD2CA /* PluginsSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47461151F769E1D00BFD2CA /* PluginsSearchTableViewController.swift */; };
@@ -50,6 +49,7 @@
 		B4C1C3BC279C93EC0056AFDC /* MBProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = B4C1C3BB279C93EC0056AFDC /* MBProgressHUD */; };
 		B4C1C3C7279C99B70056AFDC /* TPInAppReceipt in Frameworks */ = {isa = PBXBuildFile; productRef = B4C1C3C6279C99B70056AFDC /* TPInAppReceipt */; };
 		B4C1C3CF279C9A7D0056AFDC /* Highlightr in Frameworks */ = {isa = PBXBuildFile; productRef = B4C1C3CE279C9A7D0056AFDC /* Highlightr */; };
+		B4CB4F3D2898888300A71AE7 /* RSKGrowingTextView in Frameworks */ = {isa = PBXBuildFile; productRef = B4CB4F3C2898888300A71AE7 /* RSKGrowingTextView */; };
 		B4CD6172209C070C00F5BFB8 /* InsetsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CD6171209C070C00F5BFB8 /* InsetsLabel.swift */; };
 		B4D5F15027C3EBD300CEC627 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D5F14F27C3EBD300CEC627 /* SidebarViewController.swift */; };
 		B4DC209223AE9D7900AC156D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DC209123AE9D7900AC156D /* Constants.swift */; };
@@ -66,7 +66,7 @@
 		B4F840381D0AD1AF00C58690 /* BaseFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B4F840301D0AD1AF00C58690 /* BaseFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B4F840441D0AD26900C58690 /* ActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F840431D0AD26900C58690 /* ActionViewController.swift */; };
 		B4F840471D0AD26900C58690 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4F840451D0AD26900C58690 /* MainInterface.storyboard */; };
-		B4F8404B1D0AD26900C58690 /* ViewInIITC.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B4F840411D0AD26900C58690 /* ViewInIITC.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B4F8404B1D0AD26900C58690 /* ViewInIITC.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B4F840411D0AD26900C58690 /* ViewInIITC.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B4F840501D0AD36400C58690 /* BaseFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4F840301D0AD1AF00C58690 /* BaseFramework.framework */; };
 		B4F840511D0AD50000C58690 /* DirectoryWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BE7681D08BFA300A0A0CB /* DirectoryWatcher.swift */; };
 		B4F840521D0AD50300C58690 /* Script.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E2F0241D05D50D00D2D86B /* Script.swift */; };
@@ -117,15 +117,15 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B4F8404F1D0AD26900C58690 /* Embed App Extensions */ = {
+		B4F8404F1D0AD26900C58690 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				B4F8404B1D0AD26900C58690 /* ViewInIITC.appex in Embed App Extensions */,
+				B4F8404B1D0AD26900C58690 /* ViewInIITC.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -206,6 +206,7 @@
 				B405EED61D0726D700110D9E /* CoreLocation.framework in Frameworks */,
 				B45F34E1288D804000E86497 /* WebViewConsoleView in Frameworks */,
 				B4FCB394279C882600DBA72F /* InAppSettingsKit in Frameworks */,
+				B4CB4F3D2898888300A71AE7 /* RSKGrowingTextView in Frameworks */,
 				B4C1C3C7279C99B70056AFDC /* TPInAppReceipt in Frameworks */,
 				B4C1C3BC279C93EC0056AFDC /* MBProgressHUD in Frameworks */,
 				B4F840371D0AD1AF00C58690 /* BaseFramework.framework in Frameworks */,
@@ -233,7 +234,6 @@
 				B432CE66279CA9DA0078FE2C /* RxAlamofire in Frameworks */,
 				B432CE68279CA9E20078FE2C /* RxCocoa in Frameworks */,
 				B432CE48279C9D1D0078FE2C /* WebKit.framework in Frameworks */,
-				B45CEE3A27AF38740011CCD5 /* RSKGrowingTextView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,7 +438,7 @@
 				B4E2EFFD1D05D06C00D2D86B /* Frameworks */,
 				B4E2EFFE1D05D06C00D2D86B /* Resources */,
 				B4F8403C1D0AD1AF00C58690 /* Embed Frameworks */,
-				B4F8404F1D0AD26900C58690 /* Embed App Extensions */,
+				B4F8404F1D0AD26900C58690 /* Embed Foundation Extensions */,
 				B4D443631F21DD7E00EFB5D1 /* Set Version in Settings.bundle */,
 			);
 			buildRules = (
@@ -455,6 +455,7 @@
 				B4C1C3C6279C99B70056AFDC /* TPInAppReceipt */,
 				B4C1C3CE279C9A7D0056AFDC /* Highlightr */,
 				B45F34E0288D804000E86497 /* WebViewConsoleView */,
+				B4CB4F3C2898888300A71AE7 /* RSKGrowingTextView */,
 			);
 			productName = "IITC-Mobile";
 			productReference = B4E2F0001D05D06C00D2D86B /* IITC-Mobile.app */;
@@ -497,7 +498,6 @@
 				B432CE67279CA9E20078FE2C /* RxCocoa */,
 				B432CE69279CA9F70078FE2C /* RxSwift */,
 				B432CE6C279CAA4F0078FE2C /* Alamofire */,
-				B45CEE3927AF38740011CCD5 /* RSKGrowingTextView */,
 				B45F34DE288D803500E86497 /* WebViewConsole */,
 			);
 			productName = BaseFramework;
@@ -528,7 +528,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 1330;
+				LastUpgradeCheck = 1400;
 				ORGANIZATIONNAME = IITC;
 				TargetAttributes = {
 					B4E2EFFF1D05D06C00D2D86B = {
@@ -658,6 +658,7 @@
 		};
 		B4D443631F21DD7E00EFB5D1 /* Set Version in Settings.bundle */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -918,8 +919,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.vuryleo.iitcmobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "IITC-Mobile/IITC-Mobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -948,8 +950,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.vuryleo.iitcmobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "IITC-Mobile/IITC-Mobile-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,6";
@@ -1269,11 +1272,6 @@
 			package = B432CE6B279CAA4F0078FE2C /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
 		};
-		B45CEE3927AF38740011CCD5 /* RSKGrowingTextView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B42C17D4279C7E5B00446B8F /* XCRemoteSwiftPackageReference "RSKGrowingTextView" */;
-			productName = RSKGrowingTextView;
-		};
 		B45F34DE288D803500E86497 /* WebViewConsole */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B45F34D9288D7FE700E86497 /* XCRemoteSwiftPackageReference "WebViewConsole" */;
@@ -1303,6 +1301,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B4C1C3CD279C9A7D0056AFDC /* XCRemoteSwiftPackageReference "Highlightr" */;
 			productName = Highlightr;
+		};
+		B4CB4F3C2898888300A71AE7 /* RSKGrowingTextView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B42C17D4279C7E5B00446B8F /* XCRemoteSwiftPackageReference "RSKGrowingTextView" */;
+			productName = RSKGrowingTextView;
 		};
 		B4FCB393279C882600DBA72F /* InAppSettingsKit */ = {
 			isa = XCSwiftPackageProductDependency;
