@@ -127,29 +127,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    var fileURL: NSURL?
-    var fileType: String = ""
+    var tempFile: TempFile!
     @objc func saveFile(_ notification: Notification) {
-        guard let fileName = notification.userInfo?["fileName"] as? String else {
-            return
-        }
-//        let fileType = notification.userInfo?["fileType"] as? String ?? ""
+        let fileName = notification.userInfo?["fileName"] as? String ?? "downloadFile"
+        let fileType = notification.userInfo?["fileType"] as? String ?? ""
         guard let fileContent = notification.userInfo?["fileContent"] as? String else {
             return
         }
-        var tempURL = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-        tempURL.appendPathComponent("download", isDirectory: true)
-        tempURL.appendPathComponent(fileName)
-        try? fileContent.data(using: .utf8)?.write(to: tempURL)
+        guard var tempURL = try? FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true) else {
+            return
+        }
+        do {
+            tempURL.appendPathComponent("download", isDirectory: true)
+            try FileManager.default.createDirectory(at: tempURL, withIntermediateDirectories: true)
+            tempURL.appendPathComponent(fileName)
+            let data = fileContent.data(using: .utf8)
+            try data?.write(to: tempURL)
+        } catch _ {
+            return
+        }
+        tempFile = TempFile(fileURL: tempURL as NSURL, type: fileType)
 
-        fileURL = tempURL as NSURL
         let vc = QLPreviewController()
-        vc.dataSource = self
+        vc.dataSource = tempFile
         vc.title = "Downloaded File"
-        self.topViewController()?.present(vc, animated: true, completion: {
-            try? FileManager.default.removeItem(at: tempURL)
-            self.fileURL = nil
-        })
+        self.topViewController()?.present(vc, animated: true)
     }
 
     func topViewController() -> UIViewController? {
@@ -161,16 +163,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
-extension AppDelegate: QLPreviewControllerDataSource {
+class TempFile: QLPreviewControllerDataSource {
+    var fileURL: NSURL
+    var fileType: String
+
+    init(fileURL: NSURL, type: String) {
+        self.fileURL = fileURL
+        self.fileType = type
+    }
+
     func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
-        if self.fileURL == nil {
-            return 0
-        } else {
-            return 1
-        }
+        return 1
     }
 
     func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
-        return self.fileURL!
+        return self.fileURL
     }
 }
