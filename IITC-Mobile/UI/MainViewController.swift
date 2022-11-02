@@ -15,11 +15,6 @@ import RxSwift
 
 class MainViewController: UIViewController {
 
-    @available(iOS 11.0, *)
-    override var prefersHomeIndicatorAutoHidden: Bool {
-        return true
-    }
-
     var webView: IITCWebViewController!
 
     var location = IITCLocation()

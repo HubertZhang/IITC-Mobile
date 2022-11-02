@@ -41,6 +41,7 @@
 		B4779A33200BB71100EB34BD /* OpenInGMapActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4779A32200BB71100EB34BD /* OpenInGMapActivity.swift */; };
 		B47B46851F22417D0011CC5C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B47B46841F22417D0011CC5C /* StoreKit.framework */; };
 		B48156E61D72EAF00041D2CA /* LayersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B405EECB1D066FC900110D9E /* LayersTableViewController.swift */; };
+		B4865E1029117B43001E3A54 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4865E0F29117B43001E3A54 /* SplitViewController.swift */; };
 		B49E42B323AE9B5A0097F192 /* IITCWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49E42B123AE9B5A0097F192 /* IITCWebViewController.swift */; };
 		B49E42B423AE9B5A0097F192 /* IITCWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49E42B223AE9B5A0097F192 /* IITCWebView.swift */; };
 		B4A270D81F553B6D00A2770F /* UserAgentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A270D71F553B6D00A2770F /* UserAgentTableViewController.swift */; };
@@ -162,6 +163,7 @@
 		B4779A30200BAD3F00EB34BD /* CopyPortalLinkActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyPortalLinkActivity.swift; sourceTree = "<group>"; };
 		B4779A32200BB71100EB34BD /* OpenInGMapActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenInGMapActivity.swift; sourceTree = "<group>"; };
 		B47B46841F22417D0011CC5C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		B4865E0F29117B43001E3A54 /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
 		B49E42B123AE9B5A0097F192 /* IITCWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IITCWebViewController.swift; sourceTree = "<group>"; };
 		B49E42B223AE9B5A0097F192 /* IITCWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IITCWebView.swift; sourceTree = "<group>"; };
 		B4A270D71F553B6D00A2770F /* UserAgentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAgentTableViewController.swift; sourceTree = "<group>"; };
@@ -279,6 +281,7 @@
 				B4A270D71F553B6D00A2770F /* UserAgentTableViewController.swift */,
 				B4CD6171209C070C00F5BFB8 /* InsetsLabel.swift */,
 				B4D5F14F27C3EBD300CEC627 /* SidebarViewController.swift */,
+				B4865E0F29117B43001E3A54 /* SplitViewController.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -691,6 +694,7 @@
 				B4B3284A1D10F3AF007AA6D5 /* UserFilesTableViewController.swift in Sources */,
 				B4CD6172209C070C00F5BFB8 /* InsetsLabel.swift in Sources */,
 				B4E2F0061D05D06C00D2D86B /* MainViewController.swift in Sources */,
+				B4865E1029117B43001E3A54 /* SplitViewController.swift in Sources */,
 				B4D5F15027C3EBD300CEC627 /* SidebarViewController.swift in Sources */,
 				B42BE7631D073C7800A0A0CB /* TextViewController.swift in Sources */,
 				B405EE081D05FD1400110D9E /* PluginsTableViewController.swift in Sources */,
