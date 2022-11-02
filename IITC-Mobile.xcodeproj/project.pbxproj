@@ -909,7 +909,7 @@
 				CODE_SIGN_ENTITLEMENTS = "IITC-Mobile/IITC.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = 4L3DQ24Q2N;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "IITC-Mobile/Info.plist";
@@ -941,7 +941,7 @@
 				CODE_SIGN_ENTITLEMENTS = "IITC-Mobile/IITC.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = 4L3DQ24Q2N;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "IITC-Mobile/Info.plist";
@@ -1075,7 +1075,7 @@
 				CODE_SIGN_ENTITLEMENTS = "ViewInIITC/IITC-Action.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = 4L3DQ24Q2N;
 				INFOPLIST_FILE = ViewInIITC/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -1102,7 +1102,7 @@
 				CODE_SIGN_ENTITLEMENTS = "ViewInIITC/IITC-Action.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = 4L3DQ24Q2N;
 				INFOPLIST_FILE = ViewInIITC/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
