@@ -32,7 +32,7 @@ class SidebarViewController: UICollectionViewController {
         case header, row
     }
 
-    private enum SidebarSection: Int {
+    private enum SidebarSection: Int, CaseIterable {
         case panel, map, overlay
 
         func toString() -> String {
@@ -40,9 +40,9 @@ class SidebarViewController: UICollectionViewController {
             case .panel:
                 return "Panel"
             case .map:
-                return "Base Layer"
+                return "Map"
             case .overlay:
-                return "Overlay Layers"
+                return "Overlays"
             }
         }
     }
@@ -81,13 +81,18 @@ class SidebarViewController: UICollectionViewController {
 
     lazy var doneButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonPressed(_:)))
 
+    var layerControl: UISegmentedControl = UISegmentedControl()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureNavigationItem()
         self.collectionView.collectionViewLayout = self.createLayout()
         self.configureDataSource()
         self.configureLayerController()
-        // Do any additional setup after loading the view.
+        self.configureSegmentControl()
+        self.frameSize = self.view.frame.size
+        self.safeAreaInsets = self.view.safeAreaInsets
+        self.configureInsetOfCollectionContent()
     }
 
     func configureNavigationItem() {
@@ -199,7 +204,7 @@ class SidebarViewController: UICollectionViewController {
                 return collectionView.dequeueConfiguredReusableCell(using: rowRegistration, for: indexPath, item: item)
             }
         }
-        for section: SidebarSection in [.panel, .map, .overlay] {
+        for section in SidebarSection.allCases {
             let header = SidebarItem.header(for: section)
             var snapshot = NSDiffableDataSourceSectionSnapshot<SidebarItem>()
             snapshot.append([header])
@@ -244,9 +249,49 @@ class SidebarViewController: UICollectionViewController {
             }
     }
 
-    // MARK: - TraitCollection
+    var isScrolledByLayerControl: Bool = false
+    private func scrollTo(section: SidebarSection) {
+        guard let index = self.dataSource.indexPath(for: .header(for: section)) else {
+            return
+        }
+        isScrolledByLayerControl = true
+        self.collectionView.scrollToItem(at: index, at: .top, animated: true)
+    }
+
+    func configureSegmentControl() {
+        self.navigationItem.titleView = self.layerControl
+
+        for section in SidebarSection.allCases {
+            self.layerControl.insertSegment(action: UIAction(title: section.toString(), handler: { _ in
+                self.scrollTo(section: section)
+            }), at: section.rawValue, animated: false)
+        }
+        self.layerControl.selectedSegmentIndex = 0
+    }
+
+    // MARK: - UI Changes
+    var frameSize: CGSize = .zero
+    var safeAreaInsets: UIEdgeInsets = .zero
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         self.configureNavigationItem()
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        frameSize = size
+        self.configureInsetOfCollectionContent()
+    }
+
+    override func viewSafeAreaInsetsDidChange() {
+        safeAreaInsets = self.view.safeAreaInsets
+        self.configureInsetOfCollectionContent()
+    }
+
+    func configureInsetOfCollectionContent() {
+        // add extra space at bottom for better scroll anchor experience.
+        let contentHeight = frameSize.height - safeAreaInsets.top - safeAreaInsets.bottom
+        let cellHeight: CGFloat = 55
+        self.collectionView.contentInset = .init(top: 0, left: 0, bottom: contentHeight - cellHeight, right: 0)
     }
 
     // MARK: - Button Action
@@ -255,7 +300,7 @@ class SidebarViewController: UICollectionViewController {
         self.splitViewController?.show(.secondary)
     }
 
-    // MARK: UICollectionViewDelegate
+    // MARK: - UICollectionViewDelegate
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
@@ -272,5 +317,40 @@ class SidebarViewController: UICollectionViewController {
         default:
             return
         }
+    }
+
+    // MARK: - UIScrollViewDelegate
+
+    override func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        isScrolledByLayerControl = false
+    }
+
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if isScrolledByLayerControl {
+            return
+        }
+        let topOfFirstCell = self.view.convert(CGPoint(x: collectionView.frame.size.width / 2, y: collectionView.safeAreaInsets.top), to: self.collectionView)
+        if let idx = collectionView.indexPathForItem(at: topOfFirstCell) {
+            self.layerControl.selectedSegmentIndex = idx.section
+            return
+        }
+
+        var minY = CGFloat(65536)
+        var idx: IndexPath?
+        for cell in collectionView.visibleCells {
+            let cellY = cell.frame.minY
+            if cellY < topOfFirstCell.y {
+                continue
+            }
+            if cellY < minY {
+                minY = cellY
+                idx = collectionView.indexPath(for: cell)
+            }
+        }
+
+        guard let idx = idx else {
+            return
+        }
+        self.layerControl.selectedSegmentIndex = idx.section
     }
 }
