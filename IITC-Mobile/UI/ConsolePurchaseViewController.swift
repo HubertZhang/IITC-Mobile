@@ -121,9 +121,6 @@ extension ConsolePurchaseViewController: SKProductsRequestDelegate {
                 self.descriptionLabel.text = product.localizedDescription
 #endif
                 self.products.append(product)
-                Analytics.logEvent(AnalyticsEventPresentOffer, parameters: [
-                    "item_id": product.productIdentifier
-                ])
             }
 
         } else {
