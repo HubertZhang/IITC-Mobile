@@ -85,7 +85,7 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
         guard let filename = downloadTask.response?.suggestedFilename else {
             return
         }
-//        print(filename)
+        //        print(filename)
         let destURL = extensionFolder.appendingPathComponent(filename)
         try? FileManager.default.removeItem(at: destURL)
         do {
@@ -152,11 +152,10 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
             guard let inputItem = item as? NSExtensionItem else {
                 continue
             }
-            for provider in inputItem.attachments ?? [] {
-                if provider.hasItemConformingToTypeIdentifier(kUTTypeURL as String) {
-                    founded = true
-                    provider.loadItem(forTypeIdentifier: kUTTypeURL as String, options: nil, completionHandler: self.extensionURLItemHandler)
-                }
+            for provider in inputItem.attachments ?? [] where provider.hasItemConformingToTypeIdentifier(kUTTypeURL as String) {
+                founded = true
+                provider.loadItem(forTypeIdentifier: kUTTypeURL as String, options: nil, completionHandler: self.extensionURLItemHandler)
+
             }
         }
         if !founded {
