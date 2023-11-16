@@ -18,5 +18,5 @@ download_ce() {
 }
 
 download_ce release scripts/ce
-download_ce test scripts/ce-test
+# download_ce test scripts/ce-test
 download_ce beta scripts/ce-beta
