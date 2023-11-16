@@ -10,6 +10,7 @@ import UIKit
 import MobileCoreServices
 import WebKit
 import BaseFramework
+import UniformTypeIdentifiers
 
 class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDownloadDelegate {
 
@@ -64,6 +65,7 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
                 do {
                     let containerPath = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContainerIdentifier)!
                     let userScriptsPath = containerPath.appendingPathComponent("extension", isDirectory: true)
+                    try FileManager.default.createDirectory(at: userScriptsPath, withIntermediateDirectories: true)
                     let filename = url.lastPathComponent
                     let destURL = userScriptsPath.appendingPathComponent(filename)
                     try? FileManager.default.removeItem(at: destURL)
@@ -100,7 +102,7 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
     }
 
     var url: URL?
-    func extensionURLItemHandler(item: NSSecureCoding?, error: Error!) {
+    func extensionURLItemHandler(item: NSSecureCoding?, error: Error?) {
         guard let wrappedURL = item as? URL else {
             return
         }
@@ -154,7 +156,7 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
             }
             for provider in inputItem.attachments ?? [] where provider.hasItemConformingToTypeIdentifier(kUTTypeURL as String) {
                 founded = true
-                provider.loadItem(forTypeIdentifier: kUTTypeURL as String, options: nil, completionHandler: self.extensionURLItemHandler)
+                provider.loadItem(forTypeIdentifier: UTType.url.identifier, options: nil, completionHandler: self.extensionURLItemHandler)
 
             }
         }
