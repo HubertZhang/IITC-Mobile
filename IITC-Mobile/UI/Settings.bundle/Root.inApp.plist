@@ -110,14 +110,13 @@
 			<key>Key</key>
 			<string>pref_iitc_version</string>
 			<key>DefaultValue</key>
-			<string>release</string>
+			<string>ce</string>
 			<key>Values</key>
 			<array>
 				<string>release</string>
 				<string>test</string>
 				<string>ce</string>
 				<string>ce-beta</string>
-				<string>ce-test</string>
 			</array>
 			<key>Titles</key>
 			<array>
@@ -125,7 +124,6 @@
 				<string>IITC.me test build</string>
 				<string>IITC-CE release build</string>
 				<string>IITC-CE beta build</string>
-				<string>IITC-CE test build</string>
 			</array>
 		</dict>
 		<dict>
