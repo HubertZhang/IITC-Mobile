@@ -192,9 +192,6 @@ class MainViewController: UIViewController {
                 return
             }
             if let urlComponent = URLComponents(string: urlString) {
-                if urlComponent.host == "www.ingress.com" || urlComponent.host == "intel.ingress.com" {
-                    self.webView.loadIITCNeeded = true
-                }
                 self.webView.load(url: urlComponent.url!)
             }
         }))

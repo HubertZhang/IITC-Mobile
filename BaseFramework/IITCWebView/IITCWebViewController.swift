@@ -30,8 +30,6 @@ public class IITCWebViewController: UIViewController {
 
     public weak var webViewUIDelegate: WKUIDelegate?
 
-    public var loadIITCNeeded = true
-
     private var observationProgress: NSKeyValueObservation?
 
     func configureWebView() {
@@ -136,7 +134,6 @@ public class IITCWebViewController: UIViewController {
     // MARK: IITC Callbacks
     public var permalink: String = ""
     @objc public func reloadIITC() {
-        self.loadIITCNeeded = true
         var userAgent = userDefaults.string(forKey: "pref_useragent") ?? PredefinedUserAgents[0].1
         if userAgent == "" {
             userAgent = PredefinedUserAgents[0].1
@@ -220,7 +217,7 @@ extension IITCWebViewController: WKNavigationDelegate {
             return
         }
         if let urlString = navigationAction.request.mainDocumentURL?.absoluteString, let host = URLComponents(string: urlString)?.host {
-            if (host.contains("ingress.com/intel") || host.contains("intel.ingress.com")) && self.loadIITCNeeded {
+            if host.contains("ingress.com/intel") || host.contains("intel.ingress.com") {
                 if self.webView.consoleEnabled {
                     self.webView.console.clearMessages()
                 }
@@ -234,14 +231,12 @@ extension IITCWebViewController: WKNavigationDelegate {
                 for script in scripts {
                     self.webView.configuration.userContentController.addUserScript(WKUserScript.init(source: script.fileContent, injectionTime: .atDocumentEnd, forMainFrameOnly: true))
                 }
-                self.loadIITCNeeded = false
             } else {
                 if self.webView.consoleEnabled {
                     self.webView.console.clearMessages()
                 }
                 self.webView.removeAllUserScripts()
                 self.backPanel.removeAll()
-                self.loadIITCNeeded = true
             }
         }
         decisionHandler(.allow)
