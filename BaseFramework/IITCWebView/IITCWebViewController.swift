@@ -154,7 +154,7 @@ public class IITCWebViewController: UIViewController {
     }
 
     @objc public func bootFinished() {
-        self.webView.evaluateJavaScript("if(urlPortalLL[0] != undefined) window.selectPortalByLatLng(urlPortalLL[0],urlPortalLL[1]);")
+        self.webView.evaluateJavaScript("if(urlPortalLL && urlPortalLL[0]) window.selectPortalByLatLng(urlPortalLL[0],urlPortalLL[1]);")
         needUpdateLayer()
     }
 
