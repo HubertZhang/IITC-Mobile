@@ -35,23 +35,23 @@ class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         ])
         NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "|[v]|", options: [], metrics: nil, views: ["v": self.webView!]))
 
-        self.observationProgress = self.webView.observe(\WKWebView.estimatedProgress, changeHandler: { (webview, _) in
+        self.observationProgress = self.webView.observe(\WKWebView.estimatedProgress, changeHandler: { [weak self] (webview, _) in
             let progress = webview.estimatedProgress
-            self.webProgressView.setProgress(Float(progress), animated: true)
+            self?.webProgressView.setProgress(Float(progress), animated: true)
             if progress == 1.0 {
                 UIView.animate(withDuration: 1, animations: {
                     () -> Void in
-                    self.webProgressView.alpha = 0
+                    self?.webProgressView.alpha = 0
                 }, completion: { _ in
-                    self.webProgressView.progress = 0
+                    self?.webProgressView.progress = 0
                 })
             } else {
-                self.webProgressView.alpha = 1
+                self?.webProgressView.alpha = 1
             }
         })
 
-        self.observationTitle = self.webView.observe(\WKWebView.title, changeHandler: { (webView, _) in
-            self.title = webView.title
+        self.observationTitle = self.webView.observe(\WKWebView.title, changeHandler: { [weak self] (webView, _) in
+            self?.title = webView.title
         })
 
         self.view.bringSubviewToFront(webProgressView)
