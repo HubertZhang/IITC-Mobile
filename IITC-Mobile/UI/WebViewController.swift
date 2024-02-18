@@ -24,6 +24,9 @@ class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         } else {
             self.webView = WKWebView(frame: CGRect.zero)
         }
+        if #available(macOS 13.3, iOS 16.4, tvOS 16.4, *) {
+            self.webView.isInspectable = true
+        }
 
         self.webView.translatesAutoresizingMaskIntoConstraints = false
         self.webView.uiDelegate = self

@@ -20,6 +20,9 @@ class IITCWebView: WKWebView {
         let handler = JSHandler()
         handler.initHandlers(for: &configuration.userContentController)
         super.init(frame: frame, configuration: configuration)
+        if #available(macOS 13.3, iOS 16.4, tvOS 16.4, *) {
+            self.isInspectable = true
+        }
         self.isOpaque = false
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "WebViewExecuteJS"), object: nil, queue: nil) {
             [weak self] (notification) -> Void in
