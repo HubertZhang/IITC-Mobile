@@ -296,10 +296,11 @@ extension MainViewController: WKUIDelegate {
         vc1.configuration = configuration
         self.navigationController?.present(vc, animated: true, completion: nil)
         vc1.loadViewIfNeeded()
-        let userAgent = userDefaults.string(forKey: "pref_useragent")
-        if userAgent != "" {
-            vc1.webView.customUserAgent = userAgent
+        var userAgent = userDefaults.string(forKey: "pref_useragent") ?? PredefinedUserAgents[0].1
+        if userAgent == "" {
+            userAgent = PredefinedUserAgents[0].1
         }
+        vc1.webView.customUserAgent = userAgent
         return vc1.webView
     }
 }
