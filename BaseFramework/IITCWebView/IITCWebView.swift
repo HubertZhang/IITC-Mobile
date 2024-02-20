@@ -23,6 +23,7 @@ class IITCWebView: WKWebView {
         if #available(macOS 13.3, iOS 16.4, tvOS 16.4, *) {
             self.isInspectable = true
         }
+        configuration.websiteDataStore.httpCookieStore.setCookie(HTTPCookie(properties: [.name: "_ncc", .value: "0", .path: "/", .domain: "signin.nianticlabs.com"])!)
         self.isOpaque = false
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "WebViewExecuteJS"), object: nil, queue: nil) {
             [weak self] (notification) -> Void in
