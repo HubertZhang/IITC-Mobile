@@ -183,16 +183,39 @@ class MainViewController: UIViewController {
         alert.addTextField {
             textField in
             textField.text = self.webView.permalink
+            textField.clearButtonMode = UITextField.ViewMode.always
             textField.keyboardType = .URL
         }
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {
             _ in
-            let urlString = alert.textFields![0].text ?? ""
+            let urlString = (alert.textFields![0].text ?? "")
+                    .replacingOccurrences(of: " ", with: "")
             if urlString == self.webView.permalink {
                 return
             }
             if let urlComponent = URLComponents(string: urlString) {
-                self.webView.load(url: urlComponent.url!)
+                /*
+ https://link.ingress.com/?
+ link=https%3a%2f%2fintel.ingress.com%2fportal%2f88833779ba4337ffb9de4c22172cf572.16&
+ apn=com.nianticproject.ingress&
+ isi=576505181&
+ ibi=com.google.ingress&
+ ifl=https%3a%2f%2fapps.apple.com%2fapp%2fingress%2fid576505181&
+ ofl=https%3a%2f%2fintel.ingress.com%2fintel%3fpll%3d53%2c588944%2c13%2c274396
+
+                 normal link:
+https://intel.ingress.com/?pll=53.560216,10.054782
+ */
+
+                var url = urlComponent.url!
+                if url.host == "link.ingress.com" {
+                    urlComponent.queryItems?.forEach({
+                        if $0.name == "ofl" {
+                            let newUrlComponent = URLComponents(string: $0.value!)
+                            url = newUrlComponent!.url!
+                        }})
+                }
+                self.webView.load(url: url)
             }
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
