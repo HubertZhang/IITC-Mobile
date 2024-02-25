@@ -78,6 +78,8 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCrossWebsiteTrackingUsageDescription</key>
+	<string>Some plugins need to store Google credentials so that you do not have to authenticate every time you launch IITC.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>IITC requires access to location service to display your location and orientation on map.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
