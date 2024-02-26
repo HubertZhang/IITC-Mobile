@@ -194,24 +194,19 @@ class MainViewController: UIViewController {
             }
             if let urlComponent = URLComponents(string: urlString) {
                 /*
- https://link.ingress.com/?
- link=https%3a%2f%2fintel.ingress.com%2fportal%2f88833779ba4337ffb9de4c22172cf572.16&
- apn=com.nianticproject.ingress&
- isi=576505181&
- ibi=com.google.ingress&
- ifl=https%3a%2f%2fapps.apple.com%2fapp%2fingress%2fid576505181&
- ofl=https%3a%2f%2fintel.ingress.com%2fintel%3fpll%3d53%2c588944%2c13%2c274396
+                    Support link shared from Ingress Prime
+                        https://link.ingress.com/?link=https%3a%2f%2fintel.ingress.com%2fportal%2f843e9240ceef4c1cb972eaedfe840e23.16&apn=com.nianticproject.ingress&isi=576505181&ibi=com.google.ingress&ifl=https%3a%2f%2fapps.apple.com%2fapp%2fingress%2fid576505181&ofl=https%3a%2f%2fintel.ingress.com%2fintel%3fpll%3d-71.970875%2c-139.35162
 
-                 normal link:
-https://intel.ingress.com/?pll=53.560216,10.054782
- */
-
+                    its ofl item contains a normal link:
+                        https://intel.ingress.com/?pll=-71.970875,-139.35162
+                */
                 var url = urlComponent.url!
                 if url.host == "link.ingress.com" {
                     urlComponent.queryItems?.forEach({
                         if $0.name == "ofl" {
-                            let newUrlComponent = URLComponents(string: $0.value!)
-                            url = newUrlComponent!.url!
+                            if let newUrlComponent = URLComponents(string: $0.value ?? "") {
+                                url = newUrlComponent.url!
+                            }
                         }})
                 }
                 self.webView.load(url: url)
