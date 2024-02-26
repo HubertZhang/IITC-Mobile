@@ -188,8 +188,7 @@ class MainViewController: UIViewController {
         }
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {
             _ in
-            let urlString = (alert.textFields![0].text ?? "")
-                    .replacingOccurrences(of: " ", with: "")
+            let urlString = alert.textFields![0].text ?? ""
             if urlString == self.webView.permalink {
                 return
             }
