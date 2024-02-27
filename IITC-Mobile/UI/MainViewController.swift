@@ -183,26 +183,34 @@ class MainViewController: UIViewController {
     }
 
     @objc func applicationDidBecomeActive() {
-        var pasted = UIPasteboard.general.string
-        let urlString = (pasted ?? "").replacingOccurrences(of: " ", with: "")
-        if let host = URLComponents(string: urlString)?.host {
-            if host.hasSuffix("ingress.com") {
-                let alert = UIAlertController(title: "Intel link found",
-                                              message: "we found some data in your clipboard that looks like an intel link. Do you want to jump to this link?",
-                                              preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {
-                    _ in
-                    self.possiblyJumpToLink(urlString)
-                }))
-                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-
-                self.present(alert, animated: true, completion: nil)
+        UIPasteboard.general.detectPatterns(for: [UIPasteboard.DetectionPattern.probableWebURL], completionHandler: { [self] result in
+            switch result {
+            case .success(let detectionPatterns):
+                let urlString = UIPasteboard.general.string!
+                if let host = URLComponents(string: urlString)?.host {
+                    if host.hasSuffix("ingress.com") {
+                        DispatchQueue.main.async {
+                            let alert = UIAlertController(title: "Intel link found",
+                                                          message: "we found some data in your clipboard that looks like an intel link. Do you want to jump to this link?",
+                                                          preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {
+                                _ in
+                                self.possiblyJumpToLink(urlString)
+                            }))
+                            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                            
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                    }
+                }
+            case .failure(let error):
+                print("Error detecting url: \(error.localizedDescription)")
             }
-        }
+        })
     }
 
     func possiblyJumpToLink(_ input: String?) {
-        let urlString = input.text ?? ""
+        let urlString = input ?? ""
         if urlString == self.webView.permalink {
             return
         }
