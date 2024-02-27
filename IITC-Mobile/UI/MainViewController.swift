@@ -103,6 +103,10 @@ class MainViewController: UIViewController {
         configureLeftButtons()
         configureRightButtons()
         configureNotification()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(applicationDidBecomeActive),
+                                               name: UIApplication.didBecomeActiveNotification,
+                                               object: nil)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -178,6 +182,56 @@ class MainViewController: UIViewController {
         }
     }
 
+    @objc func applicationDidBecomeActive() {
+        var pasted = UIPasteboard.general.string
+        let urlString = (pasted ?? "").replacingOccurrences(of: " ", with: "")
+        if let host = URLComponents(string: urlString)?.host {
+            if host.hasSuffix("ingress.com") {
+                let alert = UIAlertController(title: "Intel link found",
+                                              message: "we found some data in your clipboard that looks like an intel link. Do you want to jump to this link?",
+                                              preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {
+                    _ in
+                    self.possiblyJumpToLink(urlString)
+                }))
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
+
+    func possiblyJumpToLink(_ input: String?) {
+        let urlString = input.text ?? ""
+        if urlString == self.webView.permalink {
+            return
+        }
+        if let urlComponent = URLComponents(string: urlString) {
+            /*
+             https://link.ingress.com/?
+             link=https%3a%2f%2fintel.ingress.com%2fportal%2f88833779ba4337ffb9de4c22172cf572.16&
+             apn=com.nianticproject.ingress&
+             isi=576505181&
+             ibi=com.google.ingress&
+             ifl=https%3a%2f%2fapps.apple.com%2fapp%2fingress%2fid576505181&
+             ofl=https%3a%2f%2fintel.ingress.com%2fintel%3fpll%3d53%2c588944%2c13%2c274396
+
+             normal link:
+             https://intel.ingress.com/?pll=53.560216,10.054782
+             */
+
+            var url = urlComponent.url!
+            if url.host == "link.ingress.com" {
+                urlComponent.queryItems?.forEach({
+                    if $0.name == "ofl" {
+                        let newUrlComponent = URLComponents(string: $0.value!)
+                        url = newUrlComponent!.url!
+                    }})
+            }
+            self.webView.load(url: url)
+        }
+    }
+
     @objc func linkButtonPressed(_ sender: AnyObject) {
         let alert = UIAlertController(title: "Input intel URL", message: nil, preferredStyle: .alert)
         alert.addTextField {
@@ -187,30 +241,7 @@ class MainViewController: UIViewController {
             textField.keyboardType = .URL
         }
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {
-            _ in
-            let urlString = alert.textFields![0].text ?? ""
-            if urlString == self.webView.permalink {
-                return
-            }
-            if let urlComponent = URLComponents(string: urlString) {
-                /*
-                    Support link shared from Ingress Prime
-                        https://link.ingress.com/?link=https%3a%2f%2fintel.ingress.com%2fportal%2f843e9240ceef4c1cb972eaedfe840e23.16&apn=com.nianticproject.ingress&isi=576505181&ibi=com.google.ingress&ifl=https%3a%2f%2fapps.apple.com%2fapp%2fingress%2fid576505181&ofl=https%3a%2f%2fintel.ingress.com%2fintel%3fpll%3d-71.970875%2c-139.35162
-
-                    its ofl item contains a normal link:
-                        https://intel.ingress.com/?pll=-71.970875,-139.35162
-                */
-                var url = urlComponent.url!
-                if url.host == "link.ingress.com" {
-                    urlComponent.queryItems?.forEach({
-                        if $0.name == "ofl" {
-                            if let newUrlComponent = URLComponents(string: $0.value ?? "") {
-                                url = newUrlComponent.url!
-                            }
-                        }})
-                }
-                self.webView.load(url: url)
-            }
+            _ in self.possiblyJumpToLink(alert.textFields![0].text)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
