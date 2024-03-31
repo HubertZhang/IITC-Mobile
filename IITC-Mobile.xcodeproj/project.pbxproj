@@ -439,6 +439,7 @@
 				B4BA261B1F3DF4BE000FDFB6 /* SwiftLint */,
 				B4E2EFFC1D05D06C00D2D86B /* Sources */,
 				B4E2EFFD1D05D06C00D2D86B /* Frameworks */,
+				B4A2CEB12BB9ED7F00C204D8 /* Gen License Plist */,
 				B4E2EFFE1D05D06C00D2D86B /* Resources */,
 				B4F8403C1D0AD1AF00C58690 /* Embed Frameworks */,
 				B4F8404F1D0AD26900C58690 /* Embed Foundation Extensions */,
@@ -646,6 +647,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		B4A2CEB12BB9ED7F00C204D8 /* Gen License Plist */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Gen License Plist";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ $CONFIGURATION = \"Debug\" ]; then\n    license-plist --output-path IITC-Mobile/UI/Settings.bundle\nfi\n";
+		};
 		B4BA261B1F3DF4BE000FDFB6 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
