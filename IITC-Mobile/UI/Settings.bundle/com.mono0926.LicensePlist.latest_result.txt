@@ -1,51 +1,53 @@
-name: abseil-cpp-SwiftPM, nameSpecified: abseil, owner: firebase, version: 0.20200225.4
+name: abseil-cpp-binary, nameSpecified: abseil, owner: google, version: 1.2022062300.0, source: https://github.com/google/abseil-cpp-binary
 
-name: Alamofire, nameSpecified: Alamofire, owner: Alamofire, version: 5.5.0
+name: Alamofire, nameSpecified: Alamofire, owner: Alamofire, version: 5.8.1, source: https://github.com/Alamofire/Alamofire
 
-name: ASN1Swift, nameSpecified: ASN1Swift, owner: tikhop, version: 1.2.3
+name: app-check, nameSpecified: AppCheck, owner: google, version: 10.18.1, source: https://github.com/google/app-check
 
-name: boringssl-SwiftPM, nameSpecified: BoringSSL-GRPC, owner: firebase, version: 0.7.2
+name: ASN1Swift, nameSpecified: ASN1Swift, owner: tikhop, version: 1.2.4, source: https://github.com/tikhop/ASN1Swift
 
-name: firebase-ios-sdk, nameSpecified: Firebase, owner: firebase, version: 8.11.0
+name: firebase-ios-sdk, nameSpecified: Firebase, owner: firebase, version: 10.20.0, source: https://github.com/firebase/firebase-ios-sdk
 
-name: GoogleAppMeasurement, nameSpecified: GoogleAppMeasurement, owner: google, version: 8.9.1
+name: GoogleAppMeasurement, nameSpecified: GoogleAppMeasurement, owner: google, version: 10.20.0, source: https://github.com/google/GoogleAppMeasurement
 
-name: GoogleDataTransport, nameSpecified: GoogleDataTransport, owner: google, version: 9.1.2
+name: GoogleDataTransport, nameSpecified: GoogleDataTransport, owner: google, version: 9.3.0, source: https://github.com/google/GoogleDataTransport
 
-name: GoogleUtilities, nameSpecified: GoogleUtilities, owner: google, version: 7.7.0
+name: GoogleUtilities, nameSpecified: GoogleUtilities, owner: google, version: 7.12.1, source: https://github.com/google/GoogleUtilities
 
-name: grpc-SwiftPM, nameSpecified: gRPC, owner: firebase, version: 1.28.4
+name: grpc-binary, nameSpecified: gRPC, owner: google, version: 1.49.1, source: https://github.com/google/grpc-binary
 
-name: gtm-session-fetcher, nameSpecified: GTMSessionFetcher, owner: google, version: 1.7.0
+name: gtm-session-fetcher, nameSpecified: gtm-session-fetcher, owner: google, version: 3.3.1, source: https://github.com/google/gtm-session-fetcher
 
-name: Highlightr, nameSpecified: Highlightr, owner: raspu, version: 2.1.2
+name: Highlightr, nameSpecified: Highlightr, owner: raspu, version: 2.1.2, source: https://github.com/raspu/Highlightr
 
-name: InAppSettingsKit, nameSpecified: InAppSettingsKit, owner: futuretap, version: 3.3.5
+name: InAppSettingsKit, nameSpecified: InAppSettingsKit, owner: futuretap, version: 3.5.1, source: https://github.com/futuretap/InAppSettingsKit
 
-name: leveldb, nameSpecified: leveldb, owner: firebase, version: 1.22.2
+name: interop-ios-for-google-sdks, nameSpecified: InteropForGoogle, owner: google, version: 100.0.0, source: https://github.com/google/interop-ios-for-google-sdks
 
-name: MBProgressHUD, nameSpecified: MBProgressHUD, owner: jdg, version: 1.2.0
+name: leveldb, nameSpecified: leveldb, owner: firebase, version: 1.22.3, source: https://github.com/firebase/leveldb
 
-name: nanopb, nameSpecified: nanopb, owner: firebase, version: 2.30908.0
+name: MBProgressHUD, nameSpecified: MBProgressHUD, owner: jdg, version: 1.2.0, source: https://github.com/jdg/MBProgressHUD
 
-name: OHHTTPStubs, nameSpecified: OHHTTPStubs, owner: AliSoftware, version: 9.1.0
+name: nanopb, nameSpecified: nanopb, owner: firebase, version: 2.30909.0, source: https://github.com/firebase/nanopb
 
-name: promises, nameSpecified: Promises, owner: google, version: 2.0.0
+name: OHHTTPStubs, nameSpecified: OHHTTPStubs, owner: AliSoftware, version: 9.1.0, source: https://github.com/AliSoftware/OHHTTPStubs
 
-name: RSKGrowingTextView, nameSpecified: RSKGrowingTextView, owner: ruslanskorb, version: 6.1.0
+name: promises, nameSpecified: Promises, owner: google, version: 2.3.1, source: https://github.com/google/promises
 
-name: RSKPlaceholderTextView, nameSpecified: RSKPlaceholderTextView, owner: ruslanskorb, version: 6.1.0
+name: RSKGrowingTextView, nameSpecified: RSKGrowingTextView, owner: ruslanskorb, version: 6.1.1, source: https://github.com/ruslanskorb/RSKGrowingTextView
 
-name: RxAlamofire, nameSpecified: RxAlamofire, owner: RxSwiftCommunity, version: 6.1.2
+name: RSKPlaceholderTextView, nameSpecified: RSKPlaceholderTextView, owner: ruslanskorb, version: 6.1.0, source: https://github.com/ruslanskorb/RSKPlaceholderTextView
 
-name: RxSwift, nameSpecified: RxSwift, owner: ReactiveX, version: 6.5.0
+name: RxAlamofire, nameSpecified: RxAlamofire, owner: RxSwiftCommunity, version: 6.1.2, source: https://github.com/RxSwiftCommunity/RxAlamofire
 
-name: swift-protobuf, nameSpecified: SwiftProtobuf, owner: apple, version: 1.18.0
+name: RxSwift, nameSpecified: RxSwift, owner: ReactiveX, version: 6.6.0, source: https://github.com/ReactiveX/RxSwift
 
-name: TPInAppReceipt, nameSpecified: TPInAppReceipt, owner: tikhop, version: 3.3.3
+name: swift-protobuf, nameSpecified: SwiftProtobuf, owner: apple, version: 1.25.2, source: https://github.com/apple/swift-protobuf
 
-name: WebViewConsole, nameSpecified: WebViewConsole, owner: Hubertzhang, version: 0.2.2
+name: TPInAppReceipt, nameSpecified: TPInAppReceipt, owner: tikhop, version: 3.3.4, source: https://github.com/tikhop/TPInAppReceipt
+
+name: WebViewConsole, nameSpecified: WebViewConsole, owner: Hubertzhang, version: 0.3.1, source: https://github.com/Hubertzhang/WebViewConsole
 
 add-version-numbers: false
 
-LicensePlist Version: 3.16.0
+LicensePlist Version: 3.25.1
