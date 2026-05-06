@@ -64,26 +64,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     var lastSeenPastedLink: String?
+    var lastRejectedTime: Date?
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        UIPasteboard.general.detectValues(for: [UIPasteboard.DetectionPattern.probableWebURL], completionHandler: { [self] result in
-            switch result {
-            case .success(let detectionPatterns):
-                guard let link = detectionPatterns[.probableWebURL] as? String else {
-                    return
+        if lastRejectedTime?.timeIntervalSinceNow.isLess(than: -60*60) ?? true {
+            UIPasteboard.general.detectValues(for: [UIPasteboard.DetectionPattern.probableWebURL], completionHandler: { [self] result in
+                switch result {
+                case .success(let detectionPatterns):
+                    guard let link = detectionPatterns[.probableWebURL] as? String else {
+                        return
+                    }
+                    // print("Link detected: \(link)")
+                    if link == lastSeenPastedLink {
+                        return
+                    }
+                    lastSeenPastedLink = link
+                    // print("New link seen, comfirming...")
+                    NotificationCenter.default.post(name: NotificationLinkDetected, object: nil, userInfo: ["link": link])
+                case .failure(let error):
+                    lastRejectedTime = Date()
+                    print("Error detecting url: \(error.localizedDescription)")
                 }
-                // print("Link detected: \(link)")
-                if link == lastSeenPastedLink {
-                    return
-                }
-                lastSeenPastedLink = link
-                // print("New link seen, comfirming...")
-                NotificationCenter.default.post(name: NotificationLinkDetected, object: nil, userInfo: ["link": link])
-            case .failure(let error):
-                print("Error detecting url: \(error.localizedDescription)")
-            }
-        })
+            })
+        }
         ScriptsManager.sharedInstance.synchronizeExtensionFolder()
     }
 
