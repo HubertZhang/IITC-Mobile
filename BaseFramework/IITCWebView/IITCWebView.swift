@@ -20,13 +20,12 @@ class IITCWebView: WKWebView {
         let handler = JSHandler()
         handler.initHandlers(for: &configuration.userContentController)
         super.init(frame: frame, configuration: configuration)
-        if #available(macOS 13.3, iOS 16.4, tvOS 16.4, *) {
-            self.isInspectable = true
-        }
+        self.isInspectable = true
         configuration.websiteDataStore.httpCookieStore.setCookie(HTTPCookie(properties: [.name: "_ncc", .value: "0", .path: "/", .domain: "signin.nianticlabs.com"])!)
+        configuration.websiteDataStore.httpCookieStore.setCookie(HTTPCookie(properties: [.name: "_ncc", .value: "0", .path: "/", .domain: "signin.nianticspatial.com"])!)
         self.isOpaque = false
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "WebViewExecuteJS"), object: nil, queue: nil) {
-            [weak self] (notification) -> Void in
+            [weak self] (notification) in
             let JS = notification.userInfo?["JS"] as? String ?? ";"
             self?.evaluateJavaScript(JS, completionHandler: nil)
         }

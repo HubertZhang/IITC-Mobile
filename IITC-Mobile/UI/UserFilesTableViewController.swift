@@ -52,11 +52,6 @@ class UserFilesTableViewController: UITableViewController {
         }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -110,7 +105,7 @@ class UserFilesTableViewController: UITableViewController {
     }
 
     @IBAction func addButtonClicked(_ sender: AnyObject) {
-        var downloadPath = userScriptsPath!
+        let downloadPath = userScriptsPath!
         let alert = UIAlertController(title: "Input URL to add new scripts", message: nil, preferredStyle: .alert)
         alert.addTextField()
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {
@@ -124,8 +119,8 @@ class UserFilesTableViewController: UITableViewController {
                 AF.download(url, to: {
                     (_, response) -> (URL, DownloadRequest.Options) in
                     let pathComponent = response.suggestedFilename
-                    downloadPath = downloadPath.appendingPathComponent(pathComponent!)
-                    return (downloadPath, .removePreviousFile)
+                    let downloadPath1 = downloadPath.appendingPathComponent(pathComponent!)
+                    return (downloadPath1, .removePreviousFile)
                 }).downloadProgress {
                     progress in
                     hud.progressObject = progress

@@ -34,29 +34,27 @@ public class IITCWebViewController: UIViewController {
 
     func configureWebView() {
         self.webView = IITCWebView(frame: CGRect.zero)
-        if #available(iOS 11.0, *) {
-            self.webView.scrollView.contentInsetAdjustmentBehavior = .never
-        }
+        self.webView.scrollView.contentInsetAdjustmentBehavior = .never
         webView.scrollView.minimumZoomScale = 1
         webView.scrollView.maximumZoomScale = 1
-        webView.configuration.selectionGranularity = .dynamic
         self.webView.translatesAutoresizingMaskIntoConstraints = false
         self.webView.navigationDelegate = self
         self.webView.uiDelegate = self.webViewUIDelegate
         self.view.addSubview(self.webView)
 
         NSLayoutConstraint.activate([
-            self.view.safeAreaLayoutGuide.topAnchor.constraint(equalTo: self.webView.topAnchor),
-            self.webView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+            self.webView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            self.webView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            self.webView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.webView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         ])
-        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "|[v]|", options: [], metrics: nil, views: ["v": self.webView!]))
 
         self.observationProgress = self.webView.observe(\IITCWebView.estimatedProgress, changeHandler: { (webview, _) in
             let progress = webview.estimatedProgress
             self.webProgressView.setProgress(Float(progress), animated: true)
             if progress == 1.0 {
                 UIView.animate(withDuration: 1, animations: {
-                    () -> Void in
+                    ()  in
                     self.webProgressView.alpha = 0
                 }, completion: { _ in
                     self.webProgressView.progress = 0

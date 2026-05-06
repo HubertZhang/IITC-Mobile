@@ -175,11 +175,6 @@ class ActionViewController: UIViewController, URLSessionDelegate, URLSessionDown
 
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     // MARK: Toolbar Buttons
     @IBAction func backButtonPressed(_ sender: AnyObject) {
         self.webView.goBackPanel()
@@ -204,7 +199,7 @@ extension ActionViewController: WKUIDelegate {
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
         let alertController: UIAlertController = UIAlertController(title: message, message: "", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: {
-            _ -> Void in
+            _  in
             completionHandler()
         }))
         self.present(alertController, animated: true, completion: nil)
@@ -213,11 +208,11 @@ extension ActionViewController: WKUIDelegate {
     func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
         let alertController: UIAlertController = UIAlertController(title: message, message: "", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: {
-            _ -> Void in
+            _  in
             completionHandler(true)
         }))
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
-            _ -> Void in
+            _  in
             completionHandler(false)
         }))
         self.present(alertController, animated: true, completion: nil)
@@ -226,16 +221,16 @@ extension ActionViewController: WKUIDelegate {
     func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
         let alertController = UIAlertController(title: prompt, message: webView.url!.host, preferredStyle: .alert)
         alertController.addTextField(configurationHandler: {
-            (textField: UITextField) -> Void in
+            (textField: UITextField)  in
             textField.text = defaultText
         })
         alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: {
-            _ -> Void in
+            _  in
             let input = alertController.textFields!.first!.text!
             completionHandler(input)
         }))
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
-            _ -> Void in
+            _  in
             completionHandler(nil)
         }))
         self.present(alertController, animated: true, completion: nil)

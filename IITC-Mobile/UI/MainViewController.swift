@@ -28,8 +28,8 @@ class MainViewController: UIViewController {
         return InAppPurchaseManager.default.consolePurchased && userDefaults.bool(forKey: "pref_console")
         #endif
     }
-    lazy var debugButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "terminal", withConfiguration: UIImage.SymbolConfiguration(weight: .bold)), style: .plain, target: self, action: #selector(debugButtonPressed(_:)))
-    lazy var backButton: UIBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backButtonPressed(_:)))
+    lazy var debugButton: UIBarButtonItem = UIBarButtonItem(title: "Console", image: UIImage(systemName: "terminal", withConfiguration: UIImage.SymbolConfiguration(weight: .bold)), target: self, action: #selector(debugButtonPressed(_:)))
+    lazy var backButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(backButtonPressed(_:)))
     lazy var layersButton: UIBarButtonItem = UIBarButtonItem(title: "Layers", style: .plain, target: self, action: #selector(self.layersButtonPressed(_:)))
 
     let disposeBag = DisposeBag()
@@ -87,33 +87,18 @@ class MainViewController: UIViewController {
 
     func configureLeftButtons() {
         var buttons = [self.backButton]
-        if self.splitViewController?.traitCollection.horizontalSizeClass == .compact {
+        if self.traitCollection.horizontalSizeClass == .compact {
             buttons.append(self.layersButton)
         }
         self.navigationItem.setLeftBarButtonItems(buttons, animated: true)
     }
 
     func configureRightButtons() {
-        var buttons = [UIBarButtonItem]()
-        let settingsButton = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 24))
-        settingsButton.setImage(UIImage(systemName: "slider.horizontal.3", withConfiguration: UIImage.SymbolConfiguration(weight: .bold)), for: .normal)
-        settingsButton.addTarget(self, action: #selector(settingsButtonPressed(_:)), for: .touchUpInside)
-        buttons.append(UIBarButtonItem(customView: settingsButton))
-
-        let locationButton = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 24))
-        locationButton.setImage(UIImage(systemName: "location", withConfiguration: UIImage.SymbolConfiguration(weight: .bold)), for: .normal)
-        locationButton.addTarget(self, action: #selector(locationButtonPressed(_:)), for: .touchUpInside)
-        buttons.append(UIBarButtonItem(customView: locationButton))
-
-        let reloadButton = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 24))
-        reloadButton.setImage(UIImage(systemName: "arrow.clockwise", withConfiguration: UIImage.SymbolConfiguration(weight: .bold)), for: .normal)
-        reloadButton.addTarget(self, action: #selector(reloadButtonPressed(_:)), for: .touchUpInside)
-        buttons.append(UIBarButtonItem(customView: reloadButton))
-
-        let linkButton = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 24))
-        linkButton.setImage(UIImage(systemName: "link", withConfiguration: UIImage.SymbolConfiguration(weight: .bold)), for: .normal)
-        linkButton.addTarget(self, action: #selector(linkButtonPressed(_:)), for: .touchUpInside)
-        buttons.append(UIBarButtonItem(customView: linkButton))
+        let settingsButton = UIBarButtonItem(title: "Settings", image: UIImage(systemName: "slider.horizontal.3", withConfiguration: UIImage.SymbolConfiguration(weight: .bold)), target: self, action: #selector(settingsButtonPressed(_:)))
+        let locationButton = UIBarButtonItem(title: "Locate", image: UIImage(systemName: "location", withConfiguration: UIImage.SymbolConfiguration(weight: .bold)), target: self, action: #selector(locationButtonPressed(_:)))
+        let reloadButton = UIBarButtonItem(title: "Reload", image: UIImage(systemName: "arrow.clockwise", withConfiguration: UIImage.SymbolConfiguration(weight: .bold)), target: self, action: #selector(reloadButtonPressed(_:)))
+        let linkButton = UIBarButtonItem(title: "Link", image: UIImage(systemName: "link", withConfiguration: UIImage.SymbolConfiguration(weight: .bold)), target: self, action: #selector(linkButtonPressed(_:)))
+        let buttons = [settingsButton, locationButton, reloadButton, linkButton]
 
         self.navigationItem.setRightBarButtonItems(buttons, animated: true)
     }
@@ -155,13 +140,14 @@ class MainViewController: UIViewController {
 
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        self.configureLeftButtons()
+        guard let previousTraitCollection = previousTraitCollection else {
+            self.configureLeftButtons()
+            return
+        }
+        if self.traitCollection.horizontalSizeClass != previousTraitCollection.horizontalSizeClass {
+            self.configureLeftButtons()
+        }
     }
 
     // MARK: Toolbar Buttons
@@ -295,7 +281,7 @@ extension MainViewController: WKUIDelegate {
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
         let alertController: UIAlertController = UIAlertController(title: message, message: "", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: {
-            _ -> Void in
+            _  in
             completionHandler()
         }))
         self.topViewController()?.present(alertController, animated: true)
@@ -304,11 +290,11 @@ extension MainViewController: WKUIDelegate {
     func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
         let alertController: UIAlertController = UIAlertController(title: message, message: "", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: {
-            _ -> Void in
+            _ in
             completionHandler(true)
         }))
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
-            _ -> Void in
+            _ in
             completionHandler(false)
         }))
         self.topViewController()?.present(alertController, animated: true, completion: nil)
@@ -317,37 +303,37 @@ extension MainViewController: WKUIDelegate {
     func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
         let alertController = UIAlertController(title: prompt, message: webView.url!.host, preferredStyle: .alert)
         alertController.addTextField(configurationHandler: {
-            (textField: UITextField) -> Void in
+            (textField: UITextField)  in
             textField.text = defaultText
         })
         alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: {
-            _ -> Void in
+            _  in
             let input = alertController.textFields!.first!.text!
             completionHandler(input)
         }))
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
-            _ -> Void in
+            _  in
             completionHandler(nil)
         }))
         self.topViewController()?.present(alertController, animated: true, completion: nil)
     }
 
     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
-        guard let vc = self.storyboard!.instantiateViewController(withIdentifier: "webview") as? UINavigationController else {
+        guard let nc = self.storyboard!.instantiateViewController(withIdentifier: "webview") as? UINavigationController else {
             return nil
         }
-        guard let vc1 = vc.viewControllers[0] as? WebViewController else {
+        guard let vc = nc.topViewController as? WebViewController else {
             return nil
         }
         configuration.userContentController.removeAllUserScripts()
-        vc1.configuration = configuration
-        self.navigationController?.present(vc, animated: true, completion: nil)
-        vc1.loadViewIfNeeded()
+        vc.configuration = configuration
+        self.navigationController?.present(nc, animated: true, completion: nil)
+        vc.loadViewIfNeeded()
         var userAgent = userDefaults.string(forKey: "pref_useragent") ?? PredefinedUserAgents[0].1
         if userAgent == "" {
             userAgent = PredefinedUserAgents[0].1
         }
-        vc1.webView.customUserAgent = userAgent
-        return vc1.webView
+        vc.webView.customUserAgent = userAgent
+        return vc.webView
     }
 }

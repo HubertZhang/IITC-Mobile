@@ -96,7 +96,7 @@ class SidebarViewController: UICollectionViewController {
     }
 
     func configureNavigationItem() {
-        if self.splitViewController?.traitCollection.horizontalSizeClass == .compact {
+        if self.traitCollection.horizontalSizeClass == .compact {
             self.navigationItem.leftBarButtonItem = self.doneButton
         } else {
             self.navigationItem.leftBarButtonItem = nil

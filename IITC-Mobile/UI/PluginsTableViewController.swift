@@ -74,11 +74,6 @@ class PluginsTableViewController: UITableViewController {
         definesPresentationContext = true
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     var scripts = [String: [Script]]()
     var keys = [String]()
     var allScripts = [Script]()

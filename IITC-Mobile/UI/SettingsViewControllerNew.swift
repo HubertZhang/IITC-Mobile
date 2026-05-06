@@ -144,12 +144,12 @@ var MainStoryBoard = UIStoryboard(name: "Main", bundle: nil)
         o.subscribe(on: SerialDispatchQueueScheduler.init(internalSerialQueueName: "com.vuryleo.iitcmobile.network"))
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {
-                _ -> Void in
+                _  in
             }, onError: {
-                (e) -> Void in
+                (e)  in
                 print(e)
             }, onCompleted: {
-                () -> Void in
+                ()  in
                 hud.label.text = "Scanning..."
                 DispatchQueue.global().async(execute: {
                     ScriptsManager.sharedInstance.reloadScripts()
@@ -158,7 +158,7 @@ var MainStoryBoard = UIStoryboard(name: "Main", bundle: nil)
                     })
                 })
             }, onDisposed: {
-                () -> Void in
+                ()  in
             }).disposed(by: self.disposeBag)
     }
 

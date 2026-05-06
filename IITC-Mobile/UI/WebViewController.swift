@@ -24,26 +24,25 @@ class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         } else {
             self.webView = WKWebView(frame: CGRect.zero)
         }
-        if #available(macOS 13.3, iOS 16.4, tvOS 16.4, *) {
-            self.webView.isInspectable = true
-        }
+        self.webView.isInspectable = true
 
         self.webView.translatesAutoresizingMaskIntoConstraints = false
         self.webView.uiDelegate = self
         self.view.addSubview(self.webView)
 
         NSLayoutConstraint.activate([
-            self.view.safeAreaLayoutGuide.topAnchor.constraint(equalTo: self.webView.topAnchor),
-            self.webView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+            self.webView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            self.webView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            self.webView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.webView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         ])
-        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "|[v]|", options: [], metrics: nil, views: ["v": self.webView!]))
 
         self.observationProgress = self.webView.observe(\WKWebView.estimatedProgress, changeHandler: { [weak self] (webview, _) in
             let progress = webview.estimatedProgress
             self?.webProgressView.setProgress(Float(progress), animated: true)
             if progress == 1.0 {
                 UIView.animate(withDuration: 1, animations: {
-                    () -> Void in
+                    () in
                     self?.webProgressView.alpha = 0
                 }, completion: { _ in
                     self?.webProgressView.progress = 0
@@ -67,50 +66,45 @@ class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         self.observationProgress = nil
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
         let alertController: UIAlertController = UIAlertController(title: message, message: "", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: {
-            _ -> Void in
+            _ in
             completionHandler()
         }))
         self.present(alertController, animated: true, completion: {
-            () -> Void in
+            () in
         })
     }
 
     func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
         let alertController: UIAlertController = UIAlertController(title: message, message: "", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: {
-            _ -> Void in
+            _ in
             completionHandler(true)
         }))
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
-            _ -> Void in
+            _ in
             completionHandler(false)
         }))
         self.present(alertController, animated: true, completion: {
-            () -> Void in
+            () in
         })
     }
 
     func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
         let alertController = UIAlertController(title: prompt, message: webView.url!.host, preferredStyle: .alert)
         alertController.addTextField(configurationHandler: {
-            (textField: UITextField) -> Void in
+            (textField: UITextField) in
             textField.text = defaultText
         })
         alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: {
-            _ -> Void in
+            _  in
             let input = alertController.textFields!.first!.text!
             completionHandler(input)
         }))
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
-            _ -> Void in
+            _  in
             completionHandler(nil)
         }))
         self.present(alertController, animated: true, completion: nil)

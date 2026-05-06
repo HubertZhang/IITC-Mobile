@@ -19,15 +19,8 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var overlayLayerTable: UITableView!
     @IBOutlet weak var navigationBar: UINavigationBar!
 
-    func configureHairline() {
-        let app = UINavigationBarAppearance()
-        app.shadowColor = .clear
-        self.navigationBar.scrollEdgeAppearance = app
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configureHairline()
         NotificationCenter.default.addObserver(self, selector: #selector(LayersTableViewController.updateLayers), name: JSNotificationLayersGot, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(LayersTableViewController.updateLayers), name: JSNotificationAddPane, object: nil)
 
@@ -40,11 +33,6 @@ class LayersTableViewController: UIViewController, UITableViewDelegate, UITableV
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     @objc func updateLayers() {
